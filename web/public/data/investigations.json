@@ -1386,6 +1386,16 @@
   "fuel_class": "solid",
   "pillar": "prevention",
   "page": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-26",
+  "sensors": [
+   {
+    "kind": "camera",
+    "name": "Video and digital still camera",
+    "detail": "the main record of flame appearance, spread rate and extinction",
+    "source_file": "PSI-26_Presentations_BASS_Overview of Recent ISS Results.pdf",
+    "source_where": "p. 10",
+    "quote": "Video and digital still camera provided bulk of the data."
+   }
+  ],
   "varied": [
    {
     "field": "fuel",
@@ -1518,6 +1528,40 @@
   "fuel_class": "droplet",
   "pillar": null,
   "page": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-39",
+  "sensors": [
+   {
+    "kind": "camera",
+    "name": "Backlit black-and-white camera",
+    "detail": "droplet size over time",
+    "source_file": "PSI-39_Reports_CFI Science Final Report.pdf",
+    "source_where": "p. 6",
+    "quote": "The combustion process is recorded using a backlit, black-and-white camera"
+   },
+   {
+    "kind": "spectral",
+    "name": "UV-sensitive camera (OH* emission)",
+    "detail": "flame size",
+    "source_file": "PSI-39_Reports_CFI Science Final Report.pdf",
+    "source_where": "p. 6",
+    "quote": "a UV-sensitive camera is used to image the OH* emission from the flame which provides the flame size data"
+   },
+   {
+    "kind": "camera",
+    "name": "Color camera",
+    "detail": "live downlink, to run and monitor the test",
+    "source_file": "PSI-39_Reports_CFI Science Final Report.pdf",
+    "source_where": "p. 6",
+    "quote": "A color camera which is had a live downlink to the TSC is used to perform and monitor the overall process."
+   },
+   {
+    "kind": "radiometer",
+    "name": "Narrow-band and wide-band radiometers",
+    "detail": "flame radiation",
+    "source_file": "PSI-39_Reports_CFI Science Final Report.pdf",
+    "source_where": "p. 6",
+    "quote": "Narrow-band and wide-band radiometers are used to measure the radiation emission from the flame."
+   }
+  ],
   "varied": [
    {
     "field": "o2_fraction",
@@ -3180,6 +3224,24 @@
   "fuel_class": null,
   "pillar": "detection",
   "page": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+  "sensors": [
+   {
+    "kind": "smoke",
+    "name": "P-Trak and DustTrak",
+    "detail": "particle counter and light-scattering instrument, as in SAME",
+    "source_file": "PSI-101_Reports_SAME-R_Final Report.pdf",
+    "source_where": "p. 2",
+    "quote": "to obtain accurate dilution ratio data of the P-trak and Dusttrak"
+   },
+   {
+    "kind": "smoke",
+    "name": "M-pass",
+    "detail": "new GRC instrument replacing one of SAME's two diagnostic enclosures (DustTrak and ionization detector)",
+    "source_file": "PSI-101_Reports_SAME-R_Final Report.pdf",
+    "source_where": "p. 2",
+    "quote": "a new instrument, M-pass, developed in-house GRC, was used to replace one of the two Commercial Diagnostic Enclosures"
+   }
+  ],
   "hardware_group": {
    "id": "same",
    "label": "Smoke and soot hardware (SAME)",
@@ -3307,6 +3369,32 @@
   "fuel_class": null,
   "pillar": "detection",
   "page": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-102",
+  "sensors": [
+   {
+    "kind": "smoke",
+    "name": "P-Trak condensation nuclei counter",
+    "detail": "particle number (zeroth moment)",
+    "source_file": "PSI-102_Reports_SAME_Final Science Report.pdf",
+    "source_where": "p. 18",
+    "quote": "was measured using a condensation nuclei counter called the P-Trak"
+   },
+   {
+    "kind": "smoke",
+    "name": "Ionization detector",
+    "detail": "modified ionization chamber from a commercial smoke detector (first moment)",
+    "source_file": "PSI-102_Reports_SAME_Final Science Report.pdf",
+    "source_where": "p. 18",
+    "quote": "an ionization detector, which was a modified ionization chamber taken from a commercially- available smoke detector"
+   },
+   {
+    "kind": "smoke",
+    "name": "DustTrak",
+    "detail": "red-laser light scattering (third moment)",
+    "source_file": "PSI-102_Reports_SAME_Final Science Report.pdf",
+    "source_where": "p. 18",
+    "quote": "The instrument used to obtain the third moment is called a DustTrak"
+   }
+  ],
   "hardware_group": {
    "id": "same",
    "label": "Smoke and soot hardware (SAME)",
@@ -3462,6 +3550,32 @@
   "fuel_class": null,
   "pillar": null,
   "page": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-107",
+  "sensors": [
+   {
+    "kind": "camera",
+    "name": "Still camera (modified Nikon D100)",
+    "detail": "top view of the flame",
+    "source_file": "PSI-107_Reports_SPICE_FinalReport.pdf",
+    "source_where": "p. 15",
+    "quote": "The still camera, a modified Nikon D100 (Fig. 9), acquires flame images from the top window of the flow duct."
+   },
+   {
+    "kind": "camera",
+    "name": "Video camera (Panasonic WV-CP 654)",
+    "detail": "front view of the flame",
+    "source_file": "PSI-107_Reports_SPICE_FinalReport.pdf",
+    "source_where": "p. 15",
+    "quote": "The video camera, Panasonic WV-CP 654 (Fig. 10), is installed in front of the flow duct"
+   },
+   {
+    "kind": "radiometer",
+    "name": "Thermopile radiometer (Oriel Model 71768)",
+    "detail": "downstream, 90 degree view of the whole flame",
+    "source_file": "PSI-107_Reports_SPICE_FinalReport.pdf",
+    "source_where": "p. 11",
+    "quote": "A thermopile radiometer, Oriel Model 71768, is placed in the far right corner downstream of the duct."
+   }
+  ],
   "varied": [
    {
     "field": "airflow_cm_s",
