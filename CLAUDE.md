@@ -28,7 +28,12 @@ Audience: professors, students, aerospace researchers and engineers. Full notes:
 5. **Cited AI summaries.** Every statement links to a test row and the investigation DOI.
 6. **Habitat evidence map** (agreed 2026-11-14): the user uploads a floor plan, marks materials,
    liquids and gas points, and each mark is coloured by how much NASA evidence exists there. An
-   evidence map, not a fire simulation. Full spec and who builds what: **`docs/LAYOUT_PLAN.md`**.
+   evidence map, not a fire simulation: the evidence never depends on where a fire starts. Full
+   spec and who builds what: **`docs/LAYOUT_PLAN.md`**.
+7. **Illustrated spread** (agreed 2026-11-14): on the Simulation tab the user sets where a fire
+   starts and can play, pause and scrub a timeline that shows it reaching more objects in the
+   example layout. It is a drawing, not a model, and is bound by the rule "Spread is an
+   illustration, never a result" below.
 
 **Headline finding (reproduced by `scripts/build_web_data.py`):** of the tests whose tables record
 cabin-air oxygen and pressure, only **20** sit in Moon Base conditions (oxygen >= 30 %, pressure
@@ -54,6 +59,17 @@ say "not in the tables", never "never tested".
 - **`gemini_data/` is unverified.** Nothing from it reaches the app or an AI summary until workstream
   A has opened the cited source and confirmed the quote and value (`gemini_data/README.md`).
 - **A number shown without a source is a bug.** So is an unlabelled assumption.
+- **Spread is an illustration, never a result.** NASA's tables hold no spread rates between
+  objects, no room geometry and no partial-gravity data, so any spread we show is our own drawing.
+  It is allowed only on the Simulation tab and only within these limits:
+  - The order in which objects light comes only from distance in the example layout, and the screen
+    says so. It is never presented as what a real fire would do.
+  - The timeline counts steps. It never shows seconds, minutes, speeds or any other real unit.
+  - No number, ranking, outcome or "safe / destroyed" state is derived from the animation.
+  - Evidence does not move with it: colours, card lines, nearest tests and task answers are the
+    same wherever the fire starts and whatever step the timeline is on.
+  - This label stays on screen whenever spread is shown: "Illustration of spread, not a
+    prediction. NASA's tables do not model how fire spreads."
 - **Report every issue you find**, however small, with a proposed fix. Do not silently drop one.
 
 ## Out of scope
