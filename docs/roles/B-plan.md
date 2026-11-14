@@ -1,9 +1,9 @@
 # Workstream B - implementation plan
 
-**Status: steps 0 to 2 are merged. Step 3 is answered (C agreed). Step 4, the sample spacecraft, is
-built on branch `scene/sample-spacecraft` and waiting for B's human to review; it is not committed.
-Steps 5 onward are a DRAFT and not started. The team has agreed to fire spread with a timeline
-(option C in section 5); the shared documents still have to be changed to say so.**
+**Status: steps 0 to 2 are merged. Steps 4, 4a, 4b, 6 and 7 (the sample spacecraft, its marks file,
+the fire values, the cabin stage and its wiring) are built and in one pull request from
+`scene/sample-spacecraft`. Step 5 (the flame, spread and timeline) is a DRAFT and not started; the
+team has agreed to it (option C in section 5), but the shared documents still say nothing spreads.**
 Rewritten 2026-11-14 from `main` at `2e243fe` (C's Simulation tab merged).
 
 This is B's own working plan. The specs it follows are `CLAUDE.md`, `docs/roles/B-3d.md`,
@@ -25,6 +25,12 @@ Change log:
   behaviour to the stage: it was not implemented on any branch, so B added it (uncommitted). The
   cabin gained a furniture toggle with one sub-toggle per colour group. Branch brought up to
   `main` at `e2cd384`.
+- 2026-11-14 (f): at B's human's request the cabin was wired into the Simulation tab ahead of the
+  fire step, so steps 6 and 7 came before step 5. The fire in the cabin is still the plain glow
+  marker. Checked in the browser: the tab shows the spacecraft with evidence colours, a
+  double-click on an object or the deck places the fire and picks the object's material, Simulate
+  shows the results, and the idle view loads. Not checked: the uploaded-plan view, a phone, a
+  projector. Workstream A's validator does not check `example-spacecraft.json` yet.
 
 ---
 
@@ -88,9 +94,10 @@ left for B is what that stage looks like: the sample layout in 3D, and the fire 
 | Step | What | Branch | Depends on | Size |
 |---|---|---|---|---|
 | 3 | Agree the hand-over with C (and A if a layout file is needed) | none | - | **C agreed** (B's human, 2026-11-14) |
-| 4 | **Sample 3D spacecraft layout** | `scene/sample-spacecraft` | step 3 | **Built, in review** |
-| 4a | Pass oxygen, airflow and behaviour to the stage | `app/stage-fire-values` | C agreed | **Built, uncommitted** (C's and shared files) |
-| 4b | Example layout file for the sample's marks | `data/example-spacecraft` | A's go-ahead | Small (A's folder) |
+| 4 | **Sample 3D spacecraft layout** | `scene/sample-spacecraft` | step 3 | **Built, in the pull request** |
+| 4a | Pass oxygen, airflow and behaviour to the stage | same branch, own commit | C agreed | **Built, in the pull request** (C's and shared files) |
+| 4b | Example layout file for the sample's marks | same branch | A's folder, as B's human decided | **Built, in the pull request**; A's validator still to cover it |
+| 6, 7 | `CabinStage3D` and its wiring (done before step 5) | same branch | steps 4, 4a, 4b | **Built, in the pull request** |
 | 4c | Change the rule in the shared documents | `docs/illustrated-spread` | all three humans | Small (shared files) |
 | 5 | Fire in the cabin: start point, spread over time, timeline | `scene/cabin-fire` | steps 1, 4, 4a, 4c | Large |
 | 6 | `CabinStage3D`: the full stage (example and uploaded plan) | `scene/cabin-stage` | steps 4 and 5 | Medium |
