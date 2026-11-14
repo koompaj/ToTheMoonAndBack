@@ -158,6 +158,8 @@ function restingHeight(x: number, z: number) {
 
 export function CabinStage3D({ placeChosen, markColors, selectedMarkId, imageUrl, point, fuel, lit, onPick }: CabinStageProps) {
   const still = useReducedMotion()
+  const [labels, setLabels] = useState(true)
+  const [exterior, setExterior] = useState(false)
   const [furniture, setFurniture] = useState(true)
   const [off, setOff] = useState<ReadonlySet<string>>(new Set())
   const [planSize, setPlanSize] = useState<[number, number]>([PLAN.w, PLAN.d])
@@ -208,6 +210,8 @@ export function CabinStage3D({ placeChosen, markColors, selectedMarkId, imageUrl
             <Spacecraft
               markColors={Object.keys(markColors).length ? markColors : undefined}
               selectedMarkId={selectedMarkId}
+              showLabels={labels}
+              exterior={exterior}
               hiddenIds={hiddenIds}
               showFittings={showFittings}
               pickOn="doubleClick"
@@ -222,6 +226,12 @@ export function CabinStage3D({ placeChosen, markColors, selectedMarkId, imageUrl
 
       {placeChosen && !upload && (
         <div className="cabin-b-panel">
+          <label className="cabin-b-main">
+            <input type="checkbox" checked={labels} onChange={(e) => setLabels(e.target.checked)} /> Labels
+          </label>
+          <label className="cabin-b-main">
+            <input type="checkbox" checked={exterior} onChange={(e) => setExterior(e.target.checked)} /> Outside fittings
+          </label>
           <label className="cabin-b-main">
             <input type="checkbox" checked={furniture} onChange={(e) => setFurniture(e.target.checked)} /> Furniture
           </label>
