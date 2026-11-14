@@ -113,7 +113,7 @@ cd web && npm run build
 ```
 
 `npm run build` type-checks and builds. It must pass on `main` at all times.
-The data build ends by running `scripts/validate_data.py` (68 independent checks against the raw
+The data build ends by running `scripts/validate_data.py` (76 independent checks against the raw
 files); it stops on any failure. To run the checks alone:
 
 ```bash
@@ -152,6 +152,9 @@ python -I scripts/validate_data.py data web/public/data
   flames went out less often as oxygen rose (17 of 17 at 12-14 %, 0 of 9 at 34-36 %), and the trend
   holds within each fuel and at matched pressure. CFI-G shows no clear pattern. Show its caveats.
 - `gemini_data/`: Gemini's answers plus workstream A's check. The team no longer uses Gemini.
+- `fuels.json` + `web/src/data/layoutEvidence.ts` + `web/src/types/layout.ts`: the data side of the
+  habitat evidence map (18 tested fuel options, their evidence in every place, `markEvidence()`), and
+  an example layout in `web/public/layouts/`. See `docs/LAYOUT_PLAN.md` section 6.
 - All 22 tables are accounted for: 2,009 source rows = 1,753 tests + 247 in other tables + 9 left
   out (listed with reasons). Remaining source problems: `docs/DATA_ISSUES.md`.
 - The web app builds and shows: a stub 3D map, a stub flame, a habitat panel with live counts, and a

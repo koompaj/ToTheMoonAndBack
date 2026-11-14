@@ -3,7 +3,7 @@
 Found by inspecting all 22 downloaded tables (`python -I scripts/inspect_tables.py data`).
 The raw files in `data/` are left exactly as NASA published them. Every item below is handled in
 `scripts/build_web_data.py`, and `scripts/validate_data.py` checks each fix against the raw files
-(68 checks, run at the end of every build; the build stops if one fails).
+(76 checks, run at the end of every build; the build stops if one fails).
 
 What the pipeline did with every table and row is in `web/public/data/data_quality.json`; what each
 flag means is in its `flag_meanings`.

@@ -11,6 +11,8 @@ Writes to <out_dir>:
   data_quality.json     per table: rows read, rows used, rows left out and why; flag meanings;
                         distinct-test count
   outcomes.json         "will it go out" analysis (written by outcome_analysis.py, run from here)
+  fuels.json            the fuels a user can pick on the habitat evidence map, with their evidence in
+                        every habitat (docs/LAYOUT_PLAN.md)
 
 Usage:  python -I build_web_data.py <data_dir> <out_dir>
 """
@@ -22,7 +24,8 @@ import re
 import sys
 
 PSI_PAGE = "https://psi.nasa.gov/physci/repo/data/investigations/"
-PSI_TO_ATM = 1 / 14.696
+PSI_PER_ATM = 14.696
+PSI_TO_ATM = 1 / PSI_PER_ATM
 MOON_MIN_O2 = 0.30
 MOON_MAX_P_ATM = round(10.2 * PSI_TO_ATM, 4)
 
@@ -640,6 +643,96 @@ def build_habitats():
     ]
 
 
+# ---- habitat evidence map (docs/LAYOUT_PLAN.md) ------------------------------------------------
+# Fuel options a user can pick for a mark, matched on whole words so "methane" is never "ethane".
+GAS_FUELS = [(r"\bpropylene\b", "Propylene"), (r"\bethylene\b|\bc2h4\b", "Ethylene"), (r"\bmethane\b|\bch4\b", "Methane"),
+             (r"\bethane\b|\bc2h6\b", "Ethane"), (r"\bpropane\b|\bc3h8\b", "Propane"), (r"\bbutane\b", "Butane")]
+DROPLET_FUELS = [(r"\bheptane\b", "Heptane"), (r"\bmethanol\b", "Methanol"),
+                 (r"\bc12h26\b|dodecane", "Dodecane (n- and iso- mixes)")]
+
+
+def slug(s):
+    return re.sub(r"[^a-z0-9]+", "-", s.lower()).strip("-")
+
+
+def fuel_option_name(t):
+    if t["fuel_class"] == "solid":
+        return t["fuel_material"]
+    table = GAS_FUELS if t["fuel_class"] == "gas" else DROPLET_FUELS
+    return next((name for pat, name in table if re.search(pat, (t["fuel"] or "").lower())), None)
+
+
+def build_fuels(tests, habitats):
+    """One entry per fuel a user can pick on the layout, with its evidence in every habitat.
+    Distinct tests only (rows flagged duplicate_row are left out)."""
+    groups = {}
+    for t in tests:
+        if any(f.startswith("duplicate_row") for f in t["flags"]):
+            continue
+        name = fuel_option_name(t)
+        if name:
+            groups.setdefault((t["fuel_class"], name), []).append(t)
+
+    def rng(vals):
+        return [min(vals), max(vals)] if vals else None
+
+    out = []
+    for (cls, name), ts in sorted(groups.items(), key=lambda kv: (["solid", "droplet", "gas"].index(kv[0][0]), -len(kv[1]))):
+        amb = [t for t in ts if t["o2_basis"] == "ambient"]
+        placed = [t for t in amb if t["o2_fraction"] is not None and t["pressure_atm"] is not None]
+        air = [t for t in ts if t["airflow_cm_s"] is not None and "airflow_negative_in_source" not in t["flags"]]
+        endings = {}
+        for t in ts:
+            if t["outcome"]:
+                endings[t["outcome"]] = endings.get(t["outcome"], 0) + 1
+        inside, nearest = {}, {}
+        for h in habitats:
+            (o0, o1), (p0, p1) = h["o2_fraction"], h["pressure_atm"]
+            inside[h["id"]] = [t["id"] for t in placed if o0 <= t["o2_fraction"] <= o1 and p0 <= t["pressure_atm"] <= p1]
+            if inside[h["id"]]:
+                nearest[h["id"]] = None
+                continue
+            # Same rule as the rest of the app: 1 percentage point of oxygen counts the same as 1 psi.
+            def gap(t, oxygen_only):
+                o = t["o2_fraction"]
+                d_o2 = (o0 - o if o < o0 else o - o1 if o > o1 else 0) * 100
+                if oxygen_only:
+                    return d_o2, 0.0
+                p = t["pressure_atm"]
+                d_p = (p0 - p if p < p0 else p - p1 if p > p1 else 0) * PSI_PER_ATM
+                return d_o2, d_p
+            pool, oxygen_only = (placed, False) if placed else ([t for t in amb if t["o2_fraction"] is not None], True)
+            if not pool:
+                nearest[h["id"]] = None
+                continue
+            best = min(pool, key=lambda t: (sum(x * x for x in gap(t, oxygen_only)), t["id"]))
+            d_o2, d_p = gap(best, oxygen_only)
+            nearest[h["id"]] = {"test_id": best["id"], "o2_points": round(d_o2, 2), "psi_gap": round(d_p, 2),
+                                "oxygen_only": oxygen_only}
+        note = []
+        if not [t for t in amb if t["o2_fraction"] is not None]:
+            note.append("Oxygen is not in these tables.")
+        if not [t for t in ts if t["pressure_atm"] is not None]:
+            note.append("Pressure is not in these tables.")
+        out.append({
+            "id": f"{cls}:{slug(name)}", "fuel_class": cls, "name": name,
+            "test_ids": [t["id"] for t in ts], "test_count": len(ts),
+            "investigations": sorted({t["investigation"] for t in ts}, key=lambda a: int(a.split("-")[1])),
+            "acronyms": sorted({t["acronym"] for t in ts}),
+            "o2_range": rng([t["o2_fraction"] for t in amb if t["o2_fraction"] is not None]),
+            "pressure_psi_range": (lambda r: None if r is None else [round(r[0] * PSI_PER_ATM, 2), round(r[1] * PSI_PER_ATM, 2)])(
+                rng([t["pressure_atm"] for t in ts if t["pressure_atm"] is not None])),
+            "airflow_range": rng([t["airflow_cm_s"] for t in air]),
+            "airflow_test_count": len(air),
+            "still_air_test_count": sum(1 for t in air if t["airflow_cm_s"] == 0),
+            "endings": dict(sorted(endings.items(), key=lambda kv: -kv[1])),
+            "inside_by_habitat": inside,
+            "nearest_by_habitat": nearest,
+            "note": " ".join(note) or None,
+        })
+    return out
+
+
 def main():
     data, out = os.path.abspath(sys.argv[1]), os.path.abspath(sys.argv[2])
     os.makedirs(out, exist_ok=True)
@@ -648,6 +741,7 @@ def main():
     other = build_other_tables(data, b)
     inv = build_investigations(data, b.table_use)
     hab = build_habitats()
+    fuels = build_fuels(tests, hab)
 
     flag_counts = {}
     for t in tests:
@@ -660,7 +754,7 @@ def main():
                "source_problems": "docs/DATA_ISSUES.md"}
 
     for name, obj in (("investigations.json", inv), ("tests.json", tests), ("other_tables.json", other),
-                      ("habitats.json", hab), ("data_quality.json", quality)):
+                      ("habitats.json", hab), ("data_quality.json", quality), ("fuels.json", fuels)):
         with open(os.path.join(out, name), "w", encoding="utf-8") as f:
             json.dump(obj, f, ensure_ascii=False, indent=1)
         n = len(obj) if isinstance(obj, list) else len(obj["tables"])
