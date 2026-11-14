@@ -11,6 +11,7 @@ Writes to <out_dir>:
   data_quality.json     per table: rows read, rows used, rows left out and why; flag meanings;
                         distinct-test count
   outcomes.json         "will it go out" analysis (written by outcome_analysis.py, run from here)
+  gaps.json             per pillar, what the tests cover and what is not in the tables (gaps_analysis.py)
   fuels.json            the fuels a user can pick on the habitat evidence map, with their evidence in
                         every habitat (docs/LAYOUT_PLAN.md)
 
@@ -1100,6 +1101,8 @@ def main():
     import subprocess
     here = os.path.dirname(os.path.abspath(__file__))
     subprocess.run([sys.executable, "-I", os.path.join(here, "outcome_analysis.py"), out], check=True)
+    # What each pillar's tests cover and what is not in the tables (item 8), from the files written above.
+    subprocess.run([sys.executable, "-I", os.path.join(here, "gaps_analysis.py"), out], check=True)
     # Independent checks of everything above against the raw files; a failure stops the build.
     print("\nvalidation")
     sys.stdout.flush()

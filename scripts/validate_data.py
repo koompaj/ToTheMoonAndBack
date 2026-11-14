@@ -566,6 +566,92 @@ def main():
                     missing.append(f"{s['investigation']} {s['name']} ({s['source_where']}, found on {on})")
         check("every sensor quote is on the page given, and every sensor-log column and unit is in NASA's file (data_extra)", not missing, "; ".join(missing[:4]))
 
+    # ---- item 8: gaps by pillar (recomputed here from tests.json, not from gaps_analysis.py) ----
+    G = load("gaps.json")
+    ids = {t["id"]: t for t in T}
+    uniq = [t for t in T if not any(f.startswith("duplicate_row") for f in t["flags"])]
+    pil = {p: {i["accession"] for i in INV if i["pillar"] == p} for p in ("prevention", "detection", "suppression")}
+    P = {g["pillar"]: g for g in G["pillars"]}
+    allst = [(p, k, st) for p, g in P.items() for k in ("tested", "not_in_tables") for st in g[k]]
+    bad = [st["text"][:50] for p, k, st in allst
+           if not st["text"] or "never tested" in st["text"].lower()
+           or any(x not in ids or ids[x]["o2_basis"] != "ambient" or any(f.startswith("duplicate_row") for f in ids[x]["flags"]) for x in st["test_ids"])
+           or not {ids[x]["investigation"] for x in st["test_ids"] if x in ids} <= set(st["investigations"])
+           or not set(st["investigations"]) <= pil[p] or not st["investigations"]]
+    check("gaps.json: three pillars, every statement cites only cabin-air, non-duplicate tests of its own pillar's investigations, never says 'never tested'",
+          list(P) == ["prevention", "detection", "suppression"] and not bad and len(G["caveats"]) >= 4
+          and any("Saffire-IV to VI" in c for c in G["caveats"]) and any("summaries" in c for c in G["caveats"]), "; ".join(bad[:3]))
+
+    def find(p, k, start):
+        hits = [st for st in P[p][k] if st["text"].startswith(start)]
+        return hits[0] if len(hits) == 1 else None
+
+    def box(t, h):
+        return (t["o2_basis"] == "ambient" and t["o2_fraction"] is not None and t["pressure_atm"] is not None
+                and h["o2_fraction"][0] <= t["o2_fraction"] <= h["o2_fraction"][1] and h["pressure_atm"][0] <= t["pressure_atm"] <= h["pressure_atm"][1])
+    errs = []
+    # prevention
+    sol = [t for t in uniq if t["investigation"] in pil["prevention"]]
+    o2v = [t for t in sol if t["o2_fraction"] is not None]
+    hi = max(t["o2_fraction"] for t in o2v)
+    st = find("prevention", "tested", f"{len(sol)} solid-material tests")
+    if not st or set(st["test_ids"]) != {t["id"] for t in sol} or any(t["fuel_class"] != "solid" for t in sol):
+        errs.append("solid count")
+    st = find("prevention", "tested", f"{len(o2v)} of them record a cabin oxygen value, from {min(t['o2_fraction'] for t in o2v) * 100:.1f}".rstrip("0").rstrip("."))
+    if not st or f"to {hi * 100:.1f} %" not in st["text"]:
+        errs.append("solid oxygen")
+    st = find("prevention", "not_in_tables", "No solid-material test in the tables reaches 30 % oxygen (highest: BASS-II 22.2 %")
+    top = {t["id"] for t in o2v if t["o2_fraction"] == hi}
+    if not st or hi >= 0.30 or abs(hi - 0.222) > 1e-9 or not top <= set(st["test_ids"]) or {ids[x]["investigation"] for x in top} != {"PSI-25"}:
+        errs.append("30 % statement")
+    wp = [t for t in sol if t["pressure_atm"] is not None]
+    rp = [t for t in sol if t["pressure_atm"] is None and t["pressure_atm_min"] is not None]
+    st = find("prevention", "not_in_tables", f"Only {len(wp)} of {len(sol)} solid-material tests have a single pressure")
+    if not st or f"{len(rp)} more have only a range, and the other {len(sol) - len(wp) - len(rp)} none" not in st["text"] or (len(wp), len(rp)) != (29, 26):
+        errs.append("solid pressure counts")
+    floor = min([t["pressure_atm"] for t in wp] + [t["pressure_atm_min"] for t in rp])
+    st = find("prevention", "not_in_tables", "No solid-material test with a pressure")
+    if not st or f"below {floor * PSI:.2f} psi" not in st["text"] or floor >= 1.0:
+        errs.append("solid pressure floor")
+    st = find("prevention", "tested", "156 state the sample's shape")
+    if not st or len([t for t in sol if t.get("fuel_shape")]) != 156:
+        errs.append("shapes")
+    for p_, what, ts in (("prevention", "solid-material", sol), ("suppression", "droplet", [t for t in uniq if t["investigation"] in pil["suppression"]])):
+        for h in H:
+            ins = {t["id"] for t in ts if box(t, h)}
+            st = find(p_, "tested", f"{len(ins)} {what} tests sit in {h['name']} air") if ins else find(p_, "not_in_tables", f"No {what} test in the tables sits in {h['name']} air")
+            if not st or set(st["test_ids"]) != ins:
+                errs.append(f"{p_} {h['id']}")
+    # suppression: recount FLEX endings by oxygen band straight from the test rows
+    fl = [t for t in uniq if t["investigation"] in pil["suppression"]]
+    def band(lo):
+        g = [t for t in fl if t["o2_fraction"] is not None and lo - 1e-9 <= t["o2_fraction"] < lo + 0.02 - 1e-9 and t["outcome"]]
+        return sum(t["outcome"] == "extinction" for t in g), len(g), {t["id"] for t in g}
+    a, b, ia = band(0.12)
+    c, d, ic = band(0.34)
+    st = find("suppression", "tested", f"FLEX flames went out in {a} of {b} tests at 12-14 % oxygen and in {c} of {d} at 34-36 %")
+    if not st or set(st["test_ids"]) != ia | ic or (a, b, c, d) != (17, 17, 0, 9):
+        errs.append("FLEX outcome")
+    st = find("suppression", "tested", f"{len(fl)} droplet tests from FLEX")
+    if not st or f"oxygen {min(t['o2_fraction'] for t in fl if t['o2_fraction']) * 100:g} % to {max(t['o2_fraction'] for t in fl if t['o2_fraction']) * 100:g} %" not in st["text"]:
+        errs.append("FLEX range")
+    co2 = [t for t in fl if t["co2_fraction"]]
+    he = [t for t in fl if t["he_fraction"]]
+    st = find("suppression", "tested", f"{len(co2)} ran with carbon dioxide")
+    if not st or f"{len(he)} with helium" not in st["text"]:
+        errs.append("FLEX added gas")
+    # detection: no burn rows; smoke-table row counts
+    det = [t for t in T if t["investigation"] in pil["detection"]]
+    smoke = {o["acronym"]: len(o["rows"]) for o in O if o["investigation"] in pil["detection"]}
+    st = find("detection", "tested", "Smoke tests from")
+    if det or not st or not all(f"{k} {v} rows" in st["text"] for k, v in smoke.items()) or smoke != {"SAME": 8, "SAME-R": 109}:
+        errs.append("detection")
+    # gravity
+    if {t["gravity_g"] for t in T} == {0.0} and not all(find(p_, "not_in_tables", f"Every {p_} test in the tables ran in microgravity") for p_ in ("prevention", "suppression")):
+        errs.append("gravity")
+    check("every gaps.json number recounts from tests.json, habitats.json and other_tables.json (solid 263, 22.2 % top, 29 + 26 pressures, FLEX 17/17 and 0/9, place counts, SAME rows)",
+          not errs, ", ".join(errs))
+
     # ---- report ------------------------------------------------------------------------------
     for name, ok, detail in results:
         print(f"{'PASS' if ok else 'FAIL'}  {name}{'' if ok or not detail else '  -> ' + detail}")
