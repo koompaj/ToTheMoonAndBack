@@ -46,8 +46,12 @@ Checked by script: with every setting at "no effect" the order is identical what
 conditions; airflow at 80 % and 50 cm/s moves downstream items earlier and upstream ones last;
 airflow effect with 0 cm/s changes nothing; oxygen at 100 % and 34 % gives 1.62 items a step (7
 steps for 11 items). Checked in the browser: the panel, the rule text, the added label, and the
-cloud leaning downstream. Not checked: gravity and pressure in the browser, a phone, a projector,
-frame rate with the wider region the cloud is now drawn in.
+cloud leaning downstream. Also checked in the browser, in NASA's Moon Base air (34 % oxygen,
+8.2 psi) at Earth gravity: the gravity effect at 80 % lifts the cloud to the ceiling at the same
+step and leaves the number of steps at 11; the pressure effect at 100 % gives 0.56 items a step
+and 20 steps; with the oxygen effect also at 100 % the two multiply to 13 steps; setting all back
+to zero restores 11 steps and the original label. Not checked: a phone, a projector, frame rate
+with the wider region the cloud is now drawn in.
 
 Notes from the merges: pull requests 20, 21 and 23 were merged by B's human's request with no
 review or comment from A or C on any of them.
