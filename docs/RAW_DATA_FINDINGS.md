@@ -178,3 +178,33 @@ group them by `name`. The other investigations' sensor files are still downloadi
   "BASS Test Matrix", row 1, holds what look like account names and passwords next to a note on the
   video clock. They are not copied here. Proposed fix: tell NASA PSI (the file is public), and never
   quote that cell in the app or the docs.
+
+## Recommended next steps
+
+1. **BASS (F1), the main item:** A opens `PSI-26_Science Documents_As Run_Test Matrix.xlsx`, checks
+   a sample of cells against the candidates (for example AA4/AB4 for row 1, AA12/AB12 for row 9 and
+   one vitiated row such as AA89), and the team decides:
+   - whether a value logged per session counts as a test's condition;
+   - how to label the 26 nitrogen-diluted (calculated) oxygen values;
+   - whether to treat pressure as cabin air, given the "ISS environment" heading.
+   If it is agreed, add the facts to `solid_conditions.json` (with `pressure_source` naming the cell)
+   and let `build_web_data.py` and `validate_data.py` apply and check them. Placed tests would go from
+   775 to 896, and ISS / Earth from 171 to 209. Moon Base counts would not change.
+2. **Credentials cell (Other things noticed):** tell NASA PSI; never quote it.
+3. **Saffire-III pressure (F5):** line up the Cygnus EPS and Saffire logs by time before showing ranges.
+4. **SPICE (F3):** read `Spice Flight Test Data II modified.xls` with a proper .xls (BIFF) reader. It
+   is an old binary file, and only its text runs were read here. Its "Pressure" column is probably the
+   same 101325 Pa constant, but that is not confirmed.
+5. **BASS-II's 78 tests:** no pressure anywhere in PSI. The researchers' papers listed in the ReadMe
+   (for example Olson and Ferkul, Combustion and Flame 180, 2017) are the next place to look. They
+   are outside PSI, so use them only with a citation and a check.
+6. **Sensors (F6):** C can show the Saffire and BASS lists now. Group repeated channels by name.
+
+## Left to do (when this run stopped)
+
+- The bulk per-test files (ACME, CFI, SAME, SAME-R, DAFT) were still downloading, and their
+  summaries and sensor lists were not yet searched. Re-run:
+  `python -I scripts/fetch_psi_raw.py data data_extra` (it skips finished files), then
+  `python -I scripts/summarize_raw.py data_extra` and `python -I scripts/extract_sensors.py data_extra data_sourced/raw_candidates.json`.
+- Priority 4 (partial gravity, conditions that contradict the tables, new tests) was searched only
+  in the BASS, BASS-II, Saffire and SPICE files.
