@@ -2,6 +2,9 @@
 
 You own the words, the ranking and the overall product. Read `CLAUDE.md` first.
 
+**New (2026-11-14): the habitat evidence map.** Your part is `docs/LAYOUT_PLAN.md` section 7, workstream C:
+`web/src/panels/LayoutView.tsx`, the upload, the mark panel, the evidence cards and the report.
+
 ## You own
 
 `web/src/panels/`, `web/src/ai/`, `web/public/ai/`, `ai/` (offline AI scripts),

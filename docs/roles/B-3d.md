@@ -2,6 +2,9 @@
 
 You own what people see first. Read `CLAUDE.md` first.
 
+**New (2026-11-14): the habitat evidence map.** Your part is `docs/LAYOUT_PLAN.md` section 7, workstream B:
+`web/src/scene/LayoutCanvas.tsx`. It comes after `FireModel3D` from `docs/PLAN.md`, which it reuses.
+
 ## You own
 
 `web/src/scene/` only.
