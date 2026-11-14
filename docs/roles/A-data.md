@@ -2,6 +2,9 @@
 
 You own the truth of every number in the app. Read `CLAUDE.md` first.
 
+**New (2026-11-14): the habitat evidence map.** Your part is `docs/LAYOUT_PLAN.md` section 7, workstream A:
+`fuels.json`, `layout.ts`, `layoutEvidence.ts`, the example layout and their checks. Do it first.
+
 ## You own
 
 `data/` (read-only raw files), `scripts/`, `web/public/data/`, `web/src/data/`, `docs/DATA_ISSUES.md`,

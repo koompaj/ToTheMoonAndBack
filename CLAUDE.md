@@ -26,6 +26,9 @@ Audience: professors, students, aerospace researchers and engineers. Full notes:
 4. **Untapped-data ranking.** Investigations scored by fire-safety relevance against how little they
    have been studied, with an AI-drafted research question.
 5. **Cited AI summaries.** Every statement links to a test row and the investigation DOI.
+6. **Habitat evidence map** (agreed 2026-11-14): the user uploads a floor plan, marks materials,
+   liquids and gas points, and each mark is coloured by how much NASA evidence exists there. An
+   evidence map, not a fire simulation. Full spec and who builds what: **`docs/LAYOUT_PLAN.md`**.
 
 **Headline finding (reproduced by `scripts/build_web_data.py`):** of the tests whose tables record
 cabin-air oxygen and pressure, only **20** sit in Moon Base conditions (oxygen >= 30 %, pressure
