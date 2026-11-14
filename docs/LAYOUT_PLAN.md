@@ -15,7 +15,8 @@ It is an **evidence map, not a fire simulation.** The evidence for a mark never 
 mark or on where a fire starts. The 3D fire on a mark is an illustration, labelled as one.
 
 Changed 2026-11-14: the Simulation tab may also play an **illustrated spread** from the fire point
-to other marks, with a timeline. It is a drawing, not a model, and is bound by section 8.
+to other marks, with a timeline. The user may set the cabin's conditions and how strongly each one
+changes the drawing. It is a drawing, not a model, and is bound by section 8.
 
 ## 2. The user journey
 
@@ -269,20 +270,29 @@ Done when: the journey in section 2 works end to end on the example layout and o
 - The fire is "Illustration, not a simulation", visible whenever it is on screen.
 - **Illustrated spread (agreed 2026-11-14)** is allowed on the Simulation tab within these limits
   (the same as `CLAUDE.md`, "Spread is an illustration, never a result"):
-  - the order in which marks light comes only from distance in the example layout, and the screen
-    says so;
+  - the order in which marks light comes from two things only, and the screen says so: distance
+    through the example layout (along its deck and through its doorways), and settings the user
+    can see and change on that screen;
+  - no hidden rates: a value with a source shows it; a value without one (how strongly oxygen,
+    pressure, airflow or gravity changes the drawing) is the user's to set, is labelled "your
+    assumption, not NASA data" and starts at "no effect", where the order is distance alone;
+  - the shape of each effect is our own, is written in plain words beside its setting, and is
+    never called physics, a model or a NASA finding;
   - the timeline counts steps, never seconds, minutes or speeds;
   - no number, ranking, outcome or "safe / destroyed" state is derived from it;
-  - evidence, colours and task answers do not change with it;
+  - evidence, colours and task answers do not change with the spread or its effect settings;
   - the label "Illustration of spread, not a prediction. NASA's tables do not model how fire
-    spreads." stays on screen whenever it is shown.
+    spreads." stays on screen whenever it is shown and, when any effect setting is above "no
+    effect", is followed by "It follows the settings you chose, which are your assumptions, not
+    NASA data."
 - The uploaded image stays in the browser and is not saved in the layout file.
 - Inverse-flame tests never count toward a place (as everywhere else).
 
 ## 9. Out of scope
 
 - A physical model of fire spread: rates, times, heat transfer, or any prediction of what burns
-  next or how fast. (An illustrated spread is allowed: section 8.)
+  next or how fast. (An illustrated spread, with effect strengths the user sets, is allowed:
+  section 8.)
 - Detecting materials or objects from the image.
 - Partial gravity (PSI has none; the data is ready for it: `gravity_g` and `testsInHabitatAndGravity()`), and
   pressure for most solid materials (only 29 BASS-II tests have one, from NASA's report).

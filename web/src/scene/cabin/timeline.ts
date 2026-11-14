@@ -43,9 +43,11 @@ export function distanceToItem(item: CabinItem, x: number, z: number) {
   return Math.hypot(dx, dz)
 }
 
-/** Fuel items in the order the illustration lights them, starting from a point on the deck. */
-export function planSpread(x: number, z: number, hiddenIds?: ReadonlySet<string>): SpreadPlan {
-  const ranked = ITEMS.filter((i) => i.fuel && !hiddenIds?.has(i.id))
+/** Fuel items in the order the illustration lights them, starting from a point on the deck.
+ *  Every fuel item is in the order whether or not it is shown: hiding furniture is a choice about
+ *  the view, not about where the fire goes. */
+export function planSpread(x: number, z: number): SpreadPlan {
+  const ranked = ITEMS.filter((i) => i.fuel)
     .map((item) => ({ item, distance: distanceToItem(item, x, z) }))
     .sort((a, b) => a.distance - b.distance) // stable: equal distances keep the layout's order
   let step = 0

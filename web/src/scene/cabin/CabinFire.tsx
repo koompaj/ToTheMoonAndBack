@@ -33,8 +33,8 @@ export interface SpreadClock {
  *  of anything real, and never shown. */
 const SECONDS_PER_STEP = 1.3
 
-/** "Near a Vent" names no air speed. This only sets how far the drawn flame leans (the fire
- *  page's slider tops out at 50). */
+/** Used only when the page gives "near a vent" without a speed: how far the drawn flame leans
+ *  (the airflow slider tops out at 50). */
 const VENT_LEAN = 25
 
 const GLOW = '#ff7a2f'
@@ -102,22 +102,24 @@ export interface CabinFireProps {
   /** Which items light, and at which step. Empty on an uploaded plan. */
   plan: SpreadPlan
   clock: MutableRefObject<SpreadClock>
-  /** Draw the coloured slices that show how far the spread has reached. */
+  /** Draw the coloured cloud that shows how far the spread has reached. */
   field: boolean
+  /** Items the user has hidden. They stay in the order, but no glow or flame is drawn on them. */
+  hiddenIds?: ReadonlySet<string>
   /** Called a few times a second with the timeline position, for the controls. */
   onShow: (t: number) => void
   /** Called once when the timeline reaches its last step. */
   onEnd: () => void
 }
 
-export function CabinFire({ position, fuel, fire, plan, clock, field, onShow, onEnd }: CabinFireProps) {
+export function CabinFire({ position, fuel, fire, plan, clock, field, hiddenIds, onShow, onEnd }: CabinFireProps) {
   const still = useReducedMotion()
   const params: FireParams = {
     fuel,
     o2Fraction: fire?.o2Fraction ?? 0.21,
     pressureAtm: fire?.pressureAtm ?? 1,
-    airflowCmS: fire?.airflow === 'vent' ? VENT_LEAN : 0,
-    gravity: 0, // every PSI test ran in microgravity
+    airflowCmS: fire?.airflowCmS ?? (fire?.airflow === 'vent' ? VENT_LEAN : 0),
+    gravity: fire?.gravity ?? 0, // 0 unless the user set it: every PSI test ran in microgravity
   }
   const behaviour: ExpectedBehaviour = fire?.behaviour ?? 'unknown'
   // Where the fire starts, the flame follows what the nearest real tests of that material did.
@@ -174,7 +176,9 @@ export function CabinFire({ position, fuel, fire, plan, clock, field, onShow, on
         <Label text="Fire starts here · illustration" position={[0, 1.35, 0]} color="#ffd9a0" height={0.32} />
       </group>
       {field && plan.entries.length > 0 && <ReachField start={position} plan={plan} clock={clock} still={still} />}
-      {plan.entries.map((entry) => (
+      {plan.entries
+        .filter((entry) => !hiddenIds?.has(entry.item.id))
+        .map((entry) => (
         <ItemBurn key={entry.item.id} entry={entry} from={position} clock={clock} state={reach} />
       ))}
     </group>

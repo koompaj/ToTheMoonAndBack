@@ -18,7 +18,7 @@ import { Label } from './Label'
 import { useReducedMotion } from './fire/state'
 import { CabinFire, type SpreadClock } from './cabin/CabinFire'
 import { Spacecraft } from './cabin/Spacecraft'
-import { NothingToReach, TimelineBar } from './cabin/TimelineBar'
+import { TimelineBar } from './cabin/TimelineBar'
 import { groupItems, hiddenFor } from './cabin/groups'
 import { HOLO, Segs } from './cabin/holo'
 import { ITEMS, PLAN, deckHalfWidth } from './cabin/spec'
@@ -174,9 +174,10 @@ export function CabinStage3D({ placeChosen, markColors, selectedMarkId, imageUrl
   )
 
   // ---- illustrated spread: which fuel items light, in what order, and the timeline that plays it.
-  // The order comes only from distance in this example layout (cabin/timeline.ts). An uploaded plan
-  // has no items, so there is nothing to reach and no timeline.
-  const plan = useMemo(() => (fireAt && lit && !upload ? planSpread(fireAt[0], fireAt[2], hiddenIds) : NO_SPREAD), [fireAt, lit, upload, hiddenIds])
+  // The order comes only from distance in this example layout (cabin/timeline.ts), and it does not
+  // depend on which furniture is shown. An uploaded plan has no items, so there is nothing to reach
+  // and no timeline.
+  const plan = useMemo(() => (fireAt && lit && !upload ? planSpread(fireAt[0], fireAt[2]) : NO_SPREAD), [fireAt, lit, upload])
   const clock = useRef<SpreadClock>({ t: 0, playing: false, rate: 1, shown: 0 })
   const [shownT, setShownT] = useState(0)
   const [playing, setPlaying] = useState(false)
@@ -189,14 +190,6 @@ export function CabinStage3D({ placeChosen, markColors, selectedMarkId, imageUrl
     setShownT(0)
     setPlaying(c.playing)
   }, [lit, fireX, fireZ, still])
-  // Hiding a group shortens the plan: never sit past its end.
-  useEffect(() => {
-    const c = clock.current
-    if (c.t > plan.steps) {
-      c.t = c.shown = plan.steps
-      setShownT(plan.steps)
-    }
-  }, [plan.steps])
   const togglePlay = () => {
     const c = clock.current
     if (!c.playing && c.t >= plan.steps) c.t = c.shown = 0
@@ -245,7 +238,7 @@ export function CabinStage3D({ placeChosen, markColors, selectedMarkId, imageUrl
         )}
         {placeChosen && fireAt && !lit && <FireMarker position={fireAt} />}
         {placeChosen && fireAt && lit && (
-          <CabinFire position={fireAt} fuel={fuel} fire={fire} plan={plan} clock={clock} field={field} onShow={setShownT} onEnd={() => setPlaying(false)} />
+          <CabinFire position={fireAt} fuel={fuel} fire={fire} plan={plan} clock={clock} field={field} hiddenIds={hiddenIds} onShow={setShownT} onEnd={() => setPlaying(false)} />
         )}
         <OrbitControls target={[0, 0.8, 0]} enablePan={false} autoRotate={!placeChosen && !still} autoRotateSpeed={0.5} minDistance={5} maxDistance={40} maxPolarAngle={Math.PI * 0.49} />
       </Canvas>
@@ -274,7 +267,6 @@ export function CabinStage3D({ placeChosen, markColors, selectedMarkId, imageUrl
         </div>
       )}
       {placeChosen && lit && plan.steps > 0 && <TimelineBar t={shownT} steps={plan.steps} playing={playing} rate={rate} onPlay={togglePlay} onRate={changeRate} onScrub={scrub} field={field} />}
-      {placeChosen && lit && !upload && plan.steps === 0 && <NothingToReach />}
       {placeChosen && upload && <div className="cabin-b-tag" style={{ color: HOLO }}>Double-click your plan to place the fire</div>}
     </div>
   )

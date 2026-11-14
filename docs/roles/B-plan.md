@@ -1,8 +1,26 @@
 # Workstream B - implementation plan
 
-**Status: steps 0 to 4c, 6 and 7 are merged (pull requests 7, 9, 12 and 13). Step 5 (the flame,
-the illustrated spread and the timeline bar) is built on branch `scene/cabin-fire` and waiting for
-B's human to review; it is not committed. Step 8 (polish and housekeeping) is not started.**
+**Status: steps 0 to 7 are merged (pull requests 7, 9, 12, 13 and 14). Step 9 was approved by B's
+human on 2026-11-14. Parts 9b and 9c (the Cabin Conditions panel and place matching) are built on
+branch `app/cabin-conditions`, uncommitted, waiting for review. Parts 9a, 9d, 9e and 9f are not
+started; 9d and 9e wait for the team to agree the rule change (9a). Step 8 is not started.**
+
+Built for 9b and 9c: `web/src/data/placeMatch.ts` (A's folder), the panel in C's
+`SimulationView.tsx` and `styles.css`, two optional fields on `StageFire` in the shared
+`types/sim.ts` (airflow speed and gravity), and `cabin/CabinFire.tsx` reading them. Checked in the
+browser: a place fills in its air; typed and slider values move together; values inside a place
+name it (and say which one the evidence is for when several match); values outside every place
+show the warning, switch the evidence colours off and list the nearest tests with distances; the
+stage receives all four conditions. `npm run build` and A's 79 data checks pass. Differences from
+the draft below: the airflow value is in the URL as `flow` (the old `air` key meant still/vent);
+the place list reads "Custom values" once the sliders leave the picked place; task cards for
+values outside every place use the values themselves (answering Q12). Not checked: a phone, the
+uploaded plan, old links that carry `air=vent`.
+
+Also on this branch, a fix to step 5 found by B's human: hiding furniture no longer removes items
+from the spread. Every fuel item stays in the order whether or not it is shown; a hidden item gets
+no glow or flame, and the cloud and timeline carry on. (Before, hiding all furniture left only the
+start flame, and for a while a "nothing to reach" note.)
 Rewritten 2026-11-14 from `main` at `2e243fe` (C's Simulation tab merged).
 
 This is B's own working plan. The specs it follows are `CLAUDE.md`, `docs/roles/B-3d.md`,
@@ -53,6 +71,12 @@ Change log:
   The edge sits where `timeline.ts` says the spread has reached; the ragged texture is decoration.
   Measured on B's machine at full reach: no drop in frame rate with the cloud on. Not measured on
   a weaker laptop.
+- 2026-11-14 (i): pull request 14 (step 5) merged. Workstream A has since added sourced pressure
+  for 55 solid tests (29 now placed) and a validator check for `example-spacecraft.json`.
+  B's human found that every run looks alike, because the spread depends only on the start point
+  and the layout, and asked for a spread that reacts to oxygen, pressure, airflow and gravity, set
+  by the user, with the room's geometry counted. Drafted as step 9 below. B's human has permission
+  from A and C to edit their files for it.
   It has no scale and no units, and the bar carries a key: "Colour is distance from the start in
   this drawing. It is not heat, smoke or air speed." A "Spread colours" checkbox turns it off. When
   every fuel item is hidden the bar now says there is nothing for the fire to reach.
@@ -126,7 +150,8 @@ left for B is what that stage looks like: the sample layout in 3D, and the fire 
 | 4b | Example layout file for the sample's marks | same branch | A's folder, as B's human decided | **Built, in the pull request**; A's validator still to cover it |
 | 6, 7 | `CabinStage3D` and its wiring (done before step 5) | same branch | steps 4, 4a, 4b | **Built, in the pull request** |
 | 4c | Change the rule in the shared documents | `docs/illustrated-spread` | all three humans | **Merged** (pull request 13) |
-| 5 | Fire in the cabin: start point, spread over time, timeline | `scene/cabin-fire` | steps 1, 4, 4a, 4c | **Built, in review, uncommitted** |
+| 5 | Fire in the cabin: start point, spread over time, timeline | `scene/cabin-fire` | steps 1, 4, 4a, 4c | **Merged** (pull request 14) |
+| 9 | Conditions the user sets, and a spread that reacts to them | several, see section 9 | team agreement on the rule | **Draft, not started** |
 | 6 | `CabinStage3D`: the full stage (example and uploaded plan) | `scene/cabin-stage` | steps 4 and 5 | Medium |
 | 7 | Wiring in C's files | `app/wire-cabin-stage` | step 6 merged; C's go-ahead | Small |
 | 8 | Polish and housekeeping | `scene/polish` | all above | Small |
@@ -365,12 +390,131 @@ reviews: move the two types to `types/sim.ts`, add `renderStage` to `SimulationV
 
 ---
 
-## 9. Questions
+## 9. Step 9 - conditions the user sets, and a spread that reacts to them (DRAFT)
+
+### What B's human asked for (2026-11-14)
+
+- Oxygen, pressure, airflow and gravity are inputs the user sets, with sliders and typed values.
+- The places become a dropdown that fills in starting values; the user can then change anything.
+- The spread should react to those conditions and to the room's geometry.
+- No made-up rates or physics rules hidden in the code: anything of that kind goes on screen as a
+  parameter.
+
+### What exists, and why none of it drops in
+
+| Model | What it is | Use here |
+|---|---|---|
+| NIST Fire Dynamics Simulator (FDS) | Full fluid-dynamics fire model. NASA uses it for spacecraft fires, including Saffire-IV, at Earth, Mars, lunar and zero gravity. | Cannot run in a web page. |
+| Zone models (NIST CFAST) | Each room is a hot upper layer and a cool lower layer. | NASA's own paper says terrestrial large-scale models are of limited use for spacecraft. |
+| Flame-spread formulas (de Ris 1969; Bhattacharjee and others) | Spread rate and extinction limit along ONE flat piece of fuel, including in microgravity. | Covers one surface, not fire getting from one piece of furniture to another across open air; needs material properties the PSI tables do not hold. |
+
+None of these papers has been opened and checked; only search summaries were read. Nothing from
+them goes into the app until someone reads the source, as `CLAUDE.md` requires.
+
+PSI has **no partial-gravity data**. None can be added to the sample. Gravity can only be a setting.
+
+### The approach: every rate is a setting on screen
+
+- **Sourced values** show their source: each place's oxygen and pressure (`habitats.json`).
+- **Unsourced values** are the user's: how strongly each condition changes the spread. Each is a
+  slider labelled "your assumption, not NASA data", and each starts at "no effect". With every one
+  at "no effect" the result is exactly today's spread.
+- **The result** is labelled as the outcome of the user's settings, never as a NASA finding.
+
+### 9a. Change the rule again (shared files, all three humans)
+
+`CLAUDE.md` and `docs/LAYOUT_PLAN.md` say "the order comes only from distance in the example
+layout". It would become: the order comes from distance along the deck of the example layout and
+from the settings shown on screen; every setting without a source is labelled as the user's
+assumption and starts at "no effect"; the timeline still counts steps; nothing is derived from the
+animation; evidence does not change with it. Own pull request, as for #13.
+
+### 9b. The conditions panel (C's `SimulationView.tsx`; C agreed)
+
+"1 Choose a Location" becomes **"1 Cabin Conditions"**:
+
+| Control | Range | Notes |
+|---|---|---|
+| Place | every place in `habitats.json` | Picking one fills in its oxygen and pressure (`defaultPoint`). Not required: the sliders work without it. |
+| Cabin oxygen | 10 to 100 % | Slider and typed value |
+| Pressure | 0.2 to 5 atm, shown in psi | Slider and typed value |
+| Airflow | 0 to 50 cm/s | Replaces "Still Air / Near a Vent". 0 counts as still air for the evidence line. |
+| Gravity | 0 (microgravity) to 1 (Earth) | "% of Earth". No preset implies a tested condition: every PSI test ran in microgravity. |
+
+The values live in the URL (`o2`, `p`, `air`, `g`), as on the Fire page, so a link reopens the same
+settings. Under the sliders:
+
+- **Inside a place's range:** "These values are the air of: <place>". Evidence works as today.
+- **Outside every place's range:** "Not the air of any listed place. Evidence colours are off. The
+  nearest real tests are listed with how far away they are." (Not "no research": NASA may have
+  tests at those values that are not tied to a named place.)
+
+### 9c. Which place the values belong to (A's `web/src/data/`; A agreed)
+
+Evidence is worked out per named place (`inside_by_habitat` in `fuels.json`), so custom values
+change the evidence only by changing which place they fall in. A small pure helper:
+
+- `placesContaining(habitats, o2, pressure)`: every place whose oxygen and pressure range holds
+  the values.
+- When several match (the Space Station and Earth are identical; NASA's Moon Base air sits inside
+  the challenge's Moon Base range, with 0 tests against 20): use the place last picked from the
+  dropdown while the values are still inside it, otherwise the narrowest range. The line under the
+  sliders names all of them and says which one the evidence is for.
+- Three places are a single point, so they match only at exactly their values. That is
+  `CLAUDE.md` open question 10; this step keeps exact matching and says so on screen.
+- To check before building: `taskAnswers()` takes a place. What it does with none is not yet read.
+
+### 9d. Geometry in the sample (B)
+
+- **Distance along the deck.** Today the spread goes in a straight line, through bulkheads. It
+  would follow the deck through the doorway and the hatch. Pure geometry of the example layout.
+- **Vents.** The supply grilles and the fan already drawn become data, giving airflow a direction
+  along the craft. Example layout, labelled as such.
+- **Down.** Toward the deck.
+
+### 9e. Settings that change the spread (B)
+
+Each is a strength from "no effect" upward, set by the user, with its rule written beside it:
+
+| Setting | What it changes on screen when turned up |
+|---|---|
+| Airflow effect | Items downstream of the fire count as nearer and those upstream as farther, in proportion to the airflow set; the cloud leans downstream. |
+| Gravity effect | The cloud lifts toward the ceiling in proportion to the gravity set; items above the fire count as nearer. |
+| Oxygen effect | How far the spread gets before it stops: lower oxygen, fewer items lit. |
+| Pressure effect | The same, for pressure. |
+
+The form of each rule is ours and is stated on screen; the strength is the user's. None is physics.
+
+### 9f. Stretch: a published formula, once checked
+
+Open one of the flame-spread papers, confirm the formula and what it applies to, and offer it as a
+cited preset for the oxygen and airflow settings on a single surface. Only if the source can be
+opened and read.
+
+### Order, branches and size
+
+| Part | Branch | Files | Owner |
+|---|---|---|---|
+| 9a | `docs/settings-driven-spread` | `CLAUDE.md`, `docs/LAYOUT_PLAN.md` | shared |
+| 9b, 9c | `app/cabin-conditions` | `SimulationView.tsx`, a helper in `web/src/data/`, `types/sim.ts` | C, A, shared |
+| 9d, 9e | `scene/settings-driven-spread` | `web/src/scene/cabin/` | B |
+| 9f | later | - | B, checked by A |
+
+9b and 9c are useful on their own and come first. 9d and 9e need 9a agreed. This is the largest
+change since the cabin itself; the feature freeze is Sunday 15 November, 3 p.m.
+
+---
+
+## 10. Questions
 
 ### Open
 
 | # | Question | Who | Affects |
 |---|---|---|---|
+| Q11 | Do all three humans agree to change the rule again (9a), so settings on screen may change the order of spread? | **Whole team** | Steps 9d, 9e |
+| Q12 | What should the task cards show when the values are not the air of any listed place? | C | Step 9b |
+| Q13 | Single-point places match only at exactly their values (open question 10 in `CLAUDE.md`). Keep exact matching, or agree a tolerance? | A, C | Step 9c |
+| Q14 | Is the form of each rule in 9e acceptable, given that only its strength is the user's? | B's human, team | Step 9e |
 | Q7 | Delete `HabitatMap3D.tsx` and `Flame3D.tsx`, or bring the all-tests map back somewhere? | Team | Step 8 |
 | Q9 | Who writes the new wording for `CLAUDE.md` and `docs/LAYOUT_PLAN.md` (step 4c)? B can draft it; all three humans must see it. | Team | Step 5 |
 | Q10 | In the illustrated spread, should a liquid or gas point light up the same way as a solid area, and should plain furniture ever light? This plan: only fuel items light; furniture never does. | B's human | Step 5 |
@@ -398,6 +542,10 @@ already accepts the marks.
 
 ### Answered
 
+- Wording when values are outside every place? "Not the air of any listed place", with the nearest
+  real tests listed (B's human, 2026-11-14).
+- Several places match? The place last picked while the values are still inside it, otherwise the
+  narrowest range (B's human, 2026-11-14; taken from "do as you suggest").
 - Fire spread and a timeline? Yes, option C: the whole team agrees (B's human, 2026-11-14).
 - Where do the sample's marks live? A new example layout file in A's folder (step 4b).
 - Does C pass oxygen, airflow and behaviour to the stage? Yes; built as step 4a.
@@ -413,7 +561,7 @@ already accepts the marks.
 - `showLabel` on the fire: not needed; `FireModel3D` draws its own label and C's CSS hides the
   duplicate on the fire page.
 
-## 10. Not in this plan
+## 11. Not in this plan
 
 - A physics model of fire, or any time, speed or number derived from the picture. (Whether an
   illustrated spread is allowed at all is Q2.)
