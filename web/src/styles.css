@@ -1179,3 +1179,114 @@ body { background: #04050a; background-image: none; }
 .risk-matrix thead th .fuel-icon { margin-right: 6px; }
 .choice.full { flex-wrap: nowrap; }
 .choice.full button { min-width: 0; padding-left: 8px; padding-right: 8px; gap: 6px; }
+
+/* ===================== tasks 5-12 ===================== */
+/* 6: will it go out */
+.outcomes { display: grid; gap: 14px; border-radius: var(--r-xl); padding: 14px; }
+.outcomes > p { margin: 0 6px; }
+.out-list { display: grid; gap: 12px; }
+.out-study { display: grid; gap: 10px; padding: 16px; border-radius: 16px; background: var(--surface-2); border: 1px solid var(--hairline); }
+.out-study header { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.out-study h3 { font-size: 17px; flex: 1; min-width: 200px; margin: 0; }
+.out-verdict { font-size: 13px; font-weight: 700; padding: 2px 10px; border-radius: 999px; background: var(--surface-3); white-space: nowrap; }
+.t-caution { color: var(--caution); }
+.out-finding { color: var(--ink); font-size: 15px; }
+.out-axis { margin: 0; }
+.out-groups { display: grid; gap: 6px; }
+.out-group { display: grid; grid-template-columns: 110px minmax(0, 1fr) auto; align-items: center; gap: 10px; font-size: 14px; }
+.out-label { color: var(--ink-muted); font-family: var(--mono); font-size: 13px; }
+.out-bar { height: 10px; border-radius: 5px; background: var(--surface-3); overflow: hidden; }
+.out-bar i { display: block; height: 100%; border-radius: 5px; background: var(--evidence); }
+.out-count { border: 1px solid var(--hairline-strong); background: var(--surface-1); color: var(--ink); border-radius: 8px; padding: 2px 10px; font: 600 13px var(--mono); cursor: pointer; white-space: nowrap; }
+.out-count:hover, .out-count[aria-expanded='true'] { border-color: var(--evidence); color: var(--evidence); }
+.out-cites { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 2px; padding: 6px 0 4px; max-height: 160px; overflow-y: auto; }
+.out-matched { border-top: 1px solid var(--hairline); padding-top: 8px; }
+.out-matched summary { cursor: pointer; color: var(--link); font-weight: 600; font-size: 14px; }
+.out-matched-block { display: grid; gap: 6px; margin-top: 10px; }
+.out-matched-block p { display: flex; align-items: center; gap: 8px; font-size: 14px; }
+.out-foot { font-size: 13px; color: var(--ink-subtle); }
+.out-caveats { margin: 0 6px; padding-left: 18px; display: grid; gap: 4px; color: var(--caution); font-size: 13px; }
+
+/* 11: waiting places */
+.waiting { margin-top: 16px; padding: 16px 18px; border-radius: 16px; background: var(--surface-1); border: 1px dashed var(--hairline-strong); display: grid; gap: 10px; }
+.waiting h3 { font-size: 17px; margin: 0; }
+.waiting ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; font-size: 15px; color: var(--ink-muted); }
+.waiting b { color: var(--ink); }
+
+/* 12: air-conditions filter */
+.cond-bar { display: grid; gap: 12px; border-radius: 18px; padding: 14px 16px; }
+.cond-bar.compact { padding: 12px; }
+.cond-row { display: flex; flex-wrap: wrap; gap: 12px 18px; align-items: flex-end; }
+.cond-row .select select { width: 240px; }
+.cond-pair { display: flex; align-items: center; gap: 6px; border: 0; padding: 0; margin: 0; font-size: 14px; color: var(--ink-muted); }
+.cond-pair legend { font-size: 14px; font-weight: 550; color: var(--ink-subtle); padding: 0; margin-bottom: 6px; float: left; width: 100%; }
+.cond-pair input, .cond-g-input { width: 80px; height: 38px; padding: 0 8px; border-radius: 8px; border: 1px solid var(--hairline-strong); background: var(--surface-1); color: var(--ink); font: 14px var(--mono); }
+.cond-pair input:focus, .cond-g-input:focus { outline: none; border-color: var(--accent); }
+.cond-g { display: grid; gap: 6px; }
+.cond-g-label { font-size: 14px; font-weight: 550; color: var(--ink-subtle); }
+.cond-g .choice button { padding: 7px 10px; font-size: 14px; }
+.cond-result { display: grid; gap: 6px; border-top: 1px solid var(--hairline); padding-top: 10px; }
+.cond-count { font-size: 16px; }
+.cond-count b { color: var(--accent); }
+.cond-none ul { margin: 6px 0 0; padding-left: 18px; display: grid; gap: 4px; font-size: 14px; color: var(--ink-muted); }
+.cond-gnote { color: var(--caution); font-size: 14px; }
+.air-match { font-size: 15px; color: var(--ink-muted); padding: 8px 12px; border-radius: 10px; background: rgba(45, 212, 191, 0.1); }
+.air-match b { color: var(--evidence); }
+.csv-line { margin-top: 4px; }
+
+/* 9: group by */
+.group-bar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.group-head { grid-column: 1 / -1; font-size: 18px; margin: 8px 0 -4px; display: flex; align-items: center; gap: 8px; }
+.group-head .count { font: 12px var(--mono); color: var(--ink-tertiary); }
+
+/* 5, 7, 10: experiment page */
+.varied-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.varied-list li { display: grid; grid-template-columns: minmax(140px, 1fr) minmax(0, 1.2fr); gap: 2px 12px; font-size: 15px; padding-bottom: 8px; border-bottom: 1px solid var(--hairline); }
+.varied-list li .small { grid-column: 2; }
+.sensor-groups { display: grid; gap: 10px; }
+.sensor-groups h3 { font-size: 14px; color: var(--ink-subtle); margin: 0 0 4px; }
+.sensor-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font-size: 14px; }
+.sensor-src { margin-left: 6px; }
+.fuel-shapes { font-size: 15px; color: var(--ink-muted); }
+
+/* 8: research needed */
+.needed-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 12px; }
+.needed { display: grid; gap: 10px; align-content: start; border-radius: 20px; }
+.needed h4 { margin: 4px 0 0; font-size: 13px; color: var(--ink-subtle); text-transform: uppercase; letter-spacing: 0.05em; }
+
+@media (max-width: 1100px) { .needed-grid { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 760px) {
+  .out-group { grid-template-columns: 80px minmax(0, 1fr) auto; }
+  .cond-row .select select { width: 100%; }
+  .varied-list li { grid-template-columns: minmax(0, 1fr); }
+  .varied-list li .small { grid-column: 1; }
+}
+
+/* air + gravity filter inline with the search boxes, in a cool blue so it reads as a different kind of control */
+.search-pair { align-items: flex-end; }
+.cond-bar.inline { display: contents; }
+.cond-bar.inline .cond-row {
+  gap: 10px 14px; padding: 8px 12px 10px; border-radius: 14px;
+  background: rgba(96, 165, 250, 0.1); border: 1px solid rgba(96, 165, 250, 0.35);
+}
+.cond-bar.inline .select, .cond-bar.inline .cond-g-label, .cond-bar.inline .cond-pair legend { color: #93c5fd; }
+.cond-bar.inline .select select { width: 190px; height: 38px; border-color: rgba(96, 165, 250, 0.4); background: rgba(15, 23, 42, 0.6); }
+.cond-bar.inline .cond-pair input, .cond-bar.inline .cond-g-input { border-color: rgba(96, 165, 250, 0.4); background: rgba(15, 23, 42, 0.6); }
+.cond-bar.inline .select select:focus, .cond-bar.inline .cond-pair input:focus { border-color: #60a5fa; box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.25); }
+.cond-bar.inline .choice { border-color: rgba(96, 165, 250, 0.35); background: rgba(15, 23, 42, 0.5); }
+.cond-bar.inline .choice button { padding: 6px 10px; font-size: 14px; }
+.cond-bar.inline .choice button.on { background: rgba(96, 165, 250, 0.25); color: #dbeafe; }
+.cond-bar.inline .btn { color: #93c5fd; }
+.cond-bar.inline .cond-result { flex-basis: 100%; }
+.cond-bar.inline .cond-count b { color: #60a5fa; }
+@media (max-width: 760px) { .cond-bar.inline .select select { width: 100%; } .cond-bar.inline .cond-row { width: 100%; } }
+.search-pair .search input { width: 230px; }
+.cond-bar.inline .select select { width: 175px; }
+@media (max-width: 760px) { .search-pair .search input { width: 100%; } .search-pair .search { flex: 1 1 100%; } }
+/* keep the box the same width when a filter is on: air + gravity on top, oxygen / pressure / clear underneath */
+.cond-bar.inline .cond-row { max-width: 610px; }
+.cond-bar.inline .cond-row > .select { order: 1; }
+.cond-bar.inline .cond-row > .cond-g { order: 2; }
+.cond-bar.inline .cond-row > .cond-pair { order: 3; }
+.cond-bar.inline .cond-row > .btn { order: 4; }
+@media (max-width: 760px) { .cond-bar.inline .select, .cond-bar.inline .select select { width: 100%; } }

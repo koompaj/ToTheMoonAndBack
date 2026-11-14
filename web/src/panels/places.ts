@@ -18,7 +18,7 @@ export const FUTURE_PLACES: FuturePlace[] = []
 export function placeName(id: string, fallback: string) {
   return (
     {
-      moon_base: 'Moon Base & Rovers (Challenge)',
+      moon_base: 'Moon Base and pressurized rovers',
       moon_base_nasa: 'Moon Base (NASA Air)',
       iss: 'Space Station (ISS)',
       spacesuit: 'Spacesuit',
