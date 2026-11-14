@@ -1,0 +1,167 @@
+{
+ "about": "Test conditions for solid-material tests that NASA's experiment tables leave out, taken from NASA's own reports and sensor logs in PSI. Hand-checked by workstream A against the downloaded files (scripts/fetch_psi_docs.py, scripts/extract_docs.py; see docs/PSI_DOCUMENTS.md). build_web_data.py applies these to tests.json; validate_data.py checks them. data/ is never edited.",
+ "checked": "2026-11-14",
+ "facts": [
+  {
+   "id": "bass2-tien-pressure",
+   "investigation": "PSI-25",
+   "applies_to": {
+    "column": "PI",
+    "value": "T'ien"
+   },
+   "quantity": "pressure",
+   "value": 1.0,
+   "unit": "atm",
+   "source_file": "PSI-25_Reports_BASS-II Summary Report.pdf",
+   "source_title": "Burning and Suppression of Solids-II (BASS-II) Summary Report, NASA/TM-20210011385",
+   "location": "p. 102, chapter 7.0 Individual Principal Investigator Report: T'ien",
+   "quote": "Ambient pressure was 1 atm."
+  },
+  {
+   "id": "bass2-bhattacharjee-pressure",
+   "investigation": "PSI-25",
+   "applies_to": {
+    "column": "PI",
+    "value": "Bhattacharjee"
+   },
+   "quantity": "pressure",
+   "range": [
+    99.2,
+    99.5
+   ],
+   "unit": "kPa",
+   "source_file": "PSI-25_Reports_BASS-II Summary Report.pdf",
+   "source_title": "Burning and Suppression of Solids-II (BASS-II) Summary Report, NASA/TM-20210011385",
+   "location": "p. 46, chapter 2.0 Individual Principal Investigator Report: Bhattacharjee",
+   "quote": "The total pressure is also monitored, which varied from 99.2 to 99.5 kPa in the tests reported."
+  },
+  {
+   "id": "saffire1-s1-pressure",
+   "investigation": "PSI-98",
+   "applies_to": {
+    "test_label": "S1"
+   },
+   "quantity": "pressure",
+   "range": [
+    14.8245,
+    14.9035
+   ],
+   "unit": "psia",
+   "source_file": "PSI-98_Raw Data_Saffire-I Sample 1 Sensor Data Complete TM graphs.xlsx",
+   "location": "sheet 'Anemometer Tach and Igniter', column J ('Ambient Pressure', unit row J2 'PSIA'), min-max of 20,000 readings",
+   "quote": "Ambient Pressure | PSIA"
+  },
+  {
+   "id": "saffire1-s1-o2",
+   "investigation": "PSI-98",
+   "applies_to": {
+    "test_label": "S1"
+   },
+   "quantity": "oxygen",
+   "range": [
+    22.2059,
+    22.7198
+   ],
+   "unit": "%",
+   "source_file": "PSI-98_Raw Data_Saffire-I Sample 1 Sensor Data Complete TM graphs.xlsx",
+   "location": "sheet 'Anemometer Tach and Igniter', column G ('O2', unit row G2 '%'; charted as 'Oxygen Concentration (%)'), min-max of 20,000 readings",
+   "quote": "O2 | %"
+  },
+  {
+   "id": "saffire1-s2-pressure",
+   "investigation": "PSI-98",
+   "applies_to": {
+    "test_label": "S2"
+   },
+   "quantity": "pressure",
+   "range": [
+    14.8506,
+    14.9035
+   ],
+   "unit": "psia",
+   "source_file": "PSI-98_Raw Data_Saffire-I Sample 2 Sensor Data Complete TM graphs.xlsx",
+   "location": "sheet 'Anemometer Tach and Igniter', column J ('Ambient Pressure', unit row J2 'PSIA'), min-max of 20,000 readings",
+   "quote": "Ambient Pressure | PSIA"
+  },
+  {
+   "id": "saffire1-s2-o2",
+   "investigation": "PSI-98",
+   "applies_to": {
+    "test_label": "S2"
+   },
+   "quantity": "oxygen",
+   "range": [
+    22.2105,
+    22.4514
+   ],
+   "unit": "%",
+   "source_file": "PSI-98_Raw Data_Saffire-I Sample 2 Sensor Data Complete TM graphs.xlsx",
+   "location": "sheet 'Anemometer Tach and Igniter', column G ('O2', unit row G2 '%'), min-max of 20,000 readings",
+   "quote": "O2 | %"
+  },
+  {
+   "id": "saffire3-s1-pressure",
+   "investigation": "PSI-100",
+   "applies_to": {
+    "test_label": "S1"
+   },
+   "quantity": "pressure",
+   "range": [
+    14.4027,
+    14.4974
+   ],
+   "unit": "psia",
+   "source_file": "PSI-100_Raw Data_Saffire III Sample 1 Sensors.xlsx",
+   "location": "sheet 'Anemometer Tach and Igniter', column J ('Ambient Pressure', unit row J2 'PSIA'), min-max of 20,909 readings",
+   "quote": "Ambient Pressure | PSIA"
+  },
+  {
+   "id": "saffire3-s1-o2",
+   "investigation": "PSI-100",
+   "applies_to": {
+    "test_label": "S1"
+   },
+   "quantity": "oxygen",
+   "range": [
+    19.3994,
+    20.077
+   ],
+   "unit": "%",
+   "source_file": "PSI-100_Raw Data_Saffire III Sample 1 Sensors.xlsx",
+   "location": "sheet 'Anemometer Tach and Igniter', column G ('O2', unit row G2 '%'; charted as 'Oxygen Concentration (%)'), min-max of 20,909 readings",
+   "quote": "O2 | %"
+  },
+  {
+   "id": "saffire3-s2-pressure",
+   "investigation": "PSI-100",
+   "applies_to": {
+    "test_label": "S2"
+   },
+   "quantity": "pressure",
+   "range": [
+    14.3952,
+    14.4398
+   ],
+   "unit": "psia",
+   "source_file": "PSI-100_Raw Data_Saffire III Sample 2 Sensors.xlsx",
+   "location": "sheet 'Anemometer Tach and Igniter', column J ('Ambient Pressure', unit row J2 'PSIA'), min-max of 4,848 readings (the sheet has 32,600 rows; only these hold sensor values)",
+   "quote": "Ambient Pressure | PSIA"
+  },
+  {
+   "id": "saffire3-s2-o2",
+   "investigation": "PSI-100",
+   "applies_to": {
+    "test_label": "S2"
+   },
+   "quantity": "oxygen",
+   "range": [
+    19.6939,
+    20.1316
+   ],
+   "unit": "%",
+   "source_file": "PSI-100_Raw Data_Saffire III Sample 2 Sensors.xlsx",
+   "location": "sheet 'Anemometer Tach and Igniter', column G ('O2', unit row G2 '%'), min-max of 4,848 readings",
+   "quote": "O2 | %"
+  }
+ ]
+}

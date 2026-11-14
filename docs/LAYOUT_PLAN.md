@@ -162,7 +162,7 @@ and say "not in the tables", never "never tested".
 ## 6. Data contract (built by workstream A, 2026-11-14; B and C read)
 
 **Status: done and merged with this spec.** Produced by `scripts/build_web_data.py`, checked by
-`scripts/validate_data.py` (76 checks, including 8 for this feature). The types are the source of
+`scripts/validate_data.py` (80 checks, including 8 for this feature). The types are the source of
 truth; read them rather than copying from here.
 
 | File | What it gives you |

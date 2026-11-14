@@ -3,7 +3,7 @@
 Found by inspecting all 22 downloaded tables (`python -I scripts/inspect_tables.py data`).
 The raw files in `data/` are left exactly as NASA published them. Every item below is handled in
 `scripts/build_web_data.py`, and `scripts/validate_data.py` checks each fix against the raw files
-(76 checks, run at the end of every build; the build stops if one fails).
+(80 checks, run at the end of every build; the build stops if one fails).
 
 What the pipeline did with every table and row is in `web/public/data/data_quality.json`; what each
 flag means is in its `flag_meanings`.
@@ -21,7 +21,7 @@ flag means is in its `flag_meanings`.
 | 9 | Several | Inconsistent labels | Fuel names: runs of spaces collapsed (line breaks in the cell), SPICE `75 % Propylene` = `75% Propylene`. Solid materials normalised in `fuel_material` (PMMA, SIBAL, Nomex, Ultem, silicone, waxes); 87 cells name only a shape and are flagged `material_not_stated`. CFI-G hot ignition `Yes`/`yes`/`No`/`no` normalised. `Inverse`/`inverse` is carried by `o2_basis` | done |
 | 10 | SAFFIRE, SAME, SLICE, BASS, SAME-R | Rows that are not burns; SAME rows say "same conditions as 1-4"; SLICE date cells hold stray text; SAME-R dates have no year | SAFFIRE pre-test rows and the BASS `SOOT Cleaning` row left out and listed. SAME and SLICE: `rows_read_as` keeps the material and the date; SAME's blank cells stay blank because samples 1-4 used several settings. SAME-R years are not in the table, so they stay as written | done |
 | 11 | Several | Blank values, e.g. 20 Flame Design rows lack final oxygen and pressure; FLEX extinction diameter filled for 225 of 274 | Kept as null | done |
-| 12 | BASS, BASS-II, SAFFIRE, SPICE | No pressure column at all (732 tests); BASS, SAFFIRE-III and SPICE have no oxygen column either (592 tests) | Flags `pressure_not_in_table`, `o2_not_in_table`. No openable source states the pressure (ntrs.nasa.gov refuses this connection; see `gemini_data/VERIFIED.md` 3b), so nothing is backfilled | open, blocked |
+| 12 | BASS, BASS-II, SAFFIRE, SPICE | No pressure column at all (732 tests); BASS, SAFFIRE-III and SPICE have no oxygen column either (592 tests) | Partly resolved from NASA's own files in PSI (`data_sourced/solid_conditions.json`, `docs/PSI_DOCUMENTS.md`): the BASS-II Summary Report (NASA/TM-20210011385) gives **1 atm** for T'ien's 29 tests (p. 102; now placed, flag `pressure_from_report`) and **99.2-99.5 kPa** for Bhattacharjee's 22 (p. 46; range, flag `pressure_range_from_report`); Saffire-I and -III sensor logs give ambient pressure in PSIA and oxygen for their 4 burns (range, flags `pressure_range_from_sensor_log`, `o2_from_sensor_log`; Saffire-I's sensor oxygen does not overlap its table, flag `o2_differs_from_sensor_log`). Still no pressure: BASS (121), BASS-II's other 78 (Ferkul, Miller, Olson, Fernandez-Pello), SAFFIRE-II (9), SPICE (435) | partly resolved (55 of 732) |
 | 13 | SAFFIRE-II (PSI-99) | Four footnote rows inside the table; two material cells blank (merged cells) | Footnotes left out and listed; blank material filled from the row above with flag `fuel_from_row_above` | done |
 | 14 | SPICE (PSI-107) | 34 rows exactly repeat an earlier row | Kept, flagged `duplicate_row:<first row>`; `distinct_tests` (1,719) in `data_quality.json` | done |
 | 15 | SPICE (PSI-107) | 8 rows record a negative air rate (-0.28 or -5.92 cm/s) | Kept as written, flagged `airflow_negative_in_source`; `airflowRange()` in `web/src/data/load.ts` leaves them out. What NASA meant is not stated | done (meaning not knowable from the table) |

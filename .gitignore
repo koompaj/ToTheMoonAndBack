@@ -23,3 +23,6 @@ scripts/video_brightness.py
 Thumbs.db
 .vscode/
 .idea/
+
+# NASA reports, presentations and sensor logs (large; re-download with scripts/fetch_psi_docs.py)
+data_extra/
