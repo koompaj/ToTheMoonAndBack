@@ -1,0 +1,28 @@
+{
+ "about": "CANDIDATE test conditions found by searching NASA's PSI files (scripts/fetch_psi_raw.py, scripts/summarize_raw.py; see docs/RAW_DATA_FINDINGS.md). Same shape as solid_conditions.json. NOT verified and NOT applied: nothing here reaches tests.json, the app or any count until workstream A has opened the source and the team agrees.",
+ "checked": "2026-11-15",
+ "facts": [
+  {
+   "id": "spice-cabin-o2-envelope",
+   "status": "candidate, not verified",
+   "investigation": "PSI-107",
+   "applies_to": {
+    "source_table": "tables/PSI-107/PSI-107_Experimental table_Spice.csv",
+    "rows": "all"
+   },
+   "quantity": "oxygen",
+   "range": [19, 24],
+   "unit": "%",
+   "kind": "stated control range of ISS cabin air, not a reading for any burn",
+   "source_file": "PSI-107_Reports_SPICE_FinalReport.pdf",
+   "source_title": "Smoke Point in Co-flow Experiment (SPICE): Laminar Smoke Point Properties of Non-buoyant Round-Jet Diffusion Flames, Final Report (Urban, Sunderland et al.)",
+   "location": "p. 19 (pdftotext page count; confirm in the PDF)",
+   "quote": "after each two such burns the MSG contents were flushed with ISS cabin air. The oxygen mole fraction of this cabin air is maintained within 19 - 24%.",
+   "quote_note": "The dash between 19 and 24 is a glyph pdftotext cannot read (byte 0xFF); check it in the PDF.",
+   "caveats": [
+    "A range NASA keeps the cabin within, not a measurement during SPICE. Not usable as a per-test o2_fraction.",
+    "The same report's Table 1 footnote says flow parameters 'assume conditions of 298 K, 101 kPa and 21+-1% O2': an assumption for a calculation, not a measured pressure. Do not use it as pressure."
+   ]
+  }
+ ]
+}
