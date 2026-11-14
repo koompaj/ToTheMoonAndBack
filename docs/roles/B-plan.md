@@ -1,284 +1,333 @@
 # Workstream B - implementation plan
 
-**Status: steps 0 to 2 approved and built (2026-11-14), not yet committed. Steps 3 to 6 not started.**
-Written 2026-11-14 from `main` at `4022394` (layout spec and workstream A's layout data merged).
+**Status: steps 0 to 2 are merged. Step 3 is answered (C agreed). Step 4, the sample spacecraft, is
+built on branch `scene/sample-spacecraft` and waiting for B's human to review; it is not committed.
+Steps 5 onward are a DRAFT and not started. The team has agreed to fire spread with a timeline
+(option C in section 5); the shared documents still have to be changed to say so.**
+Rewritten 2026-11-14 from `main` at `2e243fe` (C's Simulation tab merged).
 
 This is B's own working plan. The specs it follows are `CLAUDE.md`, `docs/roles/B-3d.md`,
-`docs/PLAN.md` (written by C for B) and `docs/LAYOUT_PLAN.md`. Where this file and a spec disagree,
-the spec wins and this file is wrong.
+`docs/PLAN.md` and `docs/LAYOUT_PLAN.md`. Where this file and a spec disagree, the spec wins and
+this file is wrong.
 
 Change log:
-- 2026-11-14: order changed at B's human's request: `FireModel3D` first, then `HabitatSimMap`, then
-  `LayoutCanvas`. The separate "shared helpers" step is folded into the components that need it.
+- 2026-11-14 (a): order changed at B's human's request: `FireModel3D` first.
+- 2026-11-14 (b): steps 1 and 2 merged (pull requests #7 and #9).
+- 2026-11-14 (c): C moved step 4 of the flow into a new Simulation tab and wrote that B no longer
+  needs `HabitatSimMap` or `LayoutCanvas`. Both are dropped from this plan. At B's human's request
+  the plan now adds a detailed sample 3D spacecraft layout, then the fire illustration inside it.
+- 2026-11-14 (d): B's human answered the open questions: C agreed to the hand-over; one sample
+  layout for every place; blue wireframe; an uploaded plan stays an image on the deck; the Sunday
+  deadline stands. Step 4 built. B's human also asked for fire that spreads over time with a
+  timeline bar: recorded in section 5 as a proposal that needs the team to change a rule.
+- 2026-11-14 (e): B's human reports the whole team agrees to fire spread with a timeline (option C).
+  The sample's marks go in a new example layout file in A's folder. C passes oxygen, airflow and
+  behaviour to the stage: it was not implemented on any branch, so B added it (uncommitted). The
+  cabin gained a furniture toggle with one sub-toggle per colour group. Branch brought up to
+  `main` at `e2cd384`.
 
 ---
 
-## 1. What B has to deliver
+## 1. Where things stand
 
-| # | Component | Spec | Where it appears | State today |
-|---|---|---|---|---|
-| 1 | `FireModel3D` | `docs/PLAN.md` section 4 | Fire page (`#fire?h=...&fuel=...`), top stage, 320 px tall. Reused by the Layout page's "Start a Fire Here". | Not built. The baseline `Flame3D` stands in and only reacts to gravity. |
-| 2 | `HabitatSimMap` | `docs/PLAN.md` section 5 | Fire page, "Step 4 - Pick Where the Fire Starts", 460 px tall (340 px on phones) | Not built. The baseline `HabitatMap3D` stands in; clicking it does nothing. |
-| 3 | `LayoutCanvas` | `docs/LAYOUT_PLAN.md` section 7 | New Layout page (`#layout?h=...`), which C builds | Not built. No longer blocked: A's `types/layout.ts`, `fuels.json` and `layoutEvidence.ts` are on `main`. |
-| 4 | Wiring | `docs/PLAN.md` section 6 | Two lines and two imports in C's `web/src/App.tsx` | Pre-agreed with C. |
+### Done
 
-`docs/PLAN.md` replaces tasks 4 to 6 of B's brief (2D view, inverse flames, flame) with components
-1 and 2. Tasks 1 to 3 of the brief (readable map, interaction, show the gap) now apply inside
-`HabitatSimMap`. The all-tests 3D map (`HabitatMap3D`) is shown nowhere once component 2 is wired
-in; whether it comes back on the home page is open question Q3 below.
+| Step | What | Result |
+|---|---|---|
+| 0 | Environment check | Done |
+| 1 | `FireModel3D` (`web/src/scene/FireModel3D.tsx`, `web/src/scene/fire/`) | Merged, pull request #7 |
+| 2 | Wire the fire slot in `App.tsx` | Merged, pull request #9 |
 
-### Rules B must keep (from the specs)
+### What C changed on `main` (pull request #6)
 
-- B draws what C passes in. B never computes an outcome, a nearest test or a count that C or A
-  already provides.
-- Both fire pictures are **illustrations, not simulations**. No number is ever derived from the
-  picture. Nothing spreads; no physics model.
-- B's components are controlled: draw from props, report clicks through callbacks, keep no copy of
-  the fire point or the marks.
-- Never hard-code a habitat. `habitats.json` has 5 today and A may add more.
-- Tests with `pressure_atm === null` are never given a position (all 263 solid tests today).
-- Inverse flames are drawn only when the store's `showBurnerOxidizer` is on, visibly different, and
-  never counted toward a habitat.
+- **Fire page.** "Step 4 - Pick Where the Fire Starts" is gone. In its place is a button,
+  **Simulate Your Project!**, that opens `#simulation?h=<place>&fuel=<fuel>`.
+- **New Simulation tab**, built by C in `web/src/panels/SimulationView.tsx` and
+  `web/src/panels/sim/`. The user: (1) chooses a place, (2) chooses the map, **Example Cabin** or
+  **Your Floor Plan** (uploads a PNG or JPG), (3) chooses what burns (fuel type, a material NASA
+  tested, still air or near a vent), (4) clicks the floor to place the fire point, (5) presses
+  **Simulate**. The side bar then shows the evidence colour, the nearest real tests and the three
+  tasks, all cited.
+- **The 3D stage is C's `SimStage.tsx`.** Today it draws a blue wireframe shell per place (dome,
+  module, suit outline, lab box), a flat floor, the example marks as flat boxes and pins coloured by
+  evidence, and the fire as a plain glowing sphere. An uploaded image becomes the floor texture and
+  the example marks are hidden.
+- **`docs/PLAN.md` now says:** "B no longer needs `HabitatSimMap` or `LayoutCanvas`; `FireModel3D`
+  is still wanted for the Fire page."
+
+### Dropped from this plan
+
+| Component | Why |
+|---|---|
+| `HabitatSimMap` | Its slot no longer exists: `renderMap` was removed from `App.tsx` and `FireView.tsx`. |
+| `LayoutCanvas` | There is no `#layout` page. C's Simulation tab covers that journey in 3D. |
+
+**Should the map and the layout canvas be one thing?** Yes, and on `main` they already are: one
+stage that shows either the example layout or the uploaded plan, and takes the fire point. What is
+left for B is what that stage looks like: the sample layout in 3D, and the fire inside it.
+
+### Rules B must keep
+
+- **Illustration, not a simulation.** The tab is called "Simulation" (the team lead's call), but
+  nothing is modelled: nothing spreads, there is no heat between objects, no timing, and no number
+  is derived from the picture. C's page says so on screen and B's stage must not contradict it.
+- **Position changes nothing.** One cabin shares one air, so where the fire starts does not change
+  the evidence. B never computes evidence, colours or nearest tests; they arrive as props.
+- **Example layouts are not NASA designs.** The label "Example layout, not a NASA design" stays
+  visible, object names are labels only, and no size or arrangement is presented as real.
+- **Colours mean how much evidence exists, never how dangerous.**
 - No network at runtime: procedural geometry and shaders only.
-- B edits only `web/src/scene/` and this brief. No imports from `web/src/panels/` or `web/src/ai/`.
-- Shared files (`types/sim.ts`, `types/layout.ts`, `types/data.ts`, `state/store.ts`,
-  `package.json`) change only by agreement.
+- B edits only `web/src/scene/` and its own brief. No imports from `web/src/panels/` or
+  `web/src/ai/`. Shared files change only by agreement.
+- Never hard-code a place. `habitats.json` decides which places exist.
 
 ---
 
-## 2. Order of work and branches
+## 2. Remaining steps
 
 | Step | What | Branch | Depends on | Size |
 |---|---|---|---|---|
-| 0 | Environment check | none | - | No code |
-| 1 | `FireModel3D` | `scene/fire-model` | - | Large |
-| 2 | Wire the fire slot | `app/wire-fire-slot` | step 1 merged; C's go-ahead | One line in C's file |
-| 3 | `HabitatSimMap` | `scene/sim-map` | - | Medium |
-| 4 | Wire the map slot | `app/wire-map-slot` | step 3 merged; C's go-ahead | One line in C's file |
-| 5 | `LayoutCanvas` | `scene/layout-canvas` | step 1 (C's panel reuses the fire) | Medium |
-| 6 | Polish | `scene/polish` | all above | Small |
+| 3 | Agree the hand-over with C (and A if a layout file is needed) | none | - | **C agreed** (B's human, 2026-11-14) |
+| 4 | **Sample 3D spacecraft layout** | `scene/sample-spacecraft` | step 3 | **Built, in review** |
+| 4a | Pass oxygen, airflow and behaviour to the stage | `app/stage-fire-values` | C agreed | **Built, uncommitted** (C's and shared files) |
+| 4b | Example layout file for the sample's marks | `data/example-spacecraft` | A's go-ahead | Small (A's folder) |
+| 4c | Change the rule in the shared documents | `docs/illustrated-spread` | all three humans | Small (shared files) |
+| 5 | Fire in the cabin: start point, spread over time, timeline | `scene/cabin-fire` | steps 1, 4, 4a, 4c | Large |
+| 6 | `CabinStage3D`: the full stage (example and uploaded plan) | `scene/cabin-stage` | steps 4 and 5 | Medium |
+| 7 | Wiring in C's files | `app/wire-cabin-stage` | step 6 merged; C's go-ahead | Small |
+| 8 | Polish and housekeeping | `scene/polish` | all above | Small |
 
-Why this order: B's human asked for the fire first (2026-11-14). It also matches the brief, which
-says `LayoutCanvas` comes after `FireModel3D` because the Layout page reuses it, and it is the
-piece every visitor to the fire page sees first.
-
-Cost of this order: until step 3 lands, step 4 of the demo ("pick where the fire starts") still
-shows the stand-in map, where clicking does nothing. The sliders already move the fire point, so
-the page works without it.
-
-Steps 3 and 5 do not depend on each other. Which comes first is open question Q2.
-
-Each step is its own pull request. `npm run build` must pass before each one. The two wiring steps
-can be one pull request if C prefers; they are split here so the fire can go live without waiting
-for the map.
-
-### Step 0 - environment (no code)
-
-- `cd web && npm install`. On this Windows machine npm skips a native package and Vite will not
-  start; fix locally with `npm install --no-save @rolldown/binding-win32-x64-msvc@<rolldown version>`
-  (does not touch the shared lockfile).
-- Vite warns that it wants Node 20.19+; this machine has 20.17. It runs anyway.
-- Open `#fire?h=moon_base&fuel=gas` and note what the two stand-ins look like, for before/after.
+Each step is its own pull request and `npm run build` must pass before each one. **After every
+step B stops and shows the result; the next step starts only when B's human approves it.**
 
 ---
 
-## 3. Step 1 - `FireModel3D` (`scene/fire-model`)
+## 3. Step 3 - agree the hand-over (no code)
 
-File: `web/src/scene/FireModel3D.tsx`, plus `web/src/scene/fire/` for shaders and the three samples.
-Props: `FireModelProps` from `web/src/types/sim.ts`, unchanged.
+C built the stage and wrote that B is finished. Before B writes anything for the Simulation tab,
+three things need a yes from C:
 
-**Rendering choice:** one react-three-fiber canvas, procedural geometry, a custom flame shader
-(layered additive shells).
+1. **B takes over the 3D stage's content.** B builds `CabinStage3D` in `web/src/scene/`; C's
+   `SimStage.tsx` stays as the fallback until it lands.
+2. **The props move to the shared contract.** `SimStageProps` and `CabinTemplate` are defined in
+   C's folder, which B may not import. They move to `web/src/types/sim.ts` unchanged, so both
+   stages type-check against one definition.
+3. **A render prop, like the fire slot.** `SimulationView` takes `renderStage` and `App.tsx` passes
+   B's component, because `panels/` may not import from `scene/`.
 
-### 3.1 Structure
+If C says no to any of these, steps 4 and 5 still stand on their own (a model and a flame B can
+show), and steps 6 and 7 are re-planned.
 
-- `FireModel3D.tsx`: the canvas, camera, and the mapping from props to "look" values.
-- `fire/look.ts`: a pure function `lookFor(params, behaviour)` returning brightness, size, colour
-  warmth, stretch, lean, flicker and pulse. Pure, so it can be checked without a browser. A comment
-  at the top states that every mapping is a drawing choice, not physics or data.
-- `fire/FlameShell.tsx`: the shader material and mesh, shared by all three fuels.
-- `fire/GasBurner.tsx`, `fire/Droplet.tsx`, `fire/SolidStrip.tsx`: the sample for each fuel.
-- `scene.css` (new): B's own stylesheet for anything outside the canvas, imported by B's
-  components. Classes prefixed `fire-b-`, `simmap-b-`, `layout-b-` so they cannot collide with C's
-  `styles.css`. Colours reuse C's CSS variables where they exist (`--accent` is the gold `#ffcc29`).
+---
 
-### 3.2 The three looks (from the spec's table)
+## 4. Step 4 - sample 3D spacecraft layout (`scene/sample-spacecraft`)
 
-| Fuel | Sample | Microgravity (`gravity` 0) | Earth (`gravity` 1) |
-|---|---|---|---|
-| gas | Small round burner nozzle | Near-spherical dim blue-violet flame around the nozzle | Tall yellow teardrop, flickering |
-| droplet | Liquid sphere on a thin fibre | Blue flame shell standing off the droplet; droplet slowly shrinks, then resets | Flame stretched upward around the droplet |
-| solid | Thin flat strip | Low blue-tinged flame front creeping along the strip, leaning into the airflow | Yellow flame climbing the strip, faster |
+**Goal:** one example spacecraft that is simple to read as a layout (a few joined shapes) but
+detailed enough to look like a place people live. It is generated by code: no model files, no
+textures, nothing downloaded.
 
-### 3.3 How each parameter changes the picture
+Files: `web/src/scene/cabin/`.
 
-| Input | Effect | Limits |
+**Built (2026-11-14), in blue wireframe as B's human chose:**
+
+| File | What it is |
+|---|---|
+| `cabin/spec.ts` | The craft as data: hull profile, 4 zones, 15 objects (11 of them fuel items), the marks they offer, and `checkSpec()` |
+| `cabin/holo.tsx` | The hologram look: edges plus a faint glow, with shared geometry |
+| `cabin/Hull.tsx` | Ribs and stringers, deck with plates, doorway, hatch, docking ring, optional solar wings and antenna |
+| `cabin/parts.tsx` | The kit: seats, console, window dome, racks, table, bottles, cable tray, bunks with curtain, bags, wiring panel, gas bottle, gas line, locker; plus duct, fan, grilles, lights, smoke detectors, extinguisher, handrails |
+| `cabin/Spacecraft.tsx` | The assembled craft. Props: `markColors`, `selectedMarkId`, `showLabels`, `exterior`, `onPickMark` |
+| `cabin/preview/` | A development page, not in the built site: `/src/scene/cabin/preview/index.html` on the dev server |
+
+Checked: `checkSpec()` reports no problems against `fuels.json`; A's `layoutProblems()` accepts the
+11 marks; evidence colours from A's `markEvidence()` show per place (Space Station: 3 teal, 7 amber,
+1 coral); clicking an item picks it; `npm run build` passes. Not checked: a projector, a phone, and
+frame rate on a laptop on battery.
+
+Added on review (2026-11-14): a **Furniture** toggle with one sub-toggle per colour group
+(`cabin/groups.ts`; `Spacecraft` props `hiddenIds` and `showFittings`). The groups follow the
+colour on screen: with no place chosen they are the fuel types (solid materials, liquids, gases);
+with a place chosen they are the evidence levels (tested in this air, tested only in other air,
+not in the tables); plus furniture and fittings that are not fuel items. They are not a
+flammability ranking: NASA's tables do not rank these objects by how easily they burn.
+
+Differences from the text below: the cutaway is not needed in wireframe (the inside shows through
+the hull), and the count is 15 named objects plus the cabin systems rather than 40 to 60.
+
+### 4.1 Shape: three joined volumes
+
+| Volume | Shape | Role |
 |---|---|---|
-| `o2Fraction` | Brighter, whiter, larger, faster as it rises; faint below about 15 % | A visual cue only. No threshold is shown and no number is derived. |
-| `pressureAtm` | Lower = slightly larger, dimmer, more diffuse | Small effect on purpose |
-| `airflowCmS` | 0 = still. Higher = flame stretched downstream and more yellow; the solid flame front advances | Direction of flow is drawn with a few faint streaks |
-| `gravity` | Blends the microgravity look into the Earth look (teardrop, flicker, upward plume) | No "Moon" preset: PSI has no partial-gravity data |
-| `behaviour` | `went-out`: pulse, fade out every few seconds, relight. `kept-burning`: steady. `mixed` / `unknown`: steady but dimmer | Comes from C; B does not compute it |
+| Crew cabin | Cylinder lying on its side, with a flat deck | The main room: most of the layout |
+| Node / airlock | Sphere, joined by a hatch ring | Storage, gas bottles, suit port |
+| Flight deck | Truncated cone ending in a window dome | Seats, console, windows |
 
-All changes are eased over about 0.3 s so dragging a slider looks smooth.
+The plan view is one rectangle (about 12 by 5 units), so every object keeps a position in plan
+fractions (0..1), the same convention `LayoutMark` uses. Sizes are illustrative and never shown as
+real dimensions.
 
-### 3.4 Quality bar
+### 4.2 Detail (target: 40 to 60 objects, built from a small kit of parts)
 
-- Fills its parent (C's stage is `position: relative`, 320 px tall; about 300 px wide on phones).
-- `prefers-reduced-motion`: no flicker, no pulse, no shrinking droplet; a still flame that still
-  responds to the sliders.
-- No text in the canvas. C's stage already shows "Illustration, not a simulation"; the component
-  also takes an optional `showLabel` and draws its own label when used elsewhere (the Layout page).
-  `showLabel` is a new optional prop: agree it with C before adding it to `types/sim.ts` (Q4).
-- One draw loop, no allocation per frame, device pixel ratio capped at 2.
-- If WebGL is unavailable: a still SVG flame of the right colour, never a blank box.
+| Zone | Objects |
+|---|---|
+| Flight deck | 2 crew seats, console, window frame and panels |
+| Work area | Table, experiment rack, equipment rack, lab fuel sample, cleaning solvent bottle |
+| Crew quarters | 2 bunks with fabric curtains, fabric stowage bags |
+| Systems | Cable trays with covers along one wall, wiring bundle, vent duct with fan and two grilles |
+| Node | Experiment gas bottle, gas supply line, hatch with ring |
+| Safety (detail only, not fuel) | Smoke detector, fire extinguisher, light strips, handrails |
 
-### 3.5 Build order inside this step
+- **Kit of parts** (`cabin/parts/`): hull section, deck, hatch, window, seat, bunk, rack, bag,
+  bottle, cable tray, duct and fan, detector, extinguisher, console, handrail, light strip. Each is
+  a few primitives; repeated parts are instanced.
+- **Cutaway.** The half of the hull facing the camera is drawn as ribs and panel lines only, so the
+  inside is always visible while rotating.
+- **Exterior** (seen in the idle view): panel seams, a docking ring, two solar wings, an antenna.
+- **Text** only through `Label.tsx`: zone names and "Example layout, not a NASA design".
 
-1. `look.ts` and the shader with the gas burner only; check all four sliders and `behaviour`.
-2. Droplet sample.
-3. Solid strip sample.
-4. Reduced motion, WebGL fallback, phone width.
+### 4.3 How the model ties to the data
 
-To see it before the wiring step, B temporarily swaps the `renderFire` line in a local, uncommitted
-copy of `App.tsx`. That edit is never committed on this branch.
+The ten fuel items above are the same ten materials and fuels as workstream A's example layout
+(Nomex seats, cotton-fiberglass fabric, PMMA panels, silicone cable covers, Ultem rack, "other"
+wiring insulation, methanol, heptane, butane, propane). Each 3D object is bound to one mark id, so:
 
-### 3.6 Checks before the pull request
+- its footprint on the deck is the mark's `shape`;
+- its tint and outline come from the evidence colour C passes in (`markColors`);
+- clicking it picks that mark, exactly as clicking a mark does today.
 
-- With the local swap: `#fire?h=moon_base&fuel=gas`, `...droplet`, `...solid` look clearly
-  different from each other.
-- Each of the four sliders visibly changes each of the three.
-- At a point where C reports `went-out`, the flame pulses and relights.
-- Reduced motion, phone width, projector zoom 125 %.
-- `npm run build`; no new console errors (the existing "THREE.Clock is deprecated" warning stays).
+The model itself holds no evidence and no fuel data. Where the marks for this cabin live is Q3:
+a new `web/public/layouts/example-spacecraft.json` checked by A's validator (recommended), or
+binding to marks that already exist.
 
----
+### 4.4 Structure
 
-## 4. Step 2 - wire the fire slot (`app/wire-fire-slot`)
+- `cabin/spec.ts`: the whole spacecraft as data (volumes, zones, objects with plan footprints,
+  mark ids). Pure, no three.js, so it can be checked by a script.
+- `cabin/parts/*.tsx`: the kit.
+- `cabin/Spacecraft.tsx`: builds the scene from the spec; props `markColors`, `selectedMarkId`,
+  `cutaway`, `onPickMark`.
+- `cabin/check.ts`: every object lies inside the deck, no two fuel objects overlap, every mark id
+  has exactly one object.
 
-One pull request touching only `web/src/App.tsx` (C's file; the change is pre-agreed in
-`docs/PLAN.md` section 6): one import and the `renderFire` line. Tell C before opening it, or ask C
-to make the change.
+### 4.5 Build order and review points
 
----
+1. Hull, deck and the three volumes with the cutaway. **Show B's human; adjust the shape.**
+2. Kit of parts and the zones.
+3. Binding to marks: tint, outline, click.
+4. Exterior detail, labels, lighting.
 
-## 5. Step 3 - `HabitatSimMap` (`scene/sim-map`)
+To see it before wiring, B swaps the stage in a local, uncommitted copy of C's file. That edit is
+never committed on this branch.
 
-Files: `web/src/scene/HabitatSimMap.tsx`, `simMapData.ts` for the pure parts, `scale.ts` (extend).
-Props: `HabitatSimMapProps` from `web/src/types/sim.ts`, unchanged.
+### 4.6 Checks before the pull request
 
-**Rendering choice: SVG, 2D.** The spec says 2D is enough and 3D is a bonus. SVG gives exact
-values, crisp text on a projector, real keyboard focus and no second WebGL canvas on the page.
-
-### 5.1 Additions to `scale.ts` (pure functions)
-
-- `PSI_PER_ATM` (unit conversion). C has the same constant in `web/src/ai/evidence.ts`, which B may
-  not import. Propose to A later that one copy lives in `web/src/data/` (Q6).
-- `fmtPct`, `fmtPsi`, `fmtAtm` formatters so every read-out uses the same rounding.
-- A `linearScale` / `logScale` pair that takes a domain and a pixel range, with `invert`, so the
-  map can turn a click back into oxygen and pressure. The existing `xOf` / `yOf` stay as they are
-  because `HabitatMap3D` still uses them.
-- `niceTicks(domain)` for axis ticks.
-
-### 5.2 What is drawn
-
-1. **Which tests.** Cabin-air tests of `props.fuel` with oxygen and pressure both recorded. Today
-   that is 386 gas and 360 droplet tests and 0 solid tests. Rows flagged `duplicate_row` are left
-   out so a repeated SPICE row is not drawn twice (to confirm with A: Q5).
-2. **Visible range.** Computed, never fixed: the union of the habitat box, the picked point and the
-   tests in `nearestTestIds`, padded by 25 % on each side (in log space for pressure), then clamped
-   to the sliders' range (oxygen 10 to 100 %, pressure 0.2 to 5 atm). A "Show all tests" button
-   widens it to the full slider range; "Fit to place" returns.
-3. **Axes.** x: cabin oxygen in %. y: pressure in psi with atm in brackets, log scale. Grid lines at
-   the ticks.
-4. **The habitat.** A see-through gold box with its name and its bounds written out ("oxygen
-   32-36 %, 8.0-8.4 psi"). When the box is a single point (ISS, spacesuit, Earth sea level today) a
-   cross-hair with a ring instead. The rule is "both ranges have zero width", not a list of ids.
-5. **Test dots.** Fuel colour from `FUEL_COLOR`. Tests that share one oxygen and pressure value are
-   drawn as one larger mark whose tooltip lists them.
-6. **Nearest tests.** The ids in `nearestTestIds` get a white ring and a thin line to the fire
-   point, so the user sees where "expected behaviour" comes from.
-7. **Fire point.** `props.point` as a small flame marker in gold, pulsing gently (still under
-   `prefers-reduced-motion`).
-8. **Solid.** No solid test can be placed. The plot still draws the habitat and the fire point, with
-   a clear message in the plot area: "Solid-material tables record no pressure, so these tests
-   cannot be placed yet." Optionally, below the x axis, a detached strip shows the solid tests that
-   do record oxygen, placed by oxygen only and labelled as such: Q1.
-9. **Inverse flames.** Gas only. A small checkbox in the map's corner bound to the store's
-   `showBurnerOxidizer`. When on: hollow diamonds, a label "oxygen is burner gas, not cabin air",
-   and never highlighted as nearest.
-10. **Read-out line** under the plot: how many tests are drawn, how many of this fuel cannot be
-    placed and why, from `unplacedTests()` in `web/src/data/load.ts`.
-
-### 5.3 Interaction
-
-- **Click or tap** in the plot area: `onPick({ o2Fraction, pressureAtm })`, clamped to 0.1..1.0 and
-  0.2..5 atm, rounded to the sliders' steps (0.005 and 0.01).
-- **Drag** the fire marker: same callback while dragging.
-- **Click a test dot:** `onPick` with that test's own values ("start the fire where this test ran").
-- **Hover or focus a dot:** card with investigation, test label, fuel, oxygen, pressure, ending
-  ("not recorded in the table" when null), source table and row, DOI.
-- **Keyboard:** the plot is focusable (`role="application"`, labelled). Arrow keys nudge the point
-  by 1 point of oxygen or 0.1 psi; Shift makes it 5 times larger; Enter confirms. Tab moves through
-  the nearest tests.
-- The component holds no copy of the point. Hover state is the only local state.
-
-### 5.4 Checks before the pull request
-
-- For each of the 5 habitats and 3 fuels the box and the nearest tests are on screen.
-- Clicking changes the URL (`o2`, `p`), the sliders, the expected behaviour and the task cards.
-- The number of dots drawn equals the count from a one-line script over `tests.json`.
-- Solid shows the empty-state message and still accepts a click.
-- Phone width (340 px stage), keyboard only, reduced motion.
+- `cabin/check.ts` passes.
+- Readable from the default camera in 10 seconds: three volumes, the zones, where the fuel items are.
+- Smooth on a laptop; legible on a projector at 125 % zoom; still under `prefers-reduced-motion`.
+- The "not a NASA design" label is visible in every view.
 - `npm run build`.
 
 ---
 
-## 6. Step 4 - wire the map slot (`app/wire-map-slot`)
+## 5. Step 5 - fire in the cabin (`scene/cabin-fire`)
 
-Same as step 2 for the `renderMap` line. After it merges, `Flame3D` and `HabitatMap3D` are no
-longer imported anywhere. They stay in the repo until Q3 is answered.
+### What B's human asked for (2026-11-14)
+
+- **Double-click** the 3D model to set where the fire starts.
+- The fire starts there: a glow on the burning object, then it **spreads through the model**.
+- A **timeline bar** along the bottom: scrub to any moment since the fire started, with play/stop
+  and a speed button.
+
+### Decision (2026-11-14): option C, illustrated spread
+
+B's human reports that all three workstreams agree. Before B builds it, step 4c changes the
+wording below in the shared files, in its own pull request that all three humans see.
+
+### The rule being changed
+
+Spread changes a rule the whole team agreed and that C's page states on screen:
+
+- `CLAUDE.md`: the fire is "an illustration, not a simulation"; "Real NASA data only. Never invent,
+  estimate or fill in a value"; "an unlabelled assumption is a bug".
+- `docs/LAYOUT_PLAN.md` section 8: "no spread, no heat between marks, no distances"; section 9 lists
+  "Fire spreading across the layout over time" as out of scope.
+- `SimulationView.tsx` tells the user: "NASA's tables do not model how fire spreads."
+
+NASA's tables hold no spread rates between objects, no room geometry and no partial-gravity data, so
+any spread shown is made up by us. A timeline in seconds would also be a number without a source.
+`CLAUDE.md` and `docs/LAYOUT_PLAN.md` are shared files: B does not change them alone.
+
+### The three options that were considered (C was chosen)
+
+| Option | What the user sees | What it claims | Rule change needed |
+|---|---|---|---|
+| A. No spread | Flame at the point, glow on that object. No timeline. | Nothing new | None |
+| B. Evidence replay | The timeline steps through what the nearest real tests of that material did: lit, burned, went out or burned to the end. Only the object at the fire point changes. | "This is what the nearest NASA tests did", cited | Small: C passes the nearest tests' endings to the stage |
+| C. Illustrated spread (what B's human asked for) | From the start point the glow moves to neighbouring objects in order of distance, scrubbed with a timeline in steps, not seconds. Each object that lights shows its own evidence colour and whether NASA has any test of it. | "An illustration of a fire reaching more items. Not a prediction: NASA's tables do not model spread." Always on screen. | Yes: the team must allow spread as a labelled illustration, and `CLAUDE.md` / `LAYOUT_PLAN.md` are edited to say so |
+
+Under option C, B would hold to these limits: no seconds, minutes or speeds in real units; the
+order comes only from distance in the example layout and is labelled as such; no object is shown
+as "safe" or "destroyed"; nothing is derived from the animation; the label never leaves the screen.
+
+### Pieces common to every option
+
+- `cabin/CabinFire.tsx`: the flame at the point, reusing `FlameShell` and `lookFor` from
+  `FireModel3D`, in the microgravity look (every PSI test ran in microgravity).
+- Double-click on the deck or on an object reports the point (plan fractions) and, for an object,
+  its mark id.
+- Label via `Label.tsx`: "Fire starts here - illustration".
+
+### Extra pieces for options B and C
+
+- `cabin/timeline.ts`: pure function from (start point, layout, step) to the state of each object.
+- `cabin/TimelineBar.tsx`: play/stop, speed (1x, 2x, 4x), a scrub bar, keyboard arrows; pauses
+  under `prefers-reduced-motion`.
+
+Checks: three fuels look different at the point; the label is visible at every step; reduced
+motion; `npm run build`.
 
 ---
 
-## 7. Step 5 - `LayoutCanvas` (`scene/layout-canvas`)
+## 6. Step 6 - `CabinStage3D` (`scene/cabin-stage`)
 
-File: `web/src/scene/LayoutCanvas.tsx`. Props: `LayoutCanvasProps` exactly as in
-`docs/LAYOUT_PLAN.md` section 7. Types (`LayoutMark`, `EvidenceTier`) and the three tier colours
-(`TIER_COLOR`) come from `web/src/types/layout.ts`; B does not redefine them.
+File: `web/src/scene/CabinStage3D.tsx`. Props: exactly C's `SimStageProps` (from `types/sim.ts`
+once moved). It fills its parent (C's stage is the window height minus 110 px, 60 % of the window
+on phones).
 
-**Rendering choice: SVG over an `<img>`.** Marks are few, need focus and keyboard, and must stay
-sharp when the plan is scaled.
+| State | What is drawn |
+|---|---|
+| No place chosen | The sample spacecraft from outside, turning slowly, with call-outs |
+| Place chosen, Example Cabin | The sample spacecraft cutaway with its objects coloured by evidence; click an object or the deck to place the fire |
+| Place chosen, Your Floor Plan | The uploaded image flat on the deck of a plain open shell, no furniture; double-click to place the fire (confirmed by B's human) |
+| After Simulate | Step 5's flame at the point |
 
-1. **Plan image** scaled to fit, letterboxed, never stretched. With `imageUrl === null`: a neutral
-   grid and the hint "Upload a floor plan or use the example layout".
-2. **Marks.** Areas are boxes, points are pins. Fill by tier from `TIER_COLOR`; outline in the fuel
-   colour from `scale.ts`. The selected mark gets a gold ring and resize handles (areas only).
-   Positions are fractions of the image (0..1) in and out, so a resize never moves a mark.
-3. **Tools.** `area`: drag to draw a box, `onAdd` on release (ignored under a minimum size).
-   `point-liquid` / `point-gas`: click drops a pin, `onAdd`. `select`: click selects, drag moves
-   (`onMove` on release), click on empty space calls `onSelect(null)`.
-4. **Keyboard.** Tab through marks in list order, arrow keys move the selected mark (Shift for
-   larger steps), Delete or Backspace reports a delete request. The spec's props have no delete
-   callback: Q7.
-5. **No evidence logic.** Colours come only from `props.tiers`. No distances, no spread between
-   marks.
-6. **Start a Fire Here** is C's panel; it reuses `FireModel3D` from step 1 with `showLabel`.
+- Every place shows the same sample spacecraft (B's human, 2026-11-14): the place changes the air,
+  and so the evidence colours, not the layout. Every place reads the sample's marks from the new
+  example layout file (step 4b), where today C's page has a different set per place.
+- A **Furniture** toggle with one sub-toggle per colour group, as in the preview.
+- Drag to rotate, scroll to zoom, a "Top view" button for placing a point precisely, keyboard
+  arrows to nudge the point.
+- If WebGL is unavailable: a flat 2D plan of the same layout, never a blank box.
 
-Test data: `web/public/layouts/example-moon-habitat.json` (10 marks, via `loadExampleLayout()`).
-
-Checks: draw, drop, move and select on an uploaded image and on the example plan; colours follow
-`tiers`; touch input; keyboard only; `npm run build`.
+Checks: every place in `habitats.json`; example and upload; click, keyboard, touch; `npm run build`.
 
 ---
 
-## 8. Step 6 - polish (`scene/polish`)
+## 7. Step 7 - wiring (`app/wire-cabin-stage`)
 
-- Lazy-load the 3D code (`React.lazy` inside `web/src/scene/`) so the home page does not pay for
-  three.js. Removes the build's bundle-size warning.
-- Projector pass on real hardware: text sizes, contrast, the gold on dark.
-- Performance pass on a laptop on battery.
-- Update `docs/roles/B-3d.md` "Where things stand".
+The three changes agreed in step 3, in C's and shared files, as one small pull request that C
+reviews: move the two types to `types/sim.ts`, add `renderStage` to `SimulationView`, pass
+`CabinStage3D` from `App.tsx`.
+
+---
+
+## 8. Step 8 - polish and housekeeping (`scene/polish`)
+
+- Lazy-load the 3D code so the home page does not pay for three.js (removes the bundle warning).
+- `Flame3D.tsx` and `HabitatMap3D.tsx` are imported nowhere now: delete them, or keep the map if
+  the team wants the all-tests view back (Q7).
+- Rewrite `docs/roles/B-3d.md`: it still lists `LayoutCanvas` and the old tasks.
+- Projector and laptop-on-battery passes on real hardware.
 
 ---
 
@@ -288,28 +337,52 @@ Checks: draw, drop, move and select on an uploaded image and on the example plan
 
 | # | Question | Who | Affects |
 |---|---|---|---|
-| Q0 | `docs/LAYOUT_PLAN.md` gives a submission deadline of Sunday 15 November, 11:59 p.m., with a feature freeze at 3 p.m., and puts `LayoutCanvas` on Sunday morning. Is that still the timeline? If so, steps 1, 3 and 5 must fit in under a day and step 6 may be cut. | B's human | Everything |
-| Q1 | Solid tests on the sim map: show the "by oxygen only" strip below the axis, or only the empty-state message? The brief says not to give unplaced tests a position; the strip gives no pressure. | B's human, A | Step 3 detail |
-| Q2 | After the fire: `HabitatSimMap` and then `LayoutCanvas` (this plan), or `LayoutCanvas` first because C's Layout page is waiting on it? | B's human, C | Order of steps 3 and 5 |
-| Q3 | After both slots are wired, the all-tests 3D map is shown nowhere. Bring it back on the home page (`docs/PLAN.md` open question 1), or retire it? | Team | Step 6 |
-| Q5 | Should the map leave out rows flagged `duplicate_row` (34 SPICE rows)? | A | Step 3 detail |
-| Q6 | `PSI_PER_ATM` exists in C's `ai/evidence.ts`; B needs it too. One shared copy in `web/src/data/`? | A, C | None (B keeps its own until agreed) |
-| Q7 | `LayoutCanvasProps` has no `onDelete`. Add one to the contract, or leave delete to C's panel only? | C | Step 5 detail |
-| Q8 | C's fire page labels step 3 "Fire Simulation" and step 4 "Simulation Map", while the rule is "illustration, not a simulation". Worth telling C. | C | None |
+| Q7 | Delete `HabitatMap3D.tsx` and `Flame3D.tsx`, or bring the all-tests map back somewhere? | Team | Step 8 |
+| Q9 | Who writes the new wording for `CLAUDE.md` and `docs/LAYOUT_PLAN.md` (step 4c)? B can draft it; all three humans must see it. | Team | Step 5 |
+| Q10 | In the illustrated spread, should a liquid or gas point light up the same way as a solid area, and should plain furniture ever light? This plan: only fuel items light; furniture never does. | B's human | Step 5 |
+
+### Step 4a in detail (built, uncommitted)
+
+Checked first: on every remote branch the stage received only the fuel type and whether Simulate
+was pressed. Added:
+
+- `web/src/types/sim.ts` (shared): `StageFire` = the place's oxygen and pressure, the still/vent
+  choice, and what the nearest real tests of the chosen material did.
+- `web/src/panels/sim/SimStage.tsx` (C's): optional `fire` prop. C's stage does not draw from it.
+- `web/src/panels/SimulationView.tsx` (C's): passes `fire` from values the page already had.
+
+Verified in the browser: for the Space Station with "Near a Vent" the stage receives oxygen 0.21,
+pressure 1 atm, airflow "vent", behaviour "unknown". These three files belong in their own pull
+request, separate from the cabin.
+
+### Step 4b in detail (not started)
+
+`web/public/layouts/example-spacecraft.json`: the 11 marks from `cabin/spec.ts` (`SAMPLE_MARKS`)
+as a `Layout`, with the note "Example layout, not a NASA design". It is in A's folder, so it goes
+in a small pull request for A, ideally with a check in A's validator. A's `layoutProblems()`
+already accepts the marks.
 
 ### Answered
 
-- Is `docs/LAYOUT_PLAN.md` final? Yes: merged into `main` (pull request #4).
-- Has A delivered the layout data? Yes: `types/layout.ts`, `fuels.json`, `layoutEvidence.ts` and the
-  example layout are on `main` (pull request #5).
-- Fire or map first? Fire first (B's human, 2026-11-14).
-- Q4 (`showLabel`): not needed. `FireModel3D` always draws its own label with C's existing class
-  `flame-label`; C's `styles.css` already hides `.fire-stage .flame-label`, so the fire page shows
-  one label and any other page shows the component's own. No contract change.
+- Fire spread and a timeline? Yes, option C: the whole team agrees (B's human, 2026-11-14).
+- Where do the sample's marks live? A new example layout file in A's folder (step 4b).
+- Does C pass oxygen, airflow and behaviour to the stage? Yes; built as step 4a.
+- Has C agreed that B rebuilds the Simulation tab's 3D stage? Yes (B's human, 2026-11-14).
+- Is the Sunday 15 November deadline still right? Yes.
+- Which places show the spacecraft? All of them: one sample layout.
+- Look of the model? Blue wireframe hologram.
+- Uploaded plan? An image on the deck where the user places a point; no drawing of marks.
+- Did C change "Step 4 - Pick Where the Fire Starts"? Yes: it is now the button "Simulate Your
+  Project!" leading to the Simulation tab (pull request #6).
+- Should `HabitatSimMap` and `LayoutCanvas` be one thing? Yes; C's stage already is. Both dropped.
+- Fire or map first? Fire first; done.
+- `showLabel` on the fire: not needed; `FireModel3D` draws its own label and C's CSS hides the
+  duplicate on the fire page.
 
 ## 10. Not in this plan
 
-- Any physics or fire-spread model. Both specs rule it out ("Nothing spreads between marks", "an
-  evidence map, not a fire simulation").
-- A "Moon gravity" preset, or any number derived from the fire picture.
-- Changes to the data, the panels, `styles.css` or the store.
+- A physics model of fire, or any time, speed or number derived from the picture. (Whether an
+  illustrated spread is allowed at all is Q2.)
+- Detecting rooms, walls or materials from an uploaded image.
+- A "Moon gravity" preset.
+- Changes to the data, the evidence functions, the panels' text or `styles.css`.
