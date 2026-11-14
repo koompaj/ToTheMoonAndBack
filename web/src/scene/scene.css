@@ -1,0 +1,10 @@
+/* OWNER: 3D workstream. Styles for B's components only; every class starts with fire-b, simmap-b
+   or layout-b so it cannot collide with the app's styles.css. */
+
+.fire-b {
+  position: relative;
+  width: 100%;
+  background: radial-gradient(circle at 50% 60%, #1d2333, #0b0f17 70%);
+}
+.fire-b canvas { display: block; }
+.fire-b-fallback { display: block; width: 100%; height: 100%; }
