@@ -5,6 +5,15 @@ Read this after `CLAUDE.md`. It explains what workstream C (dashboard + AI) buil
 `docs/PLAN.md` is the detailed spec for workstream B's two components; this file is the overview.
 Last updated when PR #2 was opened.
 
+
+> **Update (Simulation tab).** Step 4 moved out of the Fire page into its own **Simulation** tab
+> (`#simulation`), built by C in `web/src/panels/SimulationView.tsx` and `web/src/panels/sim/`: pick a
+> place, see its example cabin in 3D (or upload a floor plan), choose the fuel and material (A's
+> `fuels.json`), click a fire point, press Simulate; the side bar shows `markEvidence`, the nearest
+> real tests of that material and the three tasks, all cited. It covers the journey in
+> `docs/LAYOUT_PLAN.md`, in 3D. So **B no longer needs `HabitatSimMap` or `LayoutCanvas`**;
+> `FireModel3D` is still wanted for the Fire page. The tab name "Simulation" was the team lead's call.
+
 ---
 
 ## 1. The product in one paragraph
@@ -42,7 +51,7 @@ every page.
   **Compare**: star up to 3 cards (`?cmp=PSI-25,PSI-69`); the page splits 1/3 cards : 2/3 table
   (`panels/CompareDrawer.tsx`, exports `ComparePanel`), with Expand, Shrink (`?cmpview=split|full|min`)
   and CSV download.
-- **Risk** (`panels/RiskView.tsx`): plain-language gaps. A place × fuel grid (coral = not tested),
+- **Risk** (`panels/RiskView.tsx`): plain-language gaps. A place × fuel grid (coral = not in PSI's tables),
   six "biggest gaps" cards (what, why it matters, source), then the relevance vs. study-depth ranking
   (`panels/UntappedPanel.tsx`, embedded) with the "signal, not proof" caveat.
 - **Earth Benefits drawer** (`panels/EarthDrawer.tsx`, opened by `panels/EdgeTab.tsx`): four spinoff
@@ -114,7 +123,7 @@ panels/* (C)  --render props-->  scene/* (B)        state/store.ts (shared selec
   with a number or citation not in its fact pack (`ai/out/rejected.txt`).
 - Outputs: `web/public/ai/habitats.json` (habitat summaries), `investigations.json` (summary +
   research question per experiment), `fire.json` (suggestions per `habitat:fuel` for the three tasks,
-  shown as "AI suggestion, not from the tables").
+  shown as "AI suggestion, draft"; like all AI text they must cite facts, uncited ones are rejected).
 - Files are written with `"reviewed": false`; the UI labels them "draft, not reviewed" until a person
   sets `"reviewed": true` and `"reviewed_by"`.
 - **Status: not run yet** (no key on C's machine). `cd ai && npm install && npm run facts` works

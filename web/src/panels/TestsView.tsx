@@ -5,7 +5,7 @@ import { Moon } from './SpaceArt'
 import { useMemo } from 'react'
 import type { AppData, FuelClass, Test } from '../types/data'
 import { useApp } from '../state/store'
-import { fmtPct, fmtPsi, isPlaced } from '../ai/evidence'
+import { fmtPct, fmtPsi, isDuplicate, isPlaced } from '../ai/evidence'
 import { TestCite } from './Cite'
 import { TestDetail } from './TestDetail'
 import { useHashParam } from './route'
@@ -39,6 +39,7 @@ export function TestsView({ data, lockedInv, embedded = false }: { data: AppData
   const rows = useMemo(() => {
     const needle = q.trim().toLowerCase()
     return data.tests.filter((t) => {
+      if (isDuplicate(t)) return false // repeats an earlier row exactly; counted once
       if (fuel !== 'all' && t.fuel_class !== fuel) return false
       if (inv !== 'all' && t.investigation !== inv) return false
       if (where === 'moon' && t.in_moon_envelope !== true) return false
@@ -50,6 +51,7 @@ export function TestsView({ data, lockedInv, embedded = false }: { data: AppData
     })
   }, [data.tests, fuel, inv, where, q])
 
+  const hiddenRepeats = data.tests.filter((t) => isDuplicate(t) && (inv === 'all' || t.investigation === inv)).length
   const pages = Math.max(1, Math.ceil(rows.length / PAGE))
   const cur = Math.min(page, pages)
   const shown = rows.slice((cur - 1) * PAGE, cur * PAGE)
@@ -84,7 +86,7 @@ export function TestsView({ data, lockedInv, embedded = false }: { data: AppData
       ) : (
       <ViewHead
         art={<Moon size={170} />}
-        eyebrow={`${data.tests.length.toLocaleString('en')} NASA Tests`}
+        eyebrow={`${data.tests.filter((t) => !isDuplicate(t)).length.toLocaleString('en')} NASA Tests`}
         title="Every NASA Fire Test"
         lead="Each row is one burn from one experiment. Filter by fuel, experiment or conditions; pick a row to see all its values and its source."
       >
@@ -149,6 +151,12 @@ export function TestsView({ data, lockedInv, embedded = false }: { data: AppData
                 {' '}
                 · showing {(cur - 1) * PAGE + 1}–{Math.min(cur * PAGE, rows.length)}
               </>
+            )}
+            {hiddenRepeats > 0 && (
+              <span className="muted small">
+                {' '}
+                · {hiddenRepeats} rows that exactly repeat an earlier row are counted once
+              </span>
             )}
           </p>
           {rows.length === 0 ? (

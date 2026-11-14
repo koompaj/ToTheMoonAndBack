@@ -3,8 +3,8 @@
 // live from the generated NASA data. Each card and chart leads somewhere: a place card opens that
 // place (step 2), a fuel slice opens the Test Explorer filtered to it, a pillar opens Investigations.
 import type { AppData, FuelClass } from '../types/data'
-import { testsInHabitat } from '../data/load'
-import { fmtPct, headline, isPlaced, psi } from '../ai/evidence'
+import { distinctTestCount, testsInHabitat } from '../data/load'
+import { fmtPct, headline, isDuplicate, isPlaced, psi } from '../ai/evidence'
 import { Donut, Histogram, StackRow, type BarSeg } from './charts'
 import { FUTURE_PLACES, placeArt, placeName } from './places'
 import { PlaceArt, RocketPath, Stars } from './SpaceArt'
@@ -21,6 +21,8 @@ function segs(tests: { fuel_class: FuelClass }[]): BarSeg[] {
 
 export function HomeView({ data }: { data: AppData }) {
   const h = headline(data)
+  const nTests = distinctTestCount(data)
+  const distinct = data.tests.filter((t) => !isDuplicate(t))
   const places = data.habitats.map((hab) => ({ hab, inside: testsInHabitat(data.tests, hab) }))
   const future = FUTURE_PLACES.filter((f) => !data.habitats.some((x) => x.id === f.id))
   const maxInside = Math.max(1, ...places.map((p) => p.inside.length))
@@ -51,7 +53,7 @@ export function HomeView({ data }: { data: AppData }) {
               <span className="headline-big">Where Crews Live?</span>
             </h1>
             <p className="headline-body">
-              {data.tests.length.toLocaleString('en')} NASA microgravity fire tests, placed by the <b>oxygen</b> and <b>pressure</b>{' '}
+              {nTests.toLocaleString('en')} NASA microgravity combustion tests, placed by the <b>oxygen</b> and <b>pressure</b>{' '}
               they ran at, against the air in each place crews live. Pick a place to see what is known there, then a fuel to
               see how a fire would behave and how to detect, stop and prevent it.
             </p>
@@ -64,7 +66,7 @@ export function HomeView({ data }: { data: AppData }) {
         <dl className="stat-strip">
           <div>
             <dt>NASA tests</dt>
-            <dd>{data.tests.length.toLocaleString('en')}</dd>
+            <dd>{nTests.toLocaleString('en')}</dd>
           </div>
           <div>
             <dt>Investigations</dt>
@@ -93,8 +95,8 @@ export function HomeView({ data }: { data: AppData }) {
               </span>
               <span className="place-name">{placeName(hab.id, hab.name)}</span>
               <span className="place-cond mono">
-                {hab.o2_fraction[0] === hab.o2_fraction[1] ? fmtPct(hab.o2_fraction[0], 0) : `≥ ${fmtPct(hab.o2_fraction[0], 0)}`} oxygen ·{' '}
-                {hab.pressure_psi[0] === hab.pressure_psi[1] ? `${hab.pressure_psi[0]} psi` : `≤ ${hab.pressure_psi[1]} psi`}
+                {hab.o2_fraction[0] === hab.o2_fraction[1] ? fmtPct(hab.o2_fraction[0], 0) : `${fmtPct(hab.o2_fraction[0], 0)} – ${fmtPct(hab.o2_fraction[1], 0)}`} oxygen ·{' '}
+                {hab.pressure_psi[0] === hab.pressure_psi[1] ? `${hab.pressure_psi[0]} psi` : `${hab.pressure_psi[0]} – ${hab.pressure_psi[1]} psi`}
               </span>
               <span className="place-num">{inside.length}</span>
               <span className="place-sub">NASA tests in this air</span>
@@ -126,7 +128,7 @@ export function HomeView({ data }: { data: AppData }) {
       <section className="chart-grid" aria-label="Summary charts">
         <div className="panel chart-card wide">
           <h2>Tests in Each Place, by Fuel</h2>
-          <p className="muted small">How many NASA tests ran in each place's air. Click a row to open that place.</p>
+          <p className="muted small">How many tests in PSI's tables ran in each place's air. Click a row to open that place.</p>
           <div className="srows">
             {places.map(({ hab, inside }, i) => (
               <StackRow
@@ -137,7 +139,7 @@ export function HomeView({ data }: { data: AppData }) {
                 max={maxInside}
                 delay={i * 120}
                 onClick={() => go(`#place?h=${hab.id}`)}
-                empty="No NASA test ran in this air"
+                empty="No test in PSI's tables"
               />
             ))}
           </div>
@@ -153,10 +155,10 @@ export function HomeView({ data }: { data: AppData }) {
 
         <div className="panel chart-card">
           <h2>What Burned</h2>
-          <p className="muted small">All {data.tests.length.toLocaleString('en')} tests by fuel. Click to list them.</p>
+          <p className="muted small">All {nTests.toLocaleString('en')} distinct tests by fuel. Click to list them.</p>
           <Donut
-            parts={FUELS.map((f) => ({ key: f, value: data.tests.filter((t) => t.fuel_class === f).length, className: `fill-${f}`, label: FUEL_SHORT[f] }))}
-            centre={data.tests.length.toLocaleString('en')}
+            parts={FUELS.map((f) => ({ key: f, value: distinct.filter((t) => t.fuel_class === f).length, className: `fill-${f}`, label: FUEL_SHORT[f] }))}
+            centre={nTests.toLocaleString('en')}
             sub="tests"
             onPick={(f) => go(`#experiments?view=tests&fuel=${f}`)}
           />

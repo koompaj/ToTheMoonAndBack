@@ -66,7 +66,7 @@ export function PlaceView({ data, ai }: { data: AppData; ai: AiContent }) {
               {!isSourced(hab) && <span className="badge warn">Needs a Source</span>}
             </div>
             <p className="lead">
-              <b className="t-accent">{inside.length}</b> NASA tests ran in this air:{' '}
+              <b className="t-accent">{inside.length}</b> tests in PSI&rsquo;s tables ran in this air:{' '}
               {FUELS.map((f, i) => (
                 <span key={f}>
                   {i > 0 && ', '}
@@ -109,7 +109,7 @@ export function PlaceView({ data, ai }: { data: AppData; ai: AiContent }) {
                   {' · '}
                   {ps.length ? `${fmtPsi(Math.min(...ps))} – ${fmtPsi(Math.max(...ps))}` : 'pressure not in tables'}
                 </span>
-                <span className="place-go">Simulate a {f} fire →</span>
+                <span className="place-go">Explore a {f} fire →</span>
               </a>
             )
           })}

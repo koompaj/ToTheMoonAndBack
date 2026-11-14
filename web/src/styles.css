@@ -934,3 +934,132 @@ a.risk-cell:hover { transform: translateY(-2px); text-decoration: none; }
   .exp-split.cmp-split > .inv-grid { position: static; max-height: none; order: 2; }
   .cmp-panel { position: relative; top: 0; max-height: none; }
 }
+
+/* fire page: big fuel switch */
+.fuel-switch { display: grid; gap: 8px; justify-items: start; }
+.fuel-switch-label { font-size: 14px; font-weight: 650; color: var(--ink-muted); letter-spacing: 0.04em; text-transform: uppercase; }
+.choice.big { padding: 6px; gap: 6px; border-radius: 16px; background: var(--surface-1); border-color: var(--hairline-strong); }
+.choice.big button { display: inline-flex; align-items: center; gap: 10px; padding: 14px 26px; font-size: 19px; font-weight: 700; border-radius: 12px; color: var(--ink-muted); background: var(--surface-2); }
+.choice.big button .dot { width: 14px; height: 14px; }
+.choice.big button:hover { color: var(--ink); background: var(--surface-3); }
+.choice.big button.on { box-shadow: 0 0 0 1px currentColor, 0 8px 24px color-mix(in srgb, currentColor 22%, transparent); }
+.choice.big button.tone-solid.on { background: rgba(255, 138, 61, 0.16); }
+.choice.big button.tone-droplet.on { background: rgba(79, 195, 247, 0.16); }
+.choice.big button.tone-gas.on { background: rgba(179, 136, 255, 0.16); }
+@media (max-width: 760px) {
+  .fuel-switch { justify-items: stretch; width: 100%; }
+  .choice.big { width: 100%; }
+  .choice.big button { flex: 1; justify-content: center; padding: 12px 10px; font-size: 16px; }
+}
+
+/* earth drawer: four spinoff cards stacked, filling the drawer height */
+.drawer-earth { display: flex; flex-direction: column; gap: 16px; }
+.spin-stack { flex: 1; display: flex; flex-direction: column; gap: 12px; min-height: 0; }
+.spin-stack .spin-card { flex: 1; align-content: center; padding: 20px 22px; gap: 10px; min-height: 140px; }
+.spin-stack .spin-card b { font-size: 22px; }
+.spin-stack .spin-text { font-size: 16px; }
+.spin-top .spin-tag { margin-left: auto; margin-top: 0; padding: 2px 10px; border-radius: 999px; background: color-mix(in srgb, var(--tone) 16%, transparent); }
+.spin-link { font-size: 14px; font-weight: 650; color: var(--tone); }
+
+/* ===================== starry background + translucent cards (all pages) ===================== */
+:root {
+  --surface-1: rgba(26, 27, 32, 0.72);
+  --surface-2: rgba(36, 37, 43, 0.72);
+  --surface-3: rgba(48, 49, 56, 0.8);
+}
+body {
+  background-color: #07080c;
+  background-image:
+    radial-gradient(1.2px 1.2px at 12% 18%, rgba(255, 255, 255, 0.8), transparent 60%),
+    radial-gradient(1px 1px at 72% 12%, rgba(255, 255, 255, 0.7), transparent 60%),
+    radial-gradient(1.4px 1.4px at 38% 62%, rgba(255, 255, 255, 0.6), transparent 60%),
+    radial-gradient(1px 1px at 88% 48%, rgba(255, 255, 255, 0.75), transparent 60%),
+    radial-gradient(1px 1px at 22% 84%, rgba(255, 255, 255, 0.6), transparent 60%),
+    radial-gradient(1.3px 1.3px at 56% 32%, rgba(200, 230, 255, 0.7), transparent 60%),
+    radial-gradient(1px 1px at 64% 78%, rgba(255, 255, 255, 0.55), transparent 60%),
+    radial-gradient(1px 1px at 6% 46%, rgba(255, 255, 255, 0.6), transparent 60%),
+    radial-gradient(1.1px 1.1px at 94% 88%, rgba(255, 255, 255, 0.6), transparent 60%),
+    radial-gradient(1px 1px at 46% 6%, rgba(255, 255, 255, 0.6), transparent 60%),
+    radial-gradient(60% 50% at 80% 0%, rgba(56, 120, 255, 0.08), transparent 70%),
+    radial-gradient(50% 40% at 0% 100%, rgba(255, 140, 60, 0.05), transparent 70%);
+  background-size: 420px 420px, 380px 380px, 520px 520px, 300px 300px, 460px 460px, 610px 610px, 350px 350px, 400px 400px, 540px 540px, 330px 330px, 100% 100%, 100% 100%;
+  background-attachment: fixed;
+}
+.panel, .view-hero, .headline, .inv-card, .place-card, .fuel-card, .task-card, .gap-card, .kpi, .stat-strip div, .cmp-panel, .drawer, .spinoff, .spin-card, .exp-text {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* orange gradient action */
+.btn-sim {
+  display: grid; justify-items: center; gap: 2px; width: 100%; padding: 16px 20px; border: 0; border-radius: 999px; cursor: pointer;
+  font: 800 19px var(--font-display); letter-spacing: 0.01em; color: #1f0d00; text-decoration: none;
+  background: linear-gradient(90deg, #ff9a3c, #ff7a1a 45%, #ff5f2e);
+  box-shadow: 0 10px 30px rgba(255, 122, 26, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  transition: transform 0.15s, box-shadow 0.15s, filter 0.15s;
+}
+.btn-sim:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 14px 38px rgba(255, 122, 26, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.35); text-decoration: none; }
+.btn-sim:active:not(:disabled) { transform: translateY(0) scale(0.99); }
+.btn-sim:disabled { filter: grayscale(0.8) brightness(0.6); cursor: not-allowed; box-shadow: none; }
+.btn-sim small { font: 600 13px var(--font); color: rgba(31, 13, 0, 0.75); }
+.cta-sim { max-width: 560px; margin: 0 0 0 auto; }
+
+/* ===================== simulation page ===================== */
+.sim-page { padding: 20px; display: grid; gap: 16px; max-width: 1720px; margin: 0 auto; width: 100%; }
+.sim-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; flex-wrap: wrap; }
+.sim-head h1 { font-size: clamp(30px, 3.4vw, 48px); font-weight: 800; letter-spacing: -0.025em; background: linear-gradient(90deg, #fff, #9ad8ff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.sim-steps { display: flex; gap: 6px; list-style: none; margin: 0; padding: 0; flex-wrap: wrap; }
+.sim-steps li { display: flex; align-items: center; gap: 8px; padding: 6px 12px 6px 6px; border-radius: 999px; background: var(--surface-1); border: 1px solid var(--hairline); color: var(--ink-subtle); font-size: 14px; font-weight: 600; }
+.sim-steps li span { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--surface-3); font-size: 13px; }
+.sim-steps li.now { color: var(--ink); border-color: #5cc8ff; }
+.sim-steps li.now span { background: #5cc8ff; color: #04121f; }
+.sim-steps li.done span { background: var(--evidence); color: #04121f; }
+.sim-grid { display: grid; grid-template-columns: 330px minmax(0, 1fr); gap: 16px; align-items: start; }
+.sim-grid.has-results { grid-template-columns: 330px minmax(0, 1fr) 400px; }
+.sim-grid:not(.has-results) .sim-results { display: none; }
+.sim-controls, .sim-results { display: grid; gap: 12px; align-content: start; }
+.sim-results { max-height: calc(100vh - 96px); overflow-y: auto; position: sticky; top: 76px; padding-right: 4px; }
+.sim-card { display: grid; gap: 12px; padding: 16px; border-radius: 20px; }
+.sim-card h2 { font-size: 17px; margin: 0; display: flex; align-items: center; gap: 10px; }
+.sim-card h3 { font-size: 16px; margin: 0; }
+.sim-card.locked { opacity: 0.45; pointer-events: none; }
+.sim-n { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: #5cc8ff; color: #04121f; font: 800 14px var(--font); flex: none; }
+.sim-places { display: grid; gap: 6px; }
+.sim-place { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 12px; border: 1px solid var(--hairline); background: var(--surface-2); color: var(--ink-muted); font: inherit; font-weight: 600; font-size: 15px; text-align: left; cursor: pointer; transition: border-color 0.15s, background-color 0.15s; }
+.sim-place .art { width: 34px; height: 34px; flex: none; }
+.sim-place:hover { border-color: #5cc8ff; color: var(--ink); }
+.sim-place.on { border-color: #5cc8ff; background: rgba(92, 200, 255, 0.12); color: var(--ink); }
+.sim-upload { display: grid; gap: 4px; padding: 12px; border: 1px dashed rgba(92, 200, 255, 0.5); border-radius: 12px; cursor: pointer; font-size: 14px; color: var(--ink-muted); }
+.sim-upload input { font: inherit; color: var(--ink-muted); }
+.sim-upload small { color: var(--ink-subtle); }
+.sim-select select { width: 100%; }
+.sim-air { color: var(--ink-subtle); font-size: 12px; margin: 0; }
+.sim-stage-wrap { position: sticky; top: 76px; }
+.sim-stage { position: relative; height: calc(100vh - 110px); min-height: 520px; border-radius: 24px; overflow: hidden; border: 1px solid rgba(92, 200, 255, 0.35); box-shadow: 0 0 60px rgba(56, 160, 255, 0.12) inset; }
+.sim-hint { position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%); padding: 6px 14px; border-radius: 999px; background: rgba(4, 12, 24, 0.75); border: 1px solid rgba(92, 200, 255, 0.35); color: #bfe8ff; font-size: 13px; pointer-events: none; white-space: nowrap; }
+.sim-legend { position: absolute; left: 14px; top: 14px; display: grid; gap: 6px; padding: 10px 12px; border-radius: 14px; background: rgba(4, 12, 24, 0.75); border: 1px solid rgba(92, 200, 255, 0.3); font-size: 13px; color: var(--ink-muted); max-width: 260px; }
+.sim-legend span { display: flex; align-items: center; gap: 8px; }
+.sim-legend i { width: 12px; height: 12px; border-radius: 3px; }
+.sim-legend small { color: var(--ink-subtle); }
+.sim-wait { min-height: 200px; }
+.sim-res-title { font-size: 22px; display: flex; align-items: center; gap: 10px; margin: 0; }
+.tier-badge { justify-self: start; padding: 4px 12px; border-radius: 999px; font-weight: 700; font-size: 14px; color: var(--tier); background: color-mix(in srgb, var(--tier) 16%, transparent); border: 1px solid var(--tier); }
+.sim-lines { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.sim-lines li { font-size: 14px; color: var(--ink-muted); padding: 9px 11px; border-radius: 12px; background: var(--surface-2); }
+.sim-lines li.gap { background: rgba(255, 107, 107, 0.1); }
+.sim-near { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.sim-near li { display: grid; grid-template-columns: 1fr auto; gap: 2px 8px; align-items: center; padding: 8px 10px; border-radius: 10px; background: var(--surface-2); font-size: 14px; }
+.sim-near .cite { grid-column: 1 / -1; justify-self: start; }
+.sim-task-title { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.sim-task-title small { color: var(--tone); font-weight: 600; font-size: 13px; }
+
+@media (max-width: 1400px) {
+  .sim-grid, .sim-grid.has-results { grid-template-columns: 320px minmax(0, 1fr); }
+  .sim-results { grid-column: 1 / -1; position: static; max-height: none; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
+}
+@media (max-width: 900px) {
+  .sim-grid, .sim-grid.has-results { grid-template-columns: minmax(0, 1fr); }
+  .sim-stage-wrap { position: relative; top: 0; order: -1; }
+  .sim-stage { height: 60vh; min-height: 380px; }
+  .cta-sim { margin: 0; max-width: none; }
+}

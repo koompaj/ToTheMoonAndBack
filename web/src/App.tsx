@@ -1,21 +1,20 @@
 // OWNER: dashboard + AI workstream (app shell and layout).
 // The flow: Home (summary of every place) -> #place?h=<habitat> (one place, choose a fuel)
-// -> #fire?h=<habitat>&fuel=<fuel> (3D fire, expected behaviour, three tasks, simulation map).
-// The fire page draws workstream B's components through the two render props below; see
-// docs/PLAN.md. Until B's FireModel3D and HabitatSimMap exist, the baseline Flame3D and
-// HabitatMap3D stand in for them.
+// -> #fire?h=<habitat>&fuel=<fuel> (3D fire illustration, expected behaviour, three tasks)
+// -> #simulation (3D cabin, fire point, three tasks). The fire page draws workstream B's
+// FireModel3D through the renderFire prop below (docs/PLAN.md).
 import { useEffect, useState } from 'react'
 import type { AppData } from './types/data'
-import type { FireModelProps, HabitatSimMapProps } from './types/sim'
-import { loadData } from './data/load'
+import type { FireModelProps } from './types/sim'
+import { distinctTestCount, loadData } from './data/load'
 import { loadAiContent, type AiContent } from './ai/content'
-import { HabitatMap3D } from './scene/HabitatMap3D'
 import { FireModel3D } from './scene/FireModel3D'
 import { HomeView } from './panels/HomeView'
 import { PlaceView } from './panels/PlaceView'
 import { FireView } from './panels/FireView'
 import { ExperimentsView } from './panels/ExperimentsView'
 import { RiskView } from './panels/RiskView'
+import { SimulationView } from './panels/SimulationView'
 import { EarthDrawer } from './panels/EarthDrawer'
 import { parseHash } from './panels/route'
 
@@ -25,6 +24,7 @@ const VIEWS = [
   { id: 'fire', label: 'Fire', nav: false },
   { id: 'experiments', label: 'Experiments', nav: true },
   { id: 'risk', label: 'Risk', nav: true },
+  { id: 'simulation', label: 'Simulation', nav: true },
 ] as const
 type ViewId = (typeof VIEWS)[number]['id']
 
@@ -37,9 +37,8 @@ function viewFromHash(): ViewId {
   return (VIEWS.find((x) => x.id === v)?.id ?? 'map') as ViewId
 }
 
-// ---- workstream B slots (swap these two lines when B's components land; see docs/PLAN.md) ----
+// ---- workstream B's fire illustration fills the fire page's slot (docs/PLAN.md) ----
 const renderFire = (p: FireModelProps) => <FireModel3D {...p} />
-const renderMap = (p: HabitatSimMapProps) => <HabitatMap3D data={p.data} />
 
 function Mark() {
   return (
@@ -109,16 +108,17 @@ export default function App() {
           ))}
         </nav>
         <span className="topbar-meta mono">
-          {data.tests.length.toLocaleString('en')} tests · {investigationsWithTests}/{data.investigations.length} investigations
+          {distinctTestCount(data).toLocaleString('en')} tests · {investigationsWithTests}/{data.investigations.length} investigations
         </span>
       </header>
 
       <main id="main" tabIndex={-1}>
         {view === 'map' && <HomeView data={data} />}
         {view === 'place' && <PlaceView data={data} ai={ai} />}
-        {view === 'fire' && <FireView data={data} ai={ai} renderFire={renderFire} renderMap={renderMap} />}
+        {view === 'fire' && <FireView data={data} ai={ai} renderFire={renderFire} />}
         {view === 'experiments' && <ExperimentsView data={data} ai={ai} />}
         {view === 'risk' && <RiskView data={data} ai={ai} />}
+        {view === 'simulation' && <SimulationView data={data} />}
       </main>
 
       <EarthDrawer data={data} />

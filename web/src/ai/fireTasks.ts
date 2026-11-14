@@ -122,7 +122,9 @@ export function taskAnswers(data: AppData, habitat: Habitat, fuel: FuelClass, po
       cites: invs,
     })
   }
-  const air = ofFuel.filter((t) => t.airflow_cm_s !== null)
+  // Leave out values NASA records as negative (flag airflow_negative_in_source; meaning not stated),
+  // the same rule as airflowRange() in data/load.ts.
+  const air = ofFuel.filter((t) => t.airflow_cm_s !== null && !t.flags.includes('airflow_negative_in_source'))
   if (air.length) {
     const ar = range(air.map((t) => t.airflow_cm_s!))!
     prevention.push({
@@ -180,7 +182,7 @@ export function taskAnswers(data: AppData, habitat: Habitat, fuel: FuelClass, po
     const rows = same.reduce((n, o) => n + o.rows.length, 0)
     detection.push({
       kind: 'data',
-      text: `SAME and SAME-R heated ${mats.length} spacecraft materials (${mats.join(', ')}) in ${rows} smoke tests to measure the smoke a detector would see.`,
+      text: `SAME and SAME-R heated ${mats.length} materials (${mats.join(', ')}) in ${rows} smoke tests to measure the smoke a detector would see.`,
       cites: same.map((o) => o.investigation),
     })
   }
@@ -195,7 +197,7 @@ export function taskAnswers(data: AppData, habitat: Habitat, fuel: FuelClass, po
     kind: fuel === 'solid' ? 'data' : 'gap',
     text:
       fuel === 'solid'
-        ? 'Those smoke tests heat solid materials, so they apply most directly to a solid-material fire.'
+        ? 'Those smoke tests heat materials without an open flame, so they are closest to an overheating solid material.'
         : `No smoke or detection measurement in the tables comes from a ${fuel} flame.`,
     cites: [],
   })

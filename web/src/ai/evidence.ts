@@ -146,7 +146,7 @@ export function headline(data: AppData) {
   const topSolid = solidWithO2.reduce<Test | null>((m, t) => (!m || t.o2_fraction! > m.o2_fraction! ? t : m), null)
   const solidPlaced = placed.filter((t) => t.fuel_class === 'solid').length
   return {
-    tests: data.tests.length,
+    tests: data.tests.filter((t) => !isDuplicate(t)).length,
     placed: placed.length,
     env,
     envInvestigations,
@@ -194,7 +194,8 @@ const PILLAR_WORD: Record<Pillar, string> = { prevention: 'prevention', detectio
 
 export function investigationStats(data: AppData): InvestigationStats[] {
   return data.investigations.map((inv) => {
-    const tests = data.tests.filter((t) => t.investigation === inv.accession)
+    // Rows that exactly repeat an earlier row (34 in SPICE) are not separate tests.
+    const tests = data.tests.filter((t) => t.investigation === inv.accession && !isDuplicate(t))
     const tableRows = inv.tables.reduce((n, t) => n + t.rows, 0)
     const otherRows = data.otherTables.filter((o) => o.investigation === inv.accession).reduce((n, o) => n + o.rows.length, 0)
     const pubs = inv.publications.length
