@@ -10,9 +10,11 @@ tables", never "never tested": NASA ran more (for example Saffire-IV to VI) than
 > and pressure it ran at, against the air in each place crews will live."
 
 Point at the place cards: Moon Base (challenge box) 20 tests, Moon Base in NASA's own exploration
-air 0, ISS 34, spacesuit 0, Earth 34; spacecraft cabin, lunar lander and Mars wait for a NASA
-source. Then the oxygen chart: the gold Moon Base band has almost no tests, and none solid.
-"0 of 263 solid tests can even be placed: their tables have no pressure."
+air 0, ISS 171, spacesuit 0, Earth 171 (ISS and Earth use NASA's +-2 % / +-0.2 psi control band).
+Each card says whether its gravity matches: only the ISS does; every PSI test ran in microgravity,
+and partial-gravity data may come later (LUCI, FM2). Then the oxygen chart: the gold Moon Base band
+has almost no tests, and none solid. "Only 29 of 263 solid tests can be placed, using the pressure
+in NASA's BASS-II report; the other solid tables have no pressure."
 
 ## 0:25 - Step 2, the Moon Base
 

@@ -22,9 +22,10 @@ A web dashboard for NASA Space Apps 2026, "Flame in Freefall". It answers: **"Fo
 crew will live (Moon Base, spacesuit, Earth, later ISS and Mars), what does NASA's microgravity fire
 data say, what is missing, and how would a fire there be detected, stopped and prevented?"** Every
 number comes from NASA's PSI tables (`web/public/data/`, produced by workstream A) and carries a
-citation (test row or DOI). Nothing is estimated. The headline: only 20 of 746 placeable tests ran in
+citation (test row or DOI). Nothing is estimated. The headline: only 20 of 775 placeable tests ran in
 Moon Base air, all gas flames from one experiment (ACME CFI-G); no solid material in the tables goes
-above 22.2 % oxygen, and none of the 263 solid tests records pressure.
+above 22.2 % oxygen, and only 29 of the 263 solid tests can be placed (pressure from NASA's BASS-II
+report, 1 atm). Every test ran in microgravity; each place shows its own gravity and whether it matches.
 
 ## 2. The user flow (agreed with the team)
 
