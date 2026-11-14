@@ -1167,3 +1167,14 @@ body { background: #04050a; background-image: none; }
 .space-float { will-change: transform; }
 .view-head h1, .headline-big, .place-hero h1, .fire-head h1, .sim-head h1 { animation: none; background-size: 100% 100%; }
 .panel:hover, .view-hero:hover, .headline:hover, .task-card:hover, .gap-card:hover, .exp-text:hover { box-shadow: none; }
+
+/* fuel icons in the fuel switches and the risk grid */
+.fuel-icon { flex: none; display: inline-block; vertical-align: -5px; }
+.fuel-icon-gas { color: var(--gas); }
+.fuel-icon-droplet { color: var(--droplet); }
+.fuel-icon-solid { color: var(--solid); }
+.choice button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; white-space: nowrap; }
+.choice.big button .fuel-icon { width: 24px; height: 24px; }
+.risk-matrix thead th .fuel-icon { margin-right: 6px; }
+.choice.full { flex-wrap: nowrap; }
+.choice.full button { min-width: 0; padding-left: 8px; padding-right: 8px; gap: 6px; }
