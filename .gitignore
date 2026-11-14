@@ -1,0 +1,25 @@
+# dependencies and build output
+node_modules/
+web/dist/
+
+# secrets - API keys stay local
+.env
+.env.*
+!.env.example
+
+# python
+__pycache__/
+*.pyc
+
+# partial downloads
+*.part
+
+# video is out of scope for this project
+data/video_sample/
+scripts/video_brightness.py
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

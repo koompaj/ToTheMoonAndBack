@@ -1,0 +1,66 @@
+/* OWNER: dashboard + AI workstream. Baseline styling only. */
+:root {
+  --bg: #0b0f17;
+  --panel: #131a26;
+  --line: #24303f;
+  --text: #e6edf3;
+  --muted: #8b9bb0;
+  --accent: #ffd54f;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+
+html, body, #root { height: 100%; margin: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font: 14px/1.5 system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+a { color: #7cc4ff; }
+
+.status { padding: 24px; }
+
+.app { display: flex; flex-direction: column; height: 100%; }
+
+header {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 20px;
+  padding: 10px 16px; border-bottom: 1px solid var(--line);
+}
+header h1 { font-size: 18px; margin: 0; }
+header label { margin-left: auto; color: var(--muted); }
+
+main { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) 400px; }
+
+.scene { position: relative; min-height: 320px; }
+.scene-note { position: absolute; left: 12px; bottom: 10px; color: var(--muted); font-size: 12px; }
+
+aside { overflow-y: auto; border-left: 1px solid var(--line); padding: 12px; display: grid; gap: 12px; align-content: start; }
+
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 12px; }
+.panel h2 { font-size: 14px; margin: 0 0 8px; }
+.panel ul { margin: 6px 0; padding-left: 18px; }
+.panel table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.panel th, .panel td { text-align: left; padding: 3px 6px 3px 0; border-bottom: 1px solid var(--line); }
+
+.tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+.tabs button {
+  background: transparent; color: var(--text); border: 1px solid var(--line);
+  border-radius: 6px; padding: 4px 8px; cursor: pointer; font: inherit;
+}
+.tabs button.on { border-color: var(--accent); color: var(--accent); }
+
+.big { font-size: 22px; font-weight: 600; margin: 4px 0; }
+.muted { color: var(--muted); font-size: 12px; }
+
+.flame { position: relative; height: 160px; border-radius: 6px; overflow: hidden; }
+.flame-label { position: absolute; left: 8px; bottom: 6px; font-size: 11px; color: var(--muted); }
+.slider { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); margin-top: 8px; }
+.slider input { flex: 1; }
+
+@media (max-width: 900px) {
+  main { grid-template-columns: 1fr; grid-template-rows: 55vh auto; }
+  aside { border-left: 0; border-top: 1px solid var(--line); }
+}

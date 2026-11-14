@@ -1,0 +1,59 @@
+[
+ {
+  "id": "moon_base",
+  "name": "Moon Base / pressurized rover",
+  "o2_fraction": [
+   0.3,
+   1.0
+  ],
+  "pressure_psi": [
+   4.3,
+   10.2
+  ],
+  "pressure_atm": [
+   0.2926,
+   0.6941
+  ],
+  "note": "Challenge: oxygen 'likely 30% or greater', pressure '10.2 psi or less', between spacesuit and Earth values. The outer bounds here are the spacesuit values.",
+  "source": "NASA Space Apps 2026 challenge page, Flame in Freefall (Potential Considerations)",
+  "status": "from_challenge"
+ },
+ {
+  "id": "spacesuit",
+  "name": "Spacesuit",
+  "o2_fraction": [
+   1.0,
+   1.0
+  ],
+  "pressure_psi": [
+   4.3,
+   4.3
+  ],
+  "pressure_atm": [
+   0.2926,
+   0.2926
+  ],
+  "note": "Challenge: spacesuits are filled with 100% oxygen to only 4.3 psi.",
+  "source": "NASA Space Apps 2026 challenge page, Flame in Freefall (Potential Considerations)",
+  "status": "from_challenge"
+ },
+ {
+  "id": "earth_sea_level",
+  "name": "Earth sea level",
+  "o2_fraction": [
+   0.21,
+   0.21
+  ],
+  "pressure_psi": [
+   14.7,
+   14.7
+  ],
+  "pressure_atm": [
+   1.0,
+   1.0
+  ],
+  "note": "Challenge gives 14.7 psi. The 21% oxygen figure is the standard value and is implied by the challenge's 'more than a 40% increase' comparison; cite a source before presenting it.",
+  "source": "NASA Space Apps 2026 challenge page, Flame in Freefall (Potential Considerations)",
+  "status": "pressure_from_challenge_o2_needs_source"
+ }
+]
