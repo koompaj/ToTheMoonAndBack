@@ -26,3 +26,27 @@
   position: absolute; right: 14px; top: 14px; padding: 6px 12px; border-radius: 999px; font-size: 13px;
   background: rgba(4, 12, 24, 0.78); border: 1px solid rgba(92, 200, 255, 0.3);
 }
+
+/* The illustrated-spread timeline sits above the page's own hint line at the bottom of the stage. */
+.cabin-b-timeline {
+  position: absolute; left: 14px; right: 14px; bottom: 54px; display: grid; gap: 6px; padding: 10px 14px;
+  border-radius: 14px; background: rgba(4, 12, 24, 0.86); border: 1px solid rgba(255, 179, 71, 0.45);
+  font-size: 13px; color: #cfe9ff;
+}
+.cabin-b-timeline-row { display: flex; align-items: center; gap: 10px; }
+.cabin-b-timeline-row input[type='range'] { flex: 1; min-width: 80px; accent-color: #ffb347; }
+.cabin-b-btn {
+  background: rgba(255, 179, 71, 0.12); color: #ffe2b8; border: 1px solid rgba(255, 179, 71, 0.5);
+  border-radius: 8px; padding: 4px 10px; font: inherit; font-weight: 600; cursor: pointer; white-space: nowrap;
+}
+.cabin-b-btn:hover { background: rgba(255, 179, 71, 0.22); }
+.cabin-b-step { font-variant-numeric: tabular-nums; white-space: nowrap; color: #ffe2b8; font-weight: 600; }
+.cabin-b-timeline-note { margin: 0; font-size: 12.5px; line-height: 1.4; color: #a9c6da; }
+.cabin-b-timeline-note b { color: #ffd9a0; font-weight: 600; }
+
+.cabin-b-key { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 12.5px; color: #cfe9ff; }
+.cabin-b-key i {
+  width: 150px; height: 9px; border-radius: 5px;
+  background: linear-gradient(90deg, #ff3410, #ffe61a, #26e64d, #00ccff, #1a38ff);
+}
+.cabin-b-key small { color: #a9c6da; }

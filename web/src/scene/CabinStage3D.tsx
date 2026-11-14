@@ -2,28 +2,31 @@
 //   - no place chosen: the sample spacecraft from outside, turning slowly;
 //   - place chosen:    the sample spacecraft with its fuel items coloured by how much NASA evidence
 //                      exists (colours arrive as props), or the user's own floor plan flat on a deck;
-//   - double-click an object or the deck to place the fire point; after "Simulate" it lights up.
+//   - double-click an object or the deck to place the fire point; after "Simulate" a flame starts
+//     there and an illustrated spread reaches the other fuel items, with a timeline to play or drag.
 //
 // Everything here is an ILLUSTRATION on an EXAMPLE LAYOUT, NOT A NASA DESIGN. The stage works out
 // no evidence and no outcome, and where the fire is placed changes nothing about the evidence.
+// The spread is a drawing, not a prediction: see cabin/timeline.ts and CLAUDE.md.
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { Canvas, useFrame, type ThreeEvent } from '@react-three/fiber'
+import { Canvas, type ThreeEvent } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import * as THREE from 'three'
-import type { FuelClass } from '../types/data'
 import { TIER_COLOR, type EvidenceTier } from '../types/layout'
 import type { CabinStageProps } from '../types/sim'
 import { Label } from './Label'
 import { useReducedMotion } from './fire/state'
+import { CabinFire, type SpreadClock } from './cabin/CabinFire'
 import { Spacecraft } from './cabin/Spacecraft'
+import { NothingToReach, TimelineBar } from './cabin/TimelineBar'
 import { groupItems, hiddenFor } from './cabin/groups'
 import { HOLO, Segs } from './cabin/holo'
 import { ITEMS, PLAN, deckHalfWidth } from './cabin/spec'
+import { NO_SPREAD, planSpread } from './cabin/timeline'
 import './scene.css'
 
 const BACKGROUND = '#04070d'
 const TIER_OF_COLOR = Object.fromEntries(Object.entries(TIER_COLOR).map(([tier, color]) => [color.toLowerCase(), tier])) as Record<string, EvidenceTier>
-const FLAME_COLOR: Record<FuelClass, string> = { gas: '#8fb8ff', droplet: '#6ad0ff', solid: '#ffb347' }
 
 const clamp01 = (v: number) => Math.min(1, Math.max(0, v))
 const round3 = (v: number) => Math.round(v * 1000) / 1000
@@ -106,46 +109,18 @@ function UploadedPlan({ imageUrl, onSize }: { imageUrl: string; onSize: (w: numb
   )
 }
 
-function FirePoint({ position, fuel, lit }: { position: [number, number, number]; fuel: FuelClass; lit: boolean }) {
-  const still = useReducedMotion()
-  const core = useRef<THREE.Mesh>(null)
-  const ring = useRef<THREE.Mesh>(null)
-  const time = useRef(0)
-  useFrame((_, dt) => {
-    if (still || !lit) return
-    time.current += Math.min(dt, 0.1)
-    const t = time.current
-    core.current?.scale.setScalar(1 + Math.sin(t * 6) * 0.08)
-    if (ring.current) {
-      const k = (t * 0.8) % 1
-      ring.current.scale.setScalar(0.4 + k * 2.6)
-      ;(ring.current.material as THREE.MeshBasicMaterial).opacity = 0.7 * (1 - k)
-    }
-  })
+/** Where the fire will start, before "Simulate" is pressed. */
+function FireMarker({ position }: { position: [number, number, number] }) {
   return (
     <group position={position}>
-      <mesh ref={ring} rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.03, 0]} raycast={() => null}>
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.03, 0]} raycast={() => null}>
         <ringGeometry args={[0.3, 0.38, 48]} />
-        <meshBasicMaterial color={lit ? '#ff7a2f' : '#ffcc29'} transparent opacity={0.6} side={THREE.DoubleSide} depthWrite={false} />
+        <meshBasicMaterial color="#ffcc29" transparent opacity={0.6} side={THREE.DoubleSide} depthWrite={false} />
       </mesh>
-      {lit ? (
-        <group position={[0, 0.45, 0]}>
-          <mesh ref={core} raycast={() => null}>
-            <sphereGeometry args={[0.3, 32, 32]} />
-            <meshBasicMaterial color={FLAME_COLOR[fuel]} transparent opacity={0.9} />
-          </mesh>
-          <mesh raycast={() => null}>
-            <sphereGeometry args={[0.6, 32, 32]} />
-            <meshBasicMaterial color="#ff7a2f" transparent opacity={0.22} blending={THREE.AdditiveBlending} depthWrite={false} />
-          </mesh>
-          <Label text="Fire starts here · illustration" position={[0, 1.05, 0]} color="#ffd9a0" height={0.32} />
-        </group>
-      ) : (
-        <mesh position={[0, 0.3, 0]} rotation={[Math.PI, 0, 0]} raycast={() => null}>
-          <coneGeometry args={[0.16, 0.45, 16]} />
-          <meshBasicMaterial color="#ffcc29" />
-        </mesh>
-      )}
+      <mesh position={[0, 0.3, 0]} rotation={[Math.PI, 0, 0]} raycast={() => null}>
+        <coneGeometry args={[0.16, 0.45, 16]} />
+        <meshBasicMaterial color="#ffcc29" />
+      </mesh>
     </group>
   )
 }
@@ -156,10 +131,11 @@ function restingHeight(x: number, z: number) {
   return item ? (item.y ?? 0) + Math.min(item.h, 1) * 0.6 : 0
 }
 
-export function CabinStage3D({ placeChosen, markColors, selectedMarkId, imageUrl, point, fuel, lit, onPick }: CabinStageProps) {
+export function CabinStage3D({ placeChosen, markColors, selectedMarkId, imageUrl, point, fuel, lit, fire, onPick }: CabinStageProps) {
   const still = useReducedMotion()
   const [labels, setLabels] = useState(true)
   const [exterior, setExterior] = useState(false)
+  const [field, setField] = useState(true)
   const [furniture, setFurniture] = useState(true)
   const [off, setOff] = useState<ReadonlySet<string>>(new Set())
   const [planSize, setPlanSize] = useState<[number, number]>([PLAN.w, PLAN.d])
@@ -190,8 +166,55 @@ export function CabinStage3D({ placeChosen, markColors, selectedMarkId, imageUrl
     if (item) onPick(round3(item.x / PLAN.w + 0.5), round3(item.z / PLAN.d + 0.5))
   }
 
-  const fireAt = point ? ([(point.x - 0.5) * w, 0, (point.y - 0.5) * d] as [number, number, number]) : null
-  if (fireAt && !upload) fireAt[1] = restingHeight(fireAt[0], fireAt[2])
+  const fireX = point ? (point.x - 0.5) * w : null
+  const fireZ = point ? (point.y - 0.5) * d : null
+  const fireAt = useMemo<[number, number, number] | null>(
+    () => (fireX === null || fireZ === null ? null : [fireX, upload ? 0 : restingHeight(fireX, fireZ), fireZ]),
+    [fireX, fireZ, upload],
+  )
+
+  // ---- illustrated spread: which fuel items light, in what order, and the timeline that plays it.
+  // The order comes only from distance in this example layout (cabin/timeline.ts). An uploaded plan
+  // has no items, so there is nothing to reach and no timeline.
+  const plan = useMemo(() => (fireAt && lit && !upload ? planSpread(fireAt[0], fireAt[2], hiddenIds) : NO_SPREAD), [fireAt, lit, upload, hiddenIds])
+  const clock = useRef<SpreadClock>({ t: 0, playing: false, rate: 1, shown: 0 })
+  const [shownT, setShownT] = useState(0)
+  const [playing, setPlaying] = useState(false)
+  const [rate, setRate] = useState(1)
+  // A newly lit fire starts the timeline from step 0 (paused under reduced motion: drag the bar).
+  useEffect(() => {
+    const c = clock.current
+    c.t = c.shown = 0
+    c.playing = lit && !still
+    setShownT(0)
+    setPlaying(c.playing)
+  }, [lit, fireX, fireZ, still])
+  // Hiding a group shortens the plan: never sit past its end.
+  useEffect(() => {
+    const c = clock.current
+    if (c.t > plan.steps) {
+      c.t = c.shown = plan.steps
+      setShownT(plan.steps)
+    }
+  }, [plan.steps])
+  const togglePlay = () => {
+    const c = clock.current
+    if (!c.playing && c.t >= plan.steps) c.t = c.shown = 0
+    c.playing = !c.playing
+    setShownT(c.t)
+    setPlaying(c.playing)
+  }
+  const changeRate = (r: number) => {
+    clock.current.rate = r
+    setRate(r)
+  }
+  const scrub = (t: number) => {
+    const c = clock.current
+    c.t = c.shown = t
+    c.playing = false
+    setShownT(t)
+    setPlaying(false)
+  }
 
   return (
     <div className="cabin-b">
@@ -220,7 +243,10 @@ export function CabinStage3D({ placeChosen, markColors, selectedMarkId, imageUrl
             <PickSurface w={w} d={d} deckOnly onPick={onPick} />
           </>
         )}
-        {placeChosen && fireAt && <FirePoint position={fireAt} fuel={fuel} lit={lit} />}
+        {placeChosen && fireAt && !lit && <FireMarker position={fireAt} />}
+        {placeChosen && fireAt && lit && (
+          <CabinFire position={fireAt} fuel={fuel} fire={fire} plan={plan} clock={clock} field={field} onShow={setShownT} onEnd={() => setPlaying(false)} />
+        )}
         <OrbitControls target={[0, 0.8, 0]} enablePan={false} autoRotate={!placeChosen && !still} autoRotateSpeed={0.5} minDistance={5} maxDistance={40} maxPolarAngle={Math.PI * 0.49} />
       </Canvas>
 
@@ -231,6 +257,9 @@ export function CabinStage3D({ placeChosen, markColors, selectedMarkId, imageUrl
           </label>
           <label className="cabin-b-main">
             <input type="checkbox" checked={exterior} onChange={(e) => setExterior(e.target.checked)} /> Outside fittings
+          </label>
+          <label className="cabin-b-main">
+            <input type="checkbox" checked={field} onChange={(e) => setField(e.target.checked)} /> Spread colours
           </label>
           <label className="cabin-b-main">
             <input type="checkbox" checked={furniture} onChange={(e) => setFurniture(e.target.checked)} /> Furniture
@@ -244,6 +273,8 @@ export function CabinStage3D({ placeChosen, markColors, selectedMarkId, imageUrl
           ))}
         </div>
       )}
+      {placeChosen && lit && plan.steps > 0 && <TimelineBar t={shownT} steps={plan.steps} playing={playing} rate={rate} onPlay={togglePlay} onRate={changeRate} onScrub={scrub} field={field} />}
+      {placeChosen && lit && !upload && plan.steps === 0 && <NothingToReach />}
       {placeChosen && upload && <div className="cabin-b-tag" style={{ color: HOLO }}>Double-click your plan to place the fire</div>}
     </div>
   )

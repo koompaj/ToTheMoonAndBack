@@ -1,9 +1,8 @@
 # Workstream B - implementation plan
 
-**Status: steps 0 to 2 are merged. Steps 4, 4a, 4b, 6 and 7 (the sample spacecraft, its marks file,
-the fire values, the cabin stage and its wiring) are built and in one pull request from
-`scene/sample-spacecraft`. Step 5 (the flame, spread and timeline) is a DRAFT and not started; the
-team has agreed to it (option C in section 5), but the shared documents still say nothing spreads.**
+**Status: steps 0 to 4c, 6 and 7 are merged (pull requests 7, 9, 12 and 13). Step 5 (the flame,
+the illustrated spread and the timeline bar) is built on branch `scene/cabin-fire` and waiting for
+B's human to review; it is not committed. Step 8 (polish and housekeeping) is not started.**
 Rewritten 2026-11-14 from `main` at `2e243fe` (C's Simulation tab merged).
 
 This is B's own working plan. The specs it follows are `CLAUDE.md`, `docs/roles/B-3d.md`,
@@ -31,6 +30,34 @@ Change log:
   double-click on an object or the deck places the fire and picks the object's material, Simulate
   shows the results, and the idle view loads. Not checked: the uploaded-plan view, a phone, a
   projector. Workstream A's validator does not check `example-spacecraft.json` yet.
+- 2026-11-14 (g): pull requests 12 (cabin in the Simulation tab) and 13 (the rule change) merged.
+  No reviewer changed the rule's wording. Step 5 built as option C:
+  - `cabin/timeline.ts`: the order, from distance in the example layout only. The item the fire
+    starts on is step 0; each later step lights the next nearest fuel item. Only fuel items light.
+  - `cabin/CabinFire.tsx`: the fire page's flame where the fire starts (it follows the place's
+    oxygen, the still/vent choice and what the nearest tests did), then a glow, a flame and a line
+    from the start on each item as it lights. Items the fire reaches are drawn steady and dimmed:
+    no claim is made about how they would burn.
+  - `cabin/TimelineBar.tsx`: play/pause, playback rate (1x, 2x, 4x), a bar to drag, "Step n of N",
+    and the fixed label. It counts steps, never time.
+  - Hidden groups are left out of the order. An uploaded plan has no items, so no spread and no bar.
+  Checked in the browser on the Space Station: the bar appears after Simulate, plays to the last
+  step, offers replay, pauses when dragged, and the rate button changes the pace; no console
+  errors; `npm run build` passes. Not checked: reduced motion, a phone, a projector, the uploaded
+  plan. The flame itself is faint at 21 % oxygen; the orange glow is the main cue.
+- 2026-11-14 (h): B's human found the spread hard to see and asked for something like a fire-model
+  slice (a NIST cross-section coloured by air speed). Added `cabin/ReachField.tsx`, first as two
+  flat slices, then, because that did not read as 3D, as a true volume: a coloured cloud filling
+  the inside of the hull, drawn by stepping along each line of sight, red at the start to blue at
+  the edge. It passes straight through bulkheads, as the order it follows is straight-line distance.
+  The edge sits where `timeline.ts` says the spread has reached; the ragged texture is decoration.
+  Measured on B's machine at full reach: no drop in frame rate with the cloud on. Not measured on
+  a weaker laptop.
+  It has no scale and no units, and the bar carries a key: "Colour is distance from the start in
+  this drawing. It is not heat, smoke or air speed." A "Spread colours" checkbox turns it off. When
+  every fuel item is hidden the bar now says there is nothing for the fire to reach.
+  Risk to raise with the team: it looks like the output of a real fire model, so the label and
+  the key carry more weight than before.
 
 ---
 
@@ -98,8 +125,8 @@ left for B is what that stage looks like: the sample layout in 3D, and the fire 
 | 4a | Pass oxygen, airflow and behaviour to the stage | same branch, own commit | C agreed | **Built, in the pull request** (C's and shared files) |
 | 4b | Example layout file for the sample's marks | same branch | A's folder, as B's human decided | **Built, in the pull request**; A's validator still to cover it |
 | 6, 7 | `CabinStage3D` and its wiring (done before step 5) | same branch | steps 4, 4a, 4b | **Built, in the pull request** |
-| 4c | Change the rule in the shared documents | `docs/illustrated-spread` | all three humans | Small (shared files) |
-| 5 | Fire in the cabin: start point, spread over time, timeline | `scene/cabin-fire` | steps 1, 4, 4a, 4c | Large |
+| 4c | Change the rule in the shared documents | `docs/illustrated-spread` | all three humans | **Merged** (pull request 13) |
+| 5 | Fire in the cabin: start point, spread over time, timeline | `scene/cabin-fire` | steps 1, 4, 4a, 4c | **Built, in review, uncommitted** |
 | 6 | `CabinStage3D`: the full stage (example and uploaded plan) | `scene/cabin-stage` | steps 4 and 5 | Medium |
 | 7 | Wiring in C's files | `app/wire-cabin-stage` | step 6 merged; C's go-ahead | Small |
 | 8 | Polish and housekeeping | `scene/polish` | all above | Small |
