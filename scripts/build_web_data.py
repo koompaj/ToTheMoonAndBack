@@ -7,8 +7,10 @@ Writes to <out_dir>:
   investigations.json   one entry per Combustion Science investigation (24)
   tests.json            one entry per real test row, in a common format (12 tables)
   other_tables.json     the 10 tables that are not one-row-per-burn, cells as published
-  habitats.json         habitat oxygen/pressure boxes, each with its source
-  data_quality.json     per table: rows read, rows used, rows left out and why; flag meanings
+  habitats.json         habitat oxygen/pressure boxes, each with its checked source
+  data_quality.json     per table: rows read, rows used, rows left out and why; flag meanings;
+                        distinct-test count
+  outcomes.json         "will it go out" analysis (written by outcome_analysis.py, run from here)
 
 Usage:  python -I build_web_data.py <data_dir> <out_dir>
 """
@@ -396,25 +398,51 @@ def build_investigations(data, table_use):
     return out
 
 
+EXPATM = "https://humanresearchroadmap.nasa.gov/evidence/reports/ExpAtm.pdf"
+TP2010 = "https://www.nasa.gov/wp-content/uploads/2023/03/henninger-8.2-34-atm-tp216134-2010.pdf"
+OCHMO = "https://www.nasa.gov/wp-content/uploads/2023/12/ochmo-tb-003-habitable-atmosphere.pdf"
+CHALLENGE_URL = "https://www.spaceappschallenge.org/2026/challenges/flame-in-freefall/?tab=details"
+
+
 def build_habitats():
+    """Each habitat's numbers come from a source opened and checked by workstream A
+    (gemini_data/VERIFIED.md). status starts with 'from_' when every number is sourced."""
     challenge = "NASA Space Apps 2026 challenge page, Flame in Freefall (Potential Considerations)"
+    expatm = "NASA Evidence Report: Risk of Hypoxia from the Exploration Atmosphere (2015)"
     return [
         {"id": "moon_base", "name": "Moon Base / pressurized rover",
          "o2_fraction": [0.30, 1.00], "pressure_psi": [4.3, 10.2],
          "pressure_atm": [round(4.3 * PSI_TO_ATM, 4), MOON_MAX_P_ATM],
          "note": "Challenge: oxygen 'likely 30% or greater', pressure '10.2 psi or less', between spacesuit and Earth values. "
                  "The outer bounds here are the spacesuit values.",
-         "source": challenge, "status": "from_challenge"},
+         "source": challenge, "source_urls": [CHALLENGE_URL], "status": "from_challenge"},
+        {"id": "moon_base_nasa", "name": "Moon Base (NASA Exploration Air)",
+         "o2_fraction": [0.32, 0.36], "pressure_psi": [8.0, 8.4],
+         "pressure_atm": [round(8.0 * PSI_TO_ATM, 4), round(8.4 * PSI_TO_ATM, 4)],
+         "note": "NASA's current exploration atmosphere is 8.2 psia with 34% O2: 'After re-evaluation in 2012, the 8/32 "
+                 "environment was altered to 8.2 psia and 34% O2' (evidence report, p. 4), which it calls 'the current 8.2 psia "
+                 "habitat pressure with 34% O2' (p. 29). The box is NASA's control band of +-0.2 psia and +-2.0% O2 "
+                 "(NASA/TP-2010-216134, p. 11). That report set the band for its own 2010 recommendations; applying it to "
+                 "8.2 / 34 is our step, not NASA's.",
+         "source": f"{expatm}, pp. 4 and 29; NASA/TP-2010-216134, p. 11",
+         "source_urls": [EXPATM, TP2010], "status": "from_nasa"},
+        {"id": "iss", "name": "Space Station (ISS)",
+         "o2_fraction": [0.21, 0.21], "pressure_psi": [14.7, 14.7], "pressure_atm": [1.0, 1.0],
+         "note": "'...International Space Station (ISS) program have operated at an Earth-equivalent sea level atmosphere of "
+                 "14.7 psia and 21% O2' (evidence report, p. 5). Same air as Earth sea level, so the same tests fall in both.",
+         "source": f"{expatm}, p. 5; NASA OCHMO-TB-003 Habitable Atmosphere, p. 8",
+         "source_urls": [EXPATM, OCHMO], "status": "from_nasa"},
         {"id": "spacesuit", "name": "Spacesuit",
          "o2_fraction": [1.00, 1.00], "pressure_psi": [4.3, 4.3],
          "pressure_atm": [round(4.3 * PSI_TO_ATM, 4)] * 2,
          "note": "Challenge: spacesuits are filled with 100% oxygen to only 4.3 psi.",
-         "source": challenge, "status": "from_challenge"},
+         "source": challenge, "source_urls": [CHALLENGE_URL], "status": "from_challenge"},
         {"id": "earth_sea_level", "name": "Earth sea level",
          "o2_fraction": [0.21, 0.21], "pressure_psi": [14.7, 14.7], "pressure_atm": [1.0, 1.0],
-         "note": "Challenge gives 14.7 psi. The 21% oxygen figure is the standard value and is implied by the challenge's "
-                 "'more than a 40% increase' comparison; cite a source before presenting it.",
-         "source": challenge, "status": "pressure_from_challenge_o2_needs_source"},
+         "note": "Pressure from the challenge page (14.7 psi). 21% O2 at 14.7 psia is NASA's 'Earth-equivalent sea level "
+                 "atmosphere' (evidence report, p. 5).",
+         "source": f"{challenge}; {expatm}, p. 5",
+         "source_urls": [CHALLENGE_URL, EXPATM], "status": "from_challenge_and_nasa"},
     ]
 
 
@@ -432,7 +460,9 @@ def main():
         for f in t["flags"]:
             k = f.split(":")[0]
             flag_counts[k] = flag_counts.get(k, 0) + 1
+    duplicates = sum(1 for t in tests if any(f.startswith("duplicate_row") for f in t["flags"]))
     quality = {"tables": b.quality, "flag_counts": flag_counts, "flag_meanings": FLAG_MEANINGS,
+               "tests_total": len(tests), "duplicate_rows": duplicates, "distinct_tests": len(tests) - duplicates,
                "source_problems": "docs/DATA_ISSUES.md"}
 
     for name, obj in (("investigations.json", inv), ("tests.json", tests), ("other_tables.json", other),
@@ -483,6 +513,18 @@ def main():
     for q in b.quality:
         for x in q["rows_left_out"]:
             print(f"    {q['investigation']} row {x['row']}: {x['reason']}")
+    print(f"  distinct tests: {quality['distinct_tests']} ({duplicates} duplicate rows)")
+    for h in hab:
+        ins = [t for t in tests if t["o2_basis"] == "ambient" and t["o2_fraction"] is not None and t["pressure_atm"] is not None
+               and h["o2_fraction"][0] <= t["o2_fraction"] <= h["o2_fraction"][1]
+               and h["pressure_atm"][0] <= t["pressure_atm"] <= h["pressure_atm"][1]]
+        assert h["status"].startswith("from_") and h.get("source_urls"), f"habitat without a source: {h['id']}"
+        print(f"  habitat {h['id']:16} {len(ins):3} tests inside")
+
+    # "Will it go out" analysis, written next to tests.json (same folder, same run).
+    import subprocess
+    here = os.path.dirname(os.path.abspath(__file__))
+    subprocess.run([sys.executable, "-I", os.path.join(here, "outcome_analysis.py"), out], check=True)
 
 
 if __name__ == "__main__":

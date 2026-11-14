@@ -86,7 +86,54 @@ export interface Habitat {
   pressure_atm: [number, number]
   note: string
   source: string
-  status: string // "from_challenge" or a note on what still needs a source
+  /** Links to the sources actually opened and checked (gemini_data/VERIFIED.md). */
+  source_urls?: string[]
+  /** Starts with "from_" when every number is sourced: "from_challenge", "from_nasa",
+   *  "from_challenge_and_nasa". Anything else describes what still needs a source.
+   *  Use isSourced() in data/load.ts rather than comparing strings. */
+  status: string
+}
+
+/** One group of tests in the "will it go out" analysis (outcomes.json). */
+export interface OutcomeGroup {
+  label: string
+  x: number // the value grouped on: oxygen band midpoint (fraction), pressure (psi) or a category index
+  n: number
+  recorded: number // tests whose ending NASA's table records
+  went_out: number
+  share_went_out: number | null // went_out / recorded
+  endings: Record<string, number>
+  test_ids: string[] // every test counted, for citation
+}
+
+export interface OutcomeStudy {
+  id: string
+  investigation: string
+  acronym: string
+  fuel_class: FuelClass
+  question: string
+  went_out_means: string
+  /** "clear", "no_clear_pattern" or "not_tested_for_a_trend". The rule is in `rule`. */
+  verdict: string
+  finding: string // one plain sentence with counts
+  group_by?: string
+  groups?: OutcomeGroup[]
+  direction?: string | null
+  rank_correlation?: number | null
+  spread_points?: number
+  groups_used?: number
+  rule?: string
+  matched_groups?: { group: string; groups: OutcomeGroup[]; verdict: string; rank_correlation: number | null; spread_points: number; groups_used: number }[]
+  groups_matched_oxygen?: OutcomeGroup[]
+  matched_oxygen_band?: string
+}
+
+/** "Will it go out?": descriptive counts from FLEX and ACME CFI-G (scripts/outcome_analysis.py). */
+export interface OutcomeAnalysis {
+  generated_by: string
+  method: string
+  caveats: string[] // show these wherever a finding is shown
+  studies: OutcomeStudy[]
 }
 
 /** A NASA table that is not one-row-per-burn (per-day summaries, ranges, smoke tests, ...).
@@ -117,6 +164,11 @@ export interface DataQuality {
   }[]
   flag_counts: Record<string, number>
   flag_meanings: Record<string, string>
+  /** tests.json rows; 34 SPICE rows exactly repeat an earlier row (flag duplicate_row). */
+  tests_total?: number
+  duplicate_rows?: number
+  /** Use this, not tests.length, when saying "N NASA tests". */
+  distinct_tests?: number
   source_problems: string
 }
 
@@ -126,4 +178,6 @@ export interface AppData {
   habitats: Habitat[]
   otherTables: OtherTable[]
   quality: DataQuality
+  /** Optional so older callers (ai/generate.mjs) keep working. */
+  outcomes?: OutcomeAnalysis
 }

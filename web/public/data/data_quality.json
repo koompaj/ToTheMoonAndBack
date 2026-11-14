@@ -260,5 +260,8 @@
   "duplicate_row": "Every cell of this row is identical to an earlier row of the same table.",
   "airflow_negative_in_source": "The source records a negative air rate; kept as written."
  },
+ "tests_total": 1753,
+ "duplicate_rows": 34,
+ "distinct_tests": 1719,
  "source_problems": "docs/DATA_ISSUES.md"
 }
