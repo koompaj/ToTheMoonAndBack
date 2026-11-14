@@ -6,9 +6,10 @@
 // prevention), every line cited. The fire is an illustration: NASA's tables do not model spread,
 // and where the fire starts does not change the evidence, because one cabin shares one air.
 // The tab name "Simulation" was the team lead's call (see the pull request).
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState, type ReactNode } from 'react'
 import type { AppData, FuelClass } from '../types/data'
 import type { Layout, LayoutMark } from '../types/layout'
+import type { CabinStageProps, StageFire } from '../types/sim'
 import { OTHER_FUEL, TIER_COLOR, TIER_LABEL } from '../types/layout'
 import { fuelOptionsFor, markEvidence } from '../data/layoutEvidence'
 import { defaultPoint, expectedBehaviour, nearestTests, taskAnswers, type Statement } from '../ai/fireTasks'
@@ -41,7 +42,9 @@ function inside(m: LayoutMark, x: number, y: number) {
   return Math.hypot(x - m.shape.x, y - m.shape.y) < 0.06
 }
 
-export function SimulationView({ data }: { data: AppData }) {
+/** `renderStage` draws workstream B's cabin stage (passed in by App.tsx, because panels/ does not
+ *  import from scene/). Without it the page falls back to its own SimStage and example templates. */
+export function SimulationView({ data, renderStage }: { data: AppData; renderStage?: (p: CabinStageProps) => ReactNode }) {
   const [hid, setHid] = useHashParam('h', '')
   const [mapMode, setMapMode] = useHashParam('map', 'example')
   const [fuelStr, setFuel] = useHashParam('fuel', 'solid')
@@ -53,6 +56,7 @@ export function SimulationView({ data }: { data: AppData }) {
   const [imageUrl, setImageUrl] = useState<string | null>(null)
   const [imageName, setImageName] = useState<string | null>(null)
   const [exampleMarks, setExampleMarks] = useState<LayoutMark[]>([])
+  const [cabinMarks, setCabinMarks] = useState<LayoutMark[]>([])
 
   const hab = data.habitats.find((h) => h.id === hid) ?? null
   const fuel = (FUELS.includes(fuelStr as FuelClass) ? fuelStr : 'solid') as FuelClass
@@ -66,10 +70,16 @@ export function SimulationView({ data }: { data: AppData }) {
       .then((r) => (r.ok ? r.json() : null))
       .then((l: Layout | null) => l && setExampleMarks(l.marks))
       .catch(() => undefined)
+    // B's sample spacecraft: one example layout shown for every place.
+    fetch(`${import.meta.env.BASE_URL}layouts/example-spacecraft.json`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((l: Layout | null) => l && setCabinMarks(l.marks))
+      .catch(() => undefined)
   }, [])
   useEffect(() => () => void (imageUrl && URL.revokeObjectURL(imageUrl)), [imageUrl])
 
-  const marks = template ? (template.marks ?? exampleMarks) : []
+  const marks = !template ? [] : renderStage ? cabinMarks : (template.marks ?? exampleMarks)
+  const layoutTitle = renderStage ? 'example spacecraft' : template?.title.toLowerCase()
   const usingUpload = mapMode === 'upload' && !!imageUrl
   const shownMarks = usingUpload ? [] : marks
   const markColors = useMemo(() => {
@@ -127,6 +137,7 @@ export function SimulationView({ data }: { data: AppData }) {
   const pool = chosen ? { ...data, tests: data.tests.filter((t) => chosen.test_ids.includes(t.id)) } : data
   const near = hab && air0 ? nearestTests(pool, fuel, air0, 3) : []
   const exp = expectedBehaviour(near)
+  const stageFire: StageFire | null = hab && air0 ? { o2Fraction: air0.o2Fraction, pressureAtm: air0.pressureAtm, airflow: air === 'vent' ? 'vent' : 'still', behaviour: exp.behaviour } : null
   const optName = optId === OTHER_FUEL ? "Other (not in NASA's tables)" : options.find((o) => o.id === optId)?.name ?? optId
   // Step 4 (your own plan) is optional, so a chosen point makes Simulate the current step.
   const step = !hab ? 1 : !point ? 3 : lit ? 6 : 5
@@ -278,7 +289,7 @@ export function SimulationView({ data }: { data: AppData }) {
                 <small>Your image stays on this computer.</small>
               </label>
             )}
-            {template && !usingUpload && <p className="muted small">Now showing the {template.title.toLowerCase()} (example layout, not a NASA design). Upload your own plan to place the fire on it instead.</p>}
+            {template && !usingUpload && <p className="muted small">Now showing the {layoutTitle} (example layout, not a NASA design). Upload your own plan to place the fire on it instead.</p>}
           </section>
 
           <button type="button" className="btn-sim" disabled={!hab || !point} onClick={() => setRun('1')}>
@@ -288,18 +299,25 @@ export function SimulationView({ data }: { data: AppData }) {
 
         <section className="sim-stage-wrap" aria-label="3D cabin">
           <div className="sim-stage">
-            <SimStage
-              template={template}
-              marks={shownMarks}
-              markColors={markColors}
-              selectedMarkId={hit?.id ?? null}
-              imageUrl={usingUpload ? imageUrl : null}
-              point={point}
-              fuel={fuel}
-              lit={lit}
-              onPick={pick}
-            />
-            <div className="sim-hint">{hab ? 'Drag to rotate · scroll to zoom · click the floor to place the fire' : 'Drag to rotate · choose a location to begin'}</div>
+            {renderStage ? (
+              renderStage({ placeChosen: !!hab, marks: shownMarks, markColors, selectedMarkId: hit?.id ?? null, imageUrl: usingUpload ? imageUrl : null, point, fuel, lit, fire: stageFire, onPick: pick })
+            ) : (
+              <SimStage
+                template={template}
+                marks={shownMarks}
+                markColors={markColors}
+                selectedMarkId={hit?.id ?? null}
+                imageUrl={usingUpload ? imageUrl : null}
+                point={point}
+                fuel={fuel}
+                lit={lit}
+                fire={stageFire}
+                onPick={pick}
+              />
+            )}
+            <div className="sim-hint">
+              {!hab ? 'Drag to rotate · choose a location to begin' : renderStage ? 'Drag to rotate · scroll to zoom · double-click the cabin to place the fire' : 'Drag to rotate · scroll to zoom · click the floor to place the fire'}
+            </div>
             {hab && !usingUpload && (
               <div className="sim-legend">
                 {(['tested_here', 'tested_elsewhere', 'not_in_tables'] as const).map((t) => (

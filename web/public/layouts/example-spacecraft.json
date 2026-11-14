@@ -1,0 +1,154 @@
+{
+ "version": 1,
+ "habitat_id": "iss",
+ "image_name": null,
+ "note": "Example layout, not a NASA design. Names are labels only; each mark's material or fuel is the user's choice from what NASA tested. Generated from web/src/scene/cabin/spec.ts (SAMPLE_MARKS): change it there, not here. The Simulation page shows this one layout for every place; the place changes the air, not the layout.",
+ "marks": [
+  {
+   "id": "windows",
+   "kind": "area",
+   "fuel_class": "solid",
+   "fuel_option_id": "solid:pmma",
+   "label": "Window frame and panels",
+   "airflow": "still",
+   "shape": {
+    "x": 0.054,
+    "y": 0.42,
+    "w": 0.042,
+    "h": 0.16
+   }
+  },
+  {
+   "id": "seats",
+   "kind": "area",
+   "fuel_class": "solid",
+   "fuel_option_id": "solid:nomex",
+   "label": "Crew seats",
+   "airflow": "still",
+   "shape": {
+    "x": 0.165,
+    "y": 0.31,
+    "w": 0.054,
+    "h": 0.38
+   }
+  },
+  {
+   "id": "equip-rack",
+   "kind": "area",
+   "fuel_class": "solid",
+   "fuel_option_id": "solid:ultem",
+   "label": "Equipment rack",
+   "airflow": "still",
+   "shape": {
+    "x": 0.358,
+    "y": 0.07,
+    "w": 0.092,
+    "h": 0.12
+   }
+  },
+  {
+   "id": "solvent",
+   "kind": "point",
+   "fuel_class": "droplet",
+   "fuel_option_id": "droplet:methanol",
+   "label": "Cleaning solvent",
+   "airflow": "still",
+   "shape": {
+    "x": 0.323,
+    "y": 0.57
+   }
+  },
+  {
+   "id": "fuel-sample",
+   "kind": "point",
+   "fuel_class": "droplet",
+   "fuel_option_id": "droplet:heptane",
+   "label": "Lab fuel sample",
+   "airflow": "still",
+   "shape": {
+    "x": 0.385,
+    "y": 0.56
+   }
+  },
+  {
+   "id": "cable-covers",
+   "kind": "area",
+   "fuel_class": "solid",
+   "fuel_option_id": "solid:silicone",
+   "label": "Cable covers",
+   "airflow": "vent",
+   "shape": {
+    "x": 0.254,
+    "y": 0.85,
+    "w": 0.231,
+    "h": 0.06
+   }
+  },
+  {
+   "id": "sleep-fabric",
+   "kind": "area",
+   "fuel_class": "solid",
+   "fuel_option_id": "solid:sibal-cotton-fiberglass-blend",
+   "label": "Sleep station fabric",
+   "airflow": "still",
+   "shape": {
+    "x": 0.508,
+    "y": 0.08,
+    "w": 0.169,
+    "h": 0.2
+   }
+  },
+  {
+   "id": "stowage-bags",
+   "kind": "area",
+   "fuel_class": "solid",
+   "fuel_option_id": "solid:sibal-cotton-fiberglass-blend",
+   "label": "Fabric stowage bags",
+   "airflow": "vent",
+   "shape": {
+    "x": 0.515,
+    "y": 0.76,
+    "w": 0.138,
+    "h": 0.14
+   }
+  },
+  {
+   "id": "wiring",
+   "kind": "area",
+   "fuel_class": "solid",
+   "fuel_option_id": "other",
+   "label": "Wiring insulation",
+   "airflow": "still",
+   "shape": {
+    "x": 0.671,
+    "y": 0.72,
+    "w": 0.035,
+    "h": 0.16
+   }
+  },
+  {
+   "id": "gas-bottle",
+   "kind": "point",
+   "fuel_class": "gas",
+   "fuel_option_id": "gas:butane",
+   "label": "Experiment gas bottle",
+   "airflow": "vent",
+   "shape": {
+    "x": 0.8,
+    "y": 0.3
+   }
+  },
+  {
+   "id": "gas-line",
+   "kind": "point",
+   "fuel_class": "gas",
+   "fuel_option_id": "gas:propane",
+   "label": "Gas supply line",
+   "airflow": "still",
+   "shape": {
+    "x": 0.908,
+    "y": 0.7
+   }
+  }
+ ]
+}

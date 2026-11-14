@@ -10,6 +10,7 @@ import { OrbitControls } from '@react-three/drei'
 import * as THREE from 'three'
 import type { FuelClass } from '../../types/data'
 import type { LayoutMark } from '../../types/layout'
+import type { StageFire } from '../../types/sim'
 import { HoloLabel } from './HoloLabel'
 import { IDLE_CALLOUTS, type CabinTemplate } from './templates'
 
@@ -292,6 +293,9 @@ export interface SimStageProps {
   point: { x: number; y: number } | null
   fuel: FuelClass
   lit: boolean
+  /** The place's air, the airflow choice and what the nearest tests did (types/sim.ts). This stage
+   *  does not draw from it yet; workstream B's cabin stage, which takes the same props, will. */
+  fire?: StageFire | null
   onPick: (x: number, y: number) => void
 }
 

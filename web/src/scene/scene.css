@@ -1,5 +1,5 @@
-/* OWNER: 3D workstream. Styles for B's components only; every class starts with fire-b, simmap-b
-   or layout-b so it cannot collide with the app's styles.css. */
+/* OWNER: 3D workstream. Styles for B's components only; every class starts with fire-b, cabin-b,
+   simmap-b or layout-b so it cannot collide with the app's styles.css. */
 
 .fire-b {
   position: relative;
@@ -8,3 +8,21 @@
 }
 .fire-b canvas { display: block; }
 .fire-b-fallback { display: block; width: 100%; height: 100%; }
+
+.cabin-b { position: absolute; inset: 0; }
+.cabin-b canvas { display: block; }
+.cabin-b-panel {
+  position: absolute; right: 14px; top: 14px; display: grid; gap: 5px; padding: 10px 12px;
+  border-radius: 14px; background: rgba(4, 12, 24, 0.78); border: 1px solid rgba(92, 200, 255, 0.3);
+  font-size: 13px; color: #cfe9ff; max-width: 280px;
+}
+.cabin-b-panel label { display: flex; align-items: center; gap: 7px; cursor: pointer; }
+.cabin-b-main { font-weight: 600; }
+.cabin-b-group { margin-left: 18px; }
+.cabin-b-group.off { opacity: 0.45; cursor: default; }
+.cabin-b-group i { width: 12px; height: 12px; border-radius: 3px; flex: none; }
+.cabin-b-group span { color: #8fb4cc; }
+.cabin-b-tag {
+  position: absolute; right: 14px; top: 14px; padding: 6px 12px; border-radius: 999px; font-size: 13px;
+  background: rgba(4, 12, 24, 0.78); border: 1px solid rgba(92, 200, 255, 0.3);
+}
