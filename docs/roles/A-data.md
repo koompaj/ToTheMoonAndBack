@@ -21,9 +21,14 @@ published as-is in `other_tables.json`, and 9 non-test rows are left out with re
 `data_quality.json`. It also writes `investigations.json` and `habitats.json`. It prints checks at
 the end; the Moon Base count must stay at 20 unless you can explain the change.
 
-Done so far: task 3 (tables), task 4 (airflow, except BASS-II whose display units are unknown) and
-the first version of task 7 (`data_quality.json`). Still open: tasks 1, 2, 5, 6 and the columns
-listed under "Not converted yet" in `docs/DATA_ISSUES.md`.
+Done so far: task 2 (ISS, Earth and NASA's Moon Base box; other places stay "waiting"), task 3
+(tables), task 4 (airflow, except BASS-II whose display units are unknown), task 5
+(`outcomes.json`), task 7 (`data_quality.json`, with the distinct-test count), the Gemini check
+(`gemini_data/VERIFIED.md`) and the data part of the submission (`docs/SUBMISSION_DATA.md`).
+All 20 source-table problems in `docs/DATA_ISSUES.md` are handled and every source column is kept,
+each fix checked by `scripts/validate_data.py` (68 checks, run by every build).
+Still open: task 1 (blocked: no openable source), and task 6 inputs beyond what
+`investigations.json` already gives.
 
 ## Tasks, in priority order
 

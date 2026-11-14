@@ -7,8 +7,10 @@ Writes to <out_dir>:
   investigations.json   one entry per Combustion Science investigation (24)
   tests.json            one entry per real test row, in a common format (12 tables)
   other_tables.json     the 10 tables that are not one-row-per-burn, cells as published
-  habitats.json         habitat oxygen/pressure boxes, each with its source
-  data_quality.json     per table: rows read, rows used, rows left out and why; flag meanings
+  habitats.json         habitat oxygen/pressure boxes, each with its checked source
+  data_quality.json     per table: rows read, rows used, rows left out and why; flag meanings;
+                        distinct-test count
+  outcomes.json         "will it go out" analysis (written by outcome_analysis.py, run from here)
 
 Usage:  python -I build_web_data.py <data_dir> <out_dir>
 """
@@ -45,37 +47,112 @@ FLAG_MEANINGS = {
     "pressure_not_in_table": "The source table has no pressure column.",
     "fuel_from_row_above": "The material cell is blank (merged cell in the source); filled from the row above.",
     "duplicate_row": "Every cell of this row is identical to an earlier row of the same table.",
-    "airflow_negative_in_source": "The source records a negative air rate; kept as written.",
+    "airflow_negative_in_source": "The source records a negative air rate; kept as written. Its meaning is not stated, "
+                                  "so leave it out of airflow ranges (airflowRange() in data/load.ts does).",
+    "material_not_stated": "The material cell names a shape or size (e.g. '2 cm sphere', '1/4\" black rod') but not the "
+                           "material, so fuel_material is null.",
+    "time_not_recorded": "The time cell holds no time (e.g. 'Ku LOS', 'no ku', 'n/a') or an unclear format such as '1744'; "
+                         "the cell is kept as written in source_extra.",
+    "burn_time_from_gmt_times": "burn_time_s is the table's GMT flame-off time minus its GMT ignition time.",
+    "dimensions_swapped_in_source": "The table lists length 40.6 cm and width 94 cm. NASA's Saffire fact sheet gives the "
+                                    "sample as 0.4 m wide by 1 m long (and the SAFFIRE-III table agrees), so "
+                                    "sample_length_cm and sample_width_cm are given the right way round. source_extra "
+                                    "keeps the table as written.",
+    "thickness_typo_suspected": "The thickness cell reads '037 mm' (probably 0.37 mm). Not corrected: sample_thickness_mm "
+                                "is null.",
+    "value_not_single": "A dimension cell holds more than one value or a reference (e.g. '0.85 and 0.37 mm', 'See Fig. "
+                        "5'), so the typed field is null; the cell is kept in source_extra.",
+    "burning_rate_unit_unclear": "NASA's header gives the burning-rate unit only as 'mm'; part of the unit may have been "
+                                 "lost in the file. The number is kept as written.",
+    "extinction_diameter_above_initial": "The extinction diameter is a little larger than the initial droplet diameter "
+                                         "(by no more than the table's 0.01 mm step, in a flame that went out within "
+                                         "a second). Kept as written.",
+    "temperature_placeholder":"The peak burner temperature cell holds a placeholder ('-', '#VALUE!', or 273.15 K beside an "
+                               "empty Celsius cell), so peak_burner_temp_c is null.",
 }
+
+SOLID_MATERIALS = [  # (pattern, material) - first match wins; matching is case-insensitive
+    (r"pmma.*nomex|nomex.*pmma", "PMMA and Nomex"),
+    (r"pmma", "PMMA"),
+    (r"sibal|cotton", "SIBAL (cotton-fiberglass blend)"),
+    (r"nomex", "Nomex"),
+    (r"ultem", "Ultem"),
+    (r"silicone", "Silicone"),
+    (r"japan", "Japan wax"),
+    (r"paraffin|parrafin", "Paraffin wax"),
+    (r"wax|candle", "Wax (type not stated)"),
+]
+
+
+def collapse_ws(s):
+    return re.sub(r"\s+", " ", s or "").strip()
+
+
+def solid_material(fuel):
+    for pat, name in SOLID_MATERIALS:
+        if re.search(pat, fuel or "", re.I):
+            return name
+    return None
+
+
+def parse_time(cell):
+    """'14:37:08' or '14.34.57' -> '14:37:08'; anything else -> None."""
+    m = re.fullmatch(r"(\d{1,2})[:.](\d{2})[:.](\d{2})", (cell or "").strip())
+    if not m:
+        return None
+    h, mi, s = (int(x) for x in m.groups())
+    return f"{h:02d}:{mi:02d}:{s:02d}" if h < 24 and mi < 60 and s < 60 else None
+
+
+def seconds(hms):
+    h, m, s = (int(x) for x in hms.split(":"))
+    return h * 3600 + m * 60 + s
+
+
+def length_cm(cell):
+    """'29 cm' -> 29, '0.37' (header in cm) handled by caller; returns None for anything not one value."""
+    m = re.fullmatch(r"\s*(\d*\.?\d+)\s*(cm|mm)?\s*", cell or "")
+    if not m:
+        return None
+    v = float(m.group(1))
+    return v / 10 if m.group(2) == "mm" else v
+
+
+def extra_cells(header, row, used):
+    """The source cells not turned into typed fields, keyed by header, exactly as written."""
+    return {header[j].strip(): row[j] for j in range(len(header)) if j not in used and j < len(row) and row[j]}
 
 # The 10 tables that are not one-row-per-burn. Cells are published exactly as in the source.
 OTHER_TABLES = [
     ("PSI-20", "PSI-20/PSI-20_Experimental table_ACME BRE.csv", "per_day_summary",
      "One row per test day; oxygen cells list every concentration used that day.",
-     ["Two oxygen cells read '2100%' and '3400%' (percent-format artefact); see corrections."]),
+     ["Two oxygen cells read '2100%' and '3400%' (percent-format artefact); read as 21 and 34 in rows_read_as."]),
     ("PSI-21", "PSI-21/PSI-21_Experimental table_CLD Flame.csv", "per_day_summary",
      "One row per test day.",
-     ["'Fuel Bottle' runs C2H4, C2H5 ... C2H11: looks like spreadsheet autofill. Not corrected; "
-      "confirm the real fuel against the PSI record before quoting this column."]),
+     ["'Fuel Bottle' counts up CH4, CH5 ... CH14 and C2H4, C2H5 ... C2H11 (spreadsheet autofill). NASA's record "
+      "names only methane and ethylene, so rows_read_as gives CH4 or C2H4 to match each row's test type."]),
     ("PSI-22", "PSI-22/PSI-22_Experimental table_ACME E-FIELD Flames.csv", "per_day_summary",
      "One row per test day, with continuation rows.",
-     ["11 of 32 rows carry only a fuel concentration: they continue the row above. Not filled in."]),
+     ["11 of 32 rows carry only a fuel concentration: they continue the row above, and rows_read_as repeats "
+      "that day's other cells. Flames Ignited is not repeated, so daily counts are not double-counted.",
+      "Test day 18319 appears twice with identical cells (rows 25-28 and 29-32); which is right is not stated."]),
     ("PSI-23", "PSI-23/PSI-23_Experimental table_ACME s-Flame.csv", "per_day_summary",
      "One row per test day.",
-     ["'Atmosphere*' runs N2, N3 ... N6: looks like spreadsheet autofill. Not corrected; confirm "
-      "against the PSI record before quoting this column."]),
+     ["'Atmosphere*' and 'Fuel Bottle' count up N2, N3 ... N6 (spreadsheet autofill); read as N2 in rows_read_as."]),
     ("PSI-68", "PSI-68/PSI-68_Experimental table_Flex2.csv", "ranges",
      "One row per fuel, giving the ranges tested rather than individual tests.", []),
     ("PSI-106", "PSI-106/PSI-106_Experimental table_Slice.csv", "per_day_summary",
      "One row per test date with the fuel used.",
-     ["One 'Test Date' cell also contains free text ('2012-FEB-13 SLICE testing with')."]),
+     ["Four 'Test Date' cells also hold text that runs into the Fuel Type column (e.g. '2012-FEB-13 SLICE "
+      "testing with'); rows_read_as keeps the date only."]),
     ("PSI-142", "PSI-142/PSI-142_Experimental table_Data Summary Table.csv", "figure_index",
      "An index of published figures, not tests.", []),
     ("PSI-47", "PSI-47/PSI-47_Experimental table_DAFT.csv", "sessions",
      "Two dust-measurement sessions; no combustion.", []),
     ("PSI-102", "PSI-102/PSI-102_Experimental table_SAME.csv", "smoke_tests",
      "Smoke from heated materials, for detector research; not flame tests.",
-     ["Rows 5-8 say 'same conditions as 1-4' instead of repeating the values."]),
+     ["Rows 5-8 say 'same conditions as 1-4' instead of repeating the values. Samples 1-4 used several "
+      "settings, so those cells stay blank; rows_read_as keeps the material name only."]),
     ("PSI-101", "PSI-101/PSI-101_Experimental table_SAME-R.csv", "smoke_tests",
      "Smoke from heated materials, for detector research; not flame tests.",
      ["The 'Date' column has no year."]),
@@ -156,7 +233,9 @@ class Builder:
             "investigation": acc, "acronym": acronym,
             "source_table": table, "source_row": row,   # 1 = first data row under the header
             "test_label": (label or "").strip() or None,
-            "fuel_class": fuel_class, "fuel": (fuel or "").strip() or None,
+            "fuel_class": fuel_class, "fuel": collapse_ws(fuel) or None,
+            # solid materials only: the base material named in the fuel cell (SOLID_MATERIALS), else null
+            "fuel_material": None,
             "o2_fraction": None if o2 is None else round(o2, 4),
             "o2_fraction_min": None, "o2_fraction_max": None,
             "o2_basis": o2_basis,   # ambient = cabin/chamber air; burner_oxidizer = gas fed from the burner
@@ -164,11 +243,20 @@ class Builder:
             "airflow_cm_s": None, "flow_direction": None,
             "co2_fraction": None, "he_fraction": None,
             "burn_time_s": None, "outcome": None,
+            # typed values from columns specific to some tables (null elsewhere)
+            "sample_length_cm": None, "sample_width_cm": None, "sample_thickness_mm": None,   # SAFFIRE
+            "droplet_diameter_mm": None, "extinction_diameter_mm": None, "burning_rate": None,  # FLEX
+            "cool_flame": None, "hot_ignition": None, "peak_burner_temp_c": None,           # ACME CFI-G
+            "ignition_time": None, "flame_off_time": None,                                  # SPICE (GMT)
             "in_moon_envelope": in_env,
             "source_extra": None,   # other cells of the source row, exactly as published
             "flags": flags,
         }
         d.update(extra)
+        if fuel_class == "solid":
+            d["fuel_material"] = solid_material(d["fuel"])
+            if d["fuel_material"] is None and d["fuel"]:
+                d["flags"] = d["flags"] + ["material_not_stated"]
         self.tests.append(d)
         q["rows_as_tests"] += 1
 
@@ -183,31 +271,46 @@ class Builder:
 
     # ---- gas flames (ACME) -------------------------------------------------
     def flame_design(self):
-        _, body, q = self.table("PSI-10/PSI-10_Experimental table_Flame Design_Normal Flame.csv")
+        header, body, q = self.table("PSI-10/PSI-10_Experimental table_Flame Design_Normal Flame.csv")
         for i, r in enumerate(body, 1):
             o2, p = strict_num(r[8]), strict_num(r[10])
             self.add(q, "PSI-10", "ACME Flame Design", i, r[3], "gas", r[2], o2, "ambient", p,
-                     self.flags_for(o2, p, r[8], r[10]))
-        _, body, q = self.table("PSI-10/PSI-10_Experimental table_Flame Design_Inverse Flame.csv")
+                     self.flags_for(o2, p, r[8], r[10]), source_extra=extra_cells(header, r, {2, 3, 8, 10}))
+        header, body, q = self.table("PSI-10/PSI-10_Experimental table_Flame Design_Inverse Flame.csv")
         for i, r in enumerate(body, 1):
             o2, p = strict_num(r[3]), strict_num(r[9])
             self.add(q, "PSI-10", "ACME Flame Design", i, r[2], "gas", "C2H4", o2, "burner_oxidizer", p,
-                     self.flags_for(o2, p, r[3], r[9]))
+                     self.flags_for(o2, p, r[3], r[9]), source_extra=extra_cells(header, r, {2, 3, 9}))
 
     def cfi_g(self):
         outcome = {"SE": "self-extinguished", "FT": "flow terminated"}
-        _, body, q = self.table("PSI-159/PSI-159_Experimental table_CFI-G_Normal Flames.csv")
+        hot = {"yes": "yes", "no": "no", "flash": "flash"}   # 'Yes'/'yes' and 'No'/'no' are one label
+
+        def peak(cell_c, cell_k=None):
+            c = strict_num(cell_c)
+            if c is not None:
+                return c, []
+            placeholder = cell_c in ("-", "", "#VALUE!") or (cell_k or "") in ("273.15", "#VALUE!")
+            return None, (["temperature_placeholder"] if placeholder else [])
+
+        header, body, q = self.table("PSI-159/PSI-159_Experimental table_CFI-G_Normal Flames.csv")
         for i, r in enumerate(body, 1):
             o2, pb = strict_num(r[5]), strict_num(r[7])
             p = None if pb is None else pb / 1.01325
+            t, tf = peak(r[16])
             self.add(q, "PSI-159", "ACME CFI-G", i, r[3], "gas", r[2], o2, "ambient", p,
-                     self.flags_for(o2, p, r[5], r[7]), burn_time_s=strict_num(r[14]), outcome=outcome.get(r[15]))
-        _, body, q = self.table("PSI-159/PSI-159_Experimental table_CFI-G_Inverse Flames.csv")
+                     self.flags_for(o2, p, r[5], r[7]) + tf, burn_time_s=strict_num(r[14]), outcome=outcome.get(r[15]),
+                     cool_flame=r[4] or None, hot_ignition=hot.get(r[13].lower()), peak_burner_temp_c=t,
+                     source_extra=extra_cells(header, r, {2, 3, 4, 5, 7, 13, 14, 15, 16}))
+        header, body, q = self.table("PSI-159/PSI-159_Experimental table_CFI-G_Inverse Flames.csv")
         for i, r in enumerate(body, 1):
             o2, pb = strict_num(r[7]), strict_num(r[6])
             p = None if pb is None else pb / 1.01325
+            t, tf = peak(r[16], r[17])
             self.add(q, "PSI-159", "ACME CFI-G", i, r[3], "gas", r[2], o2, "burner_oxidizer", p,
-                     self.flags_for(o2, p, r[7], r[6]), burn_time_s=strict_num(r[14]), outcome=outcome.get(r[15]))
+                     self.flags_for(o2, p, r[7], r[6]) + tf, burn_time_s=strict_num(r[14]), outcome=outcome.get(r[15]),
+                     hot_ignition=hot.get(r[13].lower()), peak_burner_temp_c=t,
+                     source_extra=extra_cells(header, r, {2, 3, 6, 7, 13, 14, 15, 16}))
 
     # ---- gas-jet flames with airflow (SPICE) -------------------------------
     def spice(self):
@@ -224,36 +327,51 @@ class Builder:
             if air is not None and air < 0:
                 flags.append("airflow_negative_in_source")
             fuel = re.sub(r"(\d)\s+%", r"\1%", r[3])   # "75 % Propylene" and "75% Propylene" are one fuel
+            ign, off = parse_time(r[1]), parse_time(r[2])
+            if ign is None or (r[2] and off is None):
+                flags.append("time_not_recorded")
+            burn = None
+            if ign and off and 0 <= seconds(off) - seconds(ign) < 3 * 3600:
+                burn = float(seconds(off) - seconds(ign))
+                flags.append("burn_time_from_gmt_times")
             extra = {header[j].strip(): r[j] for j in (0, 1, 2, 4, 5, 6, 7) if r[j]}
             self.add(q, "PSI-107", "SPICE", i, None, "gas", fuel, None, "ambient", None, flags,
-                     airflow_cm_s=air, source_extra=extra)
+                     airflow_cm_s=air, ignition_time=ign, flame_off_time=off, burn_time_s=burn, source_extra=extra)
 
     # ---- droplets ----------------------------------------------------------
     def flex(self):
-        _, body, q = self.table("PSI-69/PSI-69_Experimental table_FLEX.csv")
+        header, body, q = self.table("PSI-69/PSI-69_Experimental table_FLEX.csv")
         for i, r in enumerate(body, 1):
             o2, mm = strict_num(r[6]), strict_num(r[5])
             p = None if (mm is None or mm == 0) else mm / 760
+            rate = strict_num(r[12])
+            d0, dx = strict_num(r[10]), strict_num(r[11])
+            near = ["extinction_diameter_above_initial"] if d0 is not None and dx is not None and dx > d0 else []
             self.add(q, "PSI-69", "FLEX", i, r[1], "droplet", r[4], o2, "ambient", p,
-                     self.flags_for(o2, p, r[6], r[5]), co2_fraction=strict_num(r[8]), he_fraction=strict_num(r[9]),
-                     burn_time_s=strict_num(r[13]), outcome=(r[14].lower() or None))
+                     self.flags_for(o2, p, r[6], r[5]) + (["burning_rate_unit_unclear"] if rate is not None else []) + near,
+                     co2_fraction=strict_num(r[8]), he_fraction=strict_num(r[9]),
+                     burn_time_s=strict_num(r[13]), outcome=(r[14].lower() or None),
+                     droplet_diameter_mm=strict_num(r[10]), extinction_diameter_mm=strict_num(r[11]), burning_rate=rate,
+                     source_extra=extra_cells(header, r, {1, 4, 5, 6, 8, 9, 10, 11, 12, 13, 14}))
 
     def cfi(self):
-        _, body, q = self.table("PSI-39/PSI-39_Experimental table_CFI.csv")
+        header, body, q = self.table("PSI-39/PSI-39_Experimental table_CFI.csv")
         for i, r in enumerate(body, 1):
             o2, p = strict_num(r[5]), lead_num(r[4])
             self.add(q, "PSI-39", "CFI", i, r[0], "droplet", r[9], o2, "ambient", p,
-                     self.flags_for(o2, p, r[5], r[4]), he_fraction=strict_num(r[7]))
+                     self.flags_for(o2, p, r[5], r[4]), he_fraction=strict_num(r[7]),
+                     source_extra=extra_cells(header, r, {0, 4, 5, 7, 9}))
 
     # ---- solid materials ---------------------------------------------------
     def bass2(self):
-        _, body, q = self.table("PSI-25/PSI-25_Experimental table_BASS-II.csv")
+        header, body, q = self.table("PSI-25/PSI-25_Experimental table_BASS-II.csv")
         for i, r in enumerate(body, 1):
             pct = strict_num(r[11])
             o2 = None if pct is None else pct / 100
             flags = ([] if o2 is not None else ["o2_not_numeric:" + r[11] if r[11] else "o2_missing"])
+            # Fan and air display readings keep their cells as written: their units are not stated.
             self.add(q, "PSI-25", "BASS-II", i, r[1], "solid", r[5], o2, "ambient", None,
-                     flags + ["pressure_not_in_table"])
+                     flags + ["pressure_not_in_table"], source_extra=extra_cells(header, r, {1, 5, 11}))
 
     def bass(self):
         _, body, q = self.table("PSI-26/PSI-26_Experimental table_BASS.csv")
@@ -306,11 +424,32 @@ class Builder:
                 extra = {header[j].strip(): r[j] for j in range(len(header)) if j not in used and r[j]}
                 if burn_cell and burn is None:
                     extra["Burn Time (as written)"] = burn_cell
+                # Sample size: columns 2-4 are thickness, length, width in all three tables.
+                th_cell, len_cell, wid_cell = r[2], r[3], r[4]
+                th_unit = "cm" if "(cm)" in header[2] else None
+                thick = None
+                if th_cell:
+                    if re.fullmatch(r"0\d+\s*mm", th_cell):            # '037 mm'
+                        flags.append("thickness_typo_suspected")
+                    else:
+                        v = length_cm(th_cell if not th_unit or re.search(r"[a-z]", th_cell) else th_cell + " cm")
+                        if v is None:
+                            flags.append("value_not_single")
+                        else:
+                            thick = round(v * 10, 3)                    # cm -> mm
+                length = length_cm(len_cell if re.search(r"[a-z]", len_cell) else len_cell + " cm") if len_cell else None
+                width = length_cm(wid_cell if re.search(r"[a-z]", wid_cell) else wid_cell + " cm") if wid_cell else None
+                if len_cell and length is None and "value_not_single" not in flags:
+                    flags.append("value_not_single")
+                if acc == "PSI-98" and length is not None and width is not None and length < width:
+                    length, width = width, length                       # NASA fact sheet: 0.4 m wide, 1 m long
+                    flags.append("dimensions_swapped_in_source")
                 self.add(q, acc, acronym, i, r[0], "solid", material, o2, "ambient", None, flags,
                          o2_fraction_min=None if lo is None else round(lo, 4),
                          o2_fraction_max=None if hi is None else round(hi, 4),
                          airflow_cm_s=lead_num(r[c["air"]]), flow_direction=direction,
-                         burn_time_s=burn, source_extra=extra)
+                         burn_time_s=burn, sample_thickness_mm=thick, sample_length_cm=length, sample_width_cm=width,
+                         source_extra=extra)
 
     def build(self):
         self.flame_design()
@@ -324,24 +463,81 @@ class Builder:
         return self.tests
 
 
+def other_table_corrections(acc, header, body):
+    """Corrections to tables published as-is. Each says what the cell reads, what it is read as, and why.
+    Only made where NASA's own text or the table itself settles it; anything else stays a known issue."""
+    out = []
+
+    def fix(i, col, new, reason):
+        if body[i - 1][col] != new:
+            out.append({"row": i, "column": header[col], "as_published": body[i - 1][col], "read_as": new, "reason": reason})
+
+    if acc == "PSI-20":                                        # ACME BRE
+        o2, fuel = header.index("Oxygen Conc (percent)"), header.index("Fuel Bottle")
+        for i, r in enumerate(body, 1):
+            m = re.fullmatch(r"(\d+)00%", r[o2])
+            if m:
+                fix(i, o2, m.group(1), "percent-format artefact; other rows list plain percentages")
+            fix(i, fuel, re.sub(r"(\d%)(?=\S)", r"\1 ", r[fuel]), "spacing made consistent with the other rows")
+    elif acc == "PSI-21":                                      # ACME CLD Flame
+        ttype, fuel = header.index("Test Type"), header.index("Fuel Bottle")
+        for i, r in enumerate(body, 1):
+            m = re.fullmatch(r"(\d+%) (CH|C2H)(\d+)", r[fuel])
+            if not m:
+                continue
+            base = "CH4" if m.group(2) == "CH" else "C2H4"
+            if m.group(3) != "4":
+                fix(i, fuel, f"{m.group(1)} {base}",
+                    f"spreadsheet autofill: the formula counts up row by row ({m.group(2)}4, {m.group(2)}5, ...); "
+                    f"NASA's record names only methane and ethylene as fuels, and this row's test type is "
+                    f"'{r[ttype]}'")
+    elif acc == "PSI-23":                                      # ACME s-Flame
+        for col in (header.index("Atmosphere*"), header.index("Fuel Bottle")):
+            for i, r in enumerate(body, 1):
+                new = re.sub(r"\bN[3-9]\b", "N2", r[col])
+                fix(i, col, new, "spreadsheet autofill: N2 counts up to N3, N4, ...; NASA's record names nitrogen, "
+                                 "helium and carbon dioxide as diluents")
+    elif acc == "PSI-22":                                      # ACME E-FIELD Flames
+        keep = [header.index(h) for h in ("Test Type", "Test Day", "Year", "Month", "Date", "Mesh Polarity", "Fuel Bottle")]
+        conc = header.index("Fuel Conc")
+        last = None
+        for i, r in enumerate(body, 1):
+            if r[header.index("Test Day")]:
+                last = r
+            elif last and r[conc]:
+                for col in keep:
+                    fix(i, col, last[col], "continuation row: it lists only another fuel concentration used on the "
+                                           "test day above, so the day's other cells are repeated from that row")
+    elif acc == "PSI-106":                                     # SLICE
+        col = header.index("Test Date")
+        for i, r in enumerate(body, 1):
+            m = re.match(r"(\d{4}-[A-Z]{3}-\d{2})\s+(.+)", r[col])
+            if m:
+                fix(i, col, m.group(1), f"the cell also holds text that runs into the next column: '{m.group(2)}'")
+    elif acc == "PSI-102":                                     # SAME
+        col = header.index("Sample Material")
+        for i, r in enumerate(body, 1):
+            m = re.fullmatch(r"(.+?):\s*same conditions as 1-4", r[col])
+            if m:
+                fix(i, col, m.group(1), "the cell adds 'same conditions as 1-4' (samples 1-4 used several "
+                                        "settings, so the blank cells are not filled)")
+    return out
+
+
 def build_other_tables(data, builder):
     search = {s["Accession"]: s for s in json.load(open(os.path.join(data, "search_combustion.json"), encoding="utf-8"))}
     out = []
     for acc, rel, kind, why, issues in OTHER_TABLES:
         header, body = read_csv(os.path.join(data, "tables", rel))
-        corrections = []
-        if acc == "PSI-20":
-            col = header.index("Oxygen Conc (percent)")
-            for i, r in enumerate(body, 1):
-                m = re.fullmatch(r"(\d+)00%", r[col])
-                if m:
-                    corrections.append({"row": i, "column": header[col], "as_published": r[col],
-                                        "read_as": m.group(1),
-                                        "reason": "percent-format artefact; other rows list plain percentages"})
+        corrections = other_table_corrections(acc, header, body)
+        read_as = [list(r) for r in body]
+        for c in corrections:
+            read_as[c["row"] - 1][header.index(c["column"])] = c["read_as"]
         out.append({
             "investigation": acc, "acronym": (search[acc].get("Acronym") or "").strip() or None,
             "source_table": "tables/" + rel, "kind": kind, "why_not_tests": why,
             "columns": header, "rows": body,          # cells exactly as published
+            "rows_read_as": read_as,                  # the same rows with `corrections` applied
             "known_issues": issues, "corrections": corrections,
         })
         builder.table_use["tables/" + rel] = "other_tables.json"
@@ -396,25 +592,51 @@ def build_investigations(data, table_use):
     return out
 
 
+EXPATM = "https://humanresearchroadmap.nasa.gov/evidence/reports/ExpAtm.pdf"
+TP2010 = "https://www.nasa.gov/wp-content/uploads/2023/03/henninger-8.2-34-atm-tp216134-2010.pdf"
+OCHMO = "https://www.nasa.gov/wp-content/uploads/2023/12/ochmo-tb-003-habitable-atmosphere.pdf"
+CHALLENGE_URL = "https://www.spaceappschallenge.org/2026/challenges/flame-in-freefall/?tab=details"
+
+
 def build_habitats():
+    """Each habitat's numbers come from a source opened and checked by workstream A
+    (gemini_data/VERIFIED.md). status starts with 'from_' when every number is sourced."""
     challenge = "NASA Space Apps 2026 challenge page, Flame in Freefall (Potential Considerations)"
+    expatm = "NASA Evidence Report: Risk of Hypoxia from the Exploration Atmosphere (2015)"
     return [
         {"id": "moon_base", "name": "Moon Base / pressurized rover",
          "o2_fraction": [0.30, 1.00], "pressure_psi": [4.3, 10.2],
          "pressure_atm": [round(4.3 * PSI_TO_ATM, 4), MOON_MAX_P_ATM],
          "note": "Challenge: oxygen 'likely 30% or greater', pressure '10.2 psi or less', between spacesuit and Earth values. "
                  "The outer bounds here are the spacesuit values.",
-         "source": challenge, "status": "from_challenge"},
+         "source": challenge, "source_urls": [CHALLENGE_URL], "status": "from_challenge"},
+        {"id": "moon_base_nasa", "name": "Moon Base (NASA Exploration Air)",
+         "o2_fraction": [0.32, 0.36], "pressure_psi": [8.0, 8.4],
+         "pressure_atm": [round(8.0 * PSI_TO_ATM, 4), round(8.4 * PSI_TO_ATM, 4)],
+         "note": "NASA's current exploration atmosphere is 8.2 psia with 34% O2: 'After re-evaluation in 2012, the 8/32 "
+                 "environment was altered to 8.2 psia and 34% O2' (evidence report, p. 4), which it calls 'the current 8.2 psia "
+                 "habitat pressure with 34% O2' (p. 29). The box is NASA's control band of +-0.2 psia and +-2.0% O2 "
+                 "(NASA/TP-2010-216134, p. 11). That report set the band for its own 2010 recommendations; applying it to "
+                 "8.2 / 34 is our step, not NASA's.",
+         "source": f"{expatm}, pp. 4 and 29; NASA/TP-2010-216134, p. 11",
+         "source_urls": [EXPATM, TP2010], "status": "from_nasa"},
+        {"id": "iss", "name": "Space Station (ISS)",
+         "o2_fraction": [0.21, 0.21], "pressure_psi": [14.7, 14.7], "pressure_atm": [1.0, 1.0],
+         "note": "'...International Space Station (ISS) program have operated at an Earth-equivalent sea level atmosphere of "
+                 "14.7 psia and 21% O2' (evidence report, p. 5). Same air as Earth sea level, so the same tests fall in both.",
+         "source": f"{expatm}, p. 5; NASA OCHMO-TB-003 Habitable Atmosphere, p. 8",
+         "source_urls": [EXPATM, OCHMO], "status": "from_nasa"},
         {"id": "spacesuit", "name": "Spacesuit",
          "o2_fraction": [1.00, 1.00], "pressure_psi": [4.3, 4.3],
          "pressure_atm": [round(4.3 * PSI_TO_ATM, 4)] * 2,
          "note": "Challenge: spacesuits are filled with 100% oxygen to only 4.3 psi.",
-         "source": challenge, "status": "from_challenge"},
+         "source": challenge, "source_urls": [CHALLENGE_URL], "status": "from_challenge"},
         {"id": "earth_sea_level", "name": "Earth sea level",
          "o2_fraction": [0.21, 0.21], "pressure_psi": [14.7, 14.7], "pressure_atm": [1.0, 1.0],
-         "note": "Challenge gives 14.7 psi. The 21% oxygen figure is the standard value and is implied by the challenge's "
-                 "'more than a 40% increase' comparison; cite a source before presenting it.",
-         "source": challenge, "status": "pressure_from_challenge_o2_needs_source"},
+         "note": "Pressure from the challenge page (14.7 psi). 21% O2 at 14.7 psia is NASA's 'Earth-equivalent sea level "
+                 "atmosphere' (evidence report, p. 5).",
+         "source": f"{challenge}; {expatm}, p. 5",
+         "source_urls": [CHALLENGE_URL, EXPATM], "status": "from_challenge_and_nasa"},
     ]
 
 
@@ -432,7 +654,9 @@ def main():
         for f in t["flags"]:
             k = f.split(":")[0]
             flag_counts[k] = flag_counts.get(k, 0) + 1
+    duplicates = sum(1 for t in tests if any(f.startswith("duplicate_row") for f in t["flags"]))
     quality = {"tables": b.quality, "flag_counts": flag_counts, "flag_meanings": FLAG_MEANINGS,
+               "tests_total": len(tests), "duplicate_rows": duplicates, "distinct_tests": len(tests) - duplicates,
                "source_problems": "docs/DATA_ISSUES.md"}
 
     for name, obj in (("investigations.json", inv), ("tests.json", tests), ("other_tables.json", other),
@@ -483,6 +707,22 @@ def main():
     for q in b.quality:
         for x in q["rows_left_out"]:
             print(f"    {q['investigation']} row {x['row']}: {x['reason']}")
+    print(f"  distinct tests: {quality['distinct_tests']} ({duplicates} duplicate rows)")
+    for h in hab:
+        ins = [t for t in tests if t["o2_basis"] == "ambient" and t["o2_fraction"] is not None and t["pressure_atm"] is not None
+               and h["o2_fraction"][0] <= t["o2_fraction"] <= h["o2_fraction"][1]
+               and h["pressure_atm"][0] <= t["pressure_atm"] <= h["pressure_atm"][1]]
+        assert h["status"].startswith("from_") and h.get("source_urls"), f"habitat without a source: {h['id']}"
+        print(f"  habitat {h['id']:16} {len(ins):3} tests inside")
+
+    # "Will it go out" analysis, written next to tests.json (same folder, same run).
+    import subprocess
+    here = os.path.dirname(os.path.abspath(__file__))
+    subprocess.run([sys.executable, "-I", os.path.join(here, "outcome_analysis.py"), out], check=True)
+    # Independent checks of everything above against the raw files; a failure stops the build.
+    print("\nvalidation")
+    sys.stdout.flush()
+    subprocess.run([sys.executable, "-I", os.path.join(here, "validate_data.py"), data, out], check=True)
 
 
 if __name__ == "__main__":

@@ -4,7 +4,7 @@
 import { useEffect } from 'react'
 import type { AppData, FuelClass } from '../types/data'
 import type { AiContent } from '../ai/content'
-import { testsInHabitat } from '../data/load'
+import { isSourced, testsInHabitat } from '../data/load'
 import { useApp } from '../state/store'
 import { fmtPct, fmtPsi } from '../ai/evidence'
 import { HabitatPanel } from './HabitatPanel'
@@ -63,7 +63,7 @@ export function PlaceView({ data, ai }: { data: AppData; ai: AiContent }) {
                 <small>Pressure</small>
                 {p}
               </span>
-              {hab.status !== 'from_challenge' && <span className="badge warn">Needs a Source</span>}
+              {!isSourced(hab) && <span className="badge warn">Needs a Source</span>}
             </div>
             <p className="lead">
               <b className="t-accent">{inside.length}</b> NASA tests ran in this air:{' '}

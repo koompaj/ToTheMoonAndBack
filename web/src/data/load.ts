@@ -1,5 +1,5 @@
 // SHARED - loads the generated JSON once. Owned by the data workstream.
-import type { AppData, DataQuality, Habitat, Investigation, OtherTable, Test } from '../types/data'
+import type { AppData, DataQuality, Habitat, Investigation, OtherTable, OutcomeAnalysis, Test } from '../types/data'
 
 async function get<T>(name: string): Promise<T> {
   const res = await fetch(`${import.meta.env.BASE_URL}data/${name}`)
@@ -8,14 +8,34 @@ async function get<T>(name: string): Promise<T> {
 }
 
 export async function loadData(): Promise<AppData> {
-  const [tests, investigations, habitats, otherTables, quality] = await Promise.all([
+  const [tests, investigations, habitats, otherTables, quality, outcomes] = await Promise.all([
     get<Test[]>('tests.json'),
     get<Investigation[]>('investigations.json'),
     get<Habitat[]>('habitats.json'),
     get<OtherTable[]>('other_tables.json'),
     get<DataQuality>('data_quality.json'),
+    get<OutcomeAnalysis>('outcomes.json').catch(() => undefined),
   ])
-  return { tests, investigations, habitats, otherTables, quality }
+  return { tests, investigations, habitats, otherTables, quality, outcomes }
+}
+
+/** Airflow range of some tests, leaving out values flagged airflow_negative_in_source (meaning not
+ *  stated by NASA). Null when no test records airflow. */
+export function airflowRange(tests: Test[]): [number, number] | null {
+  const v = tests
+    .filter((t) => t.airflow_cm_s !== null && !t.flags.includes('airflow_negative_in_source'))
+    .map((t) => t.airflow_cm_s as number)
+  return v.length ? [Math.min(...v), Math.max(...v)] : null
+}
+
+/** True when every number of a habitat has a checked source (status "from_..."). */
+export function isSourced(h: Habitat) {
+  return h.status.startsWith('from_')
+}
+
+/** How many distinct NASA tests there are: tests.json minus rows that repeat an earlier row. */
+export function distinctTestCount(data: Pick<AppData, 'tests' | 'quality'>) {
+  return data.quality.distinct_tests ?? data.tests.filter((t) => !t.flags.some((f) => f.startsWith('duplicate_row'))).length
 }
 
 /** Tests that cannot be placed on the oxygen/pressure map, and why.

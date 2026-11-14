@@ -238,14 +238,23 @@
  ],
  "flag_counts": {
   "o2_not_numeric": 11,
+  "temperature_placeholder": 49,
   "o2_not_in_table": 592,
   "pressure_not_in_table": 732,
+  "burn_time_from_gmt_times": 435,
   "duplicate_row": 34,
+  "time_not_recorded": 18,
   "airflow_negative_in_source": 8,
+  "burning_rate_unit_unclear": 258,
   "pressure_missing": 1,
+  "extinction_diameter_above_initial": 1,
+  "material_not_stated": 87,
   "o2_range": 3,
+  "dimensions_swapped_in_source": 2,
   "o2_approximate": 8,
-  "fuel_from_row_above": 2
+  "thickness_typo_suspected": 3,
+  "fuel_from_row_above": 2,
+  "value_not_single": 2
  },
  "flag_meanings": {
   "o2_not_numeric": "The oxygen cell holds a label (e.g. RAMP, LOW O2), not a single number.",
@@ -258,7 +267,19 @@
   "pressure_not_in_table": "The source table has no pressure column.",
   "fuel_from_row_above": "The material cell is blank (merged cell in the source); filled from the row above.",
   "duplicate_row": "Every cell of this row is identical to an earlier row of the same table.",
-  "airflow_negative_in_source": "The source records a negative air rate; kept as written."
+  "airflow_negative_in_source": "The source records a negative air rate; kept as written. Its meaning is not stated, so leave it out of airflow ranges (airflowRange() in data/load.ts does).",
+  "material_not_stated": "The material cell names a shape or size (e.g. '2 cm sphere', '1/4\" black rod') but not the material, so fuel_material is null.",
+  "time_not_recorded": "The time cell holds no time (e.g. 'Ku LOS', 'no ku', 'n/a') or an unclear format such as '1744'; the cell is kept as written in source_extra.",
+  "burn_time_from_gmt_times": "burn_time_s is the table's GMT flame-off time minus its GMT ignition time.",
+  "dimensions_swapped_in_source": "The table lists length 40.6 cm and width 94 cm. NASA's Saffire fact sheet gives the sample as 0.4 m wide by 1 m long (and the SAFFIRE-III table agrees), so sample_length_cm and sample_width_cm are given the right way round. source_extra keeps the table as written.",
+  "thickness_typo_suspected": "The thickness cell reads '037 mm' (probably 0.37 mm). Not corrected: sample_thickness_mm is null.",
+  "value_not_single": "A dimension cell holds more than one value or a reference (e.g. '0.85 and 0.37 mm', 'See Fig. 5'), so the typed field is null; the cell is kept in source_extra.",
+  "burning_rate_unit_unclear": "NASA's header gives the burning-rate unit only as 'mm'; part of the unit may have been lost in the file. The number is kept as written.",
+  "extinction_diameter_above_initial": "The extinction diameter is a little larger than the initial droplet diameter (by no more than the table's 0.01 mm step, in a flame that went out within a second). Kept as written.",
+  "temperature_placeholder": "The peak burner temperature cell holds a placeholder ('-', '#VALUE!', or 273.15 K beside an empty Celsius cell), so peak_burner_temp_c is null."
  },
+ "tests_total": 1753,
+ "duplicate_rows": 34,
+ "distinct_tests": 1719,
  "source_problems": "docs/DATA_ISSUES.md"
 }

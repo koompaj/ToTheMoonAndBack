@@ -30,8 +30,23 @@ export interface Test {
   flow_direction: string | null // "concurrent" | "opposed" where the source says
   co2_fraction: number | null // suppressant added (FLEX)
   he_fraction: number | null
-  burn_time_s: number | null
+  burn_time_s: number | null // SPICE: flame-off minus ignition time (flag burn_time_from_gmt_times)
   outcome: string | null // as recorded by NASA, normalised wording
+  /** Solid materials: the base material named in the fuel cell (e.g. "PMMA"); null when the cell names
+   *  only a shape (flag material_not_stated). Null for gas and droplet tests. */
+  fuel_material?: string | null
+  // Typed values from columns only some tables have; null elsewhere. Units are in the names.
+  sample_length_cm?: number | null // SAFFIRE (SAFFIRE-I corrected, flag dimensions_swapped_in_source)
+  sample_width_cm?: number | null
+  sample_thickness_mm?: number | null
+  droplet_diameter_mm?: number | null // FLEX, initial droplet
+  extinction_diameter_mm?: number | null // FLEX, visible flame extinction
+  burning_rate?: number | null // FLEX, unit unclear in NASA's header (flag burning_rate_unit_unclear)
+  cool_flame?: string | null // ACME CFI-G normal flames, as written ("yes, PCI-A")
+  hot_ignition?: 'yes' | 'no' | 'flash' | null // ACME CFI-G
+  peak_burner_temp_c?: number | null // ACME CFI-G
+  ignition_time?: string | null // SPICE, GMT "HH:MM:SS"
+  flame_off_time?: string | null
   /** ambient O2 >= 0.30 and pressure <= 10.2 psi; null when either value is unknown
    *  or the oxygen is burner_oxidizer. */
   in_moon_envelope: boolean | null
@@ -86,7 +101,54 @@ export interface Habitat {
   pressure_atm: [number, number]
   note: string
   source: string
-  status: string // "from_challenge" or a note on what still needs a source
+  /** Links to the sources actually opened and checked (gemini_data/VERIFIED.md). */
+  source_urls?: string[]
+  /** Starts with "from_" when every number is sourced: "from_challenge", "from_nasa",
+   *  "from_challenge_and_nasa". Anything else describes what still needs a source.
+   *  Use isSourced() in data/load.ts rather than comparing strings. */
+  status: string
+}
+
+/** One group of tests in the "will it go out" analysis (outcomes.json). */
+export interface OutcomeGroup {
+  label: string
+  x: number // the value grouped on: oxygen band midpoint (fraction), pressure (psi) or a category index
+  n: number
+  recorded: number // tests whose ending NASA's table records
+  went_out: number
+  share_went_out: number | null // went_out / recorded
+  endings: Record<string, number>
+  test_ids: string[] // every test counted, for citation
+}
+
+export interface OutcomeStudy {
+  id: string
+  investigation: string
+  acronym: string
+  fuel_class: FuelClass
+  question: string
+  went_out_means: string
+  /** "clear", "no_clear_pattern" or "not_tested_for_a_trend". The rule is in `rule`. */
+  verdict: string
+  finding: string // one plain sentence with counts
+  group_by?: string
+  groups?: OutcomeGroup[]
+  direction?: string | null
+  rank_correlation?: number | null
+  spread_points?: number
+  groups_used?: number
+  rule?: string
+  matched_groups?: { group: string; groups: OutcomeGroup[]; verdict: string; rank_correlation: number | null; spread_points: number; groups_used: number }[]
+  groups_matched_oxygen?: OutcomeGroup[]
+  matched_oxygen_band?: string
+}
+
+/** "Will it go out?": descriptive counts from FLEX and ACME CFI-G (scripts/outcome_analysis.py). */
+export interface OutcomeAnalysis {
+  generated_by: string
+  method: string
+  caveats: string[] // show these wherever a finding is shown
+  studies: OutcomeStudy[]
 }
 
 /** A NASA table that is not one-row-per-burn (per-day summaries, ranges, smoke tests, ...).
@@ -99,6 +161,8 @@ export interface OtherTable {
   why_not_tests: string
   columns: string[]
   rows: string[][]
+  /** The same rows with `corrections` applied (autofill, continuation rows, stray text). */
+  rows_read_as?: string[][]
   known_issues: string[] // show these next to the table
   corrections: { row: number; column: string; as_published: string; read_as: string; reason: string }[]
 }
@@ -117,6 +181,11 @@ export interface DataQuality {
   }[]
   flag_counts: Record<string, number>
   flag_meanings: Record<string, string>
+  /** tests.json rows; 34 SPICE rows exactly repeat an earlier row (flag duplicate_row). */
+  tests_total?: number
+  duplicate_rows?: number
+  /** Use this, not tests.length, when saying "N NASA tests". */
+  distinct_tests?: number
   source_problems: string
 }
 
@@ -126,4 +195,6 @@ export interface AppData {
   habitats: Habitat[]
   otherTables: OtherTable[]
   quality: DataQuality
+  /** Optional so older callers (ai/generate.mjs) keep working. */
+  outcomes?: OutcomeAnalysis
 }

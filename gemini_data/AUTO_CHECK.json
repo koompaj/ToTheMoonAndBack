@@ -1,0 +1,1953 @@
+[
+ {
+  "id": "G1-01",
+  "file": "G1_habitat_atmospheres.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20150021491",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G1-02",
+  "file": "G1_habitat_atmospheres.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20150021491",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G1-03",
+  "file": "G1_habitat_atmospheres.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20140003729",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G1-04",
+  "file": "G1_habitat_atmospheres.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/19760005580",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G1-05",
+  "file": "G1_habitat_atmospheres.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20100040219",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G1-06",
+  "file": "G1_habitat_atmospheres.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20150021491",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G1-07",
+  "file": "G1_habitat_atmospheres.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20100040219",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G1-08",
+  "file": "G1_habitat_atmospheres.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20190029153",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G1-09",
+  "file": "G1_habitat_atmospheres.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20230002706",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G1-10",
+  "file": "G1_habitat_atmospheres.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20210024855",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G1-11",
+  "file": "G1_habitat_atmospheres.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20210024855",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G1-12",
+  "file": "G1_habitat_atmospheres.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20100040219",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G1-13",
+  "file": "G1_habitat_atmospheres.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20230011364",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G1-14",
+  "file": "G1_habitat_atmospheres.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20230002706",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G1-15",
+  "file": "G1_habitat_atmospheres.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://standards.nasa.gov/standard/NASA/NASA-STD-6001",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G1-16",
+  "file": "G1_habitat_atmospheres.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://standards.nasa.gov/standard/NASA/NASA-STD-3001-Vol-2",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G2-01",
+  "file": "G2_missing_test_conditions.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://doi.org/10.2514/6.2006-941",
+  "source_doi": "10.2514/6.2006-941",
+  "check": "doi_exists",
+  "detail": "Crossref title: 'The Microgravity Science Glovebox as a Platform for Exploration Research on the International Space Station' (44th AIAA Aerospace Sciences Meeting and Exhibit, 2006); title similarity 1.00",
+  "title_similarity": 1.0
+ },
+ {
+  "id": "G2-02",
+  "file": "G2_missing_test_conditions.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://doi.org/10.1016/j.firesaf.2015.11.011",
+  "source_doi": "10.1016/j.firesaf.2015.11.011",
+  "check": "doi_exists",
+  "detail": "Crossref title: 'Opposed-flow flame spread: A comparison of microgravity and normal gravity experiments to establish the thermal regime' (Fire Safety Journal, 2016); title similarity 1.00",
+  "title_similarity": 1.0
+ },
+ {
+  "id": "G2-03",
+  "file": "G2_missing_test_conditions.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://psi.nasa.gov/investigation/PSI-26",
+  "source_doi": "10.60555/58h4-dy80",
+  "check": "quote_in_psi_record",
+  "detail": "found in local PSI-26 record/table; cited URL format does not exist (real: psi.nasa.gov/physci/repo/data/investigations/PSI-26)"
+ },
+ {
+  "id": "G2-04",
+  "file": "G2_missing_test_conditions.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://psi.nasa.gov/investigation/PSI-26",
+  "source_doi": "10.60555/58h4-dy80",
+  "check": "quote_in_psi_record",
+  "detail": "found in local PSI-26 record/table; cited URL format does not exist (real: psi.nasa.gov/physci/repo/data/investigations/PSI-26)"
+ },
+ {
+  "id": "G2-05",
+  "file": "G2_missing_test_conditions.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://doi.org/10.1016/j.proci.2014.07.017",
+  "source_doi": "10.1016/j.proci.2014.07.017",
+  "check": "doi_exists",
+  "detail": "Crossref title: 'Simplified model for predicting difference between flammability limits of a thin material in normal gravity and microgravity environments' (Proceedings of the Combustion Institute, 2015); title similarity 1.00",
+  "title_similarity": 1.0
+ },
+ {
+  "id": "G2-06",
+  "file": "G2_missing_test_conditions.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20210011385",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G2-07",
+  "file": "G2_missing_test_conditions.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://doi.org/10.1016/j.combustflame.2017.03.001",
+  "source_doi": "10.1016/j.combustflame.2017.03.001",
+  "check": "doi_exists",
+  "detail": "Crossref title: 'Microgravity flammability boundary for PMMA rods in axial stagnation flow: Experimental results and energy balance analyses' (Combustion and Flame, 2017); title similarity 1.00",
+  "title_similarity": 1.0
+ },
+ {
+  "id": "G2-08",
+  "file": "G2_missing_test_conditions.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20160000593",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G2-09",
+  "file": "G2_missing_test_conditions.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://psi.nasa.gov/investigation/PSI-25",
+  "source_doi": "10.60555/4qc4-de67",
+  "check": "quote_in_psi_record",
+  "detail": "found in local PSI-25 record/table; cited URL format does not exist (real: psi.nasa.gov/physci/repo/data/investigations/PSI-25)"
+ },
+ {
+  "id": "G2-10",
+  "file": "G2_missing_test_conditions.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://doi.org/10.1016/j.combustflame.2017.03.001",
+  "source_doi": "10.1016/j.combustflame.2017.03.001",
+  "check": "doi_exists",
+  "detail": "Crossref title: 'Microgravity flammability boundary for PMMA rods in axial stagnation flow: Experimental results and energy balance analyses' (Combustion and Flame, 2017); title similarity 1.00",
+  "title_similarity": 1.0
+ },
+ {
+  "id": "G2-11",
+  "file": "G2_missing_test_conditions.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://psi.nasa.gov/investigation/PSI-25",
+  "source_doi": "10.60555/4qc4-de67",
+  "check": "table_cell_in_psi",
+  "detail": "PSI-25: Calibrated initial O2 % by vol=ok; cited URL format does not exist (real: psi.nasa.gov/physci/repo/data/investigations/PSI-25)"
+ },
+ {
+  "id": "G2-12",
+  "file": "G2_missing_test_conditions.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://doi.org/10.1016/j.combustflame.2018.10.012",
+  "source_doi": "10.1016/j.combustflame.2018.10.012",
+  "check": "doi_exists",
+  "detail": "Crossref title: 'Flame spread: Effects of microgravity and scale' (Combustion and Flame, 2019); title similarity 1.00",
+  "title_similarity": 1.0
+ },
+ {
+  "id": "G2-13",
+  "file": "G2_missing_test_conditions.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://psi.nasa.gov/investigation/PSI-98",
+  "source_doi": "10.60555/0t15-1z43",
+  "check": "table_cell_in_psi",
+  "detail": "PSI-98: Percent O2=ok; cited URL format does not exist (real: psi.nasa.gov/physci/repo/data/investigations/PSI-98)"
+ },
+ {
+  "id": "G2-14",
+  "file": "G2_missing_test_conditions.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://psi.nasa.gov/investigation/PSI-98",
+  "source_doi": "10.60555/0t15-1z43",
+  "check": "quote_in_psi_record",
+  "detail": "found in local PSI-98 record/table; cited URL format does not exist (real: psi.nasa.gov/physci/repo/data/investigations/PSI-98)"
+ },
+ {
+  "id": "G2-15",
+  "file": "G2_missing_test_conditions.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://doi.org/10.1016/j.combustflame.2018.10.012",
+  "source_doi": "10.1016/j.combustflame.2018.10.012",
+  "check": "doi_exists",
+  "detail": "Crossref title: 'Flame spread: Effects of microgravity and scale' (Combustion and Flame, 2019); title similarity 1.00",
+  "title_similarity": 1.0
+ },
+ {
+  "id": "G2-16",
+  "file": "G2_missing_test_conditions.md",
+  "status_by_gemini": "CONFLICTING",
+  "source_url": "https://psi.nasa.gov/investigation/PSI-98",
+  "source_doi": "10.60555/0t15-1z43",
+  "check": "table_cell_in_psi",
+  "detail": "PSI-98: Sample Length (cm)=ok; Sample Width (cm)=ok; cited URL format does not exist (real: psi.nasa.gov/physci/repo/data/investigations/PSI-98)"
+ },
+ {
+  "id": "G2-17",
+  "file": "G2_missing_test_conditions.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://doi.org/10.1016/j.combustflame.2018.10.012",
+  "source_doi": "10.1016/j.combustflame.2018.10.012",
+  "check": "doi_exists",
+  "detail": "Crossref title: 'Flame spread: Effects of microgravity and scale' (Combustion and Flame, 2019); title similarity 1.00",
+  "title_similarity": 1.0
+ },
+ {
+  "id": "G2-18",
+  "file": "G2_missing_test_conditions.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://psi.nasa.gov/investigation/PSI-99",
+  "source_doi": "10.60555/2chp-m469",
+  "check": "table_cell_in_psi",
+  "detail": "PSI-99: Percent O2 (Note 1)=ok; cited URL format does not exist (real: psi.nasa.gov/physci/repo/data/investigations/PSI-99)"
+ },
+ {
+  "id": "G2-19",
+  "file": "G2_missing_test_conditions.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://psi.nasa.gov/investigation/PSI-99",
+  "source_doi": "10.60555/2chp-m469",
+  "check": "table_cell_in_psi",
+  "detail": "PSI-99: Air Flow (cm/s)=ok; cited URL format does not exist (real: psi.nasa.gov/physci/repo/data/investigations/PSI-99)"
+ },
+ {
+  "id": "G2-20",
+  "file": "G2_missing_test_conditions.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://psi.nasa.gov/investigation/PSI-99",
+  "source_doi": "10.60555/2chp-m469",
+  "check": "table_cell_in_psi",
+  "detail": "PSI-99: Sample Length=ok; Sample Width (cm)=ok; cited URL format does not exist (real: psi.nasa.gov/physci/repo/data/investigations/PSI-99)"
+ },
+ {
+  "id": "G2-21",
+  "file": "G2_missing_test_conditions.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://doi.org/10.1016/j.combustflame.2018.10.012",
+  "source_doi": "10.1016/j.combustflame.2018.10.012",
+  "check": "doi_exists",
+  "detail": "Crossref title: 'Flame spread: Effects of microgravity and scale' (Combustion and Flame, 2019); title similarity 1.00",
+  "title_similarity": 1.0
+ },
+ {
+  "id": "G2-22",
+  "file": "G2_missing_test_conditions.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://doi.org/10.1016/j.combustflame.2018.10.012",
+  "source_doi": "10.1016/j.combustflame.2018.10.012",
+  "check": "doi_exists",
+  "detail": "Crossref title: 'Flame spread: Effects of microgravity and scale' (Combustion and Flame, 2019); title similarity 1.00",
+  "title_similarity": 1.0
+ },
+ {
+  "id": "G2-23",
+  "file": "G2_missing_test_conditions.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://psi.nasa.gov/investigation/PSI-100",
+  "source_doi": "10.60555/040q-4h36",
+  "check": "table_cell_in_psi",
+  "detail": "PSI-100: Air Flow=ok; cited URL format does not exist (real: psi.nasa.gov/physci/repo/data/investigations/PSI-100)"
+ },
+ {
+  "id": "G2-24",
+  "file": "G2_missing_test_conditions.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://psi.nasa.gov/investigation/PSI-100",
+  "source_doi": "10.60555/040q-4h36",
+  "check": "table_cell_in_psi",
+  "detail": "PSI-100: Sample Length=ok; Sample Width=ok; cited URL format does not exist (real: psi.nasa.gov/physci/repo/data/investigations/PSI-100)"
+ },
+ {
+  "id": "G2-25",
+  "file": "G2_missing_test_conditions.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://doi.org/10.2514/6.2010-1105",
+  "source_doi": "10.2514/6.2010-1105",
+  "check": "doi_exists",
+  "detail": "Crossref title: 'Laminar Smoke Points in Coflow Measured Aboard the International Space Station' (48th AIAA Aerospace Sciences Meeting Including the New Horizons Forum and Aerospace Exposition, 2010); title similarity 1.00",
+  "title_similarity": 1.0
+ },
+ {
+  "id": "G2-26",
+  "file": "G2_missing_test_conditions.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://psi.nasa.gov/investigation/PSI-107",
+  "source_doi": "10.60555/9kbh-e962",
+  "check": "quote_in_psi_record",
+  "detail": "found in local PSI-107 record/table; cited URL format does not exist (real: psi.nasa.gov/physci/repo/data/investigations/PSI-107)"
+ },
+ {
+  "id": "G2-27",
+  "file": "G2_missing_test_conditions.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://psi.nasa.gov/investigation/PSI-107",
+  "source_doi": "10.60555/9kbh-e962",
+  "check": "quote_in_psi_record",
+  "detail": "found in local PSI-107 record/table; cited URL format does not exist (real: psi.nasa.gov/physci/repo/data/investigations/PSI-107)"
+ },
+ {
+  "id": "G2-28",
+  "file": "G2_missing_test_conditions.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://psi.nasa.gov/investigation/PSI-107",
+  "source_doi": "10.60555/9kbh-e962",
+  "check": "quote_in_psi_record",
+  "detail": "found in local PSI-107 record/table; cited URL format does not exist (real: psi.nasa.gov/physci/repo/data/investigations/PSI-107)"
+ },
+ {
+  "id": "G2-29",
+  "file": "G2_missing_test_conditions.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://doi.org/10.1016/j.proci.2014.05.138",
+  "source_doi": "10.1016/j.proci.2014.05.138",
+  "check": "doi_exists",
+  "detail": "Crossref title: 'A computational and experimental study of coflow laminar methane/air diffusion flames: Effects of fuel dilution, inlet velocity, and gravity' (Proceedings of the Combustion Institute, 2015); title similarity 1.00",
+  "title_similarity": 1.0
+ },
+ {
+  "id": "G2-30",
+  "file": "G2_missing_test_conditions.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://psi.nasa.gov/investigation/PSI-106",
+  "source_doi": "10.60555/pm12-rg61",
+  "check": "quote_in_psi_record",
+  "detail": "found in local PSI-106 record/table; cited URL format does not exist (real: psi.nasa.gov/physci/repo/data/investigations/PSI-106)"
+ },
+ {
+  "id": "G2-31",
+  "file": "G2_missing_test_conditions.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://psi.nasa.gov/investigation/PSI-106",
+  "source_doi": "10.60555/pm12-rg61",
+  "check": "quote_in_psi_record",
+  "detail": "found in local PSI-106 record/table; cited URL format does not exist (real: psi.nasa.gov/physci/repo/data/investigations/PSI-106)"
+ },
+ {
+  "id": "G2-32",
+  "file": "G2_missing_test_conditions.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://psi.nasa.gov/investigation/PSI-106",
+  "source_doi": "10.60555/pm12-rg61",
+  "check": "quote_in_psi_record",
+  "detail": "found in local PSI-106 record/table; cited URL format does not exist (real: psi.nasa.gov/physci/repo/data/investigations/PSI-106)"
+ },
+ {
+  "id": "G2-33",
+  "file": "G2_missing_test_conditions.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://doi.org/10.4271/2008-01-2089",
+  "source_doi": "10.4271/2008-01-2089",
+  "check": "doi_exists",
+  "detail": "Crossref title: 'Measurement of Smoke Particle Size under Low-Gravity Conditions' (SAE International Journal of Aerospace, 2008); title similarity 1.00",
+  "title_similarity": 1.0
+ },
+ {
+  "id": "G2-34",
+  "file": "G2_missing_test_conditions.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://doi.org/10.4271/2008-01-2089",
+  "source_doi": "10.4271/2008-01-2089",
+  "check": "doi_exists",
+  "detail": "Crossref title: 'Measurement of Smoke Particle Size under Low-Gravity Conditions' (SAE International Journal of Aerospace, 2008); title similarity 1.00",
+  "title_similarity": 1.0
+ },
+ {
+  "id": "G2-35",
+  "file": "G2_missing_test_conditions.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://psi.nasa.gov/investigation/PSI-102",
+  "source_doi": "10.60555/gd4k-8h62",
+  "check": "quote_not_in_source",
+  "detail": "not word-for-word in local PSI-102 record or tables; cited URL format does not exist (real: psi.nasa.gov/physci/repo/data/investigations/PSI-102)"
+ },
+ {
+  "id": "G2-36",
+  "file": "G2_missing_test_conditions.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://psi.nasa.gov/investigation/PSI-102",
+  "source_doi": "10.60555/gd4k-8h62",
+  "check": "quote_not_in_source",
+  "detail": "not word-for-word in local PSI-102 record or tables; cited URL format does not exist (real: psi.nasa.gov/physci/repo/data/investigations/PSI-102)"
+ },
+ {
+  "id": "G2-37",
+  "file": "G2_missing_test_conditions.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://doi.org/10.2514/6.2012-3536",
+  "source_doi": "10.2514/6.2012-3536",
+  "check": "doi_exists",
+  "detail": "Crossref title: 'Particle Morphology and Size Results from the Smoke Aerosol Measurement Experiment-2' (42nd International Conference on Environmental Systems, 2012); title similarity 1.00",
+  "title_similarity": 1.0
+ },
+ {
+  "id": "G2-38",
+  "file": "G2_missing_test_conditions.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://doi.org/10.2514/6.2012-3536",
+  "source_doi": "10.2514/6.2012-3536",
+  "check": "doi_exists",
+  "detail": "Crossref title: 'Particle Morphology and Size Results from the Smoke Aerosol Measurement Experiment-2' (42nd International Conference on Environmental Systems, 2012); title similarity 1.00",
+  "title_similarity": 1.0
+ },
+ {
+  "id": "G2-39",
+  "file": "G2_missing_test_conditions.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://psi.nasa.gov/investigation/PSI-101",
+  "source_doi": "10.60555/2np7-jv14",
+  "check": "table_cell_in_psi",
+  "detail": "PSI-101: Inlet velocity (cm/s)=ok; cited URL format does not exist (real: psi.nasa.gov/physci/repo/data/investigations/PSI-101)"
+ },
+ {
+  "id": "G2-40",
+  "file": "G2_missing_test_conditions.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://psi.nasa.gov/investigation/PSI-101",
+  "source_doi": "10.60555/2np7-jv14",
+  "check": "table_cell_in_psi",
+  "detail": "PSI-101: Sample Type=ok; cited URL format does not exist (real: psi.nasa.gov/physci/repo/data/investigations/PSI-101)"
+ },
+ {
+  "id": "G3-01",
+  "file": "G3_key_findings.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://www.nasa.gov/mission_pages/station/research/experiments/explorer/Investigation.html?#id=795",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "HTTP 200"
+ },
+ {
+  "id": "G3-02",
+  "file": "G3_key_findings.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://psi.nasa.gov/investigation/PSI-26",
+  "source_doi": "10.60555/58h4-dy80",
+  "check": "quote_in_psi_record",
+  "detail": "found in local PSI-26 record/table; cited URL format does not exist (real: psi.nasa.gov/physci/repo/data/investigations/PSI-26)"
+ },
+ {
+  "id": "G3-03",
+  "file": "G3_key_findings.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://doi.org/10.1016/j.combustflame.2017.03.001",
+  "source_doi": "10.1016/j.combustflame.2017.03.001",
+  "check": "doi_exists",
+  "detail": "Crossref title: 'Microgravity flammability boundary for PMMA rods in axial stagnation flow: Experimental results and energy balance analyses' (Combustion and Flame, 2017); title similarity 1.00",
+  "title_similarity": 1.0
+ },
+ {
+  "id": "G3-04",
+  "file": "G3_key_findings.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20150019858",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G3-05",
+  "file": "G3_key_findings.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://doi.org/10.1016/j.combustflame.2018.10.012",
+  "source_doi": "10.1016/j.combustflame.2018.10.012",
+  "check": "doi_exists",
+  "detail": "Crossref title: 'Flame spread: Effects of microgravity and scale' (Combustion and Flame, 2019); title similarity 1.00",
+  "title_similarity": 1.0
+ },
+ {
+  "id": "G3-06",
+  "file": "G3_key_findings.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20210011521",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G3-07",
+  "file": "G3_key_findings.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20160002360",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G3-08",
+  "file": "G3_key_findings.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://doi.org/10.4271/2009-01-2468",
+  "source_doi": "10.4271/2009-01-2468",
+  "check": "doi_exists",
+  "detail": "Crossref title: 'Smoke Particle Sizes in Low-Gravity and Implications for Spacecraft Smoke Detector Design' (SAE Technical Paper Series, 2009); title similarity 0.89",
+  "title_similarity": 0.89
+ },
+ {
+  "id": "G3-09",
+  "file": "G3_key_findings.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://doi.org/10.2514/6.2013-3433",
+  "source_doi": "10.2514/6.2013-3433",
+  "check": "doi_exists",
+  "detail": "Crossref title: 'Smoke Aerosol Measurement Experiment-2: Comparison of Flight Experiment Results with Ground Test Results' (43rd International Conference on Environmental Systems, 2013); title similarity 1.00",
+  "title_similarity": 1.0
+ },
+ {
+  "id": "G3-10",
+  "file": "G3_key_findings.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://doi.org/10.1016/j.combustflame.2012.07.012",
+  "source_doi": "10.1016/j.combustflame.2012.07.012",
+  "check": "doi_exists",
+  "detail": "Crossref title: 'Can cool flames support quasi-steady alkane droplet burning?' (Combustion and Flame, 2012); title similarity 1.00",
+  "title_similarity": 1.0
+ },
+ {
+  "id": "G3-11",
+  "file": "G3_key_findings.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://psi.nasa.gov/investigation/PSI-69",
+  "source_doi": "10.60555/mbq8-0451",
+  "check": "quote_in_psi_record",
+  "detail": "found in local PSI-69 record/table; cited URL format does not exist (real: psi.nasa.gov/physci/repo/data/investigations/PSI-69)"
+ },
+ {
+  "id": "G3-12",
+  "file": "G3_key_findings.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://doi.org/10.1007/s12217-014-9372-2",
+  "source_doi": "10.1007/s12217-014-9372-2",
+  "check": "doi_exists",
+  "detail": "Crossref title: 'Droplet Combustion Experiments Aboard the International Space Station' (Microgravity Science and Technology, 2014); title similarity 1.00",
+  "title_similarity": 1.0
+ },
+ {
+  "id": "G3-13",
+  "file": "G3_key_findings.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://doi.org/10.1016/j.combustflame.2015.01.012",
+  "source_doi": "10.1016/j.combustflame.2015.01.012",
+  "check": "doi_exists",
+  "detail": "Crossref title: 'Cool-flame extinction during n-alkane droplet combustion in microgravity' (Combustion and Flame, 2015); title similarity 1.00",
+  "title_similarity": 1.0
+ },
+ {
+  "id": "G3-14",
+  "file": "G3_key_findings.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://doi.org/10.1016/j.firesaf.2011.07.006",
+  "source_doi": "10.1016/j.firesaf.2011.07.006",
+  "check": "doi_exists",
+  "detail": "Crossref title: 'Synergistic effects of inorganic tin compounds and Sb2O3 on thermal properties and flame retardancy of flexible poly(vinyl chloride)' (Fire Safety Journal, 2011); title similarity 0.25",
+  "title_similarity": 0.25
+ },
+ {
+  "id": "G3-15",
+  "file": "G3_key_findings.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://doi.org/10.1016/j.proci.2014.05.138",
+  "source_doi": "10.1016/j.proci.2014.05.138",
+  "check": "doi_exists",
+  "detail": "Crossref title: 'A computational and experimental study of coflow laminar methane/air diffusion flames: Effects of fuel dilution, inlet velocity, and gravity' (Proceedings of the Combustion Institute, 2015); title similarity 1.00",
+  "title_similarity": 1.0
+ },
+ {
+  "id": "G3-16",
+  "file": "G3_key_findings.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://psi.nasa.gov/investigation/PSI-20",
+  "source_doi": "10.60555/vb93-3y72",
+  "check": "quote_in_psi_record",
+  "detail": "found in local PSI-20 record/table; cited URL format does not exist (real: psi.nasa.gov/physci/repo/data/investigations/PSI-20)"
+ },
+ {
+  "id": "G3-17",
+  "file": "G3_key_findings.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://doi.org/10.1016/j.proci.2022.07.015",
+  "source_doi": "10.1016/j.proci.2022.07.015",
+  "check": "doi_exists",
+  "detail": "Crossref title: 'Spherical gas-fueled cool diffusion flames' (Proceedings of the Combustion Institute, 2023); title similarity 1.00",
+  "title_similarity": 1.0
+ },
+ {
+  "id": "G3-18",
+  "file": "G3_key_findings.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://doi.org/10.1016/j.proci.2022.07.049",
+  "source_doi": "10.1016/j.proci.2022.07.049",
+  "check": "doi_exists",
+  "detail": "Crossref title: 'On the existence of steady-state gaseous microgravity spherical diffusion flames in the presence of radiation heat loss' (Proceedings of the Combustion Institute, 2023); title similarity 1.00",
+  "title_similarity": 1.0
+ },
+ {
+  "id": "G3-19",
+  "file": "G3_key_findings.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://psi.nasa.gov/investigation/PSI-21",
+  "source_doi": "10.60555/23e1-9950",
+  "check": "quote_in_psi_record",
+  "detail": "found in local PSI-21 record/table; cited URL format does not exist (real: psi.nasa.gov/physci/repo/data/investigations/PSI-21)"
+ },
+ {
+  "id": "G3-20",
+  "file": "G3_key_findings.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://doi.org/10.3390/en11051235",
+  "source_doi": "10.3390/en11051235",
+  "check": "doi_exists",
+  "detail": "Crossref title: 'Electric Field Induced Changes of a Diffusion Flame and Heat Transfer near an Impinging Surface' (Energies, 2018); title similarity 1.00",
+  "title_similarity": 1.0
+ },
+ {
+  "id": "G3-21",
+  "file": "G3_key_findings.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://psi.nasa.gov/investigation/PSI-23",
+  "source_doi": "10.60555/k57n-p030",
+  "check": "quote_in_psi_record",
+  "detail": "found in local PSI-23 record/table; cited URL format does not exist (real: psi.nasa.gov/physci/repo/data/investigations/PSI-23)"
+ },
+ {
+  "id": "G3-22",
+  "file": "G3_key_findings.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://doi.org/10.1016/j.proci.2014.07.017",
+  "source_doi": "10.1016/j.proci.2014.07.017",
+  "check": "doi_exists",
+  "detail": "Crossref title: 'Simplified model for predicting difference between flammability limits of a thin material in normal gravity and microgravity environments' (Proceedings of the Combustion Institute, 2015); title similarity 1.00",
+  "title_similarity": 1.0
+ },
+ {
+  "id": "G4-01",
+  "file": "G4_material_flammability.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://standards.nasa.gov/standard/NASA/NASA-STD-6001",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G4-02",
+  "file": "G4_material_flammability.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20080034448",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G4-03",
+  "file": "G4_material_flammability.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20170004702",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G4-04",
+  "file": "G4_material_flammability.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://doi.org/10.1016/j.proci.2018.05.055",
+  "source_doi": "10.1016/j.proci.2018.05.055",
+  "check": "doi_exists",
+  "detail": "Crossref title: 'Concurrent flame spread over externally heated Nomex under mixed convection flow' (Proceedings of the Combustion Institute, 2019); title similarity 1.00",
+  "title_similarity": 1.0
+ },
+ {
+  "id": "G4-05",
+  "file": "G4_material_flammability.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20220006612",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G4-06",
+  "file": "G4_material_flammability.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20080034448",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G4-07",
+  "file": "G4_material_flammability.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://standards.nasa.gov/standard/NASA/NASA-STD-6001",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G4-08",
+  "file": "G4_material_flammability.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20050185597",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G4-09",
+  "file": "G4_material_flammability.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20050185597",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G4-10",
+  "file": "G4_material_flammability.md",
+  "status_by_gemini": "NOT_FOUND",
+  "source_url": "https://psi.nasa.gov/",
+  "source_doi": null,
+  "check": "quote_not_in_source",
+  "detail": "HTTP 200; parts found 0/0"
+ },
+ {
+  "id": "G4-11",
+  "file": "G4_material_flammability.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20160000593",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G4-12",
+  "file": "G4_material_flammability.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20160000593",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G4-13",
+  "file": "G4_material_flammability.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20150016911",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G4-14",
+  "file": "G4_material_flammability.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://doi.org/10.2514/6.2012-3492",
+  "source_doi": "10.2514/6.2012-3492",
+  "check": "doi_exists",
+  "detail": "Crossref title: 'Evaluating Material Flammability in Microgravity and Martian Gravity Compared to the NASA Standard Normal Gravity Test' (42nd International Conference on Environmental Systems, 2012); title similarity 1.00",
+  "title_similarity": 1.0
+ },
+ {
+  "id": "G4-15",
+  "file": "G4_material_flammability.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://standards.nasa.gov/standard/NASA/NASA-STD-6001",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G4-16",
+  "file": "G4_material_flammability.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://doi.org/10.2514/6.2012-3492",
+  "source_doi": "10.2514/6.2012-3492",
+  "check": "doi_exists",
+  "detail": "Crossref title: 'Evaluating Material Flammability in Microgravity and Martian Gravity Compared to the NASA Standard Normal Gravity Test' (42nd International Conference on Environmental Systems, 2012); title similarity 1.00",
+  "title_similarity": 1.0
+ },
+ {
+  "id": "G4-17",
+  "file": "G4_material_flammability.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20080034448",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G4-18",
+  "file": "G4_material_flammability.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20150016911",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G4-19",
+  "file": "G4_material_flammability.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20170004702",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G4-20",
+  "file": "G4_material_flammability.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20170004702",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G4-21",
+  "file": "G4_material_flammability.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://doi.org/10.2514/6.2010-6259",
+  "source_doi": "10.2514/6.2010-6259",
+  "check": "doi_exists",
+  "detail": "Crossref title: 'Pressure Flammability Thresholds of Selected Aerospace Materials' (40th International Conference on Environmental Systems, 2010); title similarity 1.00",
+  "title_similarity": 1.0
+ },
+ {
+  "id": "G4-22",
+  "file": "G4_material_flammability.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20080034448",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G4-23",
+  "file": "G4_material_flammability.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/19990047587",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G4-24",
+  "file": "G4_material_flammability.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/19960021046",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G4-25",
+  "file": "G4_material_flammability.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20260003925",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G4-26",
+  "file": "G4_material_flammability.md",
+  "status_by_gemini": "NOT_FOUND",
+  "source_url": "https://psi.nasa.gov/",
+  "source_doi": null,
+  "check": "quote_not_in_source",
+  "detail": "HTTP 200; parts found 0/0"
+ },
+ {
+  "id": "G4-27",
+  "file": "G4_material_flammability.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/19960021046",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G4-28",
+  "file": "G4_material_flammability.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/19960021046",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G4-29",
+  "file": "G4_material_flammability.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20090012334",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G4-30",
+  "file": "G4_material_flammability.md",
+  "status_by_gemini": "NOT_FOUND",
+  "source_url": "https://psi.nasa.gov/",
+  "source_doi": null,
+  "check": "quote_not_in_source",
+  "detail": "HTTP 200; parts found 0/0"
+ },
+ {
+  "id": "G4-31",
+  "file": "G4_material_flammability.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20150016911",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G4-32",
+  "file": "G4_material_flammability.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/19960021046",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G4-33",
+  "file": "G4_material_flammability.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20260003925",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G4-34",
+  "file": "G4_material_flammability.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20150016911",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G5-01",
+  "file": "G5_future_experiments.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://www.nasa.gov/missions/station/solid-fuel-ignition-and-extinction/",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "HTTP 404"
+ },
+ {
+  "id": "G5-02",
+  "file": "G5_future_experiments.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://www.nasa.gov/press-release/nasa-commercial-resupply-mission-to-space-station-launches-from-virginia",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "HTTP 404"
+ },
+ {
+  "id": "G5-03",
+  "file": "G5_future_experiments.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://psi.nasa.gov/",
+  "source_doi": null,
+  "check": "quote_not_in_source",
+  "detail": "HTTP 200; parts found 0/1"
+ },
+ {
+  "id": "G5-04",
+  "file": "G5_future_experiments.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://doi.org/10.1016/j.combustflame.2025.114244",
+  "source_doi": "10.1016/j.combustflame.2025.114244",
+  "check": "doi_exists",
+  "detail": "Crossref title: 'Experimental determination of diffusion flame extinction boundaries over a PMMA sphere: The effect of sub-surface solid heating' (Combustion and Flame, 2025); title similarity 1.00",
+  "title_similarity": 1.0
+ },
+ {
+  "id": "G5-05",
+  "file": "G5_future_experiments.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://www.nasa.gov/mission/station/research-explorer/investigation/?#id=8222",
+  "source_doi": null,
+  "check": "quote_not_in_source",
+  "detail": "HTTP 200; parts found 0/1"
+ },
+ {
+  "id": "G5-06",
+  "file": "G5_future_experiments.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://www.nasa.gov/mission/station/research-explorer/investigation/?#id=8223",
+  "source_doi": null,
+  "check": "quote_not_in_source",
+  "detail": "HTTP 200; parts found 0/1"
+ },
+ {
+  "id": "G5-07",
+  "file": "G5_future_experiments.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://taskbook.nasaprs.com/tbp/index.cfm?action=public_query_taskbook_content&TASKID=14774",
+  "source_doi": null,
+  "check": "quote_not_in_source",
+  "detail": "HTTP 200; parts found 0/1"
+ },
+ {
+  "id": "G5-08",
+  "file": "G5_future_experiments.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://taskbook.nasaprs.com/tbp/index.cfm?action=public_query_taskbook_content&TASKID=14775",
+  "source_doi": null,
+  "check": "quote_not_in_source",
+  "detail": "HTTP 200; parts found 0/1"
+ },
+ {
+  "id": "G5-09",
+  "file": "G5_future_experiments.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://taskbook.nasaprs.com/tbp/index.cfm?action=public_query_taskbook_content&TASKID=14776",
+  "source_doi": null,
+  "check": "quote_not_in_source",
+  "detail": "HTTP 200; parts found 0/1"
+ },
+ {
+  "id": "G5-10",
+  "file": "G5_future_experiments.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20210011521",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G5-11",
+  "file": "G5_future_experiments.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20210011521",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G5-12",
+  "file": "G5_future_experiments.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20210011521",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G5-13",
+  "file": "G5_future_experiments.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://psi.nasa.gov/",
+  "source_doi": null,
+  "check": "quote_not_in_source",
+  "detail": "HTTP 200; parts found 0/1"
+ },
+ {
+  "id": "G5-14",
+  "file": "G5_future_experiments.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20210011521",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G5-15",
+  "file": "G5_future_experiments.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20210011521",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G5-16",
+  "file": "G5_future_experiments.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20210011521",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G5-17",
+  "file": "G5_future_experiments.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://psi.nasa.gov/",
+  "source_doi": null,
+  "check": "quote_not_in_source",
+  "detail": "HTTP 200; parts found 0/1"
+ },
+ {
+  "id": "G5-18",
+  "file": "G5_future_experiments.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20240007488",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G5-19",
+  "file": "G5_future_experiments.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20240007488",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G5-20",
+  "file": "G5_future_experiments.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20240007488",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G5-21",
+  "file": "G5_future_experiments.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://psi.nasa.gov/",
+  "source_doi": null,
+  "check": "quote_not_in_source",
+  "detail": "HTTP 200; parts found 0/1"
+ },
+ {
+  "id": "G5-22",
+  "file": "G5_future_experiments.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://techport.nasa.gov/view/1560",
+  "source_doi": null,
+  "check": "quote_not_in_source",
+  "detail": "HTTP 200; parts found 0/1"
+ },
+ {
+  "id": "G5-23",
+  "file": "G5_future_experiments.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://techport.nasa.gov/view/1560",
+  "source_doi": null,
+  "check": "quote_not_in_source",
+  "detail": "HTTP 200; parts found 0/1"
+ },
+ {
+  "id": "G5-24",
+  "file": "G5_future_experiments.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://techport.nasa.gov/view/1560",
+  "source_doi": null,
+  "check": "quote_not_in_source",
+  "detail": "HTTP 200; parts found 0/1"
+ },
+ {
+  "id": "G5-25",
+  "file": "G5_future_experiments.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://psi.nasa.gov/",
+  "source_doi": null,
+  "check": "quote_not_in_source",
+  "detail": "HTTP 200; parts found 0/1"
+ },
+ {
+  "id": "G5-26",
+  "file": "G5_future_experiments.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20260001966",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G5-27",
+  "file": "G5_future_experiments.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20260001966",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G5-28",
+  "file": "G5_future_experiments.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://techport.nasa.gov/view/1560",
+  "source_doi": null,
+  "check": "quote_not_in_source",
+  "detail": "HTTP 200; parts found 0/1"
+ },
+ {
+  "id": "G5-29",
+  "file": "G5_future_experiments.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://www.nasa.gov/mission/station/research-explorer/investigation/?#id=7705",
+  "source_doi": null,
+  "check": "quote_not_in_source",
+  "detail": "HTTP 200; parts found 0/2"
+ },
+ {
+  "id": "G5-30",
+  "file": "G5_future_experiments.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://psi.nasa.gov/",
+  "source_doi": null,
+  "check": "quote_not_in_source",
+  "detail": "HTTP 200; parts found 0/1"
+ },
+ {
+  "id": "G6-01",
+  "file": "G6_incidents_and_spinoffs.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://history.nasa.gov/Apollo204/find.html",
+  "source_doi": null,
+  "check": "quote_not_in_source",
+  "detail": "HTTP 200; parts found 0/1"
+ },
+ {
+  "id": "G6-02",
+  "file": "G6_incidents_and_spinoffs.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://history.nasa.gov/Apollo204/find.html",
+  "source_doi": null,
+  "check": "quote_on_page",
+  "detail": "HTTP 200; parts found 1/1"
+ },
+ {
+  "id": "G6-03",
+  "file": "G6_incidents_and_spinoffs.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://history.nasa.gov/Apollo204/find.html",
+  "source_doi": null,
+  "check": "quote_not_in_source",
+  "detail": "HTTP 200; parts found 0/1"
+ },
+ {
+  "id": "G6-04",
+  "file": "G6_incidents_and_spinoffs.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://history.nasa.gov/Apollo204/as204r.htm",
+  "source_doi": null,
+  "check": "quote_not_in_source",
+  "detail": "HTTP 200; parts found 0/1"
+ },
+ {
+  "id": "G6-05",
+  "file": "G6_incidents_and_spinoffs.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://history.nasa.gov/Apollo204/find.html",
+  "source_doi": null,
+  "check": "quote_on_page",
+  "detail": "HTTP 200; parts found 1/1"
+ },
+ {
+  "id": "G6-06",
+  "file": "G6_incidents_and_spinoffs.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://history.nasa.gov/Apollo204/find.html",
+  "source_doi": null,
+  "check": "quote_on_page",
+  "detail": "HTTP 200; parts found 1/1"
+ },
+ {
+  "id": "G6-07",
+  "file": "G6_incidents_and_spinoffs.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/api/citations/19700076776/downloads/19700076776.pdf",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G6-08",
+  "file": "G6_incidents_and_spinoffs.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/api/citations/19700076776/downloads/19700076776.pdf",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G6-09",
+  "file": "G6_incidents_and_spinoffs.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/api/citations/19700076776/downloads/19700076776.pdf",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G6-10",
+  "file": "G6_incidents_and_spinoffs.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/api/citations/19700076776/downloads/19700076776.pdf",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G6-11",
+  "file": "G6_incidents_and_spinoffs.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/api/citations/19700076776/downloads/19700076776.pdf",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G6-12",
+  "file": "G6_incidents_and_spinoffs.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/api/citations/19700076776/downloads/19700076776.pdf",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G6-13",
+  "file": "G6_incidents_and_spinoffs.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://www.nasa.gov/history/25-years-ago-fire-aboard-space-station-mir/",
+  "source_doi": null,
+  "check": "quote_on_page",
+  "detail": "HTTP 200; parts found 1/1"
+ },
+ {
+  "id": "G6-14",
+  "file": "G6_incidents_and_spinoffs.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/api/citations/20050196230/downloads/20050196230.pdf",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G6-15",
+  "file": "G6_incidents_and_spinoffs.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://www.nasa.gov/history/25-years-ago-fire-aboard-space-station-mir/",
+  "source_doi": null,
+  "check": "quote_not_in_source",
+  "detail": "HTTP 200; parts found 0/1"
+ },
+ {
+  "id": "G6-16",
+  "file": "G6_incidents_and_spinoffs.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://www.nasa.gov/history/25-years-ago-fire-aboard-space-station-mir/",
+  "source_doi": null,
+  "check": "quote_not_in_source",
+  "detail": "HTTP 200; parts found 0/2"
+ },
+ {
+  "id": "G6-17",
+  "file": "G6_incidents_and_spinoffs.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://www.nasa.gov/history/25-years-ago-fire-aboard-space-station-mir/",
+  "source_doi": null,
+  "check": "quote_on_page",
+  "detail": "HTTP 200; parts found 1/1"
+ },
+ {
+  "id": "G6-18",
+  "file": "G6_incidents_and_spinoffs.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://www.nasa.gov/history/25-years-ago-fire-aboard-space-station-mir/",
+  "source_doi": null,
+  "check": "quote_not_in_source",
+  "detail": "HTTP 200; parts found 0/1"
+ },
+ {
+  "id": "G6-19",
+  "file": "G6_incidents_and_spinoffs.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://www.nasa.gov/news-release/nasa-to-host-artemis-ii-crew-postflight-news-conference/",
+  "source_doi": null,
+  "check": "quote_not_in_source",
+  "detail": "HTTP 200; parts found 0/3"
+ },
+ {
+  "id": "G6-20",
+  "file": "G6_incidents_and_spinoffs.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/api/citations/20110012896/downloads/20110012896.pdf",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G6-21",
+  "file": "G6_incidents_and_spinoffs.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://www.nasa.gov/blogs/artemis/",
+  "source_doi": null,
+  "check": "quote_not_in_source",
+  "detail": "HTTP 200; parts found 0/1"
+ },
+ {
+  "id": "G6-22",
+  "file": "G6_incidents_and_spinoffs.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://www.aiaa.org/news/news/2026/04/16/artemis-ii-astronauts-praise-orion-capsule",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "HTTP 404"
+ },
+ {
+  "id": "G6-23",
+  "file": "G6_incidents_and_spinoffs.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20130011664",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G6-24",
+  "file": "G6_incidents_and_spinoffs.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20110012896",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G6-25",
+  "file": "G6_incidents_and_spinoffs.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://spinoff.nasa.gov/Spinoff2019/ps_16.html",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "HTTP 404"
+ },
+ {
+  "id": "G6-26",
+  "file": "G6_incidents_and_spinoffs.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://spinoff.nasa.gov/Spinoff2019/ps_16.html",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "HTTP 404"
+ },
+ {
+  "id": "G6-27",
+  "file": "G6_incidents_and_spinoffs.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://spinoff.nasa.gov/Spinoff1978/fire_detector.html",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "HTTP 404"
+ },
+ {
+  "id": "G6-28",
+  "file": "G6_incidents_and_spinoffs.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://spinoff.nasa.gov/Spinoff1978/fire_detector.html",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "HTTP 404"
+ },
+ {
+  "id": "G6-29",
+  "file": "G6_incidents_and_spinoffs.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://spinoff.nasa.gov/Spinoff2008/ps_3.html",
+  "source_doi": null,
+  "check": "quote_on_page",
+  "detail": "HTTP 200; parts found 1/1"
+ },
+ {
+  "id": "G6-30",
+  "file": "G6_incidents_and_spinoffs.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://spinoff.nasa.gov/Spinoff2008/ps_3.html",
+  "source_doi": null,
+  "check": "quote_not_in_source",
+  "detail": "HTTP 200; parts found 0/1"
+ },
+ {
+  "id": "G6-31",
+  "file": "G6_incidents_and_spinoffs.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://spinoff.nasa.gov/Zero-Leak-Valve-Holds-Tight-in-Demanding-Environments",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "HTTP 404"
+ },
+ {
+  "id": "G6-32",
+  "file": "G6_incidents_and_spinoffs.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20110012896",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G7-01",
+  "file": "G7_judging_rules.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://www.spaceappschallenge.org/resources/judging-awards-guide/",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "HTTP 000"
+ },
+ {
+  "id": "G7-02",
+  "file": "G7_judging_rules.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://www.spaceappschallenge.org/resources/judging-awards-guide/",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "HTTP 000"
+ },
+ {
+  "id": "G7-03",
+  "file": "G7_judging_rules.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://www.spaceappschallenge.org/resources/judging-awards-guide/",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "HTTP 000"
+ },
+ {
+  "id": "G7-04",
+  "file": "G7_judging_rules.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://www.spaceappschallenge.org/resources/judging-awards-guide/",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "HTTP 000"
+ },
+ {
+  "id": "G7-05",
+  "file": "G7_judging_rules.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://www.spaceappschallenge.org/resources/judging-awards-guide/",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "HTTP 000"
+ },
+ {
+  "id": "G7-06",
+  "file": "G7_judging_rules.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://www.spaceappschallenge.org/resources/project-submission-guide/",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "HTTP 000"
+ },
+ {
+  "id": "G7-07",
+  "file": "G7_judging_rules.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://www.spaceappschallenge.org/resources/project-submission-guide/",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "HTTP 000"
+ },
+ {
+  "id": "G7-08",
+  "file": "G7_judging_rules.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://www.spaceappschallenge.org/resources/project-submission-guide/",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "HTTP 000"
+ },
+ {
+  "id": "G7-09",
+  "file": "G7_judging_rules.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://www.spaceappschallenge.org/resources/project-submission-guide/",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "HTTP 000"
+ },
+ {
+  "id": "G7-10",
+  "file": "G7_judging_rules.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://www.spaceappschallenge.org/resources/project-submission-guide/",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "HTTP 000"
+ },
+ {
+  "id": "G7-11",
+  "file": "G7_judging_rules.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://www.spaceappschallenge.org/resources/project-submission-guide/",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "HTTP 000"
+ },
+ {
+  "id": "G7-12",
+  "file": "G7_judging_rules.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://www.spaceappschallenge.org/resources/participant-faq/",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "HTTP 000"
+ },
+ {
+  "id": "G7-13",
+  "file": "G7_judging_rules.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://www.spaceappschallenge.org/resources/participant-faq/",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "HTTP 000"
+ },
+ {
+  "id": "G7-14",
+  "file": "G7_judging_rules.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://www.spaceappschallenge.org/resources/participant-faq/",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "HTTP 000"
+ },
+ {
+  "id": "G7-15",
+  "file": "G7_judging_rules.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://www.spaceappschallenge.org/resources/project-submission-guide/",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "HTTP 000"
+ },
+ {
+  "id": "G7-16",
+  "file": "G7_judging_rules.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://www.spaceappschallenge.org/resources/participant-faq/",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "HTTP 000"
+ },
+ {
+  "id": "G8-01",
+  "file": "G8_publications.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://doi.org/10.1016/j.proci.2022.07.015",
+  "source_doi": "10.1016/j.proci.2022.07.015",
+  "check": "doi_exists",
+  "detail": "Crossref title: 'Spherical gas-fueled cool diffusion flames' (Proceedings of the Combustion Institute, 2023); title similarity 1.00",
+  "title_similarity": 1.0
+ },
+ {
+  "id": "G8-02",
+  "file": "G8_publications.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://doi.org/10.1016/j.combustflame.2012.07.012",
+  "source_doi": "10.1016/j.combustflame.2012.07.012",
+  "check": "doi_exists",
+  "detail": "Crossref title: 'Can cool flames support quasi-steady alkane droplet burning?' (Combustion and Flame, 2012); title similarity 1.00",
+  "title_similarity": 1.0
+ },
+ {
+  "id": "G8-03",
+  "file": "G8_publications.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://doi.org/10.1016/j.combustflame.2015.01.012",
+  "source_doi": "10.1016/j.combustflame.2015.01.012",
+  "check": "doi_exists",
+  "detail": "Crossref title: 'Cool-flame extinction during n-alkane droplet combustion in microgravity' (Combustion and Flame, 2015); title similarity 1.00",
+  "title_similarity": 1.0
+ },
+ {
+  "id": "G8-04",
+  "file": "G8_publications.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://doi.org/10.1007/s12217-024-10115-x",
+  "source_doi": "10.1007/s12217-024-10115-x",
+  "check": "doi_exists",
+  "detail": "Crossref title: 'Low Temperature n-Dodecane Droplet Combustion Experiments Aboard the International Space Station' (Microgravity Science and Technology, 2024); title similarity 1.00",
+  "title_similarity": 1.0
+ },
+ {
+  "id": "G8-05",
+  "file": "G8_publications.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://doi.org/10.1016/j.firesaf.2011.08.002",
+  "source_doi": "10.1016/j.firesaf.2011.08.002",
+  "check": "doi_exists",
+  "detail": "Crossref title: 'Laminar smoke points of coflowing flames in microgravity' (Fire Safety Journal, 2011); title similarity 1.00",
+  "title_similarity": 1.0
+ },
+ {
+  "id": "G8-06",
+  "file": "G8_publications.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://doi.org/10.2514/6.2010-1105",
+  "source_doi": "10.2514/6.2010-1105",
+  "check": "doi_exists",
+  "detail": "Crossref title: 'Laminar Smoke Points in Coflow Measured Aboard the International Space Station' (48th AIAA Aerospace Sciences Meeting Including the New Horizons Forum and Aerospace Exposition, 2010); title similarity 1.00",
+  "title_similarity": 1.0
+ },
+ {
+  "id": "G8-07",
+  "file": "G8_publications.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://doi.org/10.2514/6.2013-3433",
+  "source_doi": "10.2514/6.2013-3433",
+  "check": "doi_exists",
+  "detail": "Crossref title: 'Smoke Aerosol Measurement Experiment-2: Comparison of Flight Experiment Results with Ground Test Results' (43rd International Conference on Environmental Systems, 2013); title similarity 1.00",
+  "title_similarity": 1.0
+ },
+ {
+  "id": "G8-08",
+  "file": "G8_publications.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://doi.org/10.1016/j.firesaf.2018.04.004",
+  "source_doi": "10.1016/j.firesaf.2018.04.004",
+  "check": "doi_exists",
+  "detail": "Crossref title: 'Evaluation of spacecraft smoke detector performance in the low-gravity environment' (Fire Safety Journal, 2018); title similarity 1.00",
+  "title_similarity": 1.0
+ },
+ {
+  "id": "G8-09",
+  "file": "G8_publications.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://doi.org/10.2514/6.2012-3536",
+  "source_doi": "10.2514/6.2012-3536",
+  "check": "doi_exists",
+  "detail": "Crossref title: 'Particle Morphology and Size Results from the Smoke Aerosol Measurement Experiment-2' (42nd International Conference on Environmental Systems, 2012); title similarity 1.00",
+  "title_similarity": 1.0
+ },
+ {
+  "id": "G8-10",
+  "file": "G8_publications.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://doi.org/10.1016/j.firesaf.2015.11.011",
+  "source_doi": "10.1016/j.firesaf.2015.11.011",
+  "check": "doi_exists",
+  "detail": "Crossref title: 'Opposed-flow flame spread: A comparison of microgravity and normal gravity experiments to establish the thermal regime' (Fire Safety Journal, 2016); title similarity 1.00",
+  "title_similarity": 1.0
+ },
+ {
+  "id": "G8-11",
+  "file": "G8_publications.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20150002882",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G8-12",
+  "file": "G8_publications.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://doi.org/10.1016/j.combustflame.2017.03.001",
+  "source_doi": "10.1016/j.combustflame.2017.03.001",
+  "check": "doi_exists",
+  "detail": "Crossref title: 'Microgravity flammability boundary for PMMA rods in axial stagnation flow: Experimental results and energy balance analyses' (Combustion and Flame, 2017); title similarity 1.00",
+  "title_similarity": 1.0
+ },
+ {
+  "id": "G8-13",
+  "file": "G8_publications.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://doi.org/10.1016/j.combustflame.2015.10.023",
+  "source_doi": "10.1016/j.combustflame.2015.10.023",
+  "check": "doi_exists",
+  "detail": "Crossref title: 'The critical flow velocity for radiative extinction in opposed-flow flame spread in a microgravity environment: A comparison of experimental, computational, and theoretical results' (Combustion and Flame, 2016); title similarity 1.00",
+  "title_similarity": 1.0
+ },
+ {
+  "id": "G8-14",
+  "file": "G8_publications.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://doi.org/10.1016/j.proci.2016.06.028",
+  "source_doi": "10.1016/j.proci.2016.06.028",
+  "check": "doi_exists",
+  "detail": "Crossref title: 'Concurrent flame growth, spread, and quenching over composite fabric samples in low speed purely forced flow in microgravity' (Proceedings of the Combustion Institute, 2017); title similarity 1.00",
+  "title_similarity": 1.0
+ },
+ {
+  "id": "G8-15",
+  "file": "G8_publications.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20210011385",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ },
+ {
+  "id": "G8-16",
+  "file": "G8_publications.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://doi.org/10.1016/j.combustflame.2018.10.012",
+  "source_doi": "10.1016/j.combustflame.2018.10.012",
+  "check": "doi_exists",
+  "detail": "Crossref title: 'Flame spread: Effects of microgravity and scale' (Combustion and Flame, 2019); title similarity 1.00",
+  "title_similarity": 1.0
+ },
+ {
+  "id": "G8-17",
+  "file": "G8_publications.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://doi.org/10.1016/j.proci.2018.05.168",
+  "source_doi": "10.1016/j.proci.2018.05.168",
+  "check": "doi_exists",
+  "detail": "Crossref title: 'Transient flame growth and spread processes over a large solid fabric in concurrent low-speed flows in microgravity – Model versus experiment' (Proceedings of the Combustion Institute, 2019); title similarity 1.00",
+  "title_similarity": 1.0
+ },
+ {
+  "id": "G8-18",
+  "file": "G8_publications.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://doi.org/10.1016/j.combustflame.2018.10.016",
+  "source_doi": "10.1016/j.combustflame.2018.10.016",
+  "check": "doi_exists",
+  "detail": "Crossref title: 'Buoyancy effects on concurrent flame spread over thick PMMA' (Combustion and Flame, 2019); title similarity 1.00",
+  "title_similarity": 1.0
+ },
+ {
+  "id": "G8-19",
+  "file": "G8_publications.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://doi.org/10.1007/s10694-019-00863-3",
+  "source_doi": "10.1007/s10694-019-00863-3",
+  "check": "doi_exists",
+  "detail": "Crossref title: 'Concurrent Flame Spread Over Two-Sided Thick PMMA Slabs in Microgravity' (Fire Technology, 2019); title similarity 1.00",
+  "title_similarity": 1.0
+ },
+ {
+  "id": "G8-20",
+  "file": "G8_publications.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://doi.org/10.1016/j.combustflame.2018.10.012",
+  "source_doi": "10.1016/j.combustflame.2018.10.012",
+  "check": "doi_exists",
+  "detail": "Crossref title: 'Flame spread: Effects of microgravity and scale' (Combustion and Flame, 2019); title similarity 1.00",
+  "title_similarity": 1.0
+ },
+ {
+  "id": "G8-21",
+  "file": "G8_publications.md",
+  "status_by_gemini": "FOUND",
+  "source_url": "https://ntrs.nasa.gov/citations/20170000230",
+  "source_doi": null,
+  "check": "needs_browser",
+  "detail": "site refuses scripted requests"
+ }
+]

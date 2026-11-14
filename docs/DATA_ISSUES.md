@@ -1,36 +1,43 @@
 # Problems in NASA's source tables
 
 Found by inspecting all 22 downloaded tables (`python -I scripts/inspect_tables.py data`).
-The raw files in `data/` are left exactly as NASA published them. Each item below is handled, or
-still to be handled, in `scripts/build_web_data.py` (workstream A). Owner updates the Status column.
+The raw files in `data/` are left exactly as NASA published them. Every item below is handled in
+`scripts/build_web_data.py`, and `scripts/validate_data.py` checks each fix against the raw files
+(68 checks, run at the end of every build; the build stops if one fails).
 
-What the pipeline did with every table and row is written to `web/public/data/data_quality.json`.
+What the pipeline did with every table and row is in `web/public/data/data_quality.json`; what each
+flag means is in its `flag_meanings`.
 
 | # | Where | Problem | Handling | Status |
 |---|---|---|---|---|
-| 1 | ACME BRE (PSI-20) | Two oxygen cells read `2100%` and `3400%` | Cells published as-is in `other_tables.json`; a `corrections` entry says read as 21 and 34 | done |
-| 2 | ACME CFI-G (PSI-159) | `#DIV/0!` in Tad and Zst; `#VALUE!` in peak burner temp (K); `-` placeholders; some 273.15 K values that look like converted blanks | Non-numeric cells become null. Those columns are not converted yet; check the 273.15 values against the Celsius column when they are | partly done |
-| 3 | FLEX (PSI-69) | Test 114 has pressure 0 mmHg; headers lost subscripts (`O`, `N`, `CO` mean O2, N2, CO2); file is cp1252-encoded, the rest are UTF-8 | Pressure 0 becomes null with flag `pressure_missing`; loader tries both encodings | done |
-| 4 | SAFFIRE-II (PSI-99) | `?-g` headers should be `µ-g`; `Samle Thickness` typo; `037 mm` probably 0.37 mm; `?-g Spread Length` holds rates in mm/s; units inside cells | `?-g` renamed to `µ-g`. Airflow and burn time parsed. Thickness, lengths and spread values kept word-for-word in `source_extra`, typos included, not parsed | partly done: nothing is guessed, but `037 mm` and the mislabelled column are not resolved |
-| 5 | SAFFIRE-I vs III (PSI-98, PSI-100) | Sample length and width swapped between the two tables (40.6 x 94 against 94 x 40.6) | Kept word-for-word in `source_extra`. Needs the final report (Gemini task G2f) | open |
-| 6 | CLD Flame (PSI-21), s-Flame (PSI-23) | Fuel column runs C2H4, C2H5 ... C2H11; atmosphere column runs N2 ... N6 (spreadsheet autofill) | Published as-is with a `known_issues` warning. Confirm real values against the record text before correcting | open |
-| 7 | E-FIELD Flames (PSI-22) | 11 of 32 rows are continuation rows with only a fuel concentration | Published as-is with a `known_issues` note; not filled in | open |
-| 8 | BASS-II (PSI-25), Flame Design inverse (PSI-10) | BASS-II fan and airflow cells hold several settings, in display units we cannot identify; 11 Flame Design oxygen cells say `RAMP` or `LOW O2` | `RAMP`/`LOW O2` become null with flag `o2_not_numeric`. BASS-II fan and air displays not converted: units unknown | partly done |
-| 9 | Several | Inconsistent labels: `Inverse`/`inverse`, `Yes`/`yes`/`flash`, `75 % Propylene`/`75% Propylene`, `100%C2H4`, `pmma`/`PMMA` | SPICE fuel spacing normalised. Material names (BASS, BASS-II) are still as written | partly done |
-| 10 | SAFFIRE, SAME, SLICE, BASS, SAME-R | Rows that are not burns (pre-test flow rows; "same conditions as 1-4"); one malformed SLICE date; one BASS row without test numbers (`SOOT Cleaning`); SAME-R dates without a year | SAFFIRE pre-test rows and the BASS row are left out of `tests.json` and listed in `data_quality.json`. SAME, SAME-R and SLICE are published as-is with notes | done |
-| 11 | Several | Blank values, e.g. 20 Flame Design rows lack final oxygen and pressure; FLEX extinction diameter filled for 225 of 274 | Kept as null | done for converted fields |
-| 12 | BASS, BASS-II, SAFFIRE, SPICE | No pressure column at all (732 tests); BASS, SAFFIRE-III and SPICE have no oxygen column either (592 tests) | Flags `pressure_not_in_table`, `o2_not_in_table`. Needs sourced values (CLAUDE.md open question 1, Gemini task G2) | open |
-| 13 | SAFFIRE-II (PSI-99) | Four footnote rows (`Note 1` to `Note 4`) sit inside the table; two material cells are blank because the source merged cells (samples 2-6 and 2-9) | Footnote rows left out and listed. Blank material filled from the row above with flag `fuel_from_row_above` | done |
-| 14 | SPICE (PSI-107) | 34 rows are exact copies of an earlier row | Kept, each flagged `duplicate_row:<first row>`. Exclude flagged rows when counting distinct tests | done |
-| 15 | SPICE (PSI-107) | 8 rows record a negative air rate (-0.28 or -5.92 cm/s) | Kept as written with flag `airflow_negative_in_source`. Meaning not known | open |
-| 16 | SPICE (PSI-107) | Time cells use three formats (`14:37:08`, `14.34.57`, `1744`) | Kept word-for-word in `source_extra`, not parsed | open |
-| 17 | SAFFIRE-I, SAFFIRE-II | Oxygen given as approximate (`~ 21.5`) or as a range (`21.5 - 21.7`, `22.1 to 22.0`) | Approximate: value kept with flag `o2_approximate`. Range: `o2_fraction` null, `o2_fraction_min`/`max` set, flag `o2_range` | done |
+| 1 | ACME BRE (PSI-20) | Two oxygen cells read `2100%` and `3400%`; one fuel cell reads `100%C2H4` | Cells published as-is; `corrections` and `rows_read_as` give 21, 34 and `100% C2H4` | done |
+| 2 | ACME CFI-G (PSI-159) | `#DIV/0!` in Tad and Zst; `#VALUE!` and `-` placeholders in peak burner temperature; one 273.15 K beside an empty Celsius cell | `peak_burner_temp_c` from the Celsius column; placeholders null with flag `temperature_placeholder` (49). The 273.15 K is the converted blank. Celsius and Kelvin agree everywhere else (checked) | done |
+| 3 | FLEX (PSI-69) | Test 114 has pressure 0 mmHg; headers lost subscripts (`O`, `N`, `CO` mean O2, N2, CO2); file is cp1252-encoded | Pressure 0 is null with flag `pressure_missing`; header mapping in the build; loader reads both encodings | done |
+| 4 | SAFFIRE-II (PSI-99) | `?-g` headers should be `µ-g`; `Samle Thickness` typo; `037 mm` three times; dimension cells with units, two values or a figure reference | `µ` restored. Typed `sample_thickness_mm` / `sample_length_cm` / `sample_width_cm` where a cell is one value; `037 mm` left null with flag `thickness_typo_suspected` (3); `0.85 and 0.37 mm`, `5 and 24 cm` and `See Fig. 5` left null with flag `value_not_single`. All cells also kept word-for-word in `source_extra` | done |
+| 5 | SAFFIRE-I vs III (PSI-98, PSI-100) | Length and width swapped between the two tables | NASA's Saffire fact sheet: the sample "measured 0.4 m wide by 1 meter long". SAFFIRE-I typed as 94 cm long, 40.6 cm wide with flag `dimensions_swapped_in_source`; SAFFIRE-III already right | done |
+| 6 | CLD Flame (PSI-21), s-Flame (PSI-23) | Fuel runs CH4, CH5 ... CH14 and C2H4 ... C2H11; atmosphere and fuel run N2 ... N6 (spreadsheet autofill) | NASA's records name only methane and ethylene (PSI-21) and nitrogen, helium, CO2 (PSI-23). `rows_read_as` gives CH4 / C2H4 matching each row's test type, and N2; each correction gives its reason | done |
+| 7 | E-FIELD Flames (PSI-22) | 11 of 32 rows carry only a fuel concentration | `rows_read_as` repeats that test day's other cells; `Flames Ignited` is not repeated, so daily counts stay the same (checked) | done |
+| 8 | BASS-II (PSI-25), Flame Design inverse (PSI-10) | BASS-II fan and air display cells hold several settings in display units NASA does not state; 11 Flame Design oxygen cells say `RAMP` or `LOW O2` | Fan and air cells kept as written in `source_extra` (no unit, so no typed value). `RAMP` / `LOW O2` null with flag `o2_not_numeric` | done (units not knowable from the table) |
+| 9 | Several | Inconsistent labels | Fuel names: runs of spaces collapsed (line breaks in the cell), SPICE `75 % Propylene` = `75% Propylene`. Solid materials normalised in `fuel_material` (PMMA, SIBAL, Nomex, Ultem, silicone, waxes); 87 cells name only a shape and are flagged `material_not_stated`. CFI-G hot ignition `Yes`/`yes`/`No`/`no` normalised. `Inverse`/`inverse` is carried by `o2_basis` | done |
+| 10 | SAFFIRE, SAME, SLICE, BASS, SAME-R | Rows that are not burns; SAME rows say "same conditions as 1-4"; SLICE date cells hold stray text; SAME-R dates have no year | SAFFIRE pre-test rows and the BASS `SOOT Cleaning` row left out and listed. SAME and SLICE: `rows_read_as` keeps the material and the date; SAME's blank cells stay blank because samples 1-4 used several settings. SAME-R years are not in the table, so they stay as written | done |
+| 11 | Several | Blank values, e.g. 20 Flame Design rows lack final oxygen and pressure; FLEX extinction diameter filled for 225 of 274 | Kept as null | done |
+| 12 | BASS, BASS-II, SAFFIRE, SPICE | No pressure column at all (732 tests); BASS, SAFFIRE-III and SPICE have no oxygen column either (592 tests) | Flags `pressure_not_in_table`, `o2_not_in_table`. No openable source states the pressure (ntrs.nasa.gov refuses this connection; see `gemini_data/VERIFIED.md` 3b), so nothing is backfilled | open, blocked |
+| 13 | SAFFIRE-II (PSI-99) | Four footnote rows inside the table; two material cells blank (merged cells) | Footnotes left out and listed; blank material filled from the row above with flag `fuel_from_row_above` | done |
+| 14 | SPICE (PSI-107) | 34 rows exactly repeat an earlier row | Kept, flagged `duplicate_row:<first row>`; `distinct_tests` (1,719) in `data_quality.json` | done |
+| 15 | SPICE (PSI-107) | 8 rows record a negative air rate (-0.28 or -5.92 cm/s) | Kept as written, flagged `airflow_negative_in_source`; `airflowRange()` in `web/src/data/load.ts` leaves them out. What NASA meant is not stated | done (meaning not knowable from the table) |
+| 16 | SPICE (PSI-107) | Time cells in `14:37:08`, `14.34.57` and `1744` forms, plus `Ku LOS`, `no ku`, `n/a` | `ignition_time` / `flame_off_time` as `HH:MM:SS` where unambiguous; `1744` and the no-signal cells stay null with flag `time_not_recorded` (18). Flame duration from the two times in 435 tests, flag `burn_time_from_gmt_times` | done |
+| 17 | SAFFIRE-I, SAFFIRE-II | Oxygen given as approximate or as a range | Approximate: value kept, flag `o2_approximate`. Range: `o2_fraction_min` / `max`, flag `o2_range` | done |
+| 18 | FLEX (PSI-69) | Test 129: extinction diameter 3.34 mm, initial droplet 3.33 mm | Within the table's 0.01 mm step, in a flame that went out after 0.55 s. Kept as written, flag `extinction_diameter_above_initial` | done |
+| 19 | E-FIELD Flames (PSI-22) | Test day 18319 appears twice with identical cells (rows 25-28 and 29-32) | Listed in the table's `known_issues`; which one is right is not stated | noted (not knowable from the table) |
+| 20 | FLEX (PSI-69) | Burning-rate header gives the unit only as `mm` | `burning_rate` kept as written, flag `burning_rate_unit_unclear` | done (unit not knowable from the table) |
 
 ## Where each table went
 
-- **`tests.json` (12 tables, 1,753 tests):** Flame Design normal and inverse, CFI-G normal and
-  inverse, SPICE, FLEX, CFI, BASS-II, BASS, SAFFIRE-I, -II, -III.
-- **`other_tables.json` (10 tables, 247 rows, cells as published):**
+- **`tests.json` (12 tables, 1,753 rows, 1,719 distinct tests):** Flame Design normal and inverse,
+  CFI-G normal and inverse, SPICE, FLEX, CFI, BASS-II, BASS, SAFFIRE-I, -II, -III. Every source column
+  is kept: typed fields where the unit is clear, `source_extra` (word-for-word) for the rest.
+- **`other_tables.json` (10 tables, 247 rows):** cells exactly as published in `rows`, and the same
+  rows with corrections applied in `rows_read_as`.
   - Per-day summaries: ACME BRE, CLD Flame, E-FIELD Flames, s-Flame, SLICE.
   - Ranges only: FLEX-2 (8 rows, one per fuel).
   - Index of published figures: PSI-142.
@@ -40,13 +47,6 @@ What the pipeline did with every table and row is written to `web/public/data/da
 - **No table in PSI:** PSI-60, PSI-62, PSI-115, PSI-117 (ground studies).
 
 2,009 source rows = 1,753 tests + 247 in other tables + 9 left out.
-
-## Not converted yet
-
-- CFI-G: cool flame, hot ignition, peak burner temperature, comments.
-- FLEX: droplet diameter, extinction diameter, burning rate.
-- BASS-II: fan and air display settings, radiometer gain, carbon dioxide and carbon monoxide readings.
-- Flame Design: fuel and nitrogen flow rates, final oxygen and pressure, adiabatic temperature.
 
 ## Not downloaded
 
