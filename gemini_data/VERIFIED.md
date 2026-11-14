@@ -58,6 +58,24 @@ The quote is word-for-word in our downloaded PSI record or table, so the fact it
 | G7-14 to G7-16 dates | Cited page is a 404. November 14-15, 2026 is confirmed on the real FAQ; "opens Saturday 9:00 AM" and "September 17" were not checked. |
 | All G4 (material flammability), most G8 (publications) | DOIs exist (Crossref) but papers are paywalled or on NTRS; quotes not checked. Publication counts in G8 are Gemini's own judgement of "uses flight data". |
 
+## 3b. Second round - the items the project uses (2026-11-14, evening)
+
+The team stopped using Gemini; workstream A verified what the app, demo and summaries rely on, using
+NASA documents this computer can open (ntrs.nasa.gov still refuses with HTTP 403).
+
+| Question | Result | Source opened |
+|---|---|---|
+| Does NASA's 8.2 / 34 apply to a lunar habitat today? | **USE.** "Consider the case of the current 8.2 psia habitat pressure with 34% O2 and 66% N2." | ExpAtm.pdf p. 29 |
+| Vehicle set points in NASA's lunar EVA plans | Confirms the three set points 14.7 psia / 21 %, 10.2 psia / 27 %, 8.2 psia / 34 % ("nominal saturation atmosphere set points" for vehicles). Not used as a habitat on its own. | NASA EVA-EXP-0075, Lunar Surface Concept of Operations, p. 8, https://www.nasa.gov/wp-content/uploads/2020/01/topic_1-_eva_lunar_surface_concept_of_operations.pdf |
+| Spacecraft cabin (Orion) | **Not added.** Only a 2011 proposal found: "The nominal atmosphere proposed for Orion is 10.2 psia with 26.5% O2" (NASA/TP-2011-216147, p. 42, https://www.nasa.gov/wp-content/uploads/2023/03/conkin-prebreathe-overview-tp216147-2011.pdf). A Constellation-era proposal is not today's Orion; the slot stays "waiting". | as stated |
+| Lunar lander, Mars surface habitat | **Not added.** The only figures found are the 2010 recommendations (landers and surface habitats at 8.0 psia / 32 %, NASA/TP-2010-216134 p. 11), which NASA replaced with 8.2 / 34 in 2012 (ExpAtm p. 4). ExpAtm discusses "lunar and Mars habitat" designs (p. 5) but gives no Mars-specific number. Gemini's G1-09 (HLS) and G1-11 (Mars) cite NTRS documents that could not be opened. Slots stay "waiting". | as stated |
+| Pressure of the solid-material tests (BASS, BASS-II, Saffire-I to III) | **Still not verified. Not backfilled.** Open sources say where the tests ran (MSG in the ISS Destiny lab; Cygnus) but no pressure: Scientific Reports 2017 BASS-II paper (https://link.springer.com/content/pdf/10.1038/s41598-017-18398-4.pdf) and the NASA Saffire fact sheet. The papers that may state it are on NTRS or paywalled. | as stated |
+| Saffire-IV to VI conditions | **USE (qualitative).** "Saffire IV burned the same materials were burned in Saffire II, but at different pressures and oxygen saturation for comparison." "Saffire-V examines fire growth in the range of pressures and oxygen concentrations expected in future exploration spacecraft." The numbers (about 54-55 kPa, 28-31 % O2) found in search results come from NTRS and are **not** verified. | NASA Saffire fact sheet, p. 2, https://www.nasa.gov/wp-content/uploads/2025/07/spacecraft-fire-safety-demonstration-saffire.pdf |
+
+**Not used by the project, so not verified further:** G3 (key findings), G4 (material flammability),
+G5 apart from Saffire, G6 (incidents and spinoffs; the Earth drawer uses the challenge page instead),
+G8 (publications; the ranking uses PSI's own lists). Treat them as unverified if anyone wants them later.
+
 ## 4. What this means for the project
 
 1. **Gemini's numbers are often right but its quotes often are not.** Of 6 habitat values checked by
@@ -70,3 +88,5 @@ The quote is word-for-word in our downloaded PSI record or table, so the fact it
 3. NASA has burned solids near crewed-spacecraft air (Saffire-VI), but those results are **not in
    PSI**. This supports "not in the tables", not "never tested".
 4. The solid-test pressure gap stays open until someone opens a primary source.
+5. Added to the data from section 1 and 3b: ISS, NASA's Moon Base box, and Earth's oxygen source
+   (`habitats.json`, each with `source_urls`).

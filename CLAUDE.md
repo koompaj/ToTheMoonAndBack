@@ -30,7 +30,10 @@ Audience: professors, students, aerospace researchers and engineers. Full notes:
 **Headline finding (reproduced by `scripts/build_web_data.py`):** of the tests whose tables record
 cabin-air oxygen and pressure, only **20** sit in Moon Base conditions (oxygen >= 30 %, pressure
 <= 10.2 psi). All 20 are gas flames from one investigation (ACME CFI-G, PSI-159). **No solid-material
-test in the tables reaches 30 % oxygen** (BASS-II tops out at 22.2 %).
+test in the tables reaches 30 % oxygen** (BASS-II tops out at 22.2 %). In NASA's own exploration
+atmosphere box (8.2 psia / 34 % O2, +-0.2 psia / +-2 %), the tables hold **0** tests. NASA did burn
+materials at other pressures and oxygen levels in Saffire-IV to VI, but those results are not in PSI:
+say "not in the tables", never "never tested".
 
 ## Rules of evidence (non-negotiable)
 
@@ -120,13 +123,22 @@ cd web && npm run build
 ## Current state of the baseline
 
 - Raw data downloaded: 24 Combustion Science records and 22 experimental tables (2,009 rows).
-- `tests.json`: **1,753 real tests from 12 tables** (263 solid, 361 droplet, 1,129 gas).
+- `tests.json`: **1,753 test rows from 12 tables, 1,719 distinct** (34 SPICE rows repeat an earlier
+  row; say "1,719 tests", via `distinctTestCount()`) (263 solid, 361 droplet, 1,129 gas).
   274 are inverse-flame (burner-oxidizer) rows. Of the 1,479 cabin-air tests, 884 record an oxygen
   value, 746 record oxygen and pressure, 270 are at >= 30 % oxygen, and 20 are inside the Moon Base
   envelope. 457 tests record airflow.
 - `other_tables.json`: the 10 tables that are not one-row-per-burn (per-day summaries, ranges,
   smoke tests), cells exactly as published.
-- `data_quality.json`: what happened to every table and row, and what each flag means.
+- `data_quality.json`: what happened to every table and row, what each flag means, and the
+  distinct-test count.
+- `habitats.json`: 5 places, every number from a source workstream A opened and checked
+  (`source_urls`; `gemini_data/VERIFIED.md`): Moon Base (challenge box, 20 tests), Moon Base (NASA
+  exploration air, 0 tests), ISS (34), spacesuit (0), Earth sea level (34).
+- `outcomes.json`: the "will it go out" analysis (`scripts/outcome_analysis.py`). FLEX droplet
+  flames went out less often as oxygen rose (17 of 17 at 12-14 %, 0 of 9 at 34-36 %), and the trend
+  holds within each fuel and at matched pressure. CFI-G shows no clear pattern. Show its caveats.
+- `gemini_data/`: Gemini's answers plus workstream A's check. The team no longer uses Gemini.
 - All 22 tables are accounted for: 2,009 source rows = 1,753 tests + 247 in other tables + 9 left
   out (listed with reasons). Remaining source problems: `docs/DATA_ISSUES.md`.
 - The web app builds and shows: a stub 3D map, a stub flame, a habitat panel with live counts, and a
@@ -134,14 +146,14 @@ cd web && npm run build
 
 ## Open questions (owner in brackets)
 
-1. **[A] Pressure for solid-material tests.** BASS-II, BASS and SAFFIRE tables have no pressure
-   column, so none of the 263 solid tests can be placed on the map (140 of them do record oxygen,
-   highest 22.2 %). Needs a sourced cabin-pressure value (Gemini task G2).
-2. **[A] Habitat numbers.** The challenge gives numbers for the Moon Base, spacesuit and Earth
-   pressure only. ISS and Mars habitat boxes need a NASA source. A candidate Moon Base nominal point
-   (8.2 psi, 34 % oxygen) is unverified: confirm against a NASA source before using it.
-3. **[A then C] "Will it go out".** Nobody has checked whether FLEX and CFI-G outcomes form a clear
-   enough pattern to chart.
+1. **[A] Pressure for solid-material tests (blocked).** BASS-II, BASS and SAFFIRE tables have no
+   pressure column, so none of the 263 solid tests can be placed on the map (140 record oxygen,
+   highest 22.2 %). No source this computer can open states it (ntrs.nasa.gov refuses the
+   connection); nothing is backfilled. Someone on another network could open NTRS 20210011385.
+2. **[A] Habitat numbers.** Done for ISS, Earth and NASA's Moon Base box. Spacecraft cabin
+   (Orion), lunar lander and Mars habitat stay "waiting": only superseded 2010-11 proposals found.
+3. **[C] "Will it go out" on screen.** The analysis is in `outcomes.json` (verdicts, counts, test
+   ids, caveats). Showing it on the place and fire pages is C's call.
 4. **[C] AI layer.** Default: summaries generated offline by a script and saved as JSON with
    citations, so no API key is ever in the browser or the repo. Live question-answering needs a small
    server function and is a stretch goal.
