@@ -7139,5 +7139,2059 @@
    "location": "sheet 'as run matrix', cell AC129 (column header row 3: 'CO2, mm Hg', under 'ISS environment'); same value also in '2013' AD46",
    "quote": "CO2, mm Hg | 2.2999999999999998"
   }
- ]
+ ],
+ "sensors_about": "Candidate Investigation.sensors (C brief item 5): from sensor spreadsheets (scripts/extract_sensors.py) and, marked from_text, from NASA's own words in a readme or report. Not verified, not applied.",
+ "sensors": {
+  "PSI-100": [
+   {
+    "kind": "radiometer",
+    "name": "P@sfsHk.Radiometer1value",
+    "detail": "3972 readings, -4002.47 to 149.174",
+    "source_file": "PSI-100_Raw Data_Raw telemetry file.csv",
+    "source_where": "column D",
+    "quote": null
+   },
+   {
+    "kind": "radiometer",
+    "name": "P@sfsHk.Radiometer2value",
+    "detail": "3972 readings, -4001.98 to 153.338",
+    "source_file": "PSI-100_Raw Data_Raw telemetry file.csv",
+    "source_where": "column E",
+    "quote": null
+   },
+   {
+    "kind": "radiometer",
+    "name": "P@sfsHk.Radiometer3value",
+    "detail": "3972 readings, -3844.32 to 148.368",
+    "source_file": "PSI-100_Raw Data_Raw telemetry file.csv",
+    "source_where": "column F",
+    "quote": null
+   },
+   {
+    "kind": "radiometer",
+    "name": "P@sfsHk.Radiometer4value",
+    "detail": "3972 readings, -3969.93 to 165.013",
+    "source_file": "PSI-100_Raw Data_Raw telemetry file.csv",
+    "source_where": "column G",
+    "quote": null
+   },
+   {
+    "kind": "flow",
+    "name": "P@sfsHk.Anemometer1",
+    "detail": "3972 readings, -76.1861 to 28.5867",
+    "source_file": "PSI-100_Raw Data_Raw telemetry file.csv",
+    "source_where": "column H",
+    "quote": null
+   },
+   {
+    "kind": "flow",
+    "name": "P@sfsHk.Anemometer2",
+    "detail": "3972 readings, -75.4904 to 31.2676",
+    "source_file": "PSI-100_Raw Data_Raw telemetry file.csv",
+    "source_where": "column I",
+    "quote": null
+   },
+   {
+    "kind": "other",
+    "name": "P@sfsHk.FanTachometer",
+    "detail": "3972 readings, -23.4244 to 77938.3",
+    "source_file": "PSI-100_Raw Data_Raw telemetry file.csv",
+    "source_where": "column J",
+    "quote": null
+   },
+   {
+    "kind": "other",
+    "name": "P@PCM_ETS_TEMP_SIG",
+    "detail": "3972 readings, 0 to 20.704",
+    "source_file": "PSI-100_Raw Data_Raw telemetry file.csv",
+    "source_where": "column AE",
+    "quote": null
+   },
+   {
+    "kind": "pressure",
+    "name": "P@F1PCM_AIR_PRES_EPS1_SIG_POS",
+    "detail": "3972 readings, 0 to 14.0562",
+    "source_file": "PSI-100_Raw Data_Raw telemetry file.csv",
+    "source_where": "column AF",
+    "quote": null
+   },
+   {
+    "kind": "pressure",
+    "name": "P@F2PCM_AIR_PRES_EPS2_SIG_POS",
+    "detail": "3972 readings, 0 to 14.0341",
+    "source_file": "PSI-100_Raw Data_Raw telemetry file.csv",
+    "source_where": "column AG",
+    "quote": null
+   },
+   {
+    "kind": "pressure",
+    "name": "P@F3PCM_AIR_PRES_EPS3_SIG_POS",
+    "detail": "3972 readings, 0 to 14.0586",
+    "source_file": "PSI-100_Raw Data_Raw telemetry file.csv",
+    "source_where": "column AH",
+    "quote": null
+   },
+   {
+    "kind": "smoke",
+    "name": "P@CDH_F1PCM_SMK_DET_OBS_SENS_P",
+    "detail": "3972 readings, 0 to 0",
+    "source_file": "PSI-100_Raw Data_Raw telemetry file.csv",
+    "source_where": "column AJ",
+    "quote": null
+   },
+   {
+    "kind": "smoke",
+    "name": "P@CDH_F2PCM_SMK_DET_OBS_SENS_P",
+    "detail": "3972 readings, -4.235 to 3.835",
+    "source_file": "PSI-100_Raw Data_Raw telemetry file.csv",
+    "source_where": "column AK",
+    "quote": null
+   },
+   {
+    "kind": "smoke",
+    "name": "P@CDH_F1PCM_SMK_DET_SCAT_SENS_P",
+    "detail": "3972 readings, 0 to 0.005",
+    "source_file": "PSI-100_Raw Data_Raw telemetry file.csv",
+    "source_where": "column AL",
+    "quote": null
+   },
+   {
+    "kind": "smoke",
+    "name": "P@CDH_F2PCM_SMK_DET_SCAT_SENS_P",
+    "detail": "3972 readings, 0 to 1.805",
+    "source_file": "PSI-100_Raw Data_Raw telemetry file.csv",
+    "source_where": "column AM",
+    "quote": null
+   },
+   {
+    "kind": "pressure",
+    "name": "P@CDH_F1PCM_ECLS_FAN_PRESSURE_P",
+    "detail": "3972 readings, -125 to 0",
+    "source_file": "PSI-100_Raw Data_Raw telemetry file.csv",
+    "source_where": "column AN",
+    "quote": null
+   },
+   {
+    "kind": "pressure",
+    "name": "P@CDH_F2PCM_ECLS_FAN_PRESSURE_P",
+    "detail": "3972 readings, -126.385 to 106.295",
+    "source_file": "PSI-100_Raw Data_Raw telemetry file.csv",
+    "source_where": "column AO",
+    "quote": null
+   },
+   {
+    "kind": "other",
+    "name": "P@GNCImuSensor.imu[0].currentMeas_Bdy.acc.elements[0]",
+    "detail": "3972 readings, -0.000601166 to 0.000227387",
+    "source_file": "PSI-100_Raw Data_Raw telemetry file.csv",
+    "source_where": "column AS",
+    "quote": null
+   },
+   {
+    "kind": "other",
+    "name": "P@GNCImuSensor.imu[0].currentMeas_Bdy.acc.elements[1]",
+    "detail": "3972 readings, -0.00204828 to 0.00163781",
+    "source_file": "PSI-100_Raw Data_Raw telemetry file.csv",
+    "source_where": "column AT",
+    "quote": null
+   },
+   {
+    "kind": "other",
+    "name": "P@GNCImuSensor.imu[0].currentMeas_Bdy.acc.elements[2]",
+    "detail": "3972 readings, -9.51e-05 to 0.0011027",
+    "source_file": "PSI-100_Raw Data_Raw telemetry file.csv",
+    "source_where": "column AU",
+    "quote": null
+   },
+   {
+    "kind": "flow",
+    "name": "Average Fan Speed",
+    "detail": "unit RPM; 20909 readings, -66.734 to 8147.19",
+    "source_file": "PSI-100_Raw Data_Saffire III Sample 1 Sensors.xlsx",
+    "source_where": "sheet 'Calibrated Data', column E (unit row E2: 'RPM')",
+    "quote": null
+   },
+   {
+    "kind": "co2",
+    "name": "CO2",
+    "detail": "unit %; 20909 readings, 0.393186 to 0.605835",
+    "source_file": "PSI-100_Raw Data_Saffire III Sample 1 Sensors.xlsx",
+    "source_where": "sheet 'Calibrated Data', column F (unit row F2: '%')",
+    "quote": null
+   },
+   {
+    "kind": "oxygen",
+    "name": "O2",
+    "detail": "unit %; 20909 readings, 19.3994 to 20.077",
+    "source_file": "PSI-100_Raw Data_Saffire III Sample 1 Sensors.xlsx",
+    "source_where": "sheet 'Calibrated Data', column G (unit row G2: '%')",
+    "quote": null
+   },
+   {
+    "kind": "flow",
+    "name": "Anemometer 1",
+    "detail": "unit cm/sec; 20909 readings, 0.138324 to 24.9514",
+    "source_file": "PSI-100_Raw Data_Saffire III Sample 1 Sensors.xlsx",
+    "source_where": "sheet 'Calibrated Data', column H (unit row H2: 'cm/sec')",
+    "quote": null
+   },
+   {
+    "kind": "flow",
+    "name": "Anemometer 2",
+    "detail": "unit cm/sec; 20909 readings, 1.18579 to 31.4736",
+    "source_file": "PSI-100_Raw Data_Saffire III Sample 1 Sensors.xlsx",
+    "source_where": "sheet 'Calibrated Data', column I (unit row I2: 'cm/sec')",
+    "quote": null
+   },
+   {
+    "kind": "pressure",
+    "name": "Ambient Pressure",
+    "detail": "unit PSIA; 20909 readings, 14.4027 to 14.4974",
+    "source_file": "PSI-100_Raw Data_Saffire III Sample 1 Sensors.xlsx",
+    "source_where": "sheet 'Calibrated Data', column J (unit row J2: 'PSIA')",
+    "quote": null
+   },
+   {
+    "kind": "radiometer",
+    "name": "Radiometer 1",
+    "detail": "unit mw/cm^2; 20909 readings, -19.3267 to 150.389",
+    "source_file": "PSI-100_Raw Data_Saffire III Sample 1 Sensors.xlsx",
+    "source_where": "sheet 'Calibrated Data', column K (unit row K2: 'mw/cm^2')",
+    "quote": null
+   },
+   {
+    "kind": "radiometer",
+    "name": "Radiometer 2",
+    "detail": "unit mw/cm^2; 20909 readings, -19.2734 to 157.104",
+    "source_file": "PSI-100_Raw Data_Saffire III Sample 1 Sensors.xlsx",
+    "source_where": "sheet 'Calibrated Data', column L (unit row L2: 'mw/cm^2')",
+    "quote": null
+   },
+   {
+    "kind": "radiometer",
+    "name": "Radiometer 3",
+    "detail": "unit mw/cm^2; 20909 readings, -17.9457 to 149.301",
+    "source_file": "PSI-100_Raw Data_Saffire III Sample 1 Sensors.xlsx",
+    "source_where": "sheet 'Calibrated Data', column M (unit row M2: 'mw/cm^2')",
+    "quote": null
+   },
+   {
+    "kind": "radiometer",
+    "name": "Radiometer 4",
+    "detail": "unit mw/cm^2; 20909 readings, -18.7538 to 169.351",
+    "source_file": "PSI-100_Raw Data_Saffire III Sample 1 Sensors.xlsx",
+    "source_where": "sheet 'Calibrated Data', column N (unit row N2: 'mw/cm^2')",
+    "quote": null
+   },
+   {
+    "kind": "humidity",
+    "name": "Humidity",
+    "detail": "unit %; 20909 readings, 45.0169 to 49.4402",
+    "source_file": "PSI-100_Raw Data_Saffire III Sample 1 Sensors.xlsx",
+    "source_where": "sheet 'Calibrated Data', column O (unit row O2: '%')",
+    "quote": null
+   },
+   {
+    "kind": "other",
+    "name": "Test Section Inlet Temp",
+    "detail": "unit Degrees C; 20909 readings, 20.804 to 22.2913",
+    "source_file": "PSI-100_Raw Data_Saffire III Sample 1 Sensors.xlsx",
+    "source_where": "sheet 'Calibrated Data', column P (unit row P2: 'Degrees C')",
+    "quote": null
+   },
+   {
+    "kind": "thermocouple",
+    "name": "Plume Temp 1 (TC1)",
+    "detail": "unit Degrees C; 20909 readings, 21.9838 to 63.3101",
+    "source_file": "PSI-100_Raw Data_Saffire III Sample 1 Sensors.xlsx",
+    "source_where": "sheet 'Calibrated Data', column Q (unit row Q2: 'Degrees C')",
+    "quote": null
+   },
+   {
+    "kind": "thermocouple",
+    "name": "Plume Temp 2 (TC2)",
+    "detail": "unit Degrees C; 20909 readings, 24.571 to 90.0064",
+    "source_file": "PSI-100_Raw Data_Saffire III Sample 1 Sensors.xlsx",
+    "source_where": "sheet 'Calibrated Data', column R (unit row R2: 'Degrees C')",
+    "quote": null
+   },
+   {
+    "kind": "thermocouple",
+    "name": "Plume Temp 3 (TC3)",
+    "detail": "unit Degrees C; 20909 readings, 24.9454 to 95.6443",
+    "source_file": "PSI-100_Raw Data_Saffire III Sample 1 Sensors.xlsx",
+    "source_where": "sheet 'Calibrated Data', column S (unit row S2: 'Degrees C')",
+    "quote": null
+   },
+   {
+    "kind": "thermocouple",
+    "name": "Plume Temp 4 (TC4)",
+    "detail": "unit Degrees C; 20909 readings, 22.1988 to 77.9628",
+    "source_file": "PSI-100_Raw Data_Saffire III Sample 1 Sensors.xlsx",
+    "source_where": "sheet 'Calibrated Data', column T (unit row T2: 'Degrees C')",
+    "quote": null
+   },
+   {
+    "kind": "thermocouple",
+    "name": "Plume Temp 5 (TC5)",
+    "detail": "unit Degrees C; 20909 readings, 22.6511 to 49.2168",
+    "source_file": "PSI-100_Raw Data_Saffire III Sample 1 Sensors.xlsx",
+    "source_where": "sheet 'Calibrated Data', column U (unit row U2: 'Degrees C')",
+    "quote": null
+   },
+   {
+    "kind": "thermocouple",
+    "name": "Plume Temp 6 (TC6)",
+    "detail": "unit Degrees C; 20909 readings, 22.4314 to 51.5669",
+    "source_file": "PSI-100_Raw Data_Saffire III Sample 1 Sensors.xlsx",
+    "source_where": "sheet 'Calibrated Data', column V (unit row V2: 'Degrees C')",
+    "quote": null
+   },
+   {
+    "kind": "thermocouple",
+    "name": "Sample Temp 1 (TC7)",
+    "detail": "unit Degrees C; 20909 readings, 7.39412 to 710.082",
+    "source_file": "PSI-100_Raw Data_Saffire III Sample 1 Sensors.xlsx",
+    "source_where": "sheet 'Calibrated Data', column W (unit row W2: 'Degrees C')",
+    "quote": null
+   },
+   {
+    "kind": "thermocouple",
+    "name": "Sample Temp 2 (TC8)",
+    "detail": "unit Degrees C; 20909 readings, 6.97001 to 857.849",
+    "source_file": "PSI-100_Raw Data_Saffire III Sample 1 Sensors.xlsx",
+    "source_where": "sheet 'Calibrated Data', column X (unit row X2: 'Degrees C')",
+    "quote": null
+   },
+   {
+    "kind": "thermocouple",
+    "name": "Sample Temp 3 (TC9)",
+    "detail": "unit Degrees C; 20909 readings, 7.39412 to 1059.96",
+    "source_file": "PSI-100_Raw Data_Saffire III Sample 1 Sensors.xlsx",
+    "source_where": "sheet 'Calibrated Data', column Y (unit row Y2: 'Degrees C')",
+    "quote": null
+   },
+   {
+    "kind": "thermocouple",
+    "name": "Sample Temp 4 (TC10)",
+    "detail": "unit Degrees C; 20909 readings, 7.39412 to 706.351",
+    "source_file": "PSI-100_Raw Data_Saffire III Sample 1 Sensors.xlsx",
+    "source_where": "sheet 'Calibrated Data', column Z (unit row Z2: 'Degrees C')",
+    "quote": null
+   },
+   {
+    "kind": "thermocouple",
+    "name": "Sample Temp 5 (TC11)",
+    "detail": "unit Degrees C; 20909 readings, 6.54576 to 1088.21",
+    "source_file": "PSI-100_Raw Data_Saffire III Sample 1 Sensors.xlsx",
+    "source_where": "sheet 'Calibrated Data', column AA (unit row AA2: 'Degrees C')",
+    "quote": null
+   },
+   {
+    "kind": "thermocouple",
+    "name": "Sample Temp 6 (TC12)",
+    "detail": "unit Degrees C; 20909 readings, 6.54576 to 329.488",
+    "source_file": "PSI-100_Raw Data_Saffire III Sample 1 Sensors.xlsx",
+    "source_where": "sheet 'Calibrated Data', column AB (unit row AB2: 'Degrees C')",
+    "quote": null
+   },
+   {
+    "kind": "flow",
+    "name": "Average Fan Speed",
+    "detail": "unit RPM; 4848 readings, -53.0881 to 8081.19",
+    "source_file": "PSI-100_Raw Data_Saffire III Sample 2 Sensors.xlsx",
+    "source_where": "sheet 'Calibrated Data', column E (unit row E2: 'RPM')",
+    "quote": null
+   },
+   {
+    "kind": "co2",
+    "name": "CO2",
+    "detail": "unit %; 4848 readings, 0.373603 to 0.38898",
+    "source_file": "PSI-100_Raw Data_Saffire III Sample 2 Sensors.xlsx",
+    "source_where": "sheet 'Calibrated Data', column F (unit row F2: '%')",
+    "quote": null
+   },
+   {
+    "kind": "oxygen",
+    "name": "O2",
+    "detail": "unit %; 4848 readings, 19.6939 to 20.1316",
+    "source_file": "PSI-100_Raw Data_Saffire III Sample 2 Sensors.xlsx",
+    "source_where": "sheet 'Calibrated Data', column G (unit row G2: '%')",
+    "quote": null
+   },
+   {
+    "kind": "flow",
+    "name": "Anemometer 1",
+    "detail": "unit cm/sec; 4848 readings, 0.138324 to 24.8396",
+    "source_file": "PSI-100_Raw Data_Saffire III Sample 2 Sensors.xlsx",
+    "source_where": "sheet 'Calibrated Data', column H (unit row H2: 'cm/sec')",
+    "quote": null
+   },
+   {
+    "kind": "flow",
+    "name": "Anemometer 2",
+    "detail": "unit cm/sec; 4848 readings, 1.19047 to 25.6385",
+    "source_file": "PSI-100_Raw Data_Saffire III Sample 2 Sensors.xlsx",
+    "source_where": "sheet 'Calibrated Data', column I (unit row I2: 'cm/sec')",
+    "quote": null
+   },
+   {
+    "kind": "pressure",
+    "name": "Ambient Pressure",
+    "detail": "unit PSIA; 4848 readings, 14.3952 to 14.4398",
+    "source_file": "PSI-100_Raw Data_Saffire III Sample 2 Sensors.xlsx",
+    "source_where": "sheet 'Calibrated Data', column J (unit row J2: 'PSIA')",
+    "quote": null
+   },
+   {
+    "kind": "radiometer",
+    "name": "Radiometer 1",
+    "detail": "unit mw/cm^2; 4848 readings, -18.2333 to -16.654",
+    "source_file": "PSI-100_Raw Data_Saffire III Sample 2 Sensors.xlsx",
+    "source_where": "sheet 'Calibrated Data', column K (unit row K2: 'mw/cm^2')",
+    "quote": null
+   },
+   {
+    "kind": "radiometer",
+    "name": "Radiometer 2",
+    "detail": "unit mw/cm^2; 4848 readings, -19.5163 to -3.72497",
+    "source_file": "PSI-100_Raw Data_Saffire III Sample 2 Sensors.xlsx",
+    "source_where": "sheet 'Calibrated Data', column L (unit row L2: 'mw/cm^2')",
+    "quote": null
+   },
+   {
+    "kind": "radiometer",
+    "name": "Radiometer 3",
+    "detail": "unit mw/cm^2; 4848 readings, -17.1287 to -15.6115",
+    "source_file": "PSI-100_Raw Data_Saffire III Sample 2 Sensors.xlsx",
+    "source_where": "sheet 'Calibrated Data', column M (unit row M2: 'mw/cm^2')",
+    "quote": null
+   },
+   {
+    "kind": "radiometer",
+    "name": "Radiometer 4",
+    "detail": "unit mw/cm^2; 4848 readings, -18.5128 to -5.61901",
+    "source_file": "PSI-100_Raw Data_Saffire III Sample 2 Sensors.xlsx",
+    "source_where": "sheet 'Calibrated Data', column N (unit row N2: 'mw/cm^2')",
+    "quote": null
+   },
+   {
+    "kind": "humidity",
+    "name": "Humidity",
+    "detail": "unit %; 4848 readings, 44.6512 to 45.7818",
+    "source_file": "PSI-100_Raw Data_Saffire III Sample 2 Sensors.xlsx",
+    "source_where": "sheet 'Calibrated Data', column O (unit row O2: '%')",
+    "quote": null
+   },
+   {
+    "kind": "other",
+    "name": "Test Section Inlet Temp",
+    "detail": "unit Degrees C; 4848 readings, 20.7413 to 21.4674",
+    "source_file": "PSI-100_Raw Data_Saffire III Sample 2 Sensors.xlsx",
+    "source_where": "sheet 'Calibrated Data', column P (unit row P2: 'Degrees C')",
+    "quote": null
+   },
+   {
+    "kind": "thermocouple",
+    "name": "Plume Temp 1 (TC1)",
+    "detail": "unit Degrees C; 4848 readings, 22.3749 to 30.1928",
+    "source_file": "PSI-100_Raw Data_Saffire III Sample 2 Sensors.xlsx",
+    "source_where": "sheet 'Calibrated Data', column Q (unit row Q2: 'Degrees C')",
+    "quote": null
+   },
+   {
+    "kind": "thermocouple",
+    "name": "Plume Temp 2 (TC2)",
+    "detail": "unit Degrees C; 4848 readings, 22.2987 to 41.9",
+    "source_file": "PSI-100_Raw Data_Saffire III Sample 2 Sensors.xlsx",
+    "source_where": "sheet 'Calibrated Data', column R (unit row R2: 'Degrees C')",
+    "quote": null
+   },
+   {
+    "kind": "thermocouple",
+    "name": "Plume Temp 3 (TC3)",
+    "detail": "unit Degrees C; 4848 readings, 22.442 to 48.3528",
+    "source_file": "PSI-100_Raw Data_Saffire III Sample 2 Sensors.xlsx",
+    "source_where": "sheet 'Calibrated Data', column S (unit row S2: 'Degrees C')",
+    "quote": null
+   },
+   {
+    "kind": "thermocouple",
+    "name": "Plume Temp 4 (TC4)",
+    "detail": "unit Degrees C; 4848 readings, 22.1622 to 35.8231",
+    "source_file": "PSI-100_Raw Data_Saffire III Sample 2 Sensors.xlsx",
+    "source_where": "sheet 'Calibrated Data', column T (unit row T2: 'Degrees C')",
+    "quote": null
+   },
+   {
+    "kind": "thermocouple",
+    "name": "Plume Temp 5 (TC5)",
+    "detail": "unit Degrees C; 4848 readings, 22.3886 to 26.0569",
+    "source_file": "PSI-100_Raw Data_Saffire III Sample 2 Sensors.xlsx",
+    "source_where": "sheet 'Calibrated Data', column U (unit row U2: 'Degrees C')",
+    "quote": null
+   },
+   {
+    "kind": "thermocouple",
+    "name": "Plume Temp 6 (TC6)",
+    "detail": "unit Degrees C; 4848 readings, 22.3147 to 26.8348",
+    "source_file": "PSI-100_Raw Data_Saffire III Sample 2 Sensors.xlsx",
+    "source_where": "sheet 'Calibrated Data', column V (unit row V2: 'Degrees C')",
+    "quote": null
+   },
+   {
+    "kind": "thermocouple",
+    "name": "Sample Temp 1 (TC7)",
+    "detail": "unit Degrees C; 4848 readings, 10.7811 to 17.5241",
+    "source_file": "PSI-100_Raw Data_Saffire III Sample 2 Sensors.xlsx",
+    "source_where": "sheet 'Calibrated Data', column W (unit row W2: 'Degrees C')",
+    "quote": null
+   },
+   {
+    "kind": "thermocouple",
+    "name": "Sample Temp 2 (TC8)",
+    "detail": "unit Degrees C; 4848 readings, 9.51217 to 17.9442",
+    "source_file": "PSI-100_Raw Data_Saffire III Sample 2 Sensors.xlsx",
+    "source_where": "sheet 'Calibrated Data', column X (unit row X2: 'Degrees C')",
+    "quote": null
+   },
+   {
+    "kind": "thermocouple",
+    "name": "Sample Temp 3 (TC9)",
+    "detail": "unit Degrees C; 4848 readings, 10.7811 to 17.9442",
+    "source_file": "PSI-100_Raw Data_Saffire III Sample 2 Sensors.xlsx",
+    "source_where": "sheet 'Calibrated Data', column Y (unit row Y2: 'Degrees C')",
+    "quote": null
+   },
+   {
+    "kind": "thermocouple",
+    "name": "Sample Temp 4 (TC10)",
+    "detail": "unit Degrees C; 4848 readings, 10.3583 to 17.1038",
+    "source_file": "PSI-100_Raw Data_Saffire III Sample 2 Sensors.xlsx",
+    "source_where": "sheet 'Calibrated Data', column Z (unit row Z2: 'Degrees C')",
+    "quote": null
+   },
+   {
+    "kind": "thermocouple",
+    "name": "Sample Temp 5 (TC11)",
+    "detail": "unit Degrees C; 4848 readings, 9.51217 to 17.1038",
+    "source_file": "PSI-100_Raw Data_Saffire III Sample 2 Sensors.xlsx",
+    "source_where": "sheet 'Calibrated Data', column AA (unit row AA2: 'Degrees C')",
+    "quote": null
+   },
+   {
+    "kind": "thermocouple",
+    "name": "Sample Temp 6 (TC12)",
+    "detail": "unit Degrees C; 4848 readings, 7.81805 to 20.0422",
+    "source_file": "PSI-100_Raw Data_Saffire III Sample 2 Sensors.xlsx",
+    "source_where": "sheet 'Calibrated Data', column AB (unit row AB2: 'Degrees C')",
+    "quote": null
+   },
+   {
+    "kind": "radiometer",
+    "name": "Radiometer1Value",
+    "detail": "11450 readings, -4002.47 to 149.174",
+    "source_file": "PSI-100_Raw Data_Saffire-III 1 Hz Telemetry Data.xlsx",
+    "source_where": "sheet 'RawData', column E",
+    "quote": null
+   },
+   {
+    "kind": "radiometer",
+    "name": "Radiometer2Value",
+    "detail": "11450 readings, -4001.98 to 155.525",
+    "source_file": "PSI-100_Raw Data_Saffire-III 1 Hz Telemetry Data.xlsx",
+    "source_where": "sheet 'RawData', column F",
+    "quote": null
+   },
+   {
+    "kind": "radiometer",
+    "name": "Radiometer3Value",
+    "detail": "11450 readings, -3844.32 to 148.368",
+    "source_file": "PSI-100_Raw Data_Saffire-III 1 Hz Telemetry Data.xlsx",
+    "source_where": "sheet 'RawData', column G",
+    "quote": null
+   },
+   {
+    "kind": "radiometer",
+    "name": "Radiometer4Value",
+    "detail": "11450 readings, -3969.93 to 167.303",
+    "source_file": "PSI-100_Raw Data_Saffire-III 1 Hz Telemetry Data.xlsx",
+    "source_where": "sheet 'RawData', column H",
+    "quote": null
+   },
+   {
+    "kind": "flow",
+    "name": "Anemometer1",
+    "detail": "11450 readings, -76.1861 to 29.2998",
+    "source_file": "PSI-100_Raw Data_Saffire-III 1 Hz Telemetry Data.xlsx",
+    "source_where": "sheet 'RawData', column I",
+    "quote": null
+   },
+   {
+    "kind": "flow",
+    "name": "Anemometer2",
+    "detail": "11450 readings, -75.4904 to 31.4666",
+    "source_file": "PSI-100_Raw Data_Saffire-III 1 Hz Telemetry Data.xlsx",
+    "source_where": "sheet 'RawData', column J",
+    "quote": null
+   },
+   {
+    "kind": "other",
+    "name": "FanTachometer",
+    "detail": "11450 readings, -42.607 to 77938.3",
+    "source_file": "PSI-100_Raw Data_Saffire-III 1 Hz Telemetry Data.xlsx",
+    "source_where": "sheet 'RawData', column K",
+    "quote": null
+   },
+   {
+    "kind": "other",
+    "name": "PCM Air Temp (degC)",
+    "detail": "11450 readings, 0 to 20.704",
+    "source_file": "PSI-100_Raw Data_Saffire-III 1 Hz Telemetry Data.xlsx",
+    "source_where": "sheet 'RawData', column AF",
+    "quote": null
+   },
+   {
+    "kind": "pressure",
+    "name": "PCM Press EPS1 (psi)",
+    "detail": "11450 readings, 0 to 14.0562",
+    "source_file": "PSI-100_Raw Data_Saffire-III 1 Hz Telemetry Data.xlsx",
+    "source_where": "sheet 'RawData', column AG",
+    "quote": null
+   },
+   {
+    "kind": "pressure",
+    "name": "PCM Press EPS2 (Psi)",
+    "detail": "11450 readings, 0 to 14.0341",
+    "source_file": "PSI-100_Raw Data_Saffire-III 1 Hz Telemetry Data.xlsx",
+    "source_where": "sheet 'RawData', column AH",
+    "quote": null
+   },
+   {
+    "kind": "pressure",
+    "name": "PCM Press EPS3 (PSI)",
+    "detail": "11450 readings, 0 to 14.0586",
+    "source_file": "PSI-100_Raw Data_Saffire-III 1 Hz Telemetry Data.xlsx",
+    "source_where": "sheet 'RawData', column AI",
+    "quote": null
+   },
+   {
+    "kind": "pressure",
+    "name": "PCM Press/Temp (psi/K)",
+    "detail": "11450 readings, 0 to 0.0527856",
+    "source_file": "PSI-100_Raw Data_Saffire-III 1 Hz Telemetry Data.xlsx",
+    "source_where": "sheet 'RawData', column AJ",
+    "quote": null
+   },
+   {
+    "kind": "smoke",
+    "name": "FIZ1 Smoke Detector Obscuration  (V)",
+    "detail": "11450 readings, 0 to 0",
+    "source_file": "PSI-100_Raw Data_Saffire-III 1 Hz Telemetry Data.xlsx",
+    "source_where": "sheet 'RawData', column AK",
+    "quote": null
+   },
+   {
+    "kind": "smoke",
+    "name": "FIZ 2 Smoke Detector Obscuration (V)",
+    "detail": "11450 readings, 0 to 3.835",
+    "source_file": "PSI-100_Raw Data_Saffire-III 1 Hz Telemetry Data.xlsx",
+    "source_where": "sheet 'RawData', column AL",
+    "quote": null
+   },
+   {
+    "kind": "smoke",
+    "name": "FIZ 1 Smoke Detector Scatterometer (V)",
+    "detail": "11450 readings, 0 to 0.005",
+    "source_file": "PSI-100_Raw Data_Saffire-III 1 Hz Telemetry Data.xlsx",
+    "source_where": "sheet 'RawData', column AM",
+    "quote": null
+   },
+   {
+    "kind": "smoke",
+    "name": "FIZ 2 Smoke Detector Scatterometer (V)",
+    "detail": "11450 readings, 0 to 1.805",
+    "source_file": "PSI-100_Raw Data_Saffire-III 1 Hz Telemetry Data.xlsx",
+    "source_where": "sheet 'RawData', column AN",
+    "quote": null
+   },
+   {
+    "kind": "other",
+    "name": "FIZ 1 Cabin Fan delta P (Pa)",
+    "detail": "11450 readings, -125 to 0",
+    "source_file": "PSI-100_Raw Data_Saffire-III 1 Hz Telemetry Data.xlsx",
+    "source_where": "sheet 'RawData', column AO",
+    "quote": null
+   },
+   {
+    "kind": "other",
+    "name": "FIZ 2 Cabin Fan Delta P (Pa)",
+    "detail": "11450 readings, 0 to 106.295",
+    "source_file": "PSI-100_Raw Data_Saffire-III 1 Hz Telemetry Data.xlsx",
+    "source_where": "sheet 'RawData', column AP",
+    "quote": null
+   },
+   {
+    "kind": "other",
+    "name": "acceleration x axis (m/s^2)",
+    "detail": "11450 readings, -0.000660993 to 0.000227387",
+    "source_file": "PSI-100_Raw Data_Saffire-III 1 Hz Telemetry Data.xlsx",
+    "source_where": "sheet 'RawData', column AT",
+    "quote": null
+   },
+   {
+    "kind": "other",
+    "name": "acceleration y axis (m/s^2)",
+    "detail": "11450 readings, -0.00204828 to 0.000154082",
+    "source_file": "PSI-100_Raw Data_Saffire-III 1 Hz Telemetry Data.xlsx",
+    "source_where": "sheet 'RawData', column AU",
+    "quote": null
+   },
+   {
+    "kind": "other",
+    "name": "acceleration z axis (m/s^2)",
+    "detail": "11450 readings, -0.00173372 to 0.00113747",
+    "source_file": "PSI-100_Raw Data_Saffire-III 1 Hz Telemetry Data.xlsx",
+    "source_where": "sheet 'RawData', column AV",
+    "quote": null
+   },
+   {
+    "kind": "pressure",
+    "name": "PCM Press EPS 1 (psi)",
+    "detail": "11450 readings, 0 to 14.0562",
+    "source_file": "PSI-100_Raw Data_Saffire-III 1 Hz Telemetry Data.xlsx",
+    "source_where": "sheet 'CygnusData', column E",
+    "quote": null
+   },
+   {
+    "kind": "pressure",
+    "name": "PCM Press ECM 2 (psi)",
+    "detail": "11450 readings, 0 to 14.0341",
+    "source_file": "PSI-100_Raw Data_Saffire-III 1 Hz Telemetry Data.xlsx",
+    "source_where": "sheet 'CygnusData', column F",
+    "quote": null
+   },
+   {
+    "kind": "pressure",
+    "name": "PCM Press EPS 3 (psi)",
+    "detail": "11450 readings, 0 to 14.0586",
+    "source_file": "PSI-100_Raw Data_Saffire-III 1 Hz Telemetry Data.xlsx",
+    "source_where": "sheet 'CygnusData', column G",
+    "quote": null
+   },
+   {
+    "kind": "smoke",
+    "name": "FIZ 2 Smoke Detector Obscuration (V)",
+    "detail": "11449 readings, 0 to 3.835",
+    "source_file": "PSI-100_Raw Data_Saffire-III 1 Hz Telemetry Data.xlsx",
+    "source_where": "sheet 'CygnusSmokeDetectorData', column D",
+    "quote": null
+   },
+   {
+    "kind": "smoke",
+    "name": "FIZ 2 Smoke Detector Scatterometer (V)",
+    "detail": "11449 readings, 0 to 1.805",
+    "source_file": "PSI-100_Raw Data_Saffire-III 1 Hz Telemetry Data.xlsx",
+    "source_where": "sheet 'CygnusSmokeDetectorData', column I",
+    "quote": null
+   },
+   {
+    "kind": "pressure",
+    "name": "PCM EPS 1 Press (psi)",
+    "detail": "11449 readings, 0 to 14.0562",
+    "source_file": "PSI-100_Raw Data_Saffire-III 1 Hz Telemetry Data.xlsx",
+    "source_where": "sheet 'CygnusPressureData', column D",
+    "quote": null
+   },
+   {
+    "kind": "pressure",
+    "name": "PCM EPS 2 Press (psi)",
+    "detail": "11449 readings, 0 to 14.0341",
+    "source_file": "PSI-100_Raw Data_Saffire-III 1 Hz Telemetry Data.xlsx",
+    "source_where": "sheet 'CygnusPressureData', column E",
+    "quote": null
+   },
+   {
+    "kind": "pressure",
+    "name": "PCM EPS 3 Press (psi)",
+    "detail": "11449 readings, 0 to 14.0586",
+    "source_file": "PSI-100_Raw Data_Saffire-III 1 Hz Telemetry Data.xlsx",
+    "source_where": "sheet 'CygnusPressureData', column F",
+    "quote": null
+   },
+   {
+    "kind": "other",
+    "name": "PCM Air Temp (degC)",
+    "detail": "11449 readings, 0 to 20.704",
+    "source_file": "PSI-100_Raw Data_Saffire-III 1 Hz Telemetry Data.xlsx",
+    "source_where": "sheet 'CygnusTemperatureData', column D",
+    "quote": null
+   },
+   {
+    "kind": "radiometer",
+    "name": "Radiometer1Value",
+    "detail": "11449 readings, -4002.47 to 149.174",
+    "source_file": "PSI-100_Raw Data_Saffire-III 1 Hz Telemetry Data.xlsx",
+    "source_where": "sheet 'SaffireData', column E",
+    "quote": null
+   },
+   {
+    "kind": "radiometer",
+    "name": "Radiometer2Value",
+    "detail": "11449 readings, -4001.98 to 155.525",
+    "source_file": "PSI-100_Raw Data_Saffire-III 1 Hz Telemetry Data.xlsx",
+    "source_where": "sheet 'SaffireData', column F",
+    "quote": null
+   },
+   {
+    "kind": "radiometer",
+    "name": "Radiometer3Value",
+    "detail": "11449 readings, -3844.32 to 148.368",
+    "source_file": "PSI-100_Raw Data_Saffire-III 1 Hz Telemetry Data.xlsx",
+    "source_where": "sheet 'SaffireData', column G",
+    "quote": null
+   },
+   {
+    "kind": "radiometer",
+    "name": "Radiometer4Value",
+    "detail": "11449 readings, -3969.93 to 167.303",
+    "source_file": "PSI-100_Raw Data_Saffire-III 1 Hz Telemetry Data.xlsx",
+    "source_where": "sheet 'SaffireData', column H",
+    "quote": null
+   },
+   {
+    "kind": "flow",
+    "name": "Anemometer1",
+    "detail": "11449 readings, -76.1861 to 29.2998",
+    "source_file": "PSI-100_Raw Data_Saffire-III 1 Hz Telemetry Data.xlsx",
+    "source_where": "sheet 'SaffireData', column I",
+    "quote": null
+   },
+   {
+    "kind": "flow",
+    "name": "Anemometer2",
+    "detail": "11449 readings, -75.4904 to 31.4666",
+    "source_file": "PSI-100_Raw Data_Saffire-III 1 Hz Telemetry Data.xlsx",
+    "source_where": "sheet 'SaffireData', column J",
+    "quote": null
+   },
+   {
+    "kind": "other",
+    "name": "FanTachometer",
+    "detail": "11449 readings, -42.607 to 77938.3",
+    "source_file": "PSI-100_Raw Data_Saffire-III 1 Hz Telemetry Data.xlsx",
+    "source_where": "sheet 'SaffireData', column K",
+    "quote": null
+   },
+   {
+    "kind": "other",
+    "name": "Tach/100",
+    "detail": "19 readings, 779.383 to 779.383",
+    "source_file": "PSI-100_Raw Data_Saffire-III 1 Hz Telemetry Data.xlsx",
+    "source_where": "sheet 'SaffireData', column AG",
+    "quote": null
+   },
+   {
+    "kind": "radiometer",
+    "name": "Radiometer1Value",
+    "detail": "3972 readings, -4002.47 to 149.174",
+    "source_file": "PSI-100_Raw Data_Saffire-III Telemetry Data.xlsx",
+    "source_where": "sheet 'RawData', column E",
+    "quote": null
+   },
+   {
+    "kind": "radiometer",
+    "name": "Radiometer2Value",
+    "detail": "3972 readings, -4001.98 to 153.338",
+    "source_file": "PSI-100_Raw Data_Saffire-III Telemetry Data.xlsx",
+    "source_where": "sheet 'RawData', column F",
+    "quote": null
+   },
+   {
+    "kind": "radiometer",
+    "name": "Radiometer3Value",
+    "detail": "3972 readings, -3844.32 to 148.368",
+    "source_file": "PSI-100_Raw Data_Saffire-III Telemetry Data.xlsx",
+    "source_where": "sheet 'RawData', column G",
+    "quote": null
+   },
+   {
+    "kind": "radiometer",
+    "name": "Radiometer4Value",
+    "detail": "3972 readings, -3969.93 to 165.013",
+    "source_file": "PSI-100_Raw Data_Saffire-III Telemetry Data.xlsx",
+    "source_where": "sheet 'RawData', column H",
+    "quote": null
+   },
+   {
+    "kind": "flow",
+    "name": "Anemometer1",
+    "detail": "3972 readings, -76.1861 to 28.5867",
+    "source_file": "PSI-100_Raw Data_Saffire-III Telemetry Data.xlsx",
+    "source_where": "sheet 'RawData', column I",
+    "quote": null
+   },
+   {
+    "kind": "flow",
+    "name": "Anemometer2",
+    "detail": "3972 readings, -75.4904 to 31.2676",
+    "source_file": "PSI-100_Raw Data_Saffire-III Telemetry Data.xlsx",
+    "source_where": "sheet 'RawData', column J",
+    "quote": null
+   },
+   {
+    "kind": "other",
+    "name": "FanTachometer",
+    "detail": "3972 readings, -23.4244 to 77938.3",
+    "source_file": "PSI-100_Raw Data_Saffire-III Telemetry Data.xlsx",
+    "source_where": "sheet 'RawData', column K",
+    "quote": null
+   },
+   {
+    "kind": "other",
+    "name": "PCM Air Temp (degC)",
+    "detail": "3972 readings, 0 to 20.704",
+    "source_file": "PSI-100_Raw Data_Saffire-III Telemetry Data.xlsx",
+    "source_where": "sheet 'RawData', column AF",
+    "quote": null
+   },
+   {
+    "kind": "pressure",
+    "name": "PCM Press EPS1 (psi)",
+    "detail": "3972 readings, 0 to 14.0562",
+    "source_file": "PSI-100_Raw Data_Saffire-III Telemetry Data.xlsx",
+    "source_where": "sheet 'RawData', column AG",
+    "quote": null
+   },
+   {
+    "kind": "pressure",
+    "name": "PCM Press EPS2 (Psi)",
+    "detail": "3972 readings, 0 to 14.0341",
+    "source_file": "PSI-100_Raw Data_Saffire-III Telemetry Data.xlsx",
+    "source_where": "sheet 'RawData', column AH",
+    "quote": null
+   },
+   {
+    "kind": "pressure",
+    "name": "PCM Press EPS3 (PSI)",
+    "detail": "3972 readings, 0 to 14.0586",
+    "source_file": "PSI-100_Raw Data_Saffire-III Telemetry Data.xlsx",
+    "source_where": "sheet 'RawData', column AI",
+    "quote": null
+   },
+   {
+    "kind": "pressure",
+    "name": "PCM Press/Temp (psi/K)",
+    "detail": "3972 readings, -0.0294529 to 0.0478454",
+    "source_file": "PSI-100_Raw Data_Saffire-III Telemetry Data.xlsx",
+    "source_where": "sheet 'RawData', column AJ",
+    "quote": null
+   },
+   {
+    "kind": "smoke",
+    "name": "FIZ1 Smoke Detector Obscuration  (V)",
+    "detail": "3972 readings, 0 to 0",
+    "source_file": "PSI-100_Raw Data_Saffire-III Telemetry Data.xlsx",
+    "source_where": "sheet 'RawData', column AK",
+    "quote": null
+   },
+   {
+    "kind": "smoke",
+    "name": "FIZ 2 Smoke Detector Obscuration (V)",
+    "detail": "3972 readings, -4.235 to 3.835",
+    "source_file": "PSI-100_Raw Data_Saffire-III Telemetry Data.xlsx",
+    "source_where": "sheet 'RawData', column AL",
+    "quote": null
+   },
+   {
+    "kind": "smoke",
+    "name": "FIZ 1 Smoke Detector Scatterometer (V)",
+    "detail": "3972 readings, 0 to 0.005",
+    "source_file": "PSI-100_Raw Data_Saffire-III Telemetry Data.xlsx",
+    "source_where": "sheet 'RawData', column AM",
+    "quote": null
+   },
+   {
+    "kind": "smoke",
+    "name": "FIZ 2 Smoke Detector Scatterometer (V)",
+    "detail": "3972 readings, 0 to 1.805",
+    "source_file": "PSI-100_Raw Data_Saffire-III Telemetry Data.xlsx",
+    "source_where": "sheet 'RawData', column AN",
+    "quote": null
+   },
+   {
+    "kind": "other",
+    "name": "FIZ 1 Cabin Fan delta P (Pa)",
+    "detail": "3972 readings, -125 to 0",
+    "source_file": "PSI-100_Raw Data_Saffire-III Telemetry Data.xlsx",
+    "source_where": "sheet 'RawData', column AO",
+    "quote": null
+   },
+   {
+    "kind": "other",
+    "name": "FIZ 2 Cabin Fan Delta P (Pa)",
+    "detail": "3972 readings, -126.385 to 106.295",
+    "source_file": "PSI-100_Raw Data_Saffire-III Telemetry Data.xlsx",
+    "source_where": "sheet 'RawData', column AP",
+    "quote": null
+   },
+   {
+    "kind": "other",
+    "name": "acceleration x axis (m/s^2)",
+    "detail": "3972 readings, -0.000601166 to 0.000227387",
+    "source_file": "PSI-100_Raw Data_Saffire-III Telemetry Data.xlsx",
+    "source_where": "sheet 'RawData', column AT",
+    "quote": null
+   },
+   {
+    "kind": "other",
+    "name": "acceleration y axis (m/s^2)",
+    "detail": "3972 readings, -0.00204828 to 0.00163781",
+    "source_file": "PSI-100_Raw Data_Saffire-III Telemetry Data.xlsx",
+    "source_where": "sheet 'RawData', column AU",
+    "quote": null
+   },
+   {
+    "kind": "other",
+    "name": "acceleration z axis (m/s^2)",
+    "detail": "3972 readings, -9.51324e-05 to 0.0011027",
+    "source_file": "PSI-100_Raw Data_Saffire-III Telemetry Data.xlsx",
+    "source_where": "sheet 'RawData', column AV",
+    "quote": null
+   },
+   {
+    "kind": "other",
+    "name": "PCM Air Temp (degC)",
+    "detail": "3845 readings, 0 to 20.704",
+    "source_file": "PSI-100_Raw Data_Saffire-III Telemetry Data.xlsx",
+    "source_where": "sheet 'CygnusData', column D",
+    "quote": null
+   },
+   {
+    "kind": "pressure",
+    "name": "PCM Press EPS 1 (psi)",
+    "detail": "3845 readings, 0 to 14.0562",
+    "source_file": "PSI-100_Raw Data_Saffire-III Telemetry Data.xlsx",
+    "source_where": "sheet 'CygnusData', column E",
+    "quote": null
+   },
+   {
+    "kind": "pressure",
+    "name": "PCM Press ECM 2 (psi)",
+    "detail": "3845 readings, 0 to 14.0341",
+    "source_file": "PSI-100_Raw Data_Saffire-III Telemetry Data.xlsx",
+    "source_where": "sheet 'CygnusData', column F",
+    "quote": null
+   },
+   {
+    "kind": "pressure",
+    "name": "PCM Press EPS 3 (psi)",
+    "detail": "3845 readings, 0 to 14.0586",
+    "source_file": "PSI-100_Raw Data_Saffire-III Telemetry Data.xlsx",
+    "source_where": "sheet 'CygnusData', column G",
+    "quote": null
+   },
+   {
+    "kind": "pressure",
+    "name": "PCM Press/Temp (psi/K)",
+    "detail": "3845 readings, -0.0294529 to 0.0478454",
+    "source_file": "PSI-100_Raw Data_Saffire-III Telemetry Data.xlsx",
+    "source_where": "sheet 'CygnusData', column H",
+    "quote": null
+   },
+   {
+    "kind": "smoke",
+    "name": "FIZ1 Smoke Detector Obscuration  (V)",
+    "detail": "3845 readings, 0 to 0",
+    "source_file": "PSI-100_Raw Data_Saffire-III Telemetry Data.xlsx",
+    "source_where": "sheet 'CygnusData', column I",
+    "quote": null
+   },
+   {
+    "kind": "smoke",
+    "name": "FIZ 2 Smoke Detector Obscuration (V)",
+    "detail": "3845 readings, -4.235 to 3.835",
+    "source_file": "PSI-100_Raw Data_Saffire-III Telemetry Data.xlsx",
+    "source_where": "sheet 'CygnusData', column J",
+    "quote": null
+   },
+   {
+    "kind": "smoke",
+    "name": "FIZ 1 Smoke Detector Scatterometer (V)",
+    "detail": "3845 readings, 0 to 0.005",
+    "source_file": "PSI-100_Raw Data_Saffire-III Telemetry Data.xlsx",
+    "source_where": "sheet 'CygnusData', column K",
+    "quote": null
+   },
+   {
+    "kind": "smoke",
+    "name": "FIZ 2 Smoke Detector Scatterometer (V)",
+    "detail": "3845 readings, 0 to 1.805",
+    "source_file": "PSI-100_Raw Data_Saffire-III Telemetry Data.xlsx",
+    "source_where": "sheet 'CygnusData', column L",
+    "quote": null
+   },
+   {
+    "kind": "other",
+    "name": "FIZ 1 Cabin Fan delta P (Pa)",
+    "detail": "3845 readings, -125 to 0",
+    "source_file": "PSI-100_Raw Data_Saffire-III Telemetry Data.xlsx",
+    "source_where": "sheet 'CygnusData', column M",
+    "quote": null
+   },
+   {
+    "kind": "other",
+    "name": "FIZ 2 Cabin Fan Delta P (Pa)",
+    "detail": "3845 readings, -126.385 to 106.295",
+    "source_file": "PSI-100_Raw Data_Saffire-III Telemetry Data.xlsx",
+    "source_where": "sheet 'CygnusData', column N",
+    "quote": null
+   },
+   {
+    "kind": "other",
+    "name": "acceleration x axis (m/s^2)",
+    "detail": "3845 readings, -0.000601166 to 0.000227387",
+    "source_file": "PSI-100_Raw Data_Saffire-III Telemetry Data.xlsx",
+    "source_where": "sheet 'CygnusData', column R",
+    "quote": null
+   },
+   {
+    "kind": "other",
+    "name": "acceleration y axis (m/s^2)",
+    "detail": "3845 readings, -0.00204828 to 0.00163781",
+    "source_file": "PSI-100_Raw Data_Saffire-III Telemetry Data.xlsx",
+    "source_where": "sheet 'CygnusData', column S",
+    "quote": null
+   },
+   {
+    "kind": "other",
+    "name": "acceleration z axis (m/s^2)",
+    "detail": "3845 readings, -9.51324e-05 to 0.0011027",
+    "source_file": "PSI-100_Raw Data_Saffire-III Telemetry Data.xlsx",
+    "source_where": "sheet 'CygnusData', column T",
+    "quote": null
+   },
+   {
+    "kind": "pressure",
+    "name": "PCM EPS 1 Press (psi)",
+    "detail": "3845 readings, 0 to 14.0562",
+    "source_file": "PSI-100_Raw Data_Saffire-III Telemetry Data.xlsx",
+    "source_where": "sheet 'CygnusPressureData', column D",
+    "quote": null
+   },
+   {
+    "kind": "pressure",
+    "name": "PCM EPS 2 Press (psi)",
+    "detail": "3845 readings, 0 to 14.0341",
+    "source_file": "PSI-100_Raw Data_Saffire-III Telemetry Data.xlsx",
+    "source_where": "sheet 'CygnusPressureData', column E",
+    "quote": null
+   },
+   {
+    "kind": "pressure",
+    "name": "PCM EPS 3 Press (psi)",
+    "detail": "3845 readings, 0 to 14.0586",
+    "source_file": "PSI-100_Raw Data_Saffire-III Telemetry Data.xlsx",
+    "source_where": "sheet 'CygnusPressureData', column F",
+    "quote": null
+   },
+   {
+    "kind": "radiometer",
+    "name": "Radiometer1Value",
+    "detail": "47 readings, -17.7474 to 149.174",
+    "source_file": "PSI-100_Raw Data_Saffire-III Telemetry Data.xlsx",
+    "source_where": "sheet 'SaffireData', column E",
+    "quote": null
+   },
+   {
+    "kind": "radiometer",
+    "name": "Radiometer2Value",
+    "detail": "47 readings, -18.1802 to 153.338",
+    "source_file": "PSI-100_Raw Data_Saffire-III Telemetry Data.xlsx",
+    "source_where": "sheet 'SaffireData', column F",
+    "quote": null
+   },
+   {
+    "kind": "radiometer",
+    "name": "Radiometer3Value",
+    "detail": "47 readings, -16.7786 to 148.368",
+    "source_file": "PSI-100_Raw Data_Saffire-III Telemetry Data.xlsx",
+    "source_where": "sheet 'SaffireData', column G",
+    "quote": null
+   },
+   {
+    "kind": "radiometer",
+    "name": "Radiometer4Value",
+    "detail": "47 readings, -18.1513 to 165.013",
+    "source_file": "PSI-100_Raw Data_Saffire-III Telemetry Data.xlsx",
+    "source_where": "sheet 'SaffireData', column H",
+    "quote": null
+   },
+   {
+    "kind": "flow",
+    "name": "Anemometer1",
+    "detail": "47 readings, 0.149975 to 25.5456",
+    "source_file": "PSI-100_Raw Data_Saffire-III Telemetry Data.xlsx",
+    "source_where": "sheet 'SaffireData', column I",
+    "quote": null
+   },
+   {
+    "kind": "flow",
+    "name": "Anemometer2",
+    "detail": "47 readings, 1.19281 to 31.2676",
+    "source_file": "PSI-100_Raw Data_Saffire-III Telemetry Data.xlsx",
+    "source_where": "sheet 'SaffireData', column J",
+    "quote": null
+   },
+   {
+    "kind": "other",
+    "name": "FanTachometer",
+    "detail": "47 readings, -23.4244 to 8737.01",
+    "source_file": "PSI-100_Raw Data_Saffire-III Telemetry Data.xlsx",
+    "source_where": "sheet 'SaffireData', column K",
+    "quote": null
+   },
+   {
+    "kind": "other",
+    "name": "Tach/100",
+    "detail": "19 readings, -0.147284 to 78.6878",
+    "source_file": "PSI-100_Raw Data_Saffire-III Telemetry Data.xlsx",
+    "source_where": "sheet 'SaffireData', column AG",
+    "quote": null
+   }
+  ],
+  "PSI-98": [
+   {
+    "kind": "flow",
+    "name": "Average Fan Speed",
+    "detail": "unit RPM; 20000 readings, -292.413 to 6589.37",
+    "source_file": "PSI-98_Raw Data_Saffire-I Sample 1 Sensor Data Complete TM graphs.xlsx",
+    "source_where": "sheet 'Calibrated Data', column E (unit row E2: 'RPM')",
+    "quote": null
+   },
+   {
+    "kind": "co2",
+    "name": "CO2",
+    "detail": "unit %; 20000 readings, 0.424298 to 0.632399",
+    "source_file": "PSI-98_Raw Data_Saffire-I Sample 1 Sensor Data Complete TM graphs.xlsx",
+    "source_where": "sheet 'Calibrated Data', column F (unit row F2: '%')",
+    "quote": null
+   },
+   {
+    "kind": "oxygen",
+    "name": "O2",
+    "detail": "unit %; 20000 readings, 22.2059 to 22.7198",
+    "source_file": "PSI-98_Raw Data_Saffire-I Sample 1 Sensor Data Complete TM graphs.xlsx",
+    "source_where": "sheet 'Calibrated Data', column G (unit row G2: '%')",
+    "quote": null
+   },
+   {
+    "kind": "flow",
+    "name": "Anemometer 1",
+    "detail": "unit cm/sec; 20000 readings, 0.109722 to 21.6297",
+    "source_file": "PSI-98_Raw Data_Saffire-I Sample 1 Sensor Data Complete TM graphs.xlsx",
+    "source_where": "sheet 'Calibrated Data', column H (unit row H2: 'cm/sec')",
+    "quote": null
+   },
+   {
+    "kind": "flow",
+    "name": "Anemometer 2",
+    "detail": "unit cm/sec; 20000 readings, 0.191209 to 19.7486",
+    "source_file": "PSI-98_Raw Data_Saffire-I Sample 1 Sensor Data Complete TM graphs.xlsx",
+    "source_where": "sheet 'Calibrated Data', column I (unit row I2: 'cm/sec')",
+    "quote": null
+   },
+   {
+    "kind": "pressure",
+    "name": "Ambient Pressure",
+    "detail": "unit PSIA; 20000 readings, 14.8245 to 14.9035",
+    "source_file": "PSI-98_Raw Data_Saffire-I Sample 1 Sensor Data Complete TM graphs.xlsx",
+    "source_where": "sheet 'Calibrated Data', column J (unit row J2: 'PSIA')",
+    "quote": null
+   },
+   {
+    "kind": "radiometer",
+    "name": "Radiometer 1",
+    "detail": "unit mW/cm2; 20000 readings, -14.1879 to 132.174",
+    "source_file": "PSI-98_Raw Data_Saffire-I Sample 1 Sensor Data Complete TM graphs.xlsx",
+    "source_where": "sheet 'Calibrated Data', column K (unit row K2: 'mW/cm2')",
+    "quote": null
+   },
+   {
+    "kind": "radiometer",
+    "name": "Radiometer 2",
+    "detail": "unit mW/cm2; 20000 readings, -16.6051 to 124.161",
+    "source_file": "PSI-98_Raw Data_Saffire-I Sample 1 Sensor Data Complete TM graphs.xlsx",
+    "source_where": "sheet 'Calibrated Data', column N (unit row N2: 'mW/cm2')",
+    "quote": null
+   },
+   {
+    "kind": "radiometer",
+    "name": "Radiometer 3",
+    "detail": "unit mW/cm2; 20000 readings, -2.48409 to 138.604",
+    "source_file": "PSI-98_Raw Data_Saffire-I Sample 1 Sensor Data Complete TM graphs.xlsx",
+    "source_where": "sheet 'Calibrated Data', column Q (unit row Q2: 'mW/cm2')",
+    "quote": null
+   },
+   {
+    "kind": "radiometer",
+    "name": "Radiometer 4",
+    "detail": "unit mW/cm2; 20000 readings, -16.7388 to 133.734",
+    "source_file": "PSI-98_Raw Data_Saffire-I Sample 1 Sensor Data Complete TM graphs.xlsx",
+    "source_where": "sheet 'Calibrated Data', column T (unit row T2: 'mW/cm2')",
+    "quote": null
+   },
+   {
+    "kind": "humidity",
+    "name": "Humidity",
+    "detail": "unit %; 20000 readings, 46.5248 to 51.0916",
+    "source_file": "PSI-98_Raw Data_Saffire-I Sample 1 Sensor Data Complete TM graphs.xlsx",
+    "source_where": "sheet 'Calibrated Data', column W (unit row W2: '%')",
+    "quote": null
+   },
+   {
+    "kind": "other",
+    "name": "Test Section Inlet Temp",
+    "detail": "unit Degrees C; 20000 readings, 20.327 to 21.373",
+    "source_file": "PSI-98_Raw Data_Saffire-I Sample 1 Sensor Data Complete TM graphs.xlsx",
+    "source_where": "sheet 'Calibrated Data', column X (unit row X2: 'Degrees C')",
+    "quote": null
+   },
+   {
+    "kind": "thermocouple",
+    "name": "Plume Temp 1 (TC1)",
+    "detail": "unit Degrees C; 20000 readings, 22.4154 to 57.9996",
+    "source_file": "PSI-98_Raw Data_Saffire-I Sample 1 Sensor Data Complete TM graphs.xlsx",
+    "source_where": "sheet 'Calibrated Data', column Y (unit row Y2: 'Degrees C')",
+    "quote": null
+   },
+   {
+    "kind": "thermocouple",
+    "name": "Plume Temp 2 (TC2)",
+    "detail": "unit Degrees C; 20000 readings, 22.4825 to 72.8017",
+    "source_file": "PSI-98_Raw Data_Saffire-I Sample 1 Sensor Data Complete TM graphs.xlsx",
+    "source_where": "sheet 'Calibrated Data', column Z (unit row Z2: 'Degrees C')",
+    "quote": null
+   },
+   {
+    "kind": "thermocouple",
+    "name": "Plume Temp 3 (TC3)",
+    "detail": "unit Degrees C; 20000 readings, 22.1935 to 121.705",
+    "source_file": "PSI-98_Raw Data_Saffire-I Sample 1 Sensor Data Complete TM graphs.xlsx",
+    "source_where": "sheet 'Calibrated Data', column AA (unit row AA2: 'Degrees C')",
+    "quote": null
+   },
+   {
+    "kind": "thermocouple",
+    "name": "Plume Temp 4 (TC4)",
+    "detail": "unit Degrees C; 20000 readings, 22.2697 to 87.6378",
+    "source_file": "PSI-98_Raw Data_Saffire-I Sample 1 Sensor Data Complete TM graphs.xlsx",
+    "source_where": "sheet 'Calibrated Data', column AB (unit row AB2: 'Degrees C')",
+    "quote": null
+   },
+   {
+    "kind": "thermocouple",
+    "name": "Plume Temp 5 (TC5)",
+    "detail": "unit Degrees C; 20000 readings, 22.3346 to 38.0972",
+    "source_file": "PSI-98_Raw Data_Saffire-I Sample 1 Sensor Data Complete TM graphs.xlsx",
+    "source_where": "sheet 'Calibrated Data', column AC (unit row AC2: 'Degrees C')",
+    "quote": null
+   },
+   {
+    "kind": "thermocouple",
+    "name": "Plume Temp 6 (TC6)",
+    "detail": "unit Degrees C; 20000 readings, 22.4917 to 42.2576",
+    "source_file": "PSI-98_Raw Data_Saffire-I Sample 1 Sensor Data Complete TM graphs.xlsx",
+    "source_where": "sheet 'Calibrated Data', column AD (unit row AD2: 'Degrees C')",
+    "quote": null
+   },
+   {
+    "kind": "thermocouple",
+    "name": "Sample Temp 1 (TC7)",
+    "detail": "unit Degrees C; 20000 readings, 11.5319 to 698.31",
+    "source_file": "PSI-98_Raw Data_Saffire-I Sample 1 Sensor Data Complete TM graphs.xlsx",
+    "source_where": "sheet 'Calibrated Data', column AE (unit row AE2: 'Degrees C')",
+    "quote": null
+   },
+   {
+    "kind": "thermocouple",
+    "name": "Sample Temp 2 (TC8)",
+    "detail": "unit Degrees C; 20000 readings, 10.6924 to 885.994",
+    "source_file": "PSI-98_Raw Data_Saffire-I Sample 1 Sensor Data Complete TM graphs.xlsx",
+    "source_where": "sheet 'Calibrated Data', column AF (unit row AF2: 'Degrees C')",
+    "quote": null
+   },
+   {
+    "kind": "thermocouple",
+    "name": "Sample Temp 3 (TC9)",
+    "detail": "unit Degrees C; 20000 readings, 11.9514 to 1078.12",
+    "source_file": "PSI-98_Raw Data_Saffire-I Sample 1 Sensor Data Complete TM graphs.xlsx",
+    "source_where": "sheet 'Calibrated Data', column AG (unit row AG2: 'Degrees C')",
+    "quote": null
+   },
+   {
+    "kind": "thermocouple",
+    "name": "Sample Temp 4 (TC10)",
+    "detail": "unit Degrees C; 20000 readings, 10.6924 to 688.13",
+    "source_file": "PSI-98_Raw Data_Saffire-I Sample 1 Sensor Data Complete TM graphs.xlsx",
+    "source_where": "sheet 'Calibrated Data', column AH (unit row AH2: 'Degrees C')",
+    "quote": null
+   },
+   {
+    "kind": "thermocouple",
+    "name": "Sample Temp 5 (TC11)",
+    "detail": "unit Degrees C; 20000 readings, 9.85224 to 1091.76",
+    "source_file": "PSI-98_Raw Data_Saffire-I Sample 1 Sensor Data Complete TM graphs.xlsx",
+    "source_where": "sheet 'Calibrated Data', column AI (unit row AI2: 'Degrees C')",
+    "quote": null
+   },
+   {
+    "kind": "thermocouple",
+    "name": "Sample Temp 6 (TC12)",
+    "detail": "unit Degrees C; 20000 readings, 11.1122 to 332.569",
+    "source_file": "PSI-98_Raw Data_Saffire-I Sample 1 Sensor Data Complete TM graphs.xlsx",
+    "source_where": "sheet 'Calibrated Data', column AJ (unit row AJ2: 'Degrees C')",
+    "quote": null
+   },
+   {
+    "kind": "flow",
+    "name": "Average Fan Speed",
+    "detail": "unit RPM; 20000 readings, -287.881 to 6410.38",
+    "source_file": "PSI-98_Raw Data_Saffire-I Sample 2 Sensor Data Complete TM graphs.xlsx",
+    "source_where": "sheet 'Calibrated Data', column E (unit row E2: 'RPM')",
+    "quote": null
+   },
+   {
+    "kind": "co2",
+    "name": "CO2",
+    "detail": "unit %; 20000 readings, 0.624533 to 0.645766",
+    "source_file": "PSI-98_Raw Data_Saffire-I Sample 2 Sensor Data Complete TM graphs.xlsx",
+    "source_where": "sheet 'Calibrated Data', column F (unit row F2: '%')",
+    "quote": null
+   },
+   {
+    "kind": "oxygen",
+    "name": "O2",
+    "detail": "unit %; 20000 readings, 22.2105 to 22.4514",
+    "source_file": "PSI-98_Raw Data_Saffire-I Sample 2 Sensor Data Complete TM graphs.xlsx",
+    "source_where": "sheet 'Calibrated Data', column G (unit row G2: '%')",
+    "quote": null
+   },
+   {
+    "kind": "flow",
+    "name": "Anemometer 1",
+    "detail": "unit cm/sec; 20000 readings, 0.109722 to 21.4114",
+    "source_file": "PSI-98_Raw Data_Saffire-I Sample 2 Sensor Data Complete TM graphs.xlsx",
+    "source_where": "sheet 'Calibrated Data', column H (unit row H2: 'cm/sec')",
+    "quote": null
+   },
+   {
+    "kind": "flow",
+    "name": "Anemometer 2",
+    "detail": "unit cm/sec; 20000 readings, 0.191209 to 19.0524",
+    "source_file": "PSI-98_Raw Data_Saffire-I Sample 2 Sensor Data Complete TM graphs.xlsx",
+    "source_where": "sheet 'Calibrated Data', column I (unit row I2: 'cm/sec')",
+    "quote": null
+   },
+   {
+    "kind": "pressure",
+    "name": "Ambient Pressure",
+    "detail": "unit PSIA; 20000 readings, 14.8506 to 14.9035",
+    "source_file": "PSI-98_Raw Data_Saffire-I Sample 2 Sensor Data Complete TM graphs.xlsx",
+    "source_where": "sheet 'Calibrated Data', column J (unit row J2: 'PSIA')",
+    "quote": null
+   },
+   {
+    "kind": "radiometer",
+    "name": "Radiometer 1",
+    "detail": "unit mw/cm^2; 32599 readings, -14.1879 to 8.11957",
+    "source_file": "PSI-98_Raw Data_Saffire-I Sample 2 Sensor Data Complete TM graphs.xlsx",
+    "source_where": "sheet 'Calibrated Data', column K (unit row K2: 'mw/cm^2')",
+    "quote": null
+   },
+   {
+    "kind": "radiometer",
+    "name": "Radiometer 2",
+    "detail": "unit mw/cm^2; 32599 readings, -15.9883 to 0.35",
+    "source_file": "PSI-98_Raw Data_Saffire-I Sample 2 Sensor Data Complete TM graphs.xlsx",
+    "source_where": "sheet 'Calibrated Data', column N (unit row N2: 'mw/cm^2')",
+    "quote": null
+   },
+   {
+    "kind": "radiometer",
+    "name": "Radiometer 3",
+    "detail": "unit mw/cm^2; 32599 readings, -1.89476 to 0.35",
+    "source_file": "PSI-98_Raw Data_Saffire-I Sample 2 Sensor Data Complete TM graphs.xlsx",
+    "source_where": "sheet 'Calibrated Data', column Q (unit row Q2: 'mw/cm^2')",
+    "quote": null
+   },
+   {
+    "kind": "radiometer",
+    "name": "Radiometer 4",
+    "detail": "unit mw/cm^2; 32599 readings, -17.0991 to 2.23539",
+    "source_file": "PSI-98_Raw Data_Saffire-I Sample 2 Sensor Data Complete TM graphs.xlsx",
+    "source_where": "sheet 'Calibrated Data', column T (unit row T2: 'mw/cm^2')",
+    "quote": null
+   },
+   {
+    "kind": "humidity",
+    "name": "Humidity",
+    "detail": "unit %; 20000 readings, 47.9668 to 50.1091",
+    "source_file": "PSI-98_Raw Data_Saffire-I Sample 2 Sensor Data Complete TM graphs.xlsx",
+    "source_where": "sheet 'Calibrated Data', column W (unit row W2: '%')",
+    "quote": null
+   },
+   {
+    "kind": "other",
+    "name": "Test Section Inlet Temp",
+    "detail": "unit Degrees C; 20000 readings, 20.717 to 21.6362",
+    "source_file": "PSI-98_Raw Data_Saffire-I Sample 2 Sensor Data Complete TM graphs.xlsx",
+    "source_where": "sheet 'Calibrated Data', column X (unit row X2: 'Degrees C')",
+    "quote": null
+   },
+   {
+    "kind": "thermocouple",
+    "name": "Plume Temp 1 (TC1)",
+    "detail": "unit Degrees C; 20000 readings, 22.2063 to 32.3384",
+    "source_file": "PSI-98_Raw Data_Saffire-I Sample 2 Sensor Data Complete TM graphs.xlsx",
+    "source_where": "sheet 'Calibrated Data', column Y (unit row Y2: 'Degrees C')",
+    "quote": null
+   },
+   {
+    "kind": "thermocouple",
+    "name": "Plume Temp 2 (TC2)",
+    "detail": "unit Degrees C; 20000 readings, 22.7813 to 41.6004",
+    "source_file": "PSI-98_Raw Data_Saffire-I Sample 2 Sensor Data Complete TM graphs.xlsx",
+    "source_where": "sheet 'Calibrated Data', column Z (unit row Z2: 'Degrees C')",
+    "quote": null
+   },
+   {
+    "kind": "thermocouple",
+    "name": "Plume Temp 3 (TC3)",
+    "detail": "unit Degrees C; 20000 readings, 23.6269 to 94.4031",
+    "source_file": "PSI-98_Raw Data_Saffire-I Sample 2 Sensor Data Complete TM graphs.xlsx",
+    "source_where": "sheet 'Calibrated Data', column AA (unit row AA2: 'Degrees C')",
+    "quote": null
+   },
+   {
+    "kind": "thermocouple",
+    "name": "Plume Temp 4 (TC4)",
+    "detail": "unit Degrees C; 20000 readings, 22.2131 to 59.4024",
+    "source_file": "PSI-98_Raw Data_Saffire-I Sample 2 Sensor Data Complete TM graphs.xlsx",
+    "source_where": "sheet 'Calibrated Data', column AB (unit row AB2: 'Degrees C')",
+    "quote": null
+   },
+   {
+    "kind": "thermocouple",
+    "name": "Plume Temp 5 (TC5)",
+    "detail": "unit Degrees C; 20000 readings, 22.3474 to 32.1222",
+    "source_file": "PSI-98_Raw Data_Saffire-I Sample 2 Sensor Data Complete TM graphs.xlsx",
+    "source_where": "sheet 'Calibrated Data', column AC (unit row AC2: 'Degrees C')",
+    "quote": null
+   },
+   {
+    "kind": "thermocouple",
+    "name": "Plume Temp 6 (TC6)",
+    "detail": "unit Degrees C; 20000 readings, 22.4306 to 33.6464",
+    "source_file": "PSI-98_Raw Data_Saffire-I Sample 2 Sensor Data Complete TM graphs.xlsx",
+    "source_where": "sheet 'Calibrated Data', column AD (unit row AD2: 'Degrees C')",
+    "quote": null
+   },
+   {
+    "kind": "thermocouple",
+    "name": "Sample Temp 1 (TC7)",
+    "detail": "unit Degrees C; 20000 readings, 14.8835 to 23.6334",
+    "source_file": "PSI-98_Raw Data_Saffire-I Sample 2 Sensor Data Complete TM graphs.xlsx",
+    "source_where": "sheet 'Calibrated Data', column AE (unit row AE2: 'Degrees C')",
+    "quote": null
+   },
+   {
+    "kind": "thermocouple",
+    "name": "Sample Temp 2 (TC8)",
+    "detail": "unit Degrees C; 20000 readings, 14.8835 to 23.2184",
+    "source_file": "PSI-98_Raw Data_Saffire-I Sample 2 Sensor Data Complete TM graphs.xlsx",
+    "source_where": "sheet 'Calibrated Data', column AF (unit row AF2: 'Degrees C')",
+    "quote": null
+   },
+   {
+    "kind": "thermocouple",
+    "name": "Sample Temp 3 (TC9)",
+    "detail": "unit Degrees C; 20000 readings, 14.4651 to 22.8031",
+    "source_file": "PSI-98_Raw Data_Saffire-I Sample 2 Sensor Data Complete TM graphs.xlsx",
+    "source_where": "sheet 'Calibrated Data', column AG (unit row AG2: 'Degrees C')",
+    "quote": null
+   },
+   {
+    "kind": "thermocouple",
+    "name": "Sample Temp 4 (TC10)",
+    "detail": "unit Degrees C; 20000 readings, 12.7899 to 24.0484",
+    "source_file": "PSI-98_Raw Data_Saffire-I Sample 2 Sensor Data Complete TM graphs.xlsx",
+    "source_where": "sheet 'Calibrated Data', column AH (unit row AH2: 'Degrees C')",
+    "quote": null
+   },
+   {
+    "kind": "thermocouple",
+    "name": "Sample Temp 5 (TC11)",
+    "detail": "unit Degrees C; 20000 readings, 12.3707 to 24.4632",
+    "source_file": "PSI-98_Raw Data_Saffire-I Sample 2 Sensor Data Complete TM graphs.xlsx",
+    "source_where": "sheet 'Calibrated Data', column AI (unit row AI2: 'Degrees C')",
+    "quote": null
+   },
+   {
+    "kind": "thermocouple",
+    "name": "Sample Temp 6 (TC12)",
+    "detail": "unit Degrees C; 20000 readings, 12.7899 to 24.8779",
+    "source_file": "PSI-98_Raw Data_Saffire-I Sample 2 Sensor Data Complete TM graphs.xlsx",
+    "source_where": "sheet 'Calibrated Data', column AJ (unit row AJ2: 'Degrees C')",
+    "quote": null
+   },
+   {
+    "kind": "radiometer",
+    "name": "Radiometer1Value",
+    "detail": "2645 readings, -4077.62 to 128.084",
+    "source_file": "PSI-98_Raw Data_Saffire-I Telemetry Data Good Process Version.xlsx",
+    "source_where": "sheet 'RawData', column E",
+    "quote": null
+   },
+   {
+    "kind": "radiometer",
+    "name": "Radiometer2Value",
+    "detail": "2645 readings, -4061.07 to 121.94",
+    "source_file": "PSI-98_Raw Data_Saffire-I Telemetry Data Good Process Version.xlsx",
+    "source_where": "sheet 'RawData', column F",
+    "quote": null
+   },
+   {
+    "kind": "radiometer",
+    "name": "Radiometer3Value",
+    "detail": "2645 readings, -3866.67 to 136.836",
+    "source_file": "PSI-98_Raw Data_Saffire-I Telemetry Data Good Process Version.xlsx",
+    "source_where": "sheet 'RawData', column G",
+    "quote": null
+   },
+   {
+    "kind": "radiometer",
+    "name": "Radiometer4Value",
+    "detail": "2645 readings, -3954.13 to 131.933",
+    "source_file": "PSI-98_Raw Data_Saffire-I Telemetry Data Good Process Version.xlsx",
+    "source_where": "sheet 'RawData', column H",
+    "quote": null
+   },
+   {
+    "kind": "flow",
+    "name": "Anemometer1",
+    "detail": "2645 readings, -72.1167 to 32.7513",
+    "source_file": "PSI-98_Raw Data_Saffire-I Telemetry Data Good Process Version.xlsx",
+    "source_where": "sheet 'RawData', column I",
+    "quote": null
+   },
+   {
+    "kind": "flow",
+    "name": "Anemometer2",
+    "detail": "2645 readings, -65.9014 to 29.8047",
+    "source_file": "PSI-98_Raw Data_Saffire-I Telemetry Data Good Process Version.xlsx",
+    "source_where": "sheet 'RawData', column J",
+    "quote": null
+   },
+   {
+    "kind": "other",
+    "name": "FanTachometer",
+    "detail": "2645 readings, -69894.2 to 8139.23",
+    "source_file": "PSI-98_Raw Data_Saffire-I Telemetry Data Good Process Version.xlsx",
+    "source_where": "sheet 'RawData', column K",
+    "quote": null
+   },
+   {
+    "kind": "other",
+    "name": "PCM Air Temp (degC)",
+    "detail": "2645 readings, 0 to 20.1832",
+    "source_file": "PSI-98_Raw Data_Saffire-I Telemetry Data Good Process Version.xlsx",
+    "source_where": "sheet 'RawData', column AF",
+    "quote": null
+   },
+   {
+    "kind": "pressure",
+    "name": "PCM Press (psi)",
+    "detail": "2645 readings, 0 to 14.5369",
+    "source_file": "PSI-98_Raw Data_Saffire-I Telemetry Data Good Process Version.xlsx",
+    "source_where": "sheet 'RawData', column AG",
+    "quote": null
+   },
+   {
+    "kind": "pressure",
+    "name": "PCM Press/Temp (psi/K)",
+    "detail": "2645 readings, 0 to 0.049569",
+    "source_file": "PSI-98_Raw Data_Saffire-I Telemetry Data Good Process Version.xlsx",
+    "source_where": "sheet 'RawData', column AH",
+    "quote": null
+   },
+   {
+    "kind": "smoke",
+    "name": "FIZ1 Smoke Detector Obscuration  (V)",
+    "detail": "2645 readings, -0.005 to 0",
+    "source_file": "PSI-98_Raw Data_Saffire-I Telemetry Data Good Process Version.xlsx",
+    "source_where": "sheet 'RawData', column AI",
+    "quote": null
+   },
+   {
+    "kind": "smoke",
+    "name": "FIZ 2 Smoke Detector Obscuration (V)",
+    "detail": "2645 readings, -4.395 to 3.845",
+    "source_file": "PSI-98_Raw Data_Saffire-I Telemetry Data Good Process Version.xlsx",
+    "source_where": "sheet 'RawData', column AJ",
+    "quote": null
+   },
+   {
+    "kind": "smoke",
+    "name": "FIZ 1 Smoke Detector Scatterometer (V)",
+    "detail": "2645 readings, 0 to 0",
+    "source_file": "PSI-98_Raw Data_Saffire-I Telemetry Data Good Process Version.xlsx",
+    "source_where": "sheet 'RawData', column AK",
+    "quote": null
+   },
+   {
+    "kind": "smoke",
+    "name": "FIZ 2 Smoke Detector Scatterometer (V)",
+    "detail": "2645 readings, 0 to 2.9",
+    "source_file": "PSI-98_Raw Data_Saffire-I Telemetry Data Good Process Version.xlsx",
+    "source_where": "sheet 'RawData', column AL",
+    "quote": null
+   },
+   {
+    "kind": "other",
+    "name": "FIZ 1 Cabin Fan delta P (Pa)",
+    "detail": "2645 readings, -126.385 to 0",
+    "source_file": "PSI-98_Raw Data_Saffire-I Telemetry Data Good Process Version.xlsx",
+    "source_where": "sheet 'RawData', column AM",
+    "quote": null
+   },
+   {
+    "kind": "other",
+    "name": "FIZ 2 Cabin Fan Delta P (Pa)",
+    "detail": "2645 readings, -126.385 to 97.985",
+    "source_file": "PSI-98_Raw Data_Saffire-I Telemetry Data Good Process Version.xlsx",
+    "source_where": "sheet 'RawData', column AN",
+    "quote": null
+   },
+   {
+    "kind": "other",
+    "name": "acceleration x axis (m/s^2)",
+    "detail": "2645 readings, -0.000692332 to 0.00027284",
+    "source_file": "PSI-98_Raw Data_Saffire-I Telemetry Data Good Process Version.xlsx",
+    "source_where": "sheet 'RawData', column AR",
+    "quote": null
+   },
+   {
+    "kind": "other",
+    "name": "acceleration y axis (m/s^2)",
+    "detail": "2645 readings, -0.000597283 to 0.000305261",
+    "source_file": "PSI-98_Raw Data_Saffire-I Telemetry Data Good Process Version.xlsx",
+    "source_where": "sheet 'RawData', column AS",
+    "quote": null
+   },
+   {
+    "kind": "other",
+    "name": "acceleration z axis (m/s^2)",
+    "detail": "2645 readings, -0.000617372 to 0.000530423",
+    "source_file": "PSI-98_Raw Data_Saffire-I Telemetry Data Good Process Version.xlsx",
+    "source_where": "sheet 'RawData', column AT",
+    "quote": null
+   },
+   {
+    "kind": "other",
+    "name": "PCM Air Temp (degC)",
+    "detail": "2540 readings, 0 to 20.1832",
+    "source_file": "PSI-98_Raw Data_Saffire-I Telemetry Data Good Process Version.xlsx",
+    "source_where": "sheet 'CygnusData', column D",
+    "quote": null
+   },
+   {
+    "kind": "pressure",
+    "name": "PCM Press (psi)",
+    "detail": "2540 readings, 0 to 14.5369",
+    "source_file": "PSI-98_Raw Data_Saffire-I Telemetry Data Good Process Version.xlsx",
+    "source_where": "sheet 'CygnusData', column E",
+    "quote": null
+   },
+   {
+    "kind": "pressure",
+    "name": "PCM Press/Temp (psi/K)",
+    "detail": "2540 readings, 0 to 0.049569",
+    "source_file": "PSI-98_Raw Data_Saffire-I Telemetry Data Good Process Version.xlsx",
+    "source_where": "sheet 'CygnusData', column F",
+    "quote": null
+   },
+   {
+    "kind": "smoke",
+    "name": "FIZ1 Smoke Detector Obscuration  (V)",
+    "detail": "2540 readings, -0.005 to 0",
+    "source_file": "PSI-98_Raw Data_Saffire-I Telemetry Data Good Process Version.xlsx",
+    "source_where": "sheet 'CygnusData', column G",
+    "quote": null
+   },
+   {
+    "kind": "smoke",
+    "name": "FIZ 2 Smoke Detector Obscuration (V)",
+    "detail": "2540 readings, -4.395 to 3.845",
+    "source_file": "PSI-98_Raw Data_Saffire-I Telemetry Data Good Process Version.xlsx",
+    "source_where": "sheet 'CygnusData', column H",
+    "quote": null
+   },
+   {
+    "kind": "smoke",
+    "name": "FIZ 1 Smoke Detector Scatterometer (V)",
+    "detail": "2540 readings, 0 to 0",
+    "source_file": "PSI-98_Raw Data_Saffire-I Telemetry Data Good Process Version.xlsx",
+    "source_where": "sheet 'CygnusData', column I",
+    "quote": null
+   },
+   {
+    "kind": "smoke",
+    "name": "FIZ 2 Smoke Detector Scatterometer (V)",
+    "detail": "2540 readings, 0 to 2.9",
+    "source_file": "PSI-98_Raw Data_Saffire-I Telemetry Data Good Process Version.xlsx",
+    "source_where": "sheet 'CygnusData', column J",
+    "quote": null
+   },
+   {
+    "kind": "other",
+    "name": "FIZ 1 Cabin Fan delta P (Pa)",
+    "detail": "2540 readings, -126.385 to 0",
+    "source_file": "PSI-98_Raw Data_Saffire-I Telemetry Data Good Process Version.xlsx",
+    "source_where": "sheet 'CygnusData', column K",
+    "quote": null
+   },
+   {
+    "kind": "other",
+    "name": "FIZ 2 Cabin Fan Delta P (Pa)",
+    "detail": "2540 readings, -126.385 to 97.985",
+    "source_file": "PSI-98_Raw Data_Saffire-I Telemetry Data Good Process Version.xlsx",
+    "source_where": "sheet 'CygnusData', column L",
+    "quote": null
+   },
+   {
+    "kind": "other",
+    "name": "acceleration x axis (m/s^2)",
+    "detail": "2540 readings, -0.000692332 to 0.00027284",
+    "source_file": "PSI-98_Raw Data_Saffire-I Telemetry Data Good Process Version.xlsx",
+    "source_where": "sheet 'CygnusData', column P",
+    "quote": null
+   },
+   {
+    "kind": "other",
+    "name": "acceleration y axis (m/s^2)",
+    "detail": "2540 readings, -0.000597283 to 0.000305261",
+    "source_file": "PSI-98_Raw Data_Saffire-I Telemetry Data Good Process Version.xlsx",
+    "source_where": "sheet 'CygnusData', column Q",
+    "quote": null
+   },
+   {
+    "kind": "other",
+    "name": "acceleration z axis (m/s^2)",
+    "detail": "2540 readings, -0.000617372 to 0.000530423",
+    "source_file": "PSI-98_Raw Data_Saffire-I Telemetry Data Good Process Version.xlsx",
+    "source_where": "sheet 'CygnusData', column R",
+    "quote": null
+   },
+   {
+    "kind": "smoke",
+    "name": "FIZ 2 Smoke Detector Obscuration (V)",
+    "detail": "289 readings, -4.395 to 3.845",
+    "source_file": "PSI-98_Raw Data_Saffire-I Telemetry Data Good Process Version.xlsx",
+    "source_where": "sheet 'CygnusSmokeDetectorData', column D",
+    "quote": null
+   },
+   {
+    "kind": "smoke",
+    "name": "FIZ 2 Smoke Detector Scatterometer (V)",
+    "detail": "272 readings, 0.01 to 2.9",
+    "source_file": "PSI-98_Raw Data_Saffire-I Telemetry Data Good Process Version.xlsx",
+    "source_where": "sheet 'CygnusSmokeDetectorData', column I",
+    "quote": null
+   },
+   {
+    "kind": "pressure",
+    "name": "PCM Press (psi)",
+    "detail": "332 readings, 14.4719 to 14.5369",
+    "source_file": "PSI-98_Raw Data_Saffire-I Telemetry Data Good Process Version.xlsx",
+    "source_where": "sheet 'CygnusPressureData', column D",
+    "quote": null
+   },
+   {
+    "kind": "other",
+    "name": "PCM Air Temp (degC)",
+    "detail": "322 readings, 19.6711 to 20.1832",
+    "source_file": "PSI-98_Raw Data_Saffire-I Telemetry Data Good Process Version.xlsx",
+    "source_where": "sheet 'CygnusTemperatureData', column D",
+    "quote": null
+   },
+   {
+    "kind": "radiometer",
+    "name": "Radiometer1Value",
+    "detail": "105 readings, -4077.62 to 128.084",
+    "source_file": "PSI-98_Raw Data_Saffire-I Telemetry Data Good Process Version.xlsx",
+    "source_where": "sheet 'SaffireData', column E",
+    "quote": null
+   },
+   {
+    "kind": "radiometer",
+    "name": "Radiometer2Value",
+    "detail": "105 readings, -4061.07 to 121.94",
+    "source_file": "PSI-98_Raw Data_Saffire-I Telemetry Data Good Process Version.xlsx",
+    "source_where": "sheet 'SaffireData', column F",
+    "quote": null
+   },
+   {
+    "kind": "radiometer",
+    "name": "Radiometer3Value",
+    "detail": "105 readings, -3866.67 to 136.836",
+    "source_file": "PSI-98_Raw Data_Saffire-I Telemetry Data Good Process Version.xlsx",
+    "source_where": "sheet 'SaffireData', column G",
+    "quote": null
+   },
+   {
+    "kind": "radiometer",
+    "name": "Radiometer4Value",
+    "detail": "105 readings, -3954.13 to 131.933",
+    "source_file": "PSI-98_Raw Data_Saffire-I Telemetry Data Good Process Version.xlsx",
+    "source_where": "sheet 'SaffireData', column H",
+    "quote": null
+   },
+   {
+    "kind": "flow",
+    "name": "Anemometer1",
+    "detail": "105 readings, -72.1167 to 32.7513",
+    "source_file": "PSI-98_Raw Data_Saffire-I Telemetry Data Good Process Version.xlsx",
+    "source_where": "sheet 'SaffireData', column I",
+    "quote": null
+   },
+   {
+    "kind": "flow",
+    "name": "Anemometer2",
+    "detail": "105 readings, -65.9014 to 29.8047",
+    "source_file": "PSI-98_Raw Data_Saffire-I Telemetry Data Good Process Version.xlsx",
+    "source_where": "sheet 'SaffireData', column J",
+    "quote": null
+   },
+   {
+    "kind": "other",
+    "name": "FanTachometer",
+    "detail": "105 readings, -69894.2 to 8139.23",
+    "source_file": "PSI-98_Raw Data_Saffire-I Telemetry Data Good Process Version.xlsx",
+    "source_where": "sheet 'SaffireData', column K",
+    "quote": null
+   },
+   {
+    "kind": "other",
+    "name": "Tach/100",
+    "detail": "6083 readings, -698.942 to 81.3923",
+    "source_file": "PSI-98_Raw Data_Saffire-I Telemetry Data Good Process Version.xlsx",
+    "source_where": "sheet 'SaffireData', column AG",
+    "quote": null
+   }
+  ],
+  "PSI-25": [
+   {
+    "kind": "oxygen",
+    "name": "O2 sensor",
+    "detail": "calibrated initial and final O2 % by vol per test (offset-corrected with the ISS MCA)",
+    "source_file": "PSI-25_Science Documents_BASS-II_ReadMe.docx",
+    "source_where": "section 'Columns in test matrix', entry 'Calibrated initial and final O2'",
+    "quote": "The O2 sensor was out of calibration, so the MCA ISS reading was used to correct the initial ISS ‘air’ reading of the sensor for the day via a constant offset.",
+    "from_text": true
+   },
+   {
+    "kind": "co2",
+    "name": "CDM sensor",
+    "detail": "initial and final CO2 % by vol per test",
+    "source_file": "PSI-25_Science Documents_BASS-II_ReadMe.docx",
+    "source_where": "section 'Columns in test matrix', entry 'CO2 readings'",
+    "quote": "CO2 readings:  CDM sensor readings.",
+    "from_text": true
+   },
+   {
+    "kind": "other",
+    "name": "CSA-CP sensor (carbon monoxide)",
+    "detail": "initial and final CO in ppm per test; OR = over range (> 1000 ppm)",
+    "source_file": "PSI-25_Science Documents_BASS-II_ReadMe.docx",
+    "source_where": "section 'Columns in test matrix', entry 'CO readings'",
+    "quote": "CO readings:  CSA-CP sensor readings.  OR = over range (> 1000 ppm)",
+    "from_text": true
+   },
+   {
+    "kind": "radiometer",
+    "name": "Radiometer",
+    "detail": "uncalibrated; shown on the video at 5 Hz",
+    "source_file": "PSI-25_Science Documents_BASS-II_ReadMe.docx",
+    "source_where": "section 'Columns in test matrix', entry 'Radiometer gain'",
+    "quote": "Uncalibrated radiometer gain, radiometer is displayed on the video.",
+    "from_text": true
+   },
+   {
+    "kind": "flow",
+    "name": "Duct air flow (Air display)",
+    "detail": "cm/s, shown on the video; slow response (~1 min)",
+    "source_file": "PSI-25_Science Documents_BASS-II_ReadMe.docx",
+    "source_where": "section 'Columns in test matrix', entry 'Air display'",
+    "quote": "Air display:  flow speed measured in the duct in cm/s on the video display.",
+    "from_text": true
+   },
+   {
+    "kind": "camera",
+    "name": "Nikon digital still camera",
+    "detail": "frames per test in the matrix column \"total frames shot\"",
+    "source_file": "PSI-25_Science Documents_BASS-II_ReadMe.docx",
+    "source_where": "section 'Columns in test matrix', entry 'Total frames'",
+    "quote": "Total frames:  digital Nikon still image frames shot, includes test and post-burn sample images.",
+    "from_text": true
+   }
+  ],
+  "PSI-26": [
+   {
+    "kind": "oxygen",
+    "name": "O2 % by volume",
+    "detail": "ISS environment; holds fractions (0.221 = 22.1 %); 67 cells are formulas of mmHg readings",
+    "source_file": "PSI-26_Science Documents_As Run_Test Matrix.xlsx",
+    "source_where": "sheet 'as run matrix', header cell AA3 (group heading AA2 'ISS environment')",
+    "quote": "O2 % by volume",
+    "from_text": true
+   },
+   {
+    "kind": "pressure",
+    "name": "pressure, atm",
+    "detail": "ISS environment; 0.970-1.009 atm",
+    "source_file": "PSI-26_Science Documents_As Run_Test Matrix.xlsx",
+    "source_where": "sheet 'as run matrix', header cell AB3",
+    "quote": "pressure, atm",
+    "from_text": true
+   },
+   {
+    "kind": "co2",
+    "name": "CO2, mm Hg",
+    "detail": "ISS environment; 1.37-3.51 mmHg",
+    "source_file": "PSI-26_Science Documents_As Run_Test Matrix.xlsx",
+    "source_where": "sheet 'as run matrix', header cell AC3",
+    "quote": "CO2, mm Hg",
+    "from_text": true
+   },
+   {
+    "kind": "radiometer",
+    "name": "Radiometer display",
+    "detail": "with \"Radiometer gain ( 1000, 250, 50, 10)\" in column L",
+    "source_file": "PSI-26_Science Documents_As Run_Test Matrix.xlsx",
+    "source_where": "sheet 'as run matrix', header cell M3",
+    "quote": "Radiometer display",
+    "from_text": true
+   },
+   {
+    "kind": "flow",
+    "name": "Air display",
+    "detail": "with \"Fan display\" in column J",
+    "source_file": "PSI-26_Science Documents_As Run_Test Matrix.xlsx",
+    "source_where": "sheet 'as run matrix', header cell K3",
+    "quote": "Air display",
+    "from_text": true
+   }
+  ]
+ }
 }

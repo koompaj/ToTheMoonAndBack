@@ -107,6 +107,57 @@ PSI table has neither.
   tests without pressure stay without one. (The FLEX row, C11M201, is a closed-chamber test with 35 %
   CO2, not cabin air.)
 
+### F5. Saffire-III: two cabin pressure sensors disagree by about 0.4 psi
+
+- Saffire's own sensor log (`PSI-100_Raw Data_Saffire III Sample 1 Sensors.xlsx` and `... Sample 2
+  Sensors.xlsx`, sheet "Calibrated Data", column J "Ambient Pressure", unit row J2 "PSIA") reads
+  **14.40-14.50** (S1) and **14.40-14.44** (S2). These are the ranges already in `solid_conditions.json`.
+- The Cygnus vehicle's own sensors in `PSI-100_Raw Data_Saffire-III 1 Hz Telemetry Data.xlsx`, sheet
+  "CygnusPressureData", columns D-F "PCM EPS 1 / 2 / 3 Press (psi)", read **13.95-14.06** (1,005 to
+  1,013 non-zero readings each; the rest of the 11,449 rows are 0, i.e. no data).
+- The two logs are not aligned in time here, so they may cover different periods. Which reading
+  applies to the burns is not stated. Proposed fix: before the Saffire-III ranges are shown, line the
+  two logs up by time stamp; until then, show the Saffire sensor value and say a second sensor read
+  about 0.4 psi lower. (Saffire-I's Cygnus sensor, "PCM Press (psi)", read 14.47-14.54, close to its
+  Saffire log; see `PSI_DOCUMENTS.md`.)
+- The same telemetry has three accelerometer axes ("acceleration x/y/z axis (m/s^2)"), all within
+  about +-0.002 m/s^2 (about 0.0002 g). That supports `gravity_g` 0 for Saffire-III; it is not a
+  partial-gravity test.
+
+### F6. Sensors per investigation (item 5, candidates)
+
+`scripts/extract_sensors.py` writes the "sensors" section of `raw_candidates.json` in the `Sensor`
+shape (kind, name, detail, source_file, source_where, quote), one line per channel per file, with the
+column letter and unit-row cell. Housekeeping channels (avionics voltages, igniter selects, time
+stamps, LEDs, camera triggers) are left out. Hand-added lines (`from_text: true`) quote NASA's words.
+
+| Investigation | Lines | Kinds | Source |
+|---|---|---|---|
+| Saffire-I (PSI-98) | 91 | O2, CO2, two anemometers, ambient pressure, 4 radiometers, 12 thermocouples (6 plume, 6 sample), humidity, smoke detectors, Cygnus pressure | sensor and telemetry spreadsheets |
+| Saffire-III (PSI-100) | 152 | the same set, plus Cygnus EPS pressures and accelerometers | sensor and telemetry spreadsheets, raw telemetry CSV |
+| BASS-II (PSI-25) | 6 | O2 sensor (offset-corrected with the ISS MCA), CDM CO2 sensor, CSA-CP CO sensor, radiometer (uncalibrated), duct air flow, Nikon still camera | `BASS-II_ReadMe.docx`, with quotes |
+| BASS (PSI-26) | 5 | "ISS environment" O2, pressure, CO2; radiometer display; air display | `As Run_Test Matrix.xlsx` header cells |
+
+Many Saffire lines repeat the same channel across files (sample 1, sample 2, telemetry); C may want to
+group them by `name`. The other investigations' sensor files are still downloading (see "Left to do").
+
+### F7. Fuel shape and size (item 10)
+
+- **BASS and BASS-II:** NASA's own table text already states the shape for most rows, in
+  "Fuel Sample Material": for BASS, 50 spheres, 14 slabs, 2 sheets and 17 candles; for BASS-II, 54 rods,
+  13 films, 3 slabs, 2 spheres and 1 candle. That needs no raw file: A can fill `fuel_shape` from those
+  words, with the column as `fuel_shape_source`. The other rows ("PMMA 2 cm", "SIBAL 2 cm", "1 cm
+  wide PMMA 2 mm thick") give a width but not a shape word, so they stay `shape_not_stated`. The BASS
+  drawings are named "Flat.Sample.Frame_1cm" and similar, but they have no text layer and cannot be
+  tied to rows, so they are not used.
+- **Saffire-I and -III:** the Operations documents (`PSI-98_Engineering Documents_SAFFIRE-I
+  Operations.pdf`, `PSI-100_..._SAFFIRE-III Operations.pdf`, p. 1) say "the sample material is a single
+  large sample (approx. 0.4 m wide by 0.94 m tall)". The tables already give 40.6 x 94 cm for S1 and S2,
+  so this agrees and adds nothing new. "Single large sample" against two table rows (S1 concurrent,
+  S2 opposed) is not explained, so it is in the unmatched list.
+- **SAFFIRE-II:** "each 5 cm x 29 cm" (`SAFFIRE Objectives, Development and Status.pdf`) agrees with
+  its table.
+
 ## Searched and not found (so far)
 
 - BASS-II pressure for Ferkul, Miller, Olson, Fernandez-Pello (F2).
@@ -117,6 +168,9 @@ PSI table has neither.
 
 - BASS table row 66 "SOOT Cleaning" (8/3/2012, GMT 216): no test numbers; not a test.
 - SPICE oxygen range: applies to the whole investigation, not to rows, so it is not a per-row value.
+- Saffire-I / -III "single large sample (approx. 0.4 m wide by 0.94 m tall)": the tables have two rows
+  (S1, S2) per flight; how one sample relates to two rows is not stated.
+- Saffire-III Cygnus EPS pressures (13.95-14.06 psi): not lined up in time with the burns.
 
 ## Other things noticed
 
