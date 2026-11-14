@@ -9,9 +9,32 @@ You own the words, the ranking and the overall product. Read `CLAUDE.md` first.
 
 ## Where things stand
 
-- `HabitatPanel.tsx` is a stub with live counts of the tests inside the selected habitat.
-- `UntappedPanel.tsx` is a stub listing table rows against publications listed in PSI.
-- No AI layer exists yet. `App.tsx` is a plain two-column layout.
+Branch `peach/dashbard`. **The user flow (Home -> place -> fuel fire -> point on the map) and B's
+side of it are specified in `docs/PLAN.md`.**
+
+- **Flow pages**: `HomeView` (animated summary of every place, future places as "waiting for a
+  source" slots in `panels/places.ts`), `PlaceView` (`#place?h=`), `FireView` (`#fire?h=&fuel=`,
+  with slots for B's `FireModel3D` and `HabitatSimMap`, contract in `web/src/types/sim.ts`).
+  `web/src/ai/fireTasks.ts` computes nearest tests, expected behaviour and the three tasks.
+- **App shell** (`App.tsx`, `styles.css`): tabs Home (`#map`), Experiments (`#experiments`, the 24 experiments with an experiment search and a
+  test search; `?id=PSI-25` opens one experiment with all its tests) and Risk (`#risk`, gaps in plain
+  words plus the scrollable relevance ranking). A right-edge Earth Benefits tab opens a drawer
+  (spinoff cards, then prevention / suppression / detection). Compare: star up to 3 experiment cards
+  (picks in `?cmp=`); the Experiments page then splits 1/3 cards : 2/3 comparison table, which can
+  expand, shrink to a strip (`?cmpview=`) and download as CSV.
+  Old links (`#tests`, `#investigations`, `#untapped`, `#earth`, `#quality`) redirect. Dark space
+  theme, 16px type, one colour per meaning; system fonts only so the demo works offline.
+- **Investigation cards** (task 2, done) with **pillar navigation** (task 5, done: pillars only
+  where the challenge page states them).
+- **Untapped ranking** (task 4, done): relevance points with a stated reason each, rows per listed
+  paper, a chart, the reuse network, the caveat on screen.
+- **Data quality view**: every table and flag from `data_quality.json`.
+- **AI layer** (task 3, built, not yet run): `ai/generate.mjs` writes cited summaries to
+  `web/public/ai/` from fact packs and rejects any sentence whose numbers or citations are not in
+  them. Needs an API key on a team laptop; see `ai/README.md`. The app shows no AI text until then.
+- **Shared logic**: `web/src/ai/evidence.ts` holds every computed number; the app and the AI script
+  both use it.
+- **Demo script** (task 7): `docs/DEMO.md`. Deployment still open.
 
 ## Tasks, in priority order
 
