@@ -61,8 +61,9 @@ PSI table has neither.
   (775 -> 896 placed), all at 0.97-1.01 atm and 16-23 % O2. 38 of them fall inside the ISS / Earth
   control band (19-23 % O2, 14.5-14.9 psi). None reach Moon Base air (>= 30 % O2), so the headline
   ("no solid-material test in the tables reaches 30 % oxygen") does not change.
-- **Candidates:** 363 entries `bass-asrun-row<N>-oxygen|pressure|co2` in `raw_candidates.json`, each
-  with sheet, cell, formula, header and the cell's exact value.
+- **Candidates:** 353 entries `bass-asrun-row<N>-oxygen|pressure|co2` in `raw_candidates.json`
+  (121 oxygen, 121 pressure, 111 CO2; 10 tests have no CO2 value), each with sheet, cell, formula,
+  header and the cell's exact value.
 
 ### F2. BASS-II: the test matrices have no pressure column
 
