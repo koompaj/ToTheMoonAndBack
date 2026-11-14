@@ -26,6 +26,8 @@ export interface SpacecraftProps {
   /** Duct, fan, lights, detectors, extinguisher and handrails. */
   showFittings?: boolean
   onPickMark?: (id: string) => void
+  /** Which gesture picks a fuel item. The Simulation stage uses a double-click. */
+  pickOn?: 'click' | 'doubleClick'
 }
 
 const FURNITURE: PartLook = { color: HOLO, line: 0.5, fill: 0.04 }
@@ -35,23 +37,21 @@ const LABEL_LIFT: Record<string, number> = Object.fromEntries(
   ITEMS.filter((i) => i.fuel && i.fuel.fuel_class !== 'solid').map((i, k) => [i.id, (k % 2) * 0.34]),
 )
 
-function Item({ item, color, selected, showLabel, labelLift, onPick }: { item: CabinItem; color: string | undefined; selected: boolean; showLabel: boolean; labelLift: number; onPick?: (id: string) => void }) {
+function Item({ item, color, selected, showLabel, labelLift, pickOn, onPick }: { item: CabinItem; color: string | undefined; selected: boolean; showLabel: boolean; labelLift: number; pickOn: 'click' | 'doubleClick'; onPick?: (id: string) => void }) {
   const look: PartLook = item.fuel ? { color: color ?? FUEL_COLOR[item.fuel.fuel_class], line: selected ? 1 : 0.9, fill: selected ? 0.3 : 0.12 } : FURNITURE
   const base = item.y ?? 0
   const pickable = !!item.fuel && !!onPick
+  const pick = (e: ThreeEvent<MouseEvent>) => {
+    if (pickOn === 'click' && e.delta > 6) return // a drag to rotate, not a click
+    e.stopPropagation()
+    onPick!(item.id)
+  }
   return (
     <group position={[item.x, base, item.z]}>
       <Part item={item} look={look} />
       {pickable && (
         // an unseen box over the item, so thin wireframe is still easy to click
-        <mesh
-          position={[0, item.h / 2, 0]}
-          onClick={(e: ThreeEvent<MouseEvent>) => {
-            if (e.delta > 6) return // a drag to rotate, not a click
-            e.stopPropagation()
-            onPick!(item.id)
-          }}
-        >
+        <mesh position={[0, item.h / 2, 0]} {...(pickOn === 'click' ? { onClick: pick } : { onDoubleClick: pick })}>
           <boxGeometry args={[Math.max(item.w, 0.4), item.h + (item.fuel!.fuel_class === 'solid' ? 0 : 0.8), Math.max(item.d, 0.4)]} />
           <meshBasicMaterial transparent opacity={0} depthWrite={false} />
         </mesh>
@@ -61,14 +61,14 @@ function Item({ item, color, selected, showLabel, labelLift, onPick }: { item: C
   )
 }
 
-export function Spacecraft({ markColors, selectedMarkId = null, showLabels = true, exterior = false, hiddenIds, showFittings = true, onPickMark }: SpacecraftProps) {
+export function Spacecraft({ markColors, selectedMarkId = null, showLabels = true, exterior = false, hiddenIds, showFittings = true, onPickMark, pickOn = 'click' }: SpacecraftProps) {
   const still = useReducedMotion()
   return (
     <group>
       <Hull exterior={exterior} />
       {showFittings && <Systems still={still} />}
       {ITEMS.filter((item) => !hiddenIds?.has(item.id)).map((item) => (
-        <Item key={item.id} item={item} color={markColors?.[item.id]} selected={item.id === selectedMarkId} showLabel={showLabels} labelLift={LABEL_LIFT[item.id] ?? 0} onPick={onPickMark} />
+        <Item key={item.id} item={item} color={markColors?.[item.id]} selected={item.id === selectedMarkId} showLabel={showLabels} labelLift={LABEL_LIFT[item.id] ?? 0} pickOn={pickOn} onPick={onPickMark} />
       ))}
       {showLabels &&
         ZONES.map((z) => {

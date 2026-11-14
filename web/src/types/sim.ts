@@ -3,6 +3,7 @@
 // C's fire page owns the state and passes these props; B's components only draw and report clicks.
 // Agree any change with B and C before editing.
 import type { AppData, FuelClass, Habitat } from './data'
+import type { LayoutMark } from './layout'
 
 /** One point on the oxygen/pressure map. Cabin-air oxygen as a fraction 0..1, pressure in atm. */
 export interface SimPoint {
@@ -51,4 +52,26 @@ export interface HabitatSimMapProps {
   nearestTestIds: string[]
   /** Called when the user clicks a spot on the map. */
   onPick: (p: SimPoint) => void
+}
+
+/** Props of the Simulation page's 3D stage drawn by workstream B (scene/CabinStage3D). The page
+ *  owns all state; the stage draws from these and reports a picked point through onPick. */
+export interface CabinStageProps {
+  /** False until a place is chosen; the stage then shows the sample spacecraft from outside. */
+  placeChosen: boolean
+  /** The marks on show (the sample spacecraft's, from layouts/example-spacecraft.json). */
+  marks: LayoutMark[]
+  /** Mark id -> evidence colour (TIER_COLOR). */
+  markColors: Record<string, string>
+  selectedMarkId: string | null
+  /** Object URL of the user's own floor plan; null = show the sample spacecraft. */
+  imageUrl: string | null
+  /** The fire point in plan fractions (0..1), or null. */
+  point: { x: number; y: number } | null
+  fuel: FuelClass
+  /** True after "Simulate". */
+  lit: boolean
+  fire?: StageFire | null
+  /** Called with plan fractions when the user places the fire point. */
+  onPick: (x: number, y: number) => void
 }

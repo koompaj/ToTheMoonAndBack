@@ -5,10 +5,11 @@
 // FireModel3D through the renderFire prop below (docs/PLAN.md).
 import { useEffect, useState } from 'react'
 import type { AppData } from './types/data'
-import type { FireModelProps } from './types/sim'
+import type { CabinStageProps, FireModelProps } from './types/sim'
 import { distinctTestCount, loadData } from './data/load'
 import { loadAiContent, type AiContent } from './ai/content'
 import { FireModel3D } from './scene/FireModel3D'
+import { CabinStage3D } from './scene/CabinStage3D'
 import { HomeView } from './panels/HomeView'
 import { PlaceView } from './panels/PlaceView'
 import { FireView } from './panels/FireView'
@@ -40,6 +41,8 @@ function viewFromHash(): ViewId {
 
 // ---- workstream B's fire illustration fills the fire page's slot (docs/PLAN.md) ----
 const renderFire = (p: FireModelProps) => <FireModel3D {...p} />
+// ---- workstream B's sample spacecraft fills the Simulation page's 3D stage ----
+const renderStage = (p: CabinStageProps) => <CabinStage3D {...p} />
 
 function Mark() {
   return (
@@ -120,7 +123,7 @@ export default function App() {
         {view === 'fire' && <FireView data={data} ai={ai} renderFire={renderFire} />}
         {view === 'experiments' && <ExperimentsView data={data} ai={ai} />}
         {view === 'risk' && <RiskView data={data} ai={ai} />}
-        {view === 'simulation' && <SimulationView data={data} />}
+        {view === 'simulation' && <SimulationView data={data} renderStage={renderStage} />}
       </main>
 
       <EarthDrawer data={data} />
