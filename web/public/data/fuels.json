@@ -230,7 +230,10 @@
    0.164,
    0.221
   ],
-  "pressure_psi_range": null,
+  "pressure_psi_range": [
+   14.7,
+   14.7
+  ],
   "airflow_range": [
    20.0,
    30.0
@@ -247,37 +250,37 @@
   },
   "nearest_by_habitat": {
    "moon_base": {
-    "test_id": "PSI-99:saffire-2:5",
-    "o2_points": 7.9,
-    "psi_gap": 0.0,
-    "oxygen_only": true
+    "test_id": "PSI-25:bass-ii:124",
+    "o2_points": 9.2,
+    "psi_gap": 4.5,
+    "oxygen_only": false
    },
    "moon_base_nasa": {
-    "test_id": "PSI-99:saffire-2:5",
-    "o2_points": 9.9,
-    "psi_gap": 0.0,
-    "oxygen_only": true
+    "test_id": "PSI-25:bass-ii:124",
+    "o2_points": 11.2,
+    "psi_gap": 6.3,
+    "oxygen_only": false
    },
    "iss": {
     "test_id": "PSI-25:bass-ii:124",
     "o2_points": 0.2,
     "psi_gap": 0.0,
-    "oxygen_only": true
+    "oxygen_only": false
    },
    "spacesuit": {
-    "test_id": "PSI-99:saffire-2:5",
-    "o2_points": 77.9,
-    "psi_gap": 0.0,
-    "oxygen_only": true
+    "test_id": "PSI-25:bass-ii:124",
+    "o2_points": 79.2,
+    "psi_gap": 10.4,
+    "oxygen_only": false
    },
    "earth_sea_level": {
     "test_id": "PSI-25:bass-ii:124",
     "o2_points": 0.2,
     "psi_gap": 0.0,
-    "oxygen_only": true
+    "oxygen_only": false
    }
   },
-  "note": "Pressure is not in these tables."
+  "note": "Pressure for 27 of these 45 tests is from NASA's reports, not the tables (see each test's pressure_source)."
  },
  {
   "id": "solid:japan-wax",

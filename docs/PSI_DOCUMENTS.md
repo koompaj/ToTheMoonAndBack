@@ -4,7 +4,7 @@ Beyond the 22 experiment tables, PSI holds reports, presentations, engineering d
 sensor logs. We downloaded a chosen set and searched them. This file says what was checked, what was
 found (with file and page), and what it means for the data.
 
-**These findings are not in the app yet.** Adding them is a team decision (end of this file).
+**Findings 1 and 2 are now in the data** (see "Done" at the end of this file).
 
 ## What was checked
 
@@ -90,9 +90,19 @@ radiometers, an inlet temperature, six plume and six sample thermocouples, and h
   but their own text says the burns happened in Cygnus after it left the station (SAFFIRE-II's record
   says Cygnus). All are microgravity, so no count changes.
 
-## Decision for the team
+## Done (2026-11-14, branch `data/solid-pressure`)
 
-Findings 1 and 2 would give **55 solid tests** a sourced pressure (4 Saffire, 22 + 29 BASS-II), each
-flagged with its source file and page, so solid materials appear on the map for the first time (near
-station air, about 14.4-14.9 psia). The Saffire oxygen conflict would be flagged, not resolved. Not yet
-done; see the conversation for the options.
+The team agreed to add findings 1 and 2. They are in `data_sourced/solid_conditions.json` (one entry per fact: rows it
+applies to, value or range, unit, file, page or cell, exact words) and applied by `scripts/build_web_data.py`;
+`scripts/validate_data.py` checks every value, and re-finds every quote and range in the downloaded files when
+`data_extra/_text/` exists.
+
+| Tests | What was added | Placed on the map? |
+|---|---|---|
+| 29 BASS-II (T'ien) | `pressure_atm` = 1.0 from the report, with `pressure_source` | **Yes** (placed tests 746 -> 775) |
+| 22 BASS-II (Bhattacharjee) | `pressure_atm_min` / `max` (99.2-99.5 kPa) with `pressure_source` | No: a range, not one value |
+| 4 Saffire-I and -III burns | pressure range (PSIA) and `o2_sensor_min` / `max` from the sensor logs | No: ranges |
+
+Habitat counts are unchanged (20 / 0 / 34 / 0 / 34): the newly placed tests ran at 1 atm and 16.4-20.8 % oxygen.
+The Saffire-I oxygen conflict is flagged, not resolved. BASS (121 tests), BASS-II's other 78 tests, SAFFIRE-II and
+SPICE still have no pressure.

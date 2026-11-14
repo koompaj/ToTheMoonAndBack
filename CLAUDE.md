@@ -38,7 +38,8 @@ Audience: professors, students, aerospace researchers and engineers. Full notes:
 **Headline finding (reproduced by `scripts/build_web_data.py`):** of the tests whose tables record
 cabin-air oxygen and pressure, only **20** sit in Moon Base conditions (oxygen >= 30 %, pressure
 <= 10.2 psi). All 20 are gas flames from one investigation (ACME CFI-G, PSI-159). **No solid-material
-test in the tables reaches 30 % oxygen** (BASS-II tops out at 22.2 %). In NASA's own exploration
+test in the tables reaches 30 % oxygen** (BASS-II tops out at 22.2 %), and only 29 solid tests have a pressure
+(from NASA's BASS-II report, at 1 atm). In NASA's own exploration
 atmosphere box (8.2 psia / 34 % O2, +-0.2 psia / +-2 %), the tables hold **0** tests. NASA did burn
 materials at other pressures and oxygen levels in Saffire-IV to VI, but those results are not in PSI:
 say "not in the tables", never "never tested".
@@ -129,7 +130,7 @@ cd web && npm run build
 ```
 
 `npm run build` type-checks and builds. It must pass on `main` at all times.
-The data build ends by running `scripts/validate_data.py` (76 independent checks against the raw
+The data build ends by running `scripts/validate_data.py` (80 independent checks against the raw
 files); it stops on any failure. To run the checks alone:
 
 ```bash
@@ -152,7 +153,8 @@ python -I scripts/validate_data.py data web/public/data
   row; say "1,719 tests", via `distinctTestCount()`) (263 solid, 361 droplet, 1,129 gas).
   274 are inverse-flame (burner-oxidizer) rows. Of the 1,479 cabin-air tests, 884 record an oxygen
   value, 746 record oxygen and pressure, 270 are at >= 30 % oxygen, and 20 are inside the Moon Base
-  envelope. 457 tests record airflow.
+  envelope. 457 tests record airflow. With pressures from NASA's own reports and sensor logs
+  (`data_sourced/solid_conditions.json`), **775** tests can be placed, 29 of them solid (BASS-II, 1 atm).
 - Every source column is in `tests.json`: typed fields where the unit is clear (solid
   `fuel_material`, SAFFIRE sample size, FLEX droplet and extinction diameters, CFI-G hot ignition and
   peak burner temperature, SPICE ignition and flame-off times), `source_extra` word-for-word for the
@@ -178,10 +180,10 @@ python -I scripts/validate_data.py data web/public/data
 
 ## Open questions (owner in brackets)
 
-1. **[A] Pressure for solid-material tests (blocked).** BASS-II, BASS and SAFFIRE tables have no
-   pressure column, so none of the 263 solid tests can be placed on the map (140 record oxygen,
-   highest 22.2 %). No source this computer can open states it (ntrs.nasa.gov refuses the
-   connection); nothing is backfilled. Someone on another network could open NTRS 20210011385.
+1. **[A] Pressure for solid-material tests (partly resolved).** NASA's own files in PSI give it for 55 of the
+   263 solid tests: 29 BASS-II at 1 atm (now placed), 22 BASS-II as a 99.2-99.5 kPa range and 4 Saffire burns as
+   sensor-log ranges (not placed). BASS's 121 tests and BASS-II's other 78 still have none; the BASS Final
+   Report is a broken link on NASA's side. See `docs/PSI_DOCUMENTS.md`.
 2. **[A] Habitat numbers.** Done for ISS, Earth and NASA's Moon Base box. Spacecraft cabin
    (Orion), lunar lander and Mars habitat stay "waiting": only superseded 2010-11 proposals found.
 3. **[C] "Will it go out" on screen.** The analysis is in `outcomes.json` (verdicts, counts, test

@@ -89,11 +89,60 @@ def main():
     counts = {h["id"]: len(inside(h)) for h in H}
     expect = {"moon_base": 20, "moon_base_nasa": 0, "iss": 34, "spacesuit": 0, "earth_sea_level": 34}
     check("habitat counts (20, 0, 34, 0, 34)", counts == expect, str(counts))
-    check("746 tests can be placed on the map", len(placed) == 746, str(len(placed)))
+    check("775 tests can be placed on the map (746 from the tables + 29 BASS-II with a pressure from NASA's report)",
+          len(placed) == 775, str(len(placed)))
     check("distinct tests 1,719 (34 duplicate rows)", Q.get("distinct_tests") == 1719 and Q.get("duplicate_rows") == 34)
     solid_o2 = [t["o2_fraction"] for t in T if t["fuel_class"] == "solid" and t["o2_fraction"] is not None]
     check("highest solid-material oxygen is 22.2 %", abs(max(solid_o2) - 0.222) < 1e-9, str(max(solid_o2)))
-    check("no solid test is placed (no pressure in their tables)", not [t for t in placed if t["fuel_class"] == "solid"])
+    solid_placed = [t for t in placed if t["fuel_class"] == "solid"]
+    check("the placed solid tests are exactly the 29 T'ien BASS-II tests, all at 1 atm with their source",
+          len(solid_placed) == 29 and all(t["investigation"] == "PSI-25" and (t["source_extra"] or {}).get("PI") == "T'ien"
+                                          and t["pressure_atm"] == 1.0 and "pressure_from_report" in t["flags"] and t["pressure_source"]
+                                          for t in solid_placed),
+          str(len(solid_placed)))
+
+    # ---- conditions from NASA's reports and sensor logs (data_sourced/solid_conditions.json) -----
+    SC = json.load(open(os.path.join(os.path.dirname(data), "data_sourced", "solid_conditions.json"), encoding="utf-8"))["facts"]
+    bad = []
+    for f in SC:
+        if f["investigation"] == "PSI-25":
+            rows = [t for t in T if t["investigation"] == "PSI-25" and (t["source_extra"] or {}).get("PI") == f["applies_to"]["value"]]
+        else:
+            rows = [t for t in T if t["investigation"] == f["investigation"] and t["test_label"] == f["applies_to"]["test_label"]]
+        if not rows:
+            bad.append(f"{f['id']}: no rows")
+        for t in rows:
+            if f["quantity"] == "pressure" and "value" in f:
+                ok = t["pressure_atm"] == f["value"] and f["quote"] in (t["pressure_source"] or "")
+            elif f["quantity"] == "pressure":
+                div = 101.325 if f["unit"] == "kPa" else PSI
+                ok = (t["pressure_atm"] is None and abs(t["pressure_atm_min"] - f["range"][0] / div) < 1e-5
+                      and abs(t["pressure_atm_max"] - f["range"][1] / div) < 1e-5 and f["quote"] in (t["pressure_source"] or ""))
+            else:
+                ok = abs(t["o2_sensor_min"] - f["range"][0] / 100) < 1e-5 and abs(t["o2_sensor_max"] - f["range"][1] / 100) < 1e-5
+            if not ok:
+                bad.append(f"{f['id']}: {t['id']}")
+    check("every sourced condition matches data_sourced/solid_conditions.json (29 + 22 BASS-II rows, 4 Saffire burns)",
+          not bad and sum(1 for t in T if t.get("pressure_source")) == 55, ", ".join(bad[:5]))
+    txt_root = os.path.join(os.path.dirname(data), "data_extra", "_text")
+    if os.path.isdir(txt_root):
+        missing = []
+        for f in SC:
+            acc_dir = os.path.join(txt_root, f["investigation"])
+            path = os.path.join(acc_dir, f["source_file"] + ".txt")
+            text = re.sub(r"\s+", " ", open(path, encoding="utf-8", errors="replace").read()) if os.path.exists(path) else ""
+            if f["source_file"].endswith(".pdf"):
+                if f["quote"] not in text:
+                    missing.append(f["id"])
+            else:   # spreadsheet: the column summary must show the stated min and max
+                col = "Ambient Pressure" if f["quantity"] == "pressure" else "O2"
+                m = re.search(r"\[" + re.escape(col) + r"\] n=\d+ min=([\d.e-]+) max=([\d.e-]+)", text)
+                if not m or abs(float(m.group(1)) - f["range"][0]) > 1e-3 or abs(float(m.group(2)) - f["range"][1]) > 1e-3:
+                    missing.append(f["id"])
+        check("every sourced quote and range is found in NASA's downloaded files (data_extra/_text)", not missing, ", ".join(missing))
+    else:
+        print("NOTE  data_extra/_text not present: quotes not re-checked against NASA's files "
+              "(run scripts/fetch_psi_docs.py and scripts/extract_docs.py to enable this check)")
     check("every habitat number is sourced", all(h["status"].startswith("from_") and h.get("source_urls") for h in H))
     nasa = next(h for h in H if h["id"] == "moon_base_nasa")
     check("NASA Moon Base box is 32-36 % O2, 8.0-8.4 psi", nasa["o2_fraction"] == [0.32, 0.36] and nasa["pressure_psi"] == [8.0, 8.4])

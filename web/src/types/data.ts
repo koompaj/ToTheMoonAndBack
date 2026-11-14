@@ -48,6 +48,16 @@ export interface Test {
   peak_burner_temp_c?: number | null // ACME CFI-G
   ignition_time?: string | null // SPICE, GMT "HH:MM:SS"
   flame_off_time?: string | null
+  // Conditions from NASA's reports and sensor logs where the table has none (data_sourced/).
+  /** A range when that is all the source gives (pressure_atm then stays null and the test is not
+   *  placed); flags pressure_range_from_report / pressure_range_from_sensor_log. */
+  pressure_atm_min?: number | null
+  pressure_atm_max?: number | null
+  /** Where a pressure not in the table comes from: document, page or cell, exact words. */
+  pressure_source?: string | null
+  /** Oxygen range from NASA's sensor log for this burn (fractions); the table's o2 is unchanged. */
+  o2_sensor_min?: number | null
+  o2_sensor_max?: number | null
   /** ambient O2 >= 0.30 and pressure <= 10.2 psi; null when either value is unknown
    *  or the oxygen is burner_oxidizer. */
   in_moon_envelope: boolean | null

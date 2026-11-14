@@ -30,7 +30,7 @@ Done so far: task 2 (ISS, Earth and NASA's Moon Base box; other places stay "wai
 (`outcomes.json`), task 7 (`data_quality.json`, with the distinct-test count), the Gemini check
 (`gemini_data/VERIFIED.md`) and the data part of the submission (`docs/SUBMISSION_DATA.md`).
 All 20 source-table problems in `docs/DATA_ISSUES.md` are handled and every source column is kept,
-each fix checked by `scripts/validate_data.py` (76 checks, run by every build).
+each fix checked by `scripts/validate_data.py` (80 checks, run by every build).
 Still open: task 1 (blocked: no openable source), and task 6 inputs beyond what
 `investigations.json` already gives.
 

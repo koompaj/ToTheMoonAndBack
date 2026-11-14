@@ -67,7 +67,18 @@ FLAG_MEANINGS = {
                         "5'), so the typed field is null; the cell is kept in source_extra.",
     "burning_rate_unit_unclear": "NASA's header gives the burning-rate unit only as 'mm'; part of the unit may have been "
                                  "lost in the file. The number is kept as written.",
-    "extinction_diameter_above_initial": "The extinction diameter is a little larger than the initial droplet diameter "
+    "pressure_from_report": "The table has no pressure; NASA's report states one for these tests (pressure_source "
+                            "gives the report, page and words). Checked by hand; see data_sourced/solid_conditions.json.",
+    "pressure_range_from_report": "NASA's report gives a pressure range for these tests (pressure_atm_min / max, "
+                                  "with pressure_source); no single value, so the test is not placed on the map.",
+    "pressure_range_from_sensor_log": "NASA's sensor log for this burn records ambient pressure in PSIA; "
+                                      "pressure_atm_min / max is its range over the log (pressure_source says where). "
+                                      "No single value, so the test is not placed on the map.",
+    "o2_from_sensor_log": "NASA's sensor log for this burn records oxygen (%); o2_sensor_min / max is its range over "
+                          "the log. The table's own oxygen value, if any, is kept unchanged.",
+    "o2_differs_from_sensor_log": "The table's oxygen and the sensor log's oxygen for this burn do not overlap "
+                                  "(e.g. 21.5-21.7 % against 22.2-22.7 %). NASA does not say which is right.",
+    "extinction_diameter_above_initial":"The extinction diameter is a little larger than the initial droplet diameter "
                                          "(by no more than the table's 0.01 mm step, in a flame that went out within "
                                          "a second). Kept as written.",
     "temperature_placeholder":"The peak burner temperature cell holds a placeholder ('-', '#VALUE!', or 273.15 K beside an "
@@ -210,12 +221,30 @@ def parse_o2_percent(cell):
     return None, None, None, ["o2_not_numeric:" + cell]
 
 
+def sourced_text(f):
+    """How a value from data_sourced/ is cited on a test: document, place in it, exact words."""
+    return f"{f.get('source_title') or f['source_file']}, {f['location']}: \"{f['quote']}\""
+
+
 class Builder:
     def __init__(self, data):
         self.T = os.path.join(data, "tables")
         self.tests = []
         self.quality = []       # one entry per table
         self.table_use = {}     # "tables/..." -> where it went
+        # Conditions NASA's tables leave out, from NASA's reports and sensor logs (hand-checked; see
+        # docs/PSI_DOCUMENTS.md). Kept outside data/, which stays exactly as downloaded.
+        path = os.path.join(os.path.dirname(os.path.abspath(data)), "data_sourced", "solid_conditions.json")
+        self.facts = json.load(open(path, encoding="utf-8"))["facts"] if os.path.exists(path) else []
+
+    def fact(self, acc, quantity, pi=None, label=None):
+        for f in self.facts:
+            a = f["applies_to"]
+            if f["investigation"] == acc and f["quantity"] == quantity and (
+                    (pi is not None and a.get("column") == "PI" and a.get("value") == pi)
+                    or (label is not None and a.get("test_label") == label)):
+                return f
+        return None
 
     def table(self, rel):
         header, body = read_csv(os.path.join(self.T, rel))
@@ -251,6 +280,9 @@ class Builder:
             "droplet_diameter_mm": None, "extinction_diameter_mm": None, "burning_rate": None,  # FLEX
             "cool_flame": None, "hot_ignition": None, "peak_burner_temp_c": None,           # ACME CFI-G
             "ignition_time": None, "flame_off_time": None,                                  # SPICE (GMT)
+            # conditions from NASA's reports and sensor logs when the table has none (data_sourced/)
+            "pressure_atm_min": None, "pressure_atm_max": None, "pressure_source": None,
+            "o2_sensor_min": None, "o2_sensor_max": None,
             "in_moon_envelope": in_env,
             "source_extra": None,   # other cells of the source row, exactly as published
             "flags": flags,
@@ -372,9 +404,22 @@ class Builder:
             pct = strict_num(r[11])
             o2 = None if pct is None else pct / 100
             flags = ([] if o2 is not None else ["o2_not_numeric:" + r[11] if r[11] else "o2_missing"])
+            # The table has no pressure. NASA's BASS-II report gives it for two researchers' tests (PI column).
+            f = self.fact("PSI-25", "pressure", pi=r[0])
+            p, more = None, {}
+            if f and "value" in f and f["unit"] == "atm":
+                p = f["value"]
+                flags += ["pressure_from_report"]
+                more = {"pressure_source": sourced_text(f)}
+            elif f and "range" in f and f["unit"] == "kPa":
+                flags += ["pressure_not_in_table", "pressure_range_from_report"]
+                more = {"pressure_atm_min": round(f["range"][0] / 101.325, 6), "pressure_atm_max": round(f["range"][1] / 101.325, 6),
+                        "pressure_source": sourced_text(f)}
+            else:
+                flags += ["pressure_not_in_table"]
             # Fan and air display readings keep their cells as written: their units are not stated.
-            self.add(q, "PSI-25", "BASS-II", i, r[1], "solid", r[5], o2, "ambient", None,
-                     flags + ["pressure_not_in_table"], source_extra=extra_cells(header, r, {1, 5, 11}))
+            self.add(q, "PSI-25", "BASS-II", i, r[1], "solid", r[5], o2, "ambient", p,
+                     flags, source_extra=extra_cells(header, r, {1, 5, 11}), **more)
 
     def bass(self):
         _, body, q = self.table("PSI-26/PSI-26_Experimental table_BASS.csv")
@@ -447,12 +492,28 @@ class Builder:
                 if acc == "PSI-98" and length is not None and width is not None and length < width:
                     length, width = width, length                       # NASA fact sheet: 0.4 m wide, 1 m long
                     flags.append("dimensions_swapped_in_source")
+                # Saffire-I and -III sensor logs: ambient pressure (PSIA) and O2 (%) over each burn.
+                sensed = {}
+                fp = self.fact(acc, "pressure", label=r[0])
+                fo = self.fact(acc, "oxygen", label=r[0])
+                if fp:
+                    flags.append("pressure_range_from_sensor_log")
+                    sensed.update(pressure_atm_min=round(fp["range"][0] / PSI_PER_ATM, 6),
+                                  pressure_atm_max=round(fp["range"][1] / PSI_PER_ATM, 6), pressure_source=sourced_text(fp))
+                if fo:
+                    s0, s1 = fo["range"][0] / 100, fo["range"][1] / 100
+                    flags.append("o2_from_sensor_log")
+                    sensed.update(o2_sensor_min=round(s0, 6), o2_sensor_max=round(s1, 6))
+                    t0 = o2 if o2 is not None else lo
+                    t1 = o2 if o2 is not None else hi
+                    if t0 is not None and (t1 < s0 or t0 > s1):         # table and sensor do not overlap
+                        flags.append("o2_differs_from_sensor_log")
                 self.add(q, acc, acronym, i, r[0], "solid", material, o2, "ambient", None, flags,
                          o2_fraction_min=None if lo is None else round(lo, 4),
                          o2_fraction_max=None if hi is None else round(hi, 4),
                          airflow_cm_s=lead_num(r[c["air"]]), flow_direction=direction,
                          burn_time_s=burn, sample_thickness_mm=thick, sample_length_cm=length, sample_width_cm=width,
-                         source_extra=extra)
+                         source_extra=extra, **sensed)
 
     def build(self):
         self.flame_design()
@@ -714,6 +775,10 @@ def build_fuels(tests, habitats):
             note.append("Oxygen is not in these tables.")
         if not [t for t in ts if t["pressure_atm"] is not None]:
             note.append("Pressure is not in these tables.")
+        from_docs = [t for t in ts if t["pressure_atm"] is not None and t.get("pressure_source")]
+        if from_docs:
+            note.append(f"Pressure for {len(from_docs)} of these {len(ts)} tests is from NASA's reports, not the tables "
+                        "(see each test's pressure_source).")
         out.append({
             "id": f"{cls}:{slug(name)}", "fuel_class": cls, "name": name,
             "test_ids": [t["id"] for t in ts], "test_count": len(ts),
