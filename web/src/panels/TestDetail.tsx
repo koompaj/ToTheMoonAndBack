@@ -23,6 +23,9 @@ export function testRows(test: Test): [string, string][] {
   if (test.he_fraction) rows.push(['Helium added', fmtPct(test.he_fraction)])
   if (test.burn_time_s !== null) rows.push(['Burn time', `${test.burn_time_s} s`])
   if (test.outcome) rows.push(['Ending', test.outcome])
+  // Item 10: only where NASA's text states it
+  if (test.fuel_shape) rows.push(['Shape', test.fuel_shape])
+  if (test.fuel_size_text) rows.push(['Size', test.fuel_size_text])
   return rows
 }
 

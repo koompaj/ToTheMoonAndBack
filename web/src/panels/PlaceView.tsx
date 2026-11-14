@@ -8,6 +8,7 @@ import { gravityNote, isSourced, testsInHabitat } from '../data/load'
 import { useApp } from '../state/store'
 import { fmtPct, fmtPsi } from '../ai/evidence'
 import { HabitatPanel } from './HabitatPanel'
+import { OutcomesPanel } from './OutcomesPanel'
 import { useHashParam } from './route'
 import { placeArt, placeName } from './places'
 import { PlaceArt, Stars } from './SpaceArt'
@@ -132,6 +133,7 @@ export function PlaceView({ data, ai }: { data: AppData; ai: AiContent }) {
       </section>
 
       <HabitatPanel data={data} ai={ai} embedded />
+      <OutcomesPanel data={data} />
     </section>
   )
 }
