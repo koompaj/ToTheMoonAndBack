@@ -59,6 +59,34 @@ export function unplacedTests(tests: Test[]) {
   }
 }
 
+/** How close a test's gravity must be to a place's gravity to count as the same (in g). */
+export const GRAVITY_TOLERANCE_G = 0.02
+
+/** Tests inside a habitat's air box that also ran in that habitat's gravity (within
+ *  GRAVITY_TOLERANCE_G). Today every PSI test is microgravity, so only the ISS matches; this is
+ *  ready for the partial-gravity data NASA expects from LUCI and FM2. A test or habitat with no
+ *  gravity value never matches. */
+export function testsInHabitatAndGravity(tests: Test[], h: Habitat): Test[] {
+  const gs = h.gravity?.g ?? []
+  return testsInHabitat(tests, h).filter(
+    (t) => t.gravity_g !== undefined && gs.some((g) => Math.abs(t.gravity_g! - g) <= GRAVITY_TOLERANCE_G),
+  )
+}
+
+/** One plain sentence on how the place's gravity compares with the tests' gravity. */
+export function gravityNote(tests: Test[], h: Habitat): string | null {
+  if (!h.gravity) return null
+  const air = testsInHabitat(tests, h).length
+  const both = testsInHabitatAndGravity(tests, h).length
+  if (air === 0) return `Gravity here: ${h.gravity.label}. Every test in PSI's tables ran in microgravity.`
+  if (both === air) return `Gravity here: ${h.gravity.label}. Air and gravity both match the ${air} tests.`
+  if (both === 0) {
+    const partial = h.gravity.g.some((g) => g > 0 && g < 1)
+    return `Gravity here: ${h.gravity.label}. All ${air} tests in this air ran in microgravity, so none match this gravity${partial ? ' yet' : ''}.`
+  }
+  return `Gravity here: ${h.gravity.label}. ${both} of the ${air} tests in this air also match this gravity.`
+}
+
 /** Tests that sit inside a habitat's oxygen and pressure box.
  *  Only ambient-oxygen tests with both values known can be placed. */
 export function testsInHabitat(tests: Test[], h: Habitat): Test[] {

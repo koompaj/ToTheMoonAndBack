@@ -52,7 +52,8 @@ export interface Nearest {
   test: Test
   o2Points: number
   psiGap: number
-  /** true when the test's table has no pressure column, so only oxygen could be compared. */
+  /** true when no test of this fuel type has a usable pressure (in its table or from NASA's
+   *  reports), so only oxygen could be compared. */
   oxygenOnly: boolean
 }
 
@@ -60,7 +61,8 @@ export interface ClassEvidence {
   fuelClass: FuelClass
   inside: Test[]
   nearest: Nearest | null
-  /** Tests of this class in cabin air that cannot be placed (no pressure and/or oxygen). */
+  /** Tests of this class in cabin air that cannot be placed (no usable pressure and/or oxygen,
+   *  neither in the table nor from NASA's reports). */
   unplaced: number
 }
 

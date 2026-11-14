@@ -660,6 +660,28 @@ EXPATM = "https://humanresearchroadmap.nasa.gov/evidence/reports/ExpAtm.pdf"
 TP2010 = "https://www.nasa.gov/wp-content/uploads/2023/03/henninger-8.2-34-atm-tp216134-2010.pdf"
 OCHMO = "https://www.nasa.gov/wp-content/uploads/2023/12/ochmo-tb-003-habitable-atmosphere.pdf"
 CHALLENGE_URL = "https://www.spaceappschallenge.org/2026/challenges/flame-in-freefall/?tab=details"
+NSSDC_MOON = "https://nssdc.gsfc.nasa.gov/planetary/factsheet/moonfact.html"
+PSI_REPO = "https://psi.nasa.gov/physci/repo/"
+
+# Gravity of each place, in units of Earth's gravity (g): the values a crew can live in there. A test fits
+# a place's gravity when within 0.02 g of one of them (GRAVITY_TOLERANCE_G in web/src/data/load.ts, mirrored
+# in validate_data.py). Sources checked 2026-11-14 (gemini_data/VERIFIED.md, section 1).
+MOON_G = 0.165   # NASA NSSDC Moon Fact Sheet: surface gravity 1.62 m/s^2 (Moon) / 9.80 (Earth), ratio 0.165
+G_MICRO = {"g": [0.0], "label": "Microgravity",
+           "source": "NASA PSI records: every investigation with tests in these tables is a 'Microgravity "
+                     "Investigation' flown on the International Space Station or a Cygnus cargo craft",
+           "source_url": PSI_REPO}
+G_MOON = {"g": [MOON_G], "label": "Moon gravity, about 1/6 of Earth's",
+          "source": "NASA NSSDC Moon Fact Sheet: 'Surface gravity (m/s2) 1.62 9.80 0.165' (Moon, Earth, ratio); "
+                    "science.nasa.gov/moon/facts: 'the gravity on the surface of the Moon is one-sixth of Earth's'",
+          "source_url": NSSDC_MOON}
+G_EARTH = {"g": [1.0], "label": "Earth gravity (1 g)",
+           "source": "NASA NSSDC Moon Fact Sheet gives Earth's surface gravity as 9.80 m/s2; 1 g by definition",
+           "source_url": NSSDC_MOON}
+G_SUIT = {"g": [0.0, MOON_G], "label": "Microgravity on spacewalks from the ISS, or Moon gravity on the surface",
+          "source": "NASA evidence report on the exploration atmosphere, p. 6: 'the ISS construction and maintenance EVAs' "
+                    "and 'exploration EVAs'; Moon gravity from the NASA NSSDC Moon Fact Sheet",
+          "source_url": EXPATM}
 
 
 def build_habitats():
@@ -673,7 +695,7 @@ def build_habitats():
          "pressure_atm": [round(4.3 * PSI_TO_ATM, 4), MOON_MAX_P_ATM],
          "note": "Challenge: oxygen 'likely 30% or greater', pressure '10.2 psi or less', between spacesuit and Earth values. "
                  "The outer bounds here are the spacesuit values.",
-         "source": challenge, "source_urls": [CHALLENGE_URL], "status": "from_challenge"},
+         "source": challenge, "source_urls": [CHALLENGE_URL], "status": "from_challenge", "gravity": G_MOON},
         {"id": "moon_base_nasa", "name": "Moon Base (NASA Exploration Air)",
          "o2_fraction": [0.32, 0.36], "pressure_psi": [8.0, 8.4],
          "pressure_atm": [round(8.0 * PSI_TO_ATM, 4), round(8.4 * PSI_TO_ATM, 4)],
@@ -683,24 +705,29 @@ def build_habitats():
                  "(NASA/TP-2010-216134, p. 11). That report set the band for its own 2010 recommendations; applying it to "
                  "8.2 / 34 is our step, not NASA's.",
          "source": f"{expatm}, pp. 4 and 29; NASA/TP-2010-216134, p. 11",
-         "source_urls": [EXPATM, TP2010], "status": "from_nasa"},
+         "source_urls": [EXPATM, TP2010], "status": "from_nasa", "gravity": G_MOON},
         {"id": "iss", "name": "Space Station (ISS)",
-         "o2_fraction": [0.21, 0.21], "pressure_psi": [14.7, 14.7], "pressure_atm": [1.0, 1.0],
+         "o2_fraction": [0.19, 0.23], "pressure_psi": [14.5, 14.9],
+         "pressure_atm": [round(14.5 * PSI_TO_ATM, 4), round(14.9 * PSI_TO_ATM, 4)],
          "note": "'...International Space Station (ISS) program have operated at an Earth-equivalent sea level atmosphere of "
-                 "14.7 psia and 21% O2' (evidence report, p. 5). Same air as Earth sea level, so the same tests fall in both.",
-         "source": f"{expatm}, p. 5; NASA OCHMO-TB-003 Habitable Atmosphere, p. 8",
-         "source_urls": [EXPATM, OCHMO], "status": "from_nasa"},
+                 "14.7 psia and 21% O2' (evidence report, p. 5). The box is NASA's control band of +-0.2 psia and +-2.0% O2 "
+                 "around it (NASA/TP-2010-216134, p. 11); applying that band here is our step, not NASA's. Same air as Earth "
+                 "sea level, so the same tests fall in both.",
+         "source": f"{expatm}, p. 5; NASA OCHMO-TB-003 Habitable Atmosphere, p. 8; NASA/TP-2010-216134, p. 11",
+         "source_urls": [EXPATM, OCHMO, TP2010], "status": "from_nasa", "gravity": G_MICRO},
         {"id": "spacesuit", "name": "Spacesuit",
          "o2_fraction": [1.00, 1.00], "pressure_psi": [4.3, 4.3],
          "pressure_atm": [round(4.3 * PSI_TO_ATM, 4)] * 2,
          "note": "Challenge: spacesuits are filled with 100% oxygen to only 4.3 psi.",
-         "source": challenge, "source_urls": [CHALLENGE_URL], "status": "from_challenge"},
+         "source": challenge, "source_urls": [CHALLENGE_URL], "status": "from_challenge", "gravity": G_SUIT},
         {"id": "earth_sea_level", "name": "Earth sea level",
-         "o2_fraction": [0.21, 0.21], "pressure_psi": [14.7, 14.7], "pressure_atm": [1.0, 1.0],
+         "o2_fraction": [0.19, 0.23], "pressure_psi": [14.5, 14.9],
+         "pressure_atm": [round(14.5 * PSI_TO_ATM, 4), round(14.9 * PSI_TO_ATM, 4)],
          "note": "Pressure from the challenge page (14.7 psi). 21% O2 at 14.7 psia is NASA's 'Earth-equivalent sea level "
-                 "atmosphere' (evidence report, p. 5).",
-         "source": f"{challenge}; {expatm}, p. 5",
-         "source_urls": [CHALLENGE_URL, EXPATM], "status": "from_challenge_and_nasa"},
+                 "atmosphere' (evidence report, p. 5). The box is NASA's control band of +-0.2 psia and +-2.0% O2 around it "
+                 "(NASA/TP-2010-216134, p. 11); applying that band here is our step, not NASA's.",
+         "source": f"{challenge}; {expatm}, p. 5; NASA/TP-2010-216134, p. 11",
+         "source_urls": [CHALLENGE_URL, EXPATM, TP2010], "status": "from_challenge_and_nasa", "gravity": G_EARTH},
     ]
 
 
@@ -777,8 +804,9 @@ def build_fuels(tests, habitats):
             note.append("Pressure is not in these tables.")
         from_docs = [t for t in ts if t["pressure_atm"] is not None and t.get("pressure_source")]
         if from_docs:
-            note.append(f"Pressure for {len(from_docs)} of these {len(ts)} tests is from NASA's reports, not the tables "
-                        "(see each test's pressure_source).")
+            docs = sorted({t["pressure_source"].split(", chapter")[0].split(': "')[0] for t in from_docs})
+            note.append(f"Pressure for {len(from_docs)} of these {len(ts)} tests is from NASA's reports, not the tables: "
+                        + "; ".join(docs) + ".")
         out.append({
             "id": f"{cls}:{slug(name)}", "fuel_class": cls, "name": name,
             "test_ids": [t["id"] for t in ts], "test_count": len(ts),
@@ -806,6 +834,14 @@ def main():
     other = build_other_tables(data, b)
     inv = build_investigations(data, b.table_use)
     hab = build_habitats()
+    # Gravity of every test, from NASA's record of its investigation. Every investigation with tests is a
+    # "Microgravity Investigation"; stop if that ever changes rather than guess a value.
+    project = {i["accession"]: i["project_type"] for i in inv}
+    for t in tests:
+        if project.get(t["investigation"]) != "Microgravity Investigation":
+            sys.exit(f"{t['id']}: investigation {t['investigation']} is '{project.get(t['investigation'])}', "
+                     f"not a Microgravity Investigation; its gravity is not known")
+        t["gravity_g"] = 0.0
     fuels = build_fuels(tests, hab)
 
     flag_counts = {}

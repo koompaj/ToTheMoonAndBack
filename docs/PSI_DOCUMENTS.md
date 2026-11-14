@@ -103,6 +103,8 @@ applies to, value or range, unit, file, page or cell, exact words) and applied b
 | 22 BASS-II (Bhattacharjee) | `pressure_atm_min` / `max` (99.2-99.5 kPa) with `pressure_source` | No: a range, not one value |
 | 4 Saffire-I and -III burns | pressure range (PSIA) and `o2_sensor_min` / `max` from the sensor logs | No: ranges |
 
-Habitat counts are unchanged (20 / 0 / 34 / 0 / 34): the newly placed tests ran at 1 atm and 16.4-20.8 % oxygen.
+Habitat counts were unchanged by this (20 / 0 / 34 / 0 / 34): the newly placed tests ran at 1 atm and 16.4-20.8 % oxygen.
+Later the same day (branch `app/gravity-and-band`) ISS and Earth became NASA's control band (19-23 % O2,
+14.5-14.9 psi), giving 20 / 0 / 171 / 0 / 171; 6 of these solid tests (SIBAL) now fall in ISS / Earth air.
 The Saffire-I oxygen conflict is flagged, not resolved. BASS (121 tests), BASS-II's other 78 tests, SAFFIRE-II and
 SPICE still have no pressure.

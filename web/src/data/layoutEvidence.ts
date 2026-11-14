@@ -12,6 +12,14 @@ const num = (v: number) => v.toFixed(1).replace(/\.0$/, '')
 const plural = (n: number, one: string, many = `${one}s`) => `${n} ${n === 1 ? one : many}`
 const list = (xs: string[]) => (xs.length <= 1 ? xs.join('') : `${xs.slice(0, -1).join(', ')} and ${xs[xs.length - 1]}`)
 
+/** "Pressure tested: 14.7 psi." for one value, "Pressures tested: X to Y." for a range, plus the
+ *  option's note when some of that pressure comes from NASA's reports rather than the tables. */
+function pressureTestedText(option: FuelOption) {
+  const [lo, hi] = option.pressure_psi_range!
+  const base = lo === hi ? `Pressure tested: ${psi(lo)}.` : `Pressures tested: ${psi(lo)} to ${psi(hi)}.`
+  return option.note && option.note.includes('reports') ? `${base} ${option.note}` : base
+}
+
 function airText(h: Habitat) {
   const [o0, o1] = h.o2_fraction
   const [p0, p1] = h.pressure_psi
@@ -62,7 +70,7 @@ export function markEvidence(data: AppData, habitat: Habitat, mark: LayoutMark):
   })
   tested.push(
     option.pressure_psi_range
-      ? { kind: 'data', text: `Pressures tested: ${psi(option.pressure_psi_range[0])} to ${psi(option.pressure_psi_range[1])}.`, cites: option.investigations }
+      ? { kind: 'data', text: pressureTestedText(option), cites: option.investigations }
       : { kind: 'gap', text: 'Pressure is not in these tables.', cites: option.investigations },
   )
   if (inside.length > 0)

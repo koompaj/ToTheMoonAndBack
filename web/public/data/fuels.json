@@ -140,7 +140,7 @@
     "oxygen_only": true
    },
    "iss": {
-    "test_id": "PSI-25:bass-ii:10",
+    "test_id": "PSI-25:bass-ii:1",
     "o2_points": 0,
     "psi_gap": 0.0,
     "oxygen_only": true
@@ -152,7 +152,7 @@
     "oxygen_only": true
    },
    "earth_sea_level": {
-    "test_id": "PSI-25:bass-ii:10",
+    "test_id": "PSI-25:bass-ii:1",
     "o2_points": 0,
     "psi_gap": 0.0,
     "oxygen_only": true
@@ -244,9 +244,23 @@
   "inside_by_habitat": {
    "moon_base": [],
    "moon_base_nasa": [],
-   "iss": [],
+   "iss": [
+    "PSI-25:bass-ii:124",
+    "PSI-25:bass-ii:125",
+    "PSI-25:bass-ii:126",
+    "PSI-25:bass-ii:127",
+    "PSI-25:bass-ii:128",
+    "PSI-25:bass-ii:129"
+   ],
    "spacesuit": [],
-   "earth_sea_level": []
+   "earth_sea_level": [
+    "PSI-25:bass-ii:124",
+    "PSI-25:bass-ii:125",
+    "PSI-25:bass-ii:126",
+    "PSI-25:bass-ii:127",
+    "PSI-25:bass-ii:128",
+    "PSI-25:bass-ii:129"
+   ]
   },
   "nearest_by_habitat": {
    "moon_base": {
@@ -261,26 +275,16 @@
     "psi_gap": 6.3,
     "oxygen_only": false
    },
-   "iss": {
-    "test_id": "PSI-25:bass-ii:124",
-    "o2_points": 0.2,
-    "psi_gap": 0.0,
-    "oxygen_only": false
-   },
+   "iss": null,
    "spacesuit": {
     "test_id": "PSI-25:bass-ii:124",
     "o2_points": 79.2,
     "psi_gap": 10.4,
     "oxygen_only": false
    },
-   "earth_sea_level": {
-    "test_id": "PSI-25:bass-ii:124",
-    "o2_points": 0.2,
-    "psi_gap": 0.0,
-    "oxygen_only": false
-   }
+   "earth_sea_level": null
   },
-  "note": "Pressure for 27 of these 45 tests is from NASA's reports, not the tables (see each test's pressure_source)."
+  "note": "Pressure for 27 of these 45 tests is from NASA's reports, not the tables: Burning and Suppression of Solids-II (BASS-II) Summary Report, NASA/TM-20210011385, p. 102."
  },
  {
   "id": "solid:japan-wax",
@@ -339,7 +343,7 @@
    },
    "iss": {
     "test_id": "PSI-25:bass-ii:26",
-    "o2_points": 3.6,
+    "o2_points": 1.6,
     "psi_gap": 0.0,
     "oxygen_only": true
    },
@@ -351,7 +355,7 @@
    },
    "earth_sea_level": {
     "test_id": "PSI-25:bass-ii:26",
-    "o2_points": 3.6,
+    "o2_points": 1.6,
     "psi_gap": 0.0,
     "oxygen_only": true
    }
@@ -412,7 +416,7 @@
     "oxygen_only": true
    },
    "iss": {
-    "test_id": "PSI-25:bass-ii:24",
+    "test_id": "PSI-25:bass-ii:23",
     "o2_points": 0,
     "psi_gap": 0.0,
     "oxygen_only": true
@@ -424,7 +428,7 @@
     "oxygen_only": true
    },
    "earth_sea_level": {
-    "test_id": "PSI-25:bass-ii:24",
+    "test_id": "PSI-25:bass-ii:23",
     "o2_points": 0,
     "psi_gap": 0.0,
     "oxygen_only": true
@@ -566,7 +570,7 @@
    },
    "iss": {
     "test_id": "PSI-99:saffire-2:1",
-    "o2_points": 0.5,
+    "o2_points": 0,
     "psi_gap": 0.0,
     "oxygen_only": true
    },
@@ -578,7 +582,7 @@
    },
    "earth_sea_level": {
     "test_id": "PSI-99:saffire-2:1",
-    "o2_points": 0.5,
+    "o2_points": 0,
     "psi_gap": 0.0,
     "oxygen_only": true
    }
@@ -670,7 +674,7 @@
    },
    "iss": {
     "test_id": "PSI-99:saffire-2:7",
-    "o2_points": 1.1,
+    "o2_points": 0,
     "psi_gap": 0.0,
     "oxygen_only": true
    },
@@ -682,7 +686,7 @@
    },
    "earth_sea_level": {
     "test_id": "PSI-99:saffire-2:7",
-    "o2_points": 1.1,
+    "o2_points": 0,
     "psi_gap": 0.0,
     "oxygen_only": true
    }
@@ -879,15 +883,61 @@
    "moon_base": [],
    "moon_base_nasa": [],
    "iss": [
+    "PSI-69:flex:1",
+    "PSI-69:flex:2",
+    "PSI-69:flex:3",
     "PSI-69:flex:4",
     "PSI-69:flex:5",
-    "PSI-69:flex:6"
+    "PSI-69:flex:6",
+    "PSI-69:flex:33",
+    "PSI-69:flex:34",
+    "PSI-69:flex:46",
+    "PSI-69:flex:48",
+    "PSI-69:flex:144",
+    "PSI-69:flex:145",
+    "PSI-69:flex:146",
+    "PSI-69:flex:168",
+    "PSI-69:flex:169",
+    "PSI-69:flex:170",
+    "PSI-69:flex:187",
+    "PSI-69:flex:188",
+    "PSI-69:flex:199",
+    "PSI-69:flex:200",
+    "PSI-69:flex:201",
+    "PSI-69:flex:202",
+    "PSI-69:flex:203",
+    "PSI-69:flex:222",
+    "PSI-69:flex:223",
+    "PSI-69:flex:225"
    ],
    "spacesuit": [],
    "earth_sea_level": [
+    "PSI-69:flex:1",
+    "PSI-69:flex:2",
+    "PSI-69:flex:3",
     "PSI-69:flex:4",
     "PSI-69:flex:5",
-    "PSI-69:flex:6"
+    "PSI-69:flex:6",
+    "PSI-69:flex:33",
+    "PSI-69:flex:34",
+    "PSI-69:flex:46",
+    "PSI-69:flex:48",
+    "PSI-69:flex:144",
+    "PSI-69:flex:145",
+    "PSI-69:flex:146",
+    "PSI-69:flex:168",
+    "PSI-69:flex:169",
+    "PSI-69:flex:170",
+    "PSI-69:flex:187",
+    "PSI-69:flex:188",
+    "PSI-69:flex:199",
+    "PSI-69:flex:200",
+    "PSI-69:flex:201",
+    "PSI-69:flex:202",
+    "PSI-69:flex:203",
+    "PSI-69:flex:222",
+    "PSI-69:flex:223",
+    "PSI-69:flex:225"
    ]
   },
   "nearest_by_habitat": {
@@ -1064,11 +1114,67 @@
    "moon_base": [],
    "moon_base_nasa": [],
    "iss": [
-    "PSI-69:flex:9"
+    "PSI-69:flex:7",
+    "PSI-69:flex:8",
+    "PSI-69:flex:9",
+    "PSI-69:flex:35",
+    "PSI-69:flex:47",
+    "PSI-69:flex:49",
+    "PSI-69:flex:50",
+    "PSI-69:flex:53",
+    "PSI-69:flex:148",
+    "PSI-69:flex:149",
+    "PSI-69:flex:150",
+    "PSI-69:flex:180",
+    "PSI-69:flex:181",
+    "PSI-69:flex:182",
+    "PSI-69:flex:196",
+    "PSI-69:flex:197",
+    "PSI-69:flex:198",
+    "PSI-69:flex:204",
+    "PSI-69:flex:205",
+    "PSI-69:flex:206",
+    "PSI-69:flex:207",
+    "PSI-69:flex:208",
+    "PSI-69:flex:224",
+    "PSI-69:flex:228",
+    "PSI-69:flex:229",
+    "PSI-69:flex:230",
+    "PSI-69:flex:231",
+    "PSI-69:flex:273",
+    "PSI-69:flex:274"
    ],
    "spacesuit": [],
    "earth_sea_level": [
-    "PSI-69:flex:9"
+    "PSI-69:flex:7",
+    "PSI-69:flex:8",
+    "PSI-69:flex:9",
+    "PSI-69:flex:35",
+    "PSI-69:flex:47",
+    "PSI-69:flex:49",
+    "PSI-69:flex:50",
+    "PSI-69:flex:53",
+    "PSI-69:flex:148",
+    "PSI-69:flex:149",
+    "PSI-69:flex:150",
+    "PSI-69:flex:180",
+    "PSI-69:flex:181",
+    "PSI-69:flex:182",
+    "PSI-69:flex:196",
+    "PSI-69:flex:197",
+    "PSI-69:flex:198",
+    "PSI-69:flex:204",
+    "PSI-69:flex:205",
+    "PSI-69:flex:206",
+    "PSI-69:flex:207",
+    "PSI-69:flex:208",
+    "PSI-69:flex:224",
+    "PSI-69:flex:228",
+    "PSI-69:flex:229",
+    "PSI-69:flex:230",
+    "PSI-69:flex:231",
+    "PSI-69:flex:273",
+    "PSI-69:flex:274"
    ]
   },
   "nearest_by_habitat": {
@@ -1678,9 +1784,121 @@
   "inside_by_habitat": {
    "moon_base": [],
    "moon_base_nasa": [],
-   "iss": [],
+   "iss": [
+    "PSI-10:normal-flame:1",
+    "PSI-10:normal-flame:2",
+    "PSI-10:normal-flame:3",
+    "PSI-10:normal-flame:4",
+    "PSI-10:normal-flame:5",
+    "PSI-10:normal-flame:6",
+    "PSI-10:normal-flame:12",
+    "PSI-10:normal-flame:13",
+    "PSI-10:normal-flame:14",
+    "PSI-10:normal-flame:15",
+    "PSI-10:normal-flame:16",
+    "PSI-10:normal-flame:17",
+    "PSI-10:normal-flame:18",
+    "PSI-10:normal-flame:19",
+    "PSI-10:normal-flame:31",
+    "PSI-10:normal-flame:32",
+    "PSI-10:normal-flame:33",
+    "PSI-10:normal-flame:34",
+    "PSI-10:normal-flame:35",
+    "PSI-10:normal-flame:36",
+    "PSI-10:normal-flame:37",
+    "PSI-10:normal-flame:38",
+    "PSI-10:normal-flame:39",
+    "PSI-10:normal-flame:40",
+    "PSI-10:normal-flame:41",
+    "PSI-10:normal-flame:42",
+    "PSI-10:normal-flame:43",
+    "PSI-10:normal-flame:44",
+    "PSI-10:normal-flame:45",
+    "PSI-10:normal-flame:46",
+    "PSI-10:normal-flame:47",
+    "PSI-10:normal-flame:48",
+    "PSI-10:normal-flame:49",
+    "PSI-10:normal-flame:50",
+    "PSI-10:normal-flame:167",
+    "PSI-10:normal-flame:168",
+    "PSI-10:normal-flame:169",
+    "PSI-10:normal-flame:170",
+    "PSI-10:normal-flame:171",
+    "PSI-10:normal-flame:172",
+    "PSI-10:normal-flame:173",
+    "PSI-10:normal-flame:174",
+    "PSI-10:normal-flame:175",
+    "PSI-10:normal-flame:176",
+    "PSI-10:normal-flame:177",
+    "PSI-10:normal-flame:178",
+    "PSI-10:normal-flame:179",
+    "PSI-10:normal-flame:180",
+    "PSI-10:normal-flame:181",
+    "PSI-10:normal-flame:182",
+    "PSI-10:normal-flame:183",
+    "PSI-10:normal-flame:184",
+    "PSI-10:normal-flame:185",
+    "PSI-10:normal-flame:186",
+    "PSI-10:normal-flame:187"
+   ],
    "spacesuit": [],
-   "earth_sea_level": []
+   "earth_sea_level": [
+    "PSI-10:normal-flame:1",
+    "PSI-10:normal-flame:2",
+    "PSI-10:normal-flame:3",
+    "PSI-10:normal-flame:4",
+    "PSI-10:normal-flame:5",
+    "PSI-10:normal-flame:6",
+    "PSI-10:normal-flame:12",
+    "PSI-10:normal-flame:13",
+    "PSI-10:normal-flame:14",
+    "PSI-10:normal-flame:15",
+    "PSI-10:normal-flame:16",
+    "PSI-10:normal-flame:17",
+    "PSI-10:normal-flame:18",
+    "PSI-10:normal-flame:19",
+    "PSI-10:normal-flame:31",
+    "PSI-10:normal-flame:32",
+    "PSI-10:normal-flame:33",
+    "PSI-10:normal-flame:34",
+    "PSI-10:normal-flame:35",
+    "PSI-10:normal-flame:36",
+    "PSI-10:normal-flame:37",
+    "PSI-10:normal-flame:38",
+    "PSI-10:normal-flame:39",
+    "PSI-10:normal-flame:40",
+    "PSI-10:normal-flame:41",
+    "PSI-10:normal-flame:42",
+    "PSI-10:normal-flame:43",
+    "PSI-10:normal-flame:44",
+    "PSI-10:normal-flame:45",
+    "PSI-10:normal-flame:46",
+    "PSI-10:normal-flame:47",
+    "PSI-10:normal-flame:48",
+    "PSI-10:normal-flame:49",
+    "PSI-10:normal-flame:50",
+    "PSI-10:normal-flame:167",
+    "PSI-10:normal-flame:168",
+    "PSI-10:normal-flame:169",
+    "PSI-10:normal-flame:170",
+    "PSI-10:normal-flame:171",
+    "PSI-10:normal-flame:172",
+    "PSI-10:normal-flame:173",
+    "PSI-10:normal-flame:174",
+    "PSI-10:normal-flame:175",
+    "PSI-10:normal-flame:176",
+    "PSI-10:normal-flame:177",
+    "PSI-10:normal-flame:178",
+    "PSI-10:normal-flame:179",
+    "PSI-10:normal-flame:180",
+    "PSI-10:normal-flame:181",
+    "PSI-10:normal-flame:182",
+    "PSI-10:normal-flame:183",
+    "PSI-10:normal-flame:184",
+    "PSI-10:normal-flame:185",
+    "PSI-10:normal-flame:186",
+    "PSI-10:normal-flame:187"
+   ]
   },
   "nearest_by_habitat": {
    "moon_base": {
@@ -1695,24 +1913,14 @@
     "psi_gap": 6.17,
     "oxygen_only": false
    },
-   "iss": {
-    "test_id": "PSI-10:normal-flame:167",
-    "o2_points": 0.01,
-    "psi_gap": 0.04,
-    "oxygen_only": false
-   },
+   "iss": null,
    "spacesuit": {
     "test_id": "PSI-10:normal-flame:59",
     "o2_points": 60.18,
     "psi_gap": 10.46,
     "oxygen_only": false
    },
-   "earth_sea_level": {
-    "test_id": "PSI-10:normal-flame:167",
-    "o2_points": 0.01,
-    "psi_gap": 0.04,
-    "oxygen_only": false
-   }
+   "earth_sea_level": null
   },
   "note": null
  },
@@ -2301,11 +2509,31 @@
    "moon_base": [],
    "moon_base_nasa": [],
    "iss": [
-    "PSI-159:normal-flames:122"
+    "PSI-159:normal-flames:57",
+    "PSI-159:normal-flames:58",
+    "PSI-159:normal-flames:59",
+    "PSI-159:normal-flames:60",
+    "PSI-159:normal-flames:61",
+    "PSI-159:normal-flames:62",
+    "PSI-159:normal-flames:63",
+    "PSI-159:normal-flames:64",
+    "PSI-159:normal-flames:122",
+    "PSI-159:normal-flames:123",
+    "PSI-159:normal-flames:124"
    ],
    "spacesuit": [],
    "earth_sea_level": [
-    "PSI-159:normal-flames:122"
+    "PSI-159:normal-flames:57",
+    "PSI-159:normal-flames:58",
+    "PSI-159:normal-flames:59",
+    "PSI-159:normal-flames:60",
+    "PSI-159:normal-flames:61",
+    "PSI-159:normal-flames:62",
+    "PSI-159:normal-flames:63",
+    "PSI-159:normal-flames:64",
+    "PSI-159:normal-flames:122",
+    "PSI-159:normal-flames:123",
+    "PSI-159:normal-flames:124"
    ]
   },
   "nearest_by_habitat": {
@@ -2518,9 +2746,23 @@
     "PSI-159:normal-flames:156"
    ],
    "moon_base_nasa": [],
-   "iss": [],
+   "iss": [
+    "PSI-159:normal-flames:83",
+    "PSI-159:normal-flames:84",
+    "PSI-159:normal-flames:85",
+    "PSI-159:normal-flames:86",
+    "PSI-159:normal-flames:87",
+    "PSI-159:normal-flames:88"
+   ],
    "spacesuit": [],
-   "earth_sea_level": []
+   "earth_sea_level": [
+    "PSI-159:normal-flames:83",
+    "PSI-159:normal-flames:84",
+    "PSI-159:normal-flames:85",
+    "PSI-159:normal-flames:86",
+    "PSI-159:normal-flames:87",
+    "PSI-159:normal-flames:88"
+   ]
   },
   "nearest_by_habitat": {
    "moon_base": null,
@@ -2530,24 +2772,14 @@
     "psi_gap": 0.65,
     "oxygen_only": false
    },
-   "iss": {
-    "test_id": "PSI-159:normal-flames:85",
-    "o2_points": 0.1,
-    "psi_gap": 0.0,
-    "oxygen_only": false
-   },
+   "iss": null,
    "spacesuit": {
     "test_id": "PSI-159:normal-flames:31",
     "o2_points": 60.74,
     "psi_gap": 3.05,
     "oxygen_only": false
    },
-   "earth_sea_level": {
-    "test_id": "PSI-159:normal-flames:85",
-    "o2_points": 0.1,
-    "psi_gap": 0.0,
-    "oxygen_only": false
-   }
+   "earth_sea_level": null
   },
   "note": null
  },
@@ -2684,11 +2916,29 @@
    ],
    "moon_base_nasa": [],
    "iss": [
-    "PSI-159:normal-flames:144"
+    "PSI-159:normal-flames:11",
+    "PSI-159:normal-flames:12",
+    "PSI-159:normal-flames:144",
+    "PSI-159:normal-flames:145",
+    "PSI-159:normal-flames:146",
+    "PSI-159:normal-flames:147",
+    "PSI-159:normal-flames:148",
+    "PSI-159:normal-flames:149",
+    "PSI-159:normal-flames:150",
+    "PSI-159:normal-flames:151"
    ],
    "spacesuit": [],
    "earth_sea_level": [
-    "PSI-159:normal-flames:144"
+    "PSI-159:normal-flames:11",
+    "PSI-159:normal-flames:12",
+    "PSI-159:normal-flames:144",
+    "PSI-159:normal-flames:145",
+    "PSI-159:normal-flames:146",
+    "PSI-159:normal-flames:147",
+    "PSI-159:normal-flames:148",
+    "PSI-159:normal-flames:149",
+    "PSI-159:normal-flames:150",
+    "PSI-159:normal-flames:151"
    ]
   },
   "nearest_by_habitat": {

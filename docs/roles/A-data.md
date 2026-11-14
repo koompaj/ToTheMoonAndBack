@@ -30,8 +30,12 @@ Done so far: task 2 (ISS, Earth and NASA's Moon Base box; other places stay "wai
 (`outcomes.json`), task 7 (`data_quality.json`, with the distinct-test count), the Gemini check
 (`gemini_data/VERIFIED.md`) and the data part of the submission (`docs/SUBMISSION_DATA.md`).
 All 20 source-table problems in `docs/DATA_ISSUES.md` are handled and every source column is kept,
-each fix checked by `scripts/validate_data.py` (80 checks, run by every build).
-Still open: task 1 (blocked: no openable source), and task 6 inputs beyond what
+each fix checked by `scripts/validate_data.py` (85 checks, run by every build).
+2026-11-14: solid pressure from NASA's reports and sensor logs (`data_sourced/solid_conditions.json`, 775
+tests placed, 29 solid); ISS and Earth use NASA's control band (171 tests each); gravity on every test and
+place (`gravity_g`, `Habitat.gravity`, `testsInHabitatAndGravity()`).
+Still open: task 1 for the remaining solid tests (BASS, 78 BASS-II tests, SAFFIRE-II: no single pressure
+in any openable source), and task 6 inputs beyond what
 `investigations.json` already gives.
 
 ## Tasks, in priority order

@@ -58,6 +58,9 @@ export interface Test {
   /** Oxygen range from NASA's sensor log for this burn (fractions); the table's o2 is unchanged. */
   o2_sensor_min?: number | null
   o2_sensor_max?: number | null
+  /** Gravity the test ran in, in g (0 = microgravity). Every test in PSI's tables is 0, from its
+   *  investigation's NASA record ('Microgravity Investigation'). Ready for partial-gravity data. */
+  gravity_g?: number
   /** ambient O2 >= 0.30 and pressure <= 10.2 psi; null when either value is unknown
    *  or the oxygen is burner_oxidizer. */
   in_moon_envelope: boolean | null
@@ -118,6 +121,16 @@ export interface Habitat {
    *  "from_challenge_and_nasa". Anything else describes what still needs a source.
    *  Use isSourced() in data/load.ts rather than comparing strings. */
   status: string
+  /** The gravity a crew lives in there, in g. Two values when the place has two (a spacesuit is
+   *  used on spacewalks from the ISS and on the Moon). Sourced like the air numbers. */
+  gravity?: HabitatGravity
+}
+
+export interface HabitatGravity {
+  g: number[]
+  label: string
+  source: string
+  source_url: string
 }
 
 /** One group of tests in the "will it go out" analysis (outcomes.json). */
