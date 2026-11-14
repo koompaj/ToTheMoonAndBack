@@ -1179,3 +1179,18 @@ body { background: #04050a; background-image: none; }
 .risk-matrix thead th .fuel-icon { margin-right: 6px; }
 .choice.full { flex-wrap: nowrap; }
 .choice.full button { min-width: 0; padding-left: 8px; padding-right: 8px; gap: 6px; }
+
+/* Simulation page: cabin conditions (a typed value and a slider per condition) */
+.cond { display: grid; gap: 4px; font-size: 14px; color: var(--ink-muted); }
+.cond-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.cond-value { display: inline-flex; align-items: baseline; gap: 6px; }
+.cond-num {
+  width: 74px; padding: 3px 6px; border-radius: 8px; border: 1px solid var(--hairline); background: var(--surface-2);
+  color: var(--accent); font-size: 14px; font-weight: 600; text-align: right;
+}
+.cond-num:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.cond-unit { color: var(--ink-subtle); font-size: 13px; min-width: 68px; }
+.cond input[type='range'] { width: 100%; accent-color: var(--accent); height: 22px; }
+.sim-match { margin: 0; font-size: 14px; color: var(--ink-muted); }
+.sim-match b { color: var(--ink); }
+.sim-warn { margin: 0; padding: 8px 10px; border-radius: 10px; font-size: 14px; background: rgba(251, 191, 36, 0.12); color: var(--caution); border: 1px solid rgba(251, 191, 36, 0.35); }

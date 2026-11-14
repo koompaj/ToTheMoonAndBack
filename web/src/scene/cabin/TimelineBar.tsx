@@ -76,14 +76,3 @@ export function TimelineBar({
     </div>
   )
 }
-
-/** Shown instead of the timeline when the fire has nothing to reach. */
-export function NothingToReach() {
-  return (
-    <div className="cabin-b-timeline">
-      <p className="cabin-b-timeline-note">
-        <b>{SPREAD_LABEL}</b> Nothing for the fire to reach here: every fuel item is hidden. Turn Furniture back on to see the spread.
-      </p>
-    </div>
-  )
-}
