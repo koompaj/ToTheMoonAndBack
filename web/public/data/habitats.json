@@ -14,12 +14,20 @@
    0.2926,
    0.6941
   ],
-  "note": "Challenge: oxygen 'likely 30% or greater', pressure '10.2 psi or less', between spacesuit and Earth values. The outer bounds here are the spacesuit values.",
+  "note": "Challenge: for a Moon base and pressurized rovers, oxygen 'likely 30% or greater', pressure '10.2 psi or less', between spacesuit and Earth values. The outer bounds here are the spacesuit values.",
   "source": "NASA Space Apps 2026 challenge page, Flame in Freefall (Potential Considerations)",
   "source_urls": [
    "https://www.spaceappschallenge.org/2026/challenges/flame-in-freefall/?tab=details"
   ],
-  "status": "from_challenge"
+  "status": "from_challenge",
+  "gravity": {
+   "g": [
+    0.165
+   ],
+   "label": "Moon gravity, about 1/6 of Earth's",
+   "source": "NASA NSSDC Moon Fact Sheet: 'Surface gravity (m/s2) 1.62 9.80 0.165' (Moon, Earth, ratio); science.nasa.gov/moon/facts: 'the gravity on the surface of the Moon is one-sixth of Earth's'",
+   "source_url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/moonfact.html"
+  }
  },
  {
   "id": "moon_base_nasa",
@@ -42,30 +50,47 @@
    "https://humanresearchroadmap.nasa.gov/evidence/reports/ExpAtm.pdf",
    "https://www.nasa.gov/wp-content/uploads/2023/03/henninger-8.2-34-atm-tp216134-2010.pdf"
   ],
-  "status": "from_nasa"
+  "status": "from_nasa",
+  "gravity": {
+   "g": [
+    0.165
+   ],
+   "label": "Moon gravity, about 1/6 of Earth's",
+   "source": "NASA NSSDC Moon Fact Sheet: 'Surface gravity (m/s2) 1.62 9.80 0.165' (Moon, Earth, ratio); science.nasa.gov/moon/facts: 'the gravity on the surface of the Moon is one-sixth of Earth's'",
+   "source_url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/moonfact.html"
+  }
  },
  {
   "id": "iss",
   "name": "Space Station (ISS)",
   "o2_fraction": [
-   0.21,
-   0.21
+   0.19,
+   0.23
   ],
   "pressure_psi": [
-   14.7,
-   14.7
+   14.5,
+   14.9
   ],
   "pressure_atm": [
-   1.0,
-   1.0
+   0.9867,
+   1.0139
   ],
-  "note": "'...International Space Station (ISS) program have operated at an Earth-equivalent sea level atmosphere of 14.7 psia and 21% O2' (evidence report, p. 5). Same air as Earth sea level, so the same tests fall in both.",
-  "source": "NASA Evidence Report: Risk of Hypoxia from the Exploration Atmosphere (2015), p. 5; NASA OCHMO-TB-003 Habitable Atmosphere, p. 8",
+  "note": "'...International Space Station (ISS) program have operated at an Earth-equivalent sea level atmosphere of 14.7 psia and 21% O2' (evidence report, p. 5). The box is NASA's control band of +-0.2 psia and +-2.0% O2 around it (NASA/TP-2010-216134, p. 11); applying that band here is our step, not NASA's. Same air as Earth sea level, so the same tests fall in both.",
+  "source": "NASA Evidence Report: Risk of Hypoxia from the Exploration Atmosphere (2015), p. 5; NASA OCHMO-TB-003 Habitable Atmosphere, p. 8; NASA/TP-2010-216134, p. 11",
   "source_urls": [
    "https://humanresearchroadmap.nasa.gov/evidence/reports/ExpAtm.pdf",
-   "https://www.nasa.gov/wp-content/uploads/2023/12/ochmo-tb-003-habitable-atmosphere.pdf"
+   "https://www.nasa.gov/wp-content/uploads/2023/12/ochmo-tb-003-habitable-atmosphere.pdf",
+   "https://www.nasa.gov/wp-content/uploads/2023/03/henninger-8.2-34-atm-tp216134-2010.pdf"
   ],
-  "status": "from_nasa"
+  "status": "from_nasa",
+  "gravity": {
+   "g": [
+    0.0
+   ],
+   "label": "Microgravity",
+   "source": "NASA PSI records: every investigation with tests in these tables is a 'Microgravity Investigation' flown on the International Space Station or a Cygnus cargo craft",
+   "source_url": "https://psi.nasa.gov/physci/repo/"
+  }
  },
  {
   "id": "spacesuit",
@@ -87,29 +112,47 @@
   "source_urls": [
    "https://www.spaceappschallenge.org/2026/challenges/flame-in-freefall/?tab=details"
   ],
-  "status": "from_challenge"
+  "status": "from_challenge",
+  "gravity": {
+   "g": [
+    0.0,
+    0.165
+   ],
+   "label": "Microgravity on spacewalks from the ISS, or Moon gravity on the surface",
+   "source": "NASA evidence report on the exploration atmosphere, p. 6: 'the ISS construction and maintenance EVAs' and 'exploration EVAs'; Moon gravity from the NASA NSSDC Moon Fact Sheet",
+   "source_url": "https://humanresearchroadmap.nasa.gov/evidence/reports/ExpAtm.pdf"
+  }
  },
  {
   "id": "earth_sea_level",
   "name": "Earth sea level",
   "o2_fraction": [
-   0.21,
-   0.21
+   0.19,
+   0.23
   ],
   "pressure_psi": [
-   14.7,
-   14.7
+   14.5,
+   14.9
   ],
   "pressure_atm": [
-   1.0,
-   1.0
+   0.9867,
+   1.0139
   ],
-  "note": "Pressure from the challenge page (14.7 psi). 21% O2 at 14.7 psia is NASA's 'Earth-equivalent sea level atmosphere' (evidence report, p. 5).",
-  "source": "NASA Space Apps 2026 challenge page, Flame in Freefall (Potential Considerations); NASA Evidence Report: Risk of Hypoxia from the Exploration Atmosphere (2015), p. 5",
+  "note": "Pressure from the challenge page (14.7 psi). 21% O2 at 14.7 psia is NASA's 'Earth-equivalent sea level atmosphere' (evidence report, p. 5). The box is NASA's control band of +-0.2 psia and +-2.0% O2 around it (NASA/TP-2010-216134, p. 11); applying that band here is our step, not NASA's.",
+  "source": "NASA Space Apps 2026 challenge page, Flame in Freefall (Potential Considerations); NASA Evidence Report: Risk of Hypoxia from the Exploration Atmosphere (2015), p. 5; NASA/TP-2010-216134, p. 11",
   "source_urls": [
    "https://www.spaceappschallenge.org/2026/challenges/flame-in-freefall/?tab=details",
-   "https://humanresearchroadmap.nasa.gov/evidence/reports/ExpAtm.pdf"
+   "https://humanresearchroadmap.nasa.gov/evidence/reports/ExpAtm.pdf",
+   "https://www.nasa.gov/wp-content/uploads/2023/03/henninger-8.2-34-atm-tp216134-2010.pdf"
   ],
-  "status": "from_challenge_and_nasa"
+  "status": "from_challenge_and_nasa",
+  "gravity": {
+   "g": [
+    1.0
+   ],
+   "label": "Earth gravity (1 g)",
+   "source": "NASA NSSDC Moon Fact Sheet gives Earth's surface gravity as 9.80 m/s2; 1 g by definition",
+   "source_url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/moonfact.html"
+  }
  }
 ]

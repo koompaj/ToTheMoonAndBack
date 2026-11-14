@@ -126,13 +126,13 @@ individual test. Rocket propellants are out of scope (challenge page).
 **Colours mean "how much evidence", never "how dangerous".** An amber mark is not safer than a coral
 one; there is just more data. The legend and the summary must say so.
 
-Expected result (snapshot 2026-11-14):
+Expected result (snapshot 2026-11-14, after the ISS / Earth control band):
 
 | Place | Teal | Amber |
 |---|---|---|
 | Moon Base (challenge box) | Butane (14 tests inside), Ethane (6) | everything else |
 | Moon Base (NASA exploration air) | none | everything |
-| Space Station (ISS), Earth | Dodecane (28), Methanol (3), Heptane (1), Propane (1), Ethane (1) | all solids, other gases |
+| Space Station (ISS), Earth | Ethylene (55), Heptane (29), Dodecane (28), Methanol (26), Propane (11), Ethane (10), Butane (6), SIBAL (6) | other solids, other gases |
 | Spacesuit | none | everything |
 
 ### The evidence card (one per mark)
@@ -284,7 +284,8 @@ Done when: the journey in section 2 works end to end on the example layout and o
 - A physical model of fire spread: rates, times, heat transfer, or any prediction of what burns
   next or how fast. (An illustrated spread is allowed: section 8.)
 - Detecting materials or objects from the image.
-- Partial gravity (PSI has none), and pressure for solid materials (not in the tables).
+- Partial gravity (PSI has none; the data is ready for it: `gravity_g` and `testsInHabitatAndGravity()`), and
+  pressure for most solid materials (only 29 BASS-II tests have one, from NASA's report).
 
 ## 10. Timeline (deadline Sunday 15 November, 11:59 p.m. local)
 

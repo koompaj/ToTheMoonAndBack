@@ -51,6 +51,10 @@ export interface Test {
   // Conditions from NASA's reports and sensor logs where the table has none (data_sourced/).
   /** A range when that is all the source gives (pressure_atm then stays null and the test is not
    *  placed); flags pressure_range_from_report / pressure_range_from_sensor_log. */
+  /** Item 10: fuel shape and size, only where NASA's text states them (else null, flag shape_not_stated). */
+  fuel_shape?: string | null
+  fuel_size_text?: string | null
+  fuel_shape_source?: string | null
   pressure_atm_min?: number | null
   pressure_atm_max?: number | null
   /** Where a pressure not in the table comes from: document, page or cell, exact words. */
@@ -58,6 +62,9 @@ export interface Test {
   /** Oxygen range from NASA's sensor log for this burn (fractions); the table's o2 is unchanged. */
   o2_sensor_min?: number | null
   o2_sensor_max?: number | null
+  /** Gravity the test ran in, in g (0 = microgravity). Every test in PSI's tables is 0, from its
+   *  investigation's NASA record ('Microgravity Investigation'). Ready for partial-gravity data. */
+  gravity_g?: number
   /** ambient O2 >= 0.30 and pressure <= 10.2 psi; null when either value is unknown
    *  or the oxygen is burner_oxidizer. */
   in_moon_envelope: boolean | null
@@ -102,6 +109,37 @@ export interface Investigation {
   fuel_class: FuelClass | null // null = not stated on the challenge page
   pillar: Pillar | null // null = not stated on the challenge page
   page: string // NASA PSI landing page
+  /** Item 5: what NASA measured, each from a report page or sensor-log column. Missing = not shipped yet. */
+  sensors?: Sensor[]
+  /** Item 7: which conditions changed between this investigation's tests (computed from tests.json). */
+  varied?: VariedCondition[]
+  /** Item 9: hardware group, from the PSI record's hardware field. */
+  hardware_group?: { id: string; label: string; source: string }
+}
+
+export type SensorKind =
+  | 'thermocouple' | 'radiometer' | 'pressure' | 'oxygen' | 'co2' | 'flow'
+  | 'camera' | 'spectral' | 'smoke' | 'soot' | 'humidity' | 'other'
+
+export interface Sensor {
+  kind: SensorKind
+  name: string // as NASA names it
+  detail: string | null
+  source_file: string // PSI file name
+  source_where: string // "p. 46" or "sheet X, cell J2"
+  quote: string | null // NASA's own words, when from a report
+}
+
+export interface VariedCondition {
+  field: string // the Test key, e.g. "o2_fraction"
+  label: string
+  unit: string | null
+  min: number | null // null for text fields
+  max: number | null
+  values: string[] | null // text fields: distinct values (up to 12)
+  distinct: number
+  recorded: number // tests that record it
+  total: number // tests in the investigation
 }
 
 export interface Habitat {
@@ -118,6 +156,16 @@ export interface Habitat {
    *  "from_challenge_and_nasa". Anything else describes what still needs a source.
    *  Use isSourced() in data/load.ts rather than comparing strings. */
   status: string
+  /** The gravity a crew lives in there, in g. Two values when the place has two (a spacesuit is
+   *  used on spacewalks from the ISS and on the Moon). Sourced like the air numbers. */
+  gravity?: HabitatGravity
+}
+
+export interface HabitatGravity {
+  g: number[]
+  label: string
+  source: string
+  source_url: string
 }
 
 /** One group of tests in the "will it go out" analysis (outcomes.json). */
@@ -210,4 +258,20 @@ export interface AppData {
   outcomes?: OutcomeAnalysis
   /** Fuels a user can pick on the habitat evidence map (docs/LAYOUT_PLAN.md). */
   fuels?: FuelOption[]
+  /** Item 8: what each pillar's tests cover and do not (gaps.json). */
+  gaps?: Gaps
+  /** Item 11: places with no card yet, and why (places_waiting.json). */
+  waitingPlaces?: WaitingPlace[]
+}
+
+export interface GapStatement { text: string; test_ids: string[]; investigations: string[] }
+export interface PillarGaps { pillar: Pillar; tested: GapStatement[]; not_in_tables: GapStatement[] }
+export interface Gaps { generated_by: string; caveats: string[]; pillars: PillarGaps[] }
+
+export interface WaitingPlace {
+  id: string
+  name: string
+  why: string
+  what_would_change: string
+  source_urls: string[]
 }

@@ -178,7 +178,7 @@ export function FireView({
           )}
           <p className="muted small">
             From the {near.length} nearest real NASA {fuel} tests to this point
-            {near[0]?.oxygenOnly ? ' (by oxygen only: solid tables record no pressure)' : ''}. What they did, not a prediction.
+            {near[0]?.oxygenOnly ? ' (by oxygen only: no test of this fuel records a usable pressure)' : ''}. What they did, not a prediction.
           </p>
           <ul className="near-tests">
             {near.map((n) => (

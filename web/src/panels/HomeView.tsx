@@ -3,10 +3,10 @@
 // live from the generated NASA data. Each card and chart leads somewhere: a place card opens that
 // place (step 2), a fuel slice opens the Test Explorer filtered to it, a pillar opens Investigations.
 import type { AppData, FuelClass } from '../types/data'
-import { distinctTestCount, testsInHabitat } from '../data/load'
+import { distinctTestCount, testsInHabitat, testsInHabitatAndGravity } from '../data/load'
 import { fmtPct, headline, isDuplicate, isPlaced, psi } from '../ai/evidence'
 import { Donut, Histogram, StackRow, type BarSeg } from './charts'
-import { FUTURE_PLACES, placeArt, placeName } from './places'
+import { FUTURE_PLACES, PARTIAL_G_NOTE, gravityShort, placeArt, placeName } from './places'
 import { PlaceArt, RocketPath, Stars } from './SpaceArt'
 import { FUEL_SHORT, PanelHead, PILLAR_LABEL } from './ui'
 
@@ -23,7 +23,7 @@ export function HomeView({ data }: { data: AppData }) {
   const h = headline(data)
   const nTests = distinctTestCount(data)
   const distinct = data.tests.filter((t) => !isDuplicate(t))
-  const places = data.habitats.map((hab) => ({ hab, inside: testsInHabitat(data.tests, hab) }))
+  const places = data.habitats.map((hab) => ({ hab, inside: testsInHabitat(data.tests, hab), sameG: testsInHabitatAndGravity(data.tests, hab).length }))
   const future = FUTURE_PLACES.filter((f) => !data.habitats.some((x) => x.id === f.id))
   const maxInside = Math.max(1, ...places.map((p) => p.inside.length))
   const amb = data.tests.filter((t) => t.o2_basis === 'ambient' && t.o2_fraction !== null)
@@ -87,8 +87,9 @@ export function HomeView({ data }: { data: AppData }) {
         <h2 id="places-title" className="section-title">
           Choose a Place
         </h2>
+        <p className="lead small">{PARTIAL_G_NOTE} The counts below match air only; each card says whether its gravity matches too.</p>
         <div className="place-grid">
-          {places.map(({ hab, inside }, i) => (
+          {places.map(({ hab, inside, sameG }, i) => (
             <button key={hab.id} type="button" className="place-card" onClick={() => go(`#place?h=${hab.id}`)}>
               <span className="place-art">
                 <PlaceArt kind={placeArt(hab.id)} size={110} />
@@ -100,6 +101,7 @@ export function HomeView({ data }: { data: AppData }) {
               </span>
               <span className="place-num">{inside.length}</span>
               <span className="place-sub">NASA tests in this air</span>
+              {gravityShort(hab, inside.length, sameG) && <span className="place-grav">{gravityShort(hab, inside.length, sameG)}</span>}
               <span className="mini-bar">
                 {inside.length === 0 ? (
                   <span className="mini-empty" />
@@ -164,7 +166,7 @@ export function HomeView({ data }: { data: AppData }) {
           />
           <p className="chart-note">
             <b className="t-gap">{data.tests.filter((t) => t.fuel_class === 'solid' && isPlaced(t)).length}</b> of{' '}
-            {h.solidTotal} solid tests can be placed: their tables have no pressure.
+            {h.solidTotal} solid tests can be placed. Their pressure is from NASA&rsquo;s BASS-II report; the other solid tables have no pressure.
           </p>
         </div>
 
