@@ -270,26 +270,56 @@ def main():
                 bad.append(f"{f['id']}@{h['id']}")
     check("every amber fuel with oxygen data names its nearest test", not bad, ", ".join(bad[:5]))
 
-    lay = json.load(open(os.path.join(web, "..", "layouts", "example-moon-habitat.json"), encoding="utf-8"))
     fids = {f["id"]: f for f in F}
-    probs = []
-    if lay["version"] != 1 or lay["habitat_id"] not in {h["id"] for h in H}:
-        probs.append("version or place")
-    if "not a NASA design" not in (lay.get("note") or ""):
-        probs.append("note must say it is not a NASA design")
-    for m in lay["marks"]:
-        if (m["kind"] == "area") != (m["fuel_class"] == "solid"):
-            probs.append(f"{m['id']} kind/type")
-        if m["fuel_option_id"] != "other" and fids.get(m["fuel_option_id"], {}).get("fuel_class") != m["fuel_class"]:
-            probs.append(f"{m['id']} fuel")
-        s = m["shape"]
-        if not all(0 <= s.get(k, 0) <= 1 for k in "xywh") or s["x"] + s.get("w", 0) > 1 or s["y"] + s.get("h", 0) > 1:
-            probs.append(f"{m['id']} position")
-    kinds = {(m["kind"], m["fuel_class"]) for m in lay["marks"]}
+
+    def layout_problems(lay):
+        probs = []
+        if lay["version"] != 1 or lay["habitat_id"] not in {h["id"] for h in H}:
+            probs.append("version or place")
+        if "not a NASA design" not in (lay.get("note") or ""):
+            probs.append("note must say it is not a NASA design")
+        if len({m["id"] for m in lay["marks"]}) != len(lay["marks"]):
+            probs.append("duplicate mark ids")
+        for m in lay["marks"]:
+            if (m["kind"] == "area") != (m["fuel_class"] == "solid"):
+                probs.append(f"{m['id']} kind/type")
+            if m["fuel_option_id"] != "other" and fids.get(m["fuel_option_id"], {}).get("fuel_class") != m["fuel_class"]:
+                probs.append(f"{m['id']} fuel")
+            s = m["shape"]
+            if not all(0 <= s.get(k, 0) <= 1 for k in "xywh") or s["x"] + s.get("w", 0) > 1 or s["y"] + s.get("h", 0) > 1:
+                probs.append(f"{m['id']} position")
+            if m["kind"] == "area" and not (s.get("w", 0) > 0 and s.get("h", 0) > 0):
+                probs.append(f"{m['id']} area needs width and height")
+        return probs
+
+    def tiers(lay, h):
+        out = {"tested_here": 0, "tested_elsewhere": 0, "not_in_tables": 0}
+        for m in lay["marks"]:
+            f = fids.get(m["fuel_option_id"])
+            out["not_in_tables" if f is None else "tested_here" if f["inside_by_habitat"][h["id"]] else "tested_elsewhere"] += 1
+        return out
+
+    def every_kind(lay):
+        kinds = {(m["kind"], m["fuel_class"]) for m in lay["marks"]}
+        return (kinds == {("area", "solid"), ("point", "droplet"), ("point", "gas")}
+                and {m["airflow"] for m in lay["marks"]} == {"still", "vent"}
+                and any(m["fuel_option_id"] == "other" for m in lay["marks"]))
+
+    lay = json.load(open(os.path.join(web, "..", "layouts", "example-moon-habitat.json"), encoding="utf-8"))
+    probs = layout_problems(lay)
     check("example layout is valid and has every mark type, both airflows and an 'Other'",
-          not probs and kinds == {("area", "solid"), ("point", "droplet"), ("point", "gas")}
-          and {m["airflow"] for m in lay["marks"]} == {"still", "vent"} and any(m["fuel_option_id"] == "other" for m in lay["marks"]),
-          ", ".join(probs))
+          not probs and every_kind(lay), ", ".join(probs))
+
+    # B's sample spacecraft (generated from web/src/scene/cabin/spec.ts); the Simulation tab shows it for every place.
+    ship = json.load(open(os.path.join(web, "..", "layouts", "example-spacecraft.json"), encoding="utf-8"))
+    probs = layout_problems(ship)
+    check("example spacecraft layout is valid and has every mark type, both airflows and an 'Other'",
+          not probs and every_kind(ship), ", ".join(probs))
+    got = {h["id"]: tiers(ship, h) for h in H}
+    expect_here = {"moon_base": 1, "moon_base_nasa": 0, "iss": 3, "spacesuit": 0, "earth_sea_level": 3}
+    check("example spacecraft colours per place match the app (teal 1/0/3/0/3, one 'Other' each)",
+          {k: v["tested_here"] for k, v in got.items()} == expect_here and all(v["not_in_tables"] == 1 for v in got.values()),
+          str(got))
 
     # ---- report ------------------------------------------------------------------------------
     for name, ok, detail in results:
