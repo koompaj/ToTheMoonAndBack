@@ -16,7 +16,7 @@ import { FUEL_FLAME_COLOR } from '../fire/Samples'
 import { easeLook, lookFor, pulseLevel, type FlameLook } from '../fire/look'
 import { useReducedMotion, type FireState } from '../fire/state'
 import { ReachField } from './ReachField'
-import { litAmount, type SpreadEntry, type SpreadPlan } from './timeline'
+import { itemsAt, litAmount, type SpreadBias, type SpreadEntry, type SpreadPlan } from './timeline'
 
 /** The timeline's moving parts, shared with the controls outside the canvas. */
 export interface SpreadClock {
@@ -48,7 +48,7 @@ function drive(state: FireState, target: FlameLook, dt: number, still: boolean) 
   state.vis = state.look.pulse ? (still ? 0.55 : pulseLevel(state.t)) : 1
 }
 
-function ItemBurn({ entry, from, clock, state }: { entry: SpreadEntry; from: [number, number, number]; clock: MutableRefObject<SpreadClock>; state: MutableRefObject<FireState> }) {
+function ItemBurn({ entry, from, plan, clock, state }: { entry: SpreadEntry; from: [number, number, number]; plan: SpreadPlan; clock: MutableRefObject<SpreadClock>; state: MutableRefObject<FireState> }) {
   const { item, step } = entry
   const base = item.y ?? 0
   const top = base + Math.min(item.h, 1) * 0.6
@@ -62,7 +62,7 @@ function ItemBurn({ entry, from, clock, state }: { entry: SpreadEntry; from: [nu
   }, [from[0], from[1], from[2]])
 
   useFrame(() => {
-    const a = litAmount(step, clock.current.t)
+    const a = litAmount(step, itemsAt(plan, clock.current.t))
     vis.current = a
     const s = state.current
     if (glow.current) glow.current.opacity = 0.22 * a * (s.still ? 1 : 0.8 + 0.2 * Math.sin(s.t * 5 + step))
@@ -102,6 +102,8 @@ export interface CabinFireProps {
   /** Which items light, and at which step. Empty on an uploaded plan. */
   plan: SpreadPlan
   clock: MutableRefObject<SpreadClock>
+  /** How the user's spread settings bend the drawing; the cloud leans the same way as the order. */
+  bias: SpreadBias
   /** Draw the coloured cloud that shows how far the spread has reached. */
   field: boolean
   /** Items the user has hidden. They stay in the order, but no glow or flame is drawn on them. */
@@ -112,7 +114,7 @@ export interface CabinFireProps {
   onEnd: () => void
 }
 
-export function CabinFire({ position, fuel, fire, plan, clock, field, hiddenIds, onShow, onEnd }: CabinFireProps) {
+export function CabinFire({ position, fuel, fire, plan, bias, clock, field, hiddenIds, onShow, onEnd }: CabinFireProps) {
   const still = useReducedMotion()
   const params: FireParams = {
     fuel,
@@ -175,11 +177,11 @@ export function CabinFire({ position, fuel, fire, plan, clock, field, hiddenIds,
         </group>
         <Label text="Fire starts here · illustration" position={[0, 1.35, 0]} color="#ffd9a0" height={0.32} />
       </group>
-      {field && plan.entries.length > 0 && <ReachField start={position} plan={plan} clock={clock} still={still} />}
+      {field && plan.entries.length > 0 && <ReachField start={position} plan={plan} bias={bias} clock={clock} still={still} />}
       {plan.entries
         .filter((entry) => !hiddenIds?.has(entry.item.id))
         .map((entry) => (
-        <ItemBurn key={entry.item.id} entry={entry} from={position} clock={clock} state={reach} />
+        <ItemBurn key={entry.item.id} entry={entry} from={position} plan={plan} clock={clock} state={reach} />
       ))}
     </group>
   )

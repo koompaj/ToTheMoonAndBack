@@ -15,7 +15,7 @@ import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import type { SpreadClock } from './CabinFire'
 import { AXIS_Y, BULKHEADS, CEILING, DECK_X0, DECK_X1, DUCT, HULL, VENTS } from './spec'
-import { reachAt, type SpreadPlan } from './timeline'
+import { MIN_FACTOR, reachAt, smallestFactor, type SpreadBias, type SpreadPlan } from './timeline'
 
 /** Box that holds the whole inside of the craft, deck to ceiling. */
 const TOP = AXIS_Y + HULL.cabinR
@@ -42,6 +42,8 @@ const FRAG = /* glsl */ `
   uniform vec3 uStart;
   uniform float uReach;
   uniform float uTime;
+  uniform vec2 uBias;   // the user's spread settings: nearer downstream (x), nearer above (y)
+  uniform float uSpan;  // how much farther than uReach a straight line can go and still be inside
   uniform vec3 uMin;
   uniform vec3 uMax;
   uniform vec2 uWalls[${BULKHEADS.length}]; // each bulkhead: where it stands, and the radius of its opening
@@ -119,7 +121,7 @@ const FRAG = /* glsl */ `
     // ...and inside the ball the spread could have reached (plus room for the ragged edge). The
     // path round an opening is never shorter than the straight line, so nothing is cut off.
     vec3 oc = ro - uStart;
-    float R = uReach + 0.7;
+    float R = uReach * uSpan + 0.7;
     float bq = dot(oc, rd);
     float disc = bq * bq - (dot(oc, oc) - R * R);
     if (disc <= 0.0) discard;
@@ -146,6 +148,10 @@ const FRAG = /* glsl */ `
       } else {
         d = pathDistance(uStart, p);
       }
+      // the same lean as the order (timeline.ts, biasFactor): 1 when no setting is in use
+      vec3 away = p - uStart;
+      float len = length(away);
+      if (len > 1.0e-4) d *= max(${f(MIN_FACTOR)}, 1.0 - uBias.x * away.x / len - uBias.y * away.y / len);
       // decoration only: a ragged, slowly drifting edge and a mottled inside
       float n = texture(uNoise, p * 0.11 + drift).r;
       float m = texture(uNoise, p * 0.29 - drift * 1.7).r;
@@ -179,7 +185,7 @@ function makeNoise() {
   return texture
 }
 
-export function ReachField({ start, plan, clock, still }: { start: [number, number, number]; plan: SpreadPlan; clock: MutableRefObject<SpreadClock>; still: boolean }) {
+export function ReachField({ start, plan, bias, clock, still }: { start: [number, number, number]; plan: SpreadPlan; bias: SpreadBias; clock: MutableRefObject<SpreadClock>; still: boolean }) {
   const noise = useMemo(makeNoise, [])
   const geometry = useMemo(() => {
     const size = new THREE.Vector3().subVectors(BOX_MAX, BOX_MIN)
@@ -201,6 +207,8 @@ export function ReachField({ start, plan, clock, still }: { start: [number, numb
           uStart: { value: new THREE.Vector3() },
           uReach: { value: 0 },
           uTime: { value: 0 },
+          uBias: { value: new THREE.Vector2() },
+          uSpan: { value: 1 },
           uMin: { value: BOX_MIN },
           uMax: { value: BOX_MAX },
           uWalls: { value: BULKHEADS.map((b) => new THREE.Vector2(b.x, b.opening)) },
@@ -221,6 +229,8 @@ export function ReachField({ start, plan, clock, still }: { start: [number, numb
     const u = material.uniforms
     if (!still) u.uTime.value += Math.min(delta, 0.1)
     u.uReach.value = reachAt(plan, clock.current.t)
+    u.uBias.value.set(bias.downstream, bias.up)
+    u.uSpan.value = 1 / smallestFactor(bias)
     u.uStart.value.set(start[0], start[1], start[2])
   })
 
