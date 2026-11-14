@@ -16,6 +16,7 @@ import { ExperimentsView } from './panels/ExperimentsView'
 import { RiskView } from './panels/RiskView'
 import { SimulationView } from './panels/SimulationView'
 import { EarthDrawer } from './panels/EarthDrawer'
+import { SpaceBackground } from './panels/SpaceBackground'
 import { parseHash } from './panels/route'
 
 const VIEWS = [
@@ -92,6 +93,7 @@ export default function App() {
 
   return (
     <div className="app">
+      <SpaceBackground />
       <a className="skip" href="#main">
         Skip to Content
       </a>

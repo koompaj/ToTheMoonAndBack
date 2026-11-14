@@ -299,7 +299,7 @@ export function SimStage({ template, marks, markColors, selectedMarkId, imageUrl
   const idle = !template
   const span = template ? Math.max(template.w, template.d) : 10
   return (
-    <Canvas key={idle ? 'idle' : `place-${span}`} camera={{ position: idle ? [0, 4, 21] : [0, span * 1.05, span * 1.35], fov: 45 }} dpr={[1, 2]}>
+    <Canvas key={idle ? 'idle' : `place-${span}`} camera={{ position: idle ? [0, 4, 21] : [0, span * 1.05, span * 1.35], fov: 45 }} dpr={[1, 1.5]}>
       <color attach="background" args={['#04070d']} />
       <fog attach="fog" args={['#04070d', 30, 90]} />
       <ambientLight intensity={0.4} />

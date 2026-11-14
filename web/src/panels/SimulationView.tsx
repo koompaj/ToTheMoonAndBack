@@ -128,7 +128,8 @@ export function SimulationView({ data }: { data: AppData }) {
   const near = hab && air0 ? nearestTests(pool, fuel, air0, 3) : []
   const exp = expectedBehaviour(near)
   const optName = optId === OTHER_FUEL ? "Other (not in NASA's tables)" : options.find((o) => o.id === optId)?.name ?? optId
-  const step = !hab ? 1 : !point ? 4 : lit ? 6 : 5
+  // Step 4 (your own plan) is optional, so a chosen point makes Simulate the current step.
+  const step = !hab ? 1 : !point ? 3 : lit ? 6 : 5
 
   return (
     <div className="sim-page">
@@ -139,7 +140,7 @@ export function SimulationView({ data }: { data: AppData }) {
           <p className="lead">Pick a place, choose what could burn, click where a fire starts, and see what NASA&rsquo;s tables say about detecting, stopping and preventing it.</p>
         </div>
         <ol className="sim-steps" aria-label="Progress">
-          {['Place', 'Map', 'What burns', 'Fire point', 'Simulate'].map((s, i) => (
+          {['Place', 'What burns', 'Fire point', 'Your plan', 'Simulate'].map((s, i) => (
             <li key={s} className={step > i + 1 ? 'done' : step === i + 1 ? 'now' : ''}>
               <span>{i + 1}</span>
               {s}
@@ -166,34 +167,7 @@ export function SimulationView({ data }: { data: AppData }) {
 
           <section className={`panel sim-card${hab ? '' : ' locked'}`} aria-disabled={!hab}>
             <h2>
-              <span className="sim-n">2</span>Map
-            </h2>
-            <Choice
-              label="Map"
-              value={usingUpload ? 'upload' : 'example'}
-              onChange={(v) => {
-                setMapMode(v)
-                resetRun()
-              }}
-              className="full"
-              options={[
-                { id: 'example', label: 'Example Cabin' },
-                { id: 'upload', label: 'Your Floor Plan' },
-              ]}
-            />
-            {mapMode === 'upload' && (
-              <label className="sim-upload">
-                <input type="file" accept="image/png,image/jpeg" onChange={(e) => upload(e.target.files?.[0])} disabled={!hab} />
-                <span>{imageName ? `Using ${imageName}` : 'Upload a PNG or JPG floor plan'}</span>
-                <small>Your image stays on this computer.</small>
-              </label>
-            )}
-            {template && !usingUpload && <p className="muted small">{template.title}: example layout, not a NASA design. Names are labels only.</p>}
-          </section>
-
-          <section className={`panel sim-card${hab ? '' : ' locked'}`} aria-disabled={!hab}>
-            <h2>
-              <span className="sim-n">3</span>What Is Burning?
+              <span className="sim-n">2</span>What Is Burning?
             </h2>
             <Choice
               label="Fuel type"
@@ -255,7 +229,7 @@ export function SimulationView({ data }: { data: AppData }) {
 
           <section className={`panel sim-card${hab ? '' : ' locked'}`} aria-disabled={!hab}>
             <h2>
-              <span className="sim-n">4</span>Fire Point
+              <span className="sim-n">3</span>Fire Point
             </h2>
             {point ? (
               <p>
@@ -278,6 +252,33 @@ export function SimulationView({ data }: { data: AppData }) {
                 Clear Point
               </button>
             )}
+          </section>
+
+          <section className={`panel sim-card${hab ? '' : ' locked'}`} aria-disabled={!hab}>
+            <h2>
+              <span className="sim-n">4</span>Your Own Floor Plan <small className="sim-opt">optional</small>
+            </h2>
+            <Choice
+              label="Map"
+              value={usingUpload ? 'upload' : 'example'}
+              onChange={(v) => {
+                setMapMode(v)
+                resetRun()
+              }}
+              className="full"
+              options={[
+                { id: 'example', label: 'Example Cabin' },
+                { id: 'upload', label: 'Your Floor Plan' },
+              ]}
+            />
+            {mapMode === 'upload' && (
+              <label className="sim-upload">
+                <input type="file" accept="image/png,image/jpeg" onChange={(e) => upload(e.target.files?.[0])} disabled={!hab} />
+                <span>{imageName ? `Using ${imageName}` : 'Upload a PNG or JPG floor plan'}</span>
+                <small>Your image stays on this computer.</small>
+              </label>
+            )}
+            {template && !usingUpload && <p className="muted small">Now showing the {template.title.toLowerCase()} (example layout, not a NASA design). Upload your own plan to place the fire on it instead.</p>}
           </section>
 
           <button type="button" className="btn-sim" disabled={!hab || !point} onClick={() => setRun('1')}>

@@ -1063,3 +1063,107 @@ body {
   .sim-stage { height: 60vh; min-height: 380px; }
   .cta-sim { margin: 0; max-width: none; }
 }
+
+/* ===================== animated space background (all pages) ===================== */
+:root {
+  --surface-1: rgba(20, 22, 30, 0.5);
+  --surface-2: rgba(32, 34, 44, 0.5);
+  --surface-3: rgba(46, 48, 60, 0.6);
+}
+body { background: #04050a; background-image: none; }
+.app { position: relative; isolation: isolate; }
+.app > main, .app > .footer { position: relative; z-index: 1; }
+.topbar { background: rgba(6, 8, 14, 0.55); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+.footer { background: rgba(6, 8, 14, 0.4); }
+
+.space-bg { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; --px: 0; --py: 0; --cx: 50vw; --cy: 30vh; }
+.space-stars { position: absolute; inset: 0; }
+.space-nebula {
+  position: absolute; inset: -20%;
+  background:
+    radial-gradient(35% 30% at 20% 25%, rgba(76, 110, 255, 0.22), transparent 70%),
+    radial-gradient(30% 28% at 80% 20%, rgba(180, 90, 255, 0.16), transparent 70%),
+    radial-gradient(40% 35% at 70% 80%, rgba(255, 120, 60, 0.13), transparent 70%),
+    radial-gradient(30% 30% at 15% 85%, rgba(45, 212, 191, 0.12), transparent 70%);
+  filter: blur(20px);
+  animation: nebula-drift 60s ease-in-out infinite alternate;
+  transform: translate(calc(var(--px) * -30px), calc(var(--py) * -30px));
+}
+@keyframes nebula-drift {
+  0% { background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%; filter: blur(20px) hue-rotate(0deg); }
+  50% { filter: blur(24px) hue-rotate(25deg); }
+  100% { background-position: 6% 4%, -5% 6%, 4% -5%, -6% -3%; filter: blur(20px) hue-rotate(-15deg); }
+}
+.space-glow { position: absolute; inset: 0; background: radial-gradient(260px 260px at var(--cx) var(--cy), rgba(120, 190, 255, 0.10), transparent 70%); }
+.space-float { position: absolute; opacity: 0.85; will-change: transform; }
+.space-float .art, .space-float svg { display: block; filter: drop-shadow(0 0 24px rgba(120, 180, 255, 0.25)); }
+.space-planet { top: 14%; left: -12%; animation: float-across 140s linear infinite; }
+.space-moon { top: 62%; left: 108%; animation: float-back 170s linear infinite; animation-delay: -60s; opacity: 0.7; }
+.space-sat { top: 30%; left: 108%; animation: float-back 90s linear infinite; animation-delay: -20s; }
+.space-rock { top: 78%; left: -8%; animation: float-across 75s linear infinite; animation-delay: -30s; opacity: 0.75; }
+.space-planet .art, .space-rock svg { animation: spin-slow 40s linear infinite; }
+.space-sat svg { animation: bob 6s ease-in-out infinite; }
+@keyframes float-across { from { transform: translate(0, 0); } to { transform: translate(130vw, -12vh); } }
+@keyframes float-back { from { transform: translate(0, 0); } to { transform: translate(-130vw, 10vh); } }
+@keyframes spin-slow { to { transform: rotate(360deg); } }
+@keyframes bob { 0%, 100% { transform: translateY(0) rotate(-8deg); } 50% { transform: translateY(-10px) rotate(6deg); } }
+
+/* gentle movement and gradient on the page itself */
+.view-head h1, .headline-big, .place-hero h1, .fire-head h1, .sim-head h1 {
+  background: linear-gradient(100deg, #ffffff 0%, #9ad8ff 35%, #ffcc29 60%, #ffffff 90%);
+  background-size: 250% 100%;
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: shimmer 12s ease-in-out infinite;
+}
+.headline-big { background-image: linear-gradient(100deg, #ffe17a 0%, #ffcc29 30%, #ff8a3d 55%, #ffe17a 90%); }
+@keyframes shimmer { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+.panel, .inv-card, .place-card, .fuel-card, .task-card, .gap-card, .kpi, .spin-card, .exp-text, .view-hero, .headline {
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.25s;
+}
+.panel:hover, .view-hero:hover, .headline:hover, .task-card:hover, .gap-card:hover, .exp-text:hover {
+  border-color: rgba(120, 190, 255, 0.35);
+  box-shadow: 0 0 0 1px rgba(120, 190, 255, 0.08), 0 18px 50px rgba(30, 80, 200, 0.15);
+}
+.inv-card:hover, .place-card:hover, .fuel-card:hover, .spin-card:hover { box-shadow: 0 18px 50px rgba(255, 160, 60, 0.12); }
+.topbar nav a.on { background: linear-gradient(90deg, #ffe17a, #ffcc29, #ff9a3c); }
+
+@media (prefers-reduced-motion: reduce) {
+  .space-nebula, .space-float, .space-float .art, .space-float svg, .view-head h1, .headline-big, .place-hero h1, .fire-head h1, .sim-head h1 { animation: none !important; }
+  .space-float { display: none; }
+}
+@media (max-width: 760px) {
+  .space-planet .art { width: 90px; height: 90px; }
+  .space-moon, .space-rock { display: none; }
+}
+.sim-opt { font-size: 12px; font-weight: 600; color: var(--ink-subtle); padding: 1px 8px; border-radius: 999px; background: var(--surface-3); }
+
+/* ===================== performance overrides (the space background lagged) =====================
+   Blur behind see-through cards is recomputed every frame the stars move, filters on huge layers
+   and text-gradient animations repaint constantly. Keep only effects the compositor can move. */
+.panel, .view-hero, .headline, .inv-card, .place-card, .fuel-card, .task-card, .gap-card, .kpi, .stat-strip div,
+.cmp-panel, .spinoff, .spin-card, .exp-text, .flame-card {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+.topbar { backdrop-filter: none; -webkit-backdrop-filter: none; background: rgba(6, 8, 14, 0.82); }
+.drawer { backdrop-filter: none; background: rgba(16, 18, 26, 0.92); }
+.space-nebula {
+  inset: -10%;
+  filter: none;
+  animation: none;
+  will-change: transform;
+  background:
+    radial-gradient(38% 34% at 20% 25%, rgba(76, 110, 255, 0.18), transparent 72%),
+    radial-gradient(32% 30% at 80% 20%, rgba(180, 90, 255, 0.13), transparent 72%),
+    radial-gradient(42% 38% at 70% 80%, rgba(255, 120, 60, 0.11), transparent 72%),
+    radial-gradient(32% 32% at 15% 85%, rgba(45, 212, 191, 0.10), transparent 72%);
+}
+.space-glow {
+  inset: auto; left: 0; top: 0; width: 320px; height: 320px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(120, 190, 255, 0.10), transparent 70%);
+  will-change: transform; transform: translate3d(-400px, -400px, 0);
+}
+.space-float .art, .space-float svg { filter: none; }
+.space-float { will-change: transform; }
+.view-head h1, .headline-big, .place-hero h1, .fire-head h1, .sim-head h1 { animation: none; background-size: 100% 100%; }
+.panel:hover, .view-hero:hover, .headline:hover, .task-card:hover, .gap-card:hover, .exp-text:hover { box-shadow: none; }
