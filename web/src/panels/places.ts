@@ -1,4 +1,5 @@
 // OWNER: dashboard + AI workstream.
+import type { PlaceArtKind } from './SpaceArt'
 // Places crews live. Real habitats come from habitats.json (workstream A, each with a source).
 // FUTURE_PLACES are slots for places we plan to add once A finds a NASA source for their air:
 // they show on the home page as "waiting for a source" and disappear automatically when a habitat
@@ -26,9 +27,12 @@ export function placeName(id: string, fallback: string) {
 }
 
 /** Which illustration a place uses on its pages. */
-export function placeArt(id: string): 'moon' | 'earth' | 'planet' | 'sun' {
-  if (id === 'moon_base' || id === 'moon_base_nasa' || id === 'lunar_lander') return 'moon'
-  if (id === 'earth_sea_level' || id === 'iss') return 'earth'
-  if (id === 'spacesuit') return 'sun'
+export function placeArt(id: string): PlaceArtKind {
+  // Every place gets its own picture.
+  if (id === 'moon_base') return 'moon'
+  if (id === 'moon_base_nasa') return 'moonbase'
+  if (id === 'iss') return 'station'
+  if (id === 'spacesuit') return 'helmet'
+  if (id === 'earth_sea_level') return 'earth'
   return 'planet'
 }

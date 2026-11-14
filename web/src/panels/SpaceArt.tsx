@@ -156,9 +156,116 @@ export function StarArt({ size = 48, className = '', color = '#ffcc29' }: ArtPro
   )
 }
 
+/** A grey Moon with a glowing habitat dome and a little flag: NASA's own Moon Base air. */
+export function MoonBase({ size = 200, className = '' }: ArtProps) {
+  const id = useId()
+  return (
+    <svg className={`art ${className}`} width={size} height={size} viewBox="0 0 200 200" aria-hidden>
+      <defs>
+        <radialGradient id={`${id}m`} cx="35%" cy="30%" r="75%">
+          <stop offset="0" stopColor="#f1f5f9" />
+          <stop offset="0.55" stopColor="#a8b3c4" />
+          <stop offset="1" stopColor="#5b6577" />
+        </radialGradient>
+        <radialGradient id={`${id}d`} cx="40%" cy="30%" r="70%">
+          <stop offset="0" stopColor="#e0f7ff" stopOpacity="0.95" />
+          <stop offset="1" stopColor="#38bdf8" stopOpacity="0.55" />
+        </radialGradient>
+        <clipPath id={`${id}k`}>
+          <circle cx="100" cy="110" r="78" />
+        </clipPath>
+      </defs>
+      <circle cx="100" cy="110" r="86" fill="#93c5fd" opacity="0.1" />
+      <circle cx="100" cy="110" r="78" fill={`url(#${id}m)`} />
+      <g clipPath={`url(#${id}k)`} fill="#7c8799" opacity="0.7">
+        <circle cx="62" cy="130" r="12" />
+        <circle cx="140" cy="150" r="16" />
+        <circle cx="120" cy="96" r="7" />
+      </g>
+      <path d="M58 70 a42 30 0 0 1 84 0 z" fill={`url(#${id}d)`} stroke="#bae6fd" strokeWidth="2" />
+      <path d="M72 70 a28 20 0 0 1 56 0" fill="none" stroke="#e0f2fe" strokeOpacity="0.7" strokeWidth="1.5" />
+      <rect x="54" y="68" width="92" height="7" rx="3" fill="#cbd5e1" />
+      <circle cx="86" cy="58" r="3" fill="#ffcc29" />
+      <circle cx="104" cy="54" r="3" fill="#ffcc29" />
+      <line x1="150" y1="72" x2="150" y2="40" stroke="#e5e7eb" strokeWidth="2.5" />
+      <path d="M150 40 h22 l-5 7 5 7 h-22 z" fill="#ff7a2f" />
+    </svg>
+  )
+}
+
+/** A small space station: modules, a truss and gold solar wings. */
+export function SpaceStation({ size = 200, className = '' }: ArtProps) {
+  const id = useId()
+  return (
+    <svg className={`art ${className}`} width={size} height={size} viewBox="0 0 200 200" aria-hidden>
+      <defs>
+        <linearGradient id={`${id}p`} x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="#fde68a" />
+          <stop offset="1" stopColor="#d97706" />
+        </linearGradient>
+        <linearGradient id={`${id}b`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#f8fafc" />
+          <stop offset="1" stopColor="#94a3b8" />
+        </linearGradient>
+      </defs>
+      <circle cx="100" cy="100" r="90" fill="#38bdf8" opacity="0.08" />
+      <g transform="rotate(-18 100 100)">
+        <rect x="18" y="96" width="164" height="8" rx="3" fill="#cbd5e1" />
+        {[22, 52, 128, 158].map((x) => (
+          <g key={x}>
+            <rect x={x} y="44" width="22" height="48" rx="2" fill={`url(#${id}p)`} stroke="#fbbf24" />
+            <rect x={x} y="108" width="22" height="48" rx="2" fill={`url(#${id}p)`} stroke="#fbbf24" />
+            <line x1={x + 11} y1="44" x2={x + 11} y2="92" stroke="#92400e" strokeOpacity="0.5" />
+            <line x1={x + 11} y1="108" x2={x + 11} y2="156" stroke="#92400e" strokeOpacity="0.5" />
+          </g>
+        ))}
+        <rect x="80" y="86" width="40" height="28" rx="12" fill={`url(#${id}b)`} stroke="#64748b" />
+        <rect x="92" y="62" width="16" height="76" rx="7" fill={`url(#${id}b)`} stroke="#64748b" />
+        <circle cx="100" cy="100" r="5" fill="#38bdf8" />
+        <circle cx="100" cy="72" r="3" fill="#38bdf8" />
+        <circle cx="100" cy="128" r="3" fill="#38bdf8" />
+      </g>
+    </svg>
+  )
+}
+
+/** A spacesuit helmet with a gold visor reflecting a star. */
+export function Helmet({ size = 200, className = '' }: ArtProps) {
+  const id = useId()
+  return (
+    <svg className={`art ${className}`} width={size} height={size} viewBox="0 0 200 200" aria-hidden>
+      <defs>
+        <radialGradient id={`${id}h`} cx="35%" cy="30%" r="75%">
+          <stop offset="0" stopColor="#ffffff" />
+          <stop offset="0.6" stopColor="#e2e8f0" />
+          <stop offset="1" stopColor="#94a3b8" />
+        </radialGradient>
+        <linearGradient id={`${id}v`} x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="#fff3b0" />
+          <stop offset="0.45" stopColor="#ffb300" />
+          <stop offset="1" stopColor="#b45309" />
+        </linearGradient>
+      </defs>
+      <circle cx="100" cy="100" r="88" fill="#fbbf24" opacity="0.08" />
+      <rect x="52" y="146" width="96" height="24" rx="10" fill="#cbd5e1" stroke="#94a3b8" />
+      <circle cx="100" cy="96" r="66" fill={`url(#${id}h)`} stroke="#94a3b8" strokeWidth="2" />
+      <path d="M52 92 q0 -40 48 -40 q48 0 48 40 q0 30 -48 30 q-48 0 -48 -30 z" fill={`url(#${id}v)`} stroke="#92400e" strokeOpacity="0.4" strokeWidth="2" />
+      <path d="M66 82 q8 -18 30 -20" fill="none" stroke="#fff" strokeOpacity="0.75" strokeWidth="5" strokeLinecap="round" />
+      <path d="M124 92 l2.5 6 6 2.5 -6 2.5 -2.5 6 -2.5 -6 -6 -2.5 6 -2.5z" fill="#fff" opacity="0.9" />
+      <circle cx="44" cy="106" r="7" fill="#cbd5e1" stroke="#94a3b8" />
+      <circle cx="156" cy="106" r="7" fill="#cbd5e1" stroke="#94a3b8" />
+    </svg>
+  )
+}
+
+export type PlaceArtKind = 'moon' | 'moonbase' | 'station' | 'helmet' | 'earth' | 'planet' | 'sun'
+
 /** The illustration for a place, by kind (see placeArt in places.ts). */
-export function PlaceArt({ kind, size = 160, className = '' }: { kind: 'moon' | 'earth' | 'planet' | 'sun'; size?: number; className?: string }) {
+export function PlaceArt({ kind, size = 160, className = '' }: { kind: PlaceArtKind; size?: number; className?: string }) {
   if (kind === 'moon') return <Moon size={size} className={className} />
+  if (kind === 'moonbase') return <MoonBase size={size} className={className} />
+  if (kind === 'station') return <SpaceStation size={size} className={className} />
+  if (kind === 'helmet') return <Helmet size={size} className={className} />
   if (kind === 'earth') return <Earth size={size} className={className} />
   if (kind === 'sun') return <Sun size={size} className={className} />
   return <RingedPlanet size={size} className={className} />
