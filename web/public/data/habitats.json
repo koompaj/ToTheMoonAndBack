@@ -14,7 +14,7 @@
    0.2926,
    0.6941
   ],
-  "note": "Challenge: oxygen 'likely 30% or greater', pressure '10.2 psi or less', between spacesuit and Earth values. The outer bounds here are the spacesuit values.",
+  "note": "Challenge: for a Moon base and pressurized rovers, oxygen 'likely 30% or greater', pressure '10.2 psi or less', between spacesuit and Earth values. The outer bounds here are the spacesuit values.",
   "source": "NASA Space Apps 2026 challenge page, Flame in Freefall (Potential Considerations)",
   "source_urls": [
    "https://www.spaceappschallenge.org/2026/challenges/flame-in-freefall/?tab=details"

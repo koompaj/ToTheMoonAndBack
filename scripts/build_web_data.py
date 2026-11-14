@@ -693,7 +693,7 @@ def build_habitats():
         {"id": "moon_base", "name": "Moon Base / pressurized rover",
          "o2_fraction": [0.30, 1.00], "pressure_psi": [4.3, 10.2],
          "pressure_atm": [round(4.3 * PSI_TO_ATM, 4), MOON_MAX_P_ATM],
-         "note": "Challenge: oxygen 'likely 30% or greater', pressure '10.2 psi or less', between spacesuit and Earth values. "
+         "note": "Challenge: for a Moon base and pressurized rovers, oxygen 'likely 30% or greater', pressure '10.2 psi or less', between spacesuit and Earth values. "
                  "The outer bounds here are the spacesuit values.",
          "source": challenge, "source_urls": [CHALLENGE_URL], "status": "from_challenge", "gravity": G_MOON},
         {"id": "moon_base_nasa", "name": "Moon Base (NASA Exploration Air)",
@@ -826,6 +826,104 @@ def build_fuels(tests, habitats):
     return out
 
 
+# ---- items 5-12 (docs/roles/C-tasks-5-12.md) --------------------------------------------------
+
+CSV_FIELDS = ["id", "investigation", "acronym", "doi", "source_table", "source_row", "test_label", "fuel_class", "fuel",
+              "o2_basis", "o2_fraction", "o2_fraction_min", "o2_fraction_max", "pressure_atm", "airflow_cm_s",
+              "flow_direction", "co2_fraction", "he_fraction", "gravity_g", "outcome", "flags"]
+
+
+def write_tests_csv(path, tests, inv):
+    """Item 6: every test row as CSV for modellers, each with its source row and investigation DOI."""
+    import csv
+    doi = {i["accession"]: i["doi"] or "" for i in inv}
+    with open(path, "w", encoding="utf-8", newline="") as f:
+        w = csv.writer(f)
+        w.writerow(CSV_FIELDS)
+        for t in tests:
+            row = []
+            for k in CSV_FIELDS:
+                v = doi[t["investigation"]] if k == "doi" else ";".join(t["flags"]) if k == "flags" else t.get(k)
+                row.append("" if v is None else v)
+            w.writerow(row)
+
+
+VARIED_NUMERIC = [  # (field, label, unit, scale to the unit shown)
+    ("o2_fraction", "Oxygen (cabin air)", "%", 100), ("o2_fraction:burner", "Oxygen (burner gas)", "%", 100),
+    ("pressure_atm", "Pressure", "psi", 1 / PSI_TO_ATM), ("airflow_cm_s", "Airflow", "cm/s", 1),
+    ("co2_fraction", "CO2 added", "%", 100), ("he_fraction", "Helium added", "%", 100),
+    ("droplet_diameter_mm", "Droplet diameter", "mm", 1), ("sample_length_cm", "Sample length", "cm", 1),
+    ("sample_width_cm", "Sample width", "cm", 1), ("sample_thickness_mm", "Sample thickness", "mm", 1),
+]
+VARIED_TEXT = [("fuel", "Fuel"), ("flow_direction", "Flow direction"), ("fuel_material", "Material")]
+
+
+def varied_conditions(tests):
+    """Item 7: which conditions changed between one investigation's tests. Repeated rows are left out.
+    Numbers are in the unit shown (oxygen and gases in %, pressure in psi). Negative airflow is NASA's
+    unexplained value (flag airflow_negative_in_source) and is left out, as in airflowRange()."""
+    ts = [t for t in tests if not any(f.startswith("duplicate_row") for f in t["flags"])]
+    out = []
+    for field, label, unit, scale in VARIED_NUMERIC:
+        key, basis = (field.split(":")[0], "burner_oxidizer") if ":" in field else (field, "ambient" if field == "o2_fraction" else None)
+        rows = [t for t in ts if basis is None or t["o2_basis"] == basis]
+        vals = [t[key] for t in rows if t.get(key) is not None
+                and not (key == "airflow_cm_s" and "airflow_negative_in_source" in t["flags"])]
+        if not vals:
+            continue
+        out.append({"field": field, "label": label, "unit": unit, "min": round(min(vals) * scale, 3),
+                    "max": round(max(vals) * scale, 3), "values": None, "distinct": len(set(vals)),
+                    "recorded": len(vals), "total": len(rows)})
+    for field, label in VARIED_TEXT:
+        vals = [t[field] for t in ts if t.get(field)]
+        if not vals:
+            continue
+        uniq = sorted(set(vals))
+        out.append({"field": field, "label": label, "unit": None, "min": None, "max": None, "values": uniq[:12],
+                    "distinct": len(uniq), "recorded": len(vals), "total": len(ts)})
+    return out
+
+
+HARDWARE_GROUPS = [  # (words in the PSI record's hardware field, id, label); first match wins
+    (("MDCA", "Droplet Combustion"), "cir_mdca", "Combustion Integrated Rack with the droplet apparatus (MDCA)"),
+    (("Combustion Integrated Rack",), "cir", "Combustion Integrated Rack (CIR)"),
+    (("Microgravity Science Glovebox",), "msg", "Microgravity Science Glovebox (MSG)"),
+    (("Cygnus",), "cygnus", "Saffire hardware in a Cygnus cargo craft"),
+    (("Soot Diagnostic",), "same", "Smoke and soot hardware (SAME)"),
+    (("P-Trak",), "p_trak", "Handheld particle counter (TSI P-Trak)"),
+    (("Principal Investigator Laboratory",), "pi_lab", "Researcher's own laboratory hardware"),
+]
+
+
+def hardware_group(inv):
+    """Item 9: group from the PSI record's hardware field only. None when the record does not say."""
+    hw = inv.get("hardware")
+    if not hw:
+        return None
+    for words, gid, label in HARDWARE_GROUPS:
+        if any(w in hw for w in words):
+            return {"id": gid, "label": label, "source": f"PSI record hardware field: \"{collapse_ws(hw)}\""}
+    return None
+
+
+def places_waiting():
+    """Item 11: places the challenge names that have no card, and why."""
+    return [
+        {"id": "spacecraft_cabin", "name": "Spacecraft cabin (e.g. Orion)",
+         "why": "We found no current NASA figures for this cabin's oxygen and pressure, only proposals from 2010-11 "
+                "that were later replaced, so there is no air range to count tests in.",
+         "what_would_change": "When NASA publishes the cabin's oxygen and pressure, it becomes a card with test counts "
+                              "automatically. Until then, try your own values in the air-conditions filter.",
+         "source_urls": [CHALLENGE_URL]},
+        {"id": "mars_habitat", "name": "Mars habitat",
+         "why": "The challenge gives no air range for Mars, and we found no current NASA figures, only proposals from "
+                "2010-11 that were later replaced. No PSI test ran in Mars gravity.",
+         "what_would_change": "When NASA publishes a Mars habitat's oxygen and pressure, it becomes a card with test "
+                              "counts automatically. Until then, try your own values in the air-conditions filter.",
+         "source_urls": [CHALLENGE_URL]},
+    ]
+
+
 def main():
     data, out = os.path.abspath(sys.argv[1]), os.path.abspath(sys.argv[2])
     os.makedirs(out, exist_ok=True)
@@ -843,6 +941,13 @@ def main():
                      f"not a Microgravity Investigation; its gravity is not known")
         t["gravity_g"] = 0.0
     fuels = build_fuels(tests, hab)
+    for i in inv:
+        mine = [t for t in tests if t["investigation"] == i["accession"]]
+        if mine:
+            i["varied"] = varied_conditions(mine)
+        g = hardware_group(i)
+        if g:
+            i["hardware_group"] = g
 
     flag_counts = {}
     for t in tests:
@@ -855,11 +960,15 @@ def main():
                "source_problems": "docs/DATA_ISSUES.md"}
 
     for name, obj in (("investigations.json", inv), ("tests.json", tests), ("other_tables.json", other),
-                      ("habitats.json", hab), ("data_quality.json", quality), ("fuels.json", fuels)):
+                      ("habitats.json", hab), ("data_quality.json", quality), ("fuels.json", fuels),
+                      ("places_waiting.json", places_waiting())):
         with open(os.path.join(out, name), "w", encoding="utf-8") as f:
             json.dump(obj, f, ensure_ascii=False, indent=1)
         n = len(obj) if isinstance(obj, list) else len(obj["tables"])
         print(f"wrote {name}: {n} entries, {os.path.getsize(os.path.join(out, name)) / 1e3:.0f} KB")
+
+    write_tests_csv(os.path.join(out, "tests.csv"), tests, inv)
+    print(f"wrote tests.csv: {len(tests)} rows")
 
     # ---- checks -------------------------------------------------------------
     ids = [t["id"] for t in tests]
