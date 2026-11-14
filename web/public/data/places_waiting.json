@@ -1,0 +1,20 @@
+[
+ {
+  "id": "spacecraft_cabin",
+  "name": "Spacecraft cabin (e.g. Orion)",
+  "why": "We found no current NASA figures for this cabin's oxygen and pressure, only proposals from 2010-11 that were later replaced, so there is no air range to count tests in.",
+  "what_would_change": "When NASA publishes the cabin's oxygen and pressure, it becomes a card with test counts automatically. Until then, try your own values in the air-conditions filter.",
+  "source_urls": [
+   "https://www.spaceappschallenge.org/2026/challenges/flame-in-freefall/?tab=details"
+  ]
+ },
+ {
+  "id": "mars_habitat",
+  "name": "Mars habitat",
+  "why": "The challenge gives no air range for Mars, and we found no current NASA figures, only proposals from 2010-11 that were later replaced. No PSI test ran in Mars gravity.",
+  "what_would_change": "When NASA publishes a Mars habitat's oxygen and pressure, it becomes a card with test counts automatically. Until then, try your own values in the air-conditions filter.",
+  "source_urls": [
+   "https://www.spaceappschallenge.org/2026/challenges/flame-in-freefall/?tab=details"
+  ]
+ }
+]

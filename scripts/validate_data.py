@@ -394,6 +394,68 @@ def main():
     both = {h["id"]: sum(1 for t in T if fits(t, h)) for h in H}
     check("tests matching air and gravity: ISS 171, every other place 0", both == {"moon_base": 0, "moon_base_nasa": 0, "iss": 171, "spacesuit": 0, "earth_sea_level": 0}, str(both))
 
+    # ---- items 6, 7, 9, 11, 12 (docs/roles/C-tasks-5-12.md) ---------------------------------
+    import csv
+    with open(os.path.join(web, "tests.csv"), encoding="utf-8", newline="") as f:
+        rows = list(csv.DictReader(f))
+    doi = {i["accession"]: i["doi"] or "" for i in INV}
+    def cell(v):
+        return "" if v is None else str(v)
+    bad = [t["id"] for t, r in zip(T, rows)
+           if r["id"] != t["id"] or r["source_table"] != t["source_table"] or r["source_row"] != str(t["source_row"])
+           or r["o2_fraction"] != cell(t["o2_fraction"]) or r["pressure_atm"] != cell(t["pressure_atm"])
+           or r["doi"] != doi[t["investigation"]] or r["flags"] != ";".join(t["flags"])]
+    check("tests.csv has every tests.json row with the same source, oxygen, pressure, DOI and flags",
+          len(rows) == len(T) and not bad, f"{len(rows)} rows vs {len(T)}; {bad[:3]}")
+
+    # item 12: Python mirror of testsInConditions() with conditionsFromHabitat() presets (gravity = any)
+    def in_conditions(h):
+        inside = unknown = inverse = 0
+        for t in T:
+            if t["o2_basis"] != "ambient":
+                inverse += 1
+            elif t["o2_fraction"] is None or t["pressure_atm"] is None:
+                unknown += 1
+            elif h["o2_fraction"][0] <= t["o2_fraction"] <= h["o2_fraction"][1] and h["pressure_atm"][0] <= t["pressure_atm"] <= h["pressure_atm"][1]:
+                inside += 1
+        return inside, unknown, inverse
+    pres = {h["id"]: in_conditions(h) for h in H}
+    check("air-conditions presets give each place card's count (20 / 0 / 171 / 0 / 171), 704 tests cannot be checked, 274 inverse rows left out",
+          {k: v[0] for k, v in pres.items()} == {"moon_base": 20, "moon_base_nasa": 0, "iss": 171, "spacesuit": 0, "earth_sea_level": 171}
+          and all(v[1:] == (704, 274) for v in pres.values()), str(pres))
+
+    # item 7: recount what varied, independently, for oxygen (cabin air) and fuel
+    bad = []
+    for i in INV:
+        ts = [t for t in by_inv(i["accession"]) if not any(f.startswith("duplicate_row") for f in t["flags"])]
+        v = {c["field"]: c for c in i.get("varied", [])}
+        o2 = [t["o2_fraction"] for t in ts if t["o2_basis"] == "ambient" and t["o2_fraction"] is not None]
+        if o2 and not ("o2_fraction" in v and v["o2_fraction"]["recorded"] == len(o2) and v["o2_fraction"]["distinct"] == len(set(o2))
+                       and abs(v["o2_fraction"]["min"] - min(o2) * 100) < 0.01 and abs(v["o2_fraction"]["max"] - max(o2) * 100) < 0.01):
+            bad.append(i["accession"] + " o2")
+        fu = [t["fuel"] for t in ts if t["fuel"]]
+        if fu and not ("fuel" in v and v["fuel"]["distinct"] == len(set(fu)) and v["fuel"]["recorded"] == len(fu)):
+            bad.append(i["accession"] + " fuel")
+        if not ts and "varied" in i:
+            bad.append(i["accession"] + " has varied but no tests")
+    check("what varied: oxygen ranges and fuel counts recount from tests.json for every investigation", not bad, ", ".join(bad))
+
+    # item 9: hardware group only where the PSI record states hardware, and quoting it
+    rec = {i["accession"]: json.load(open(os.path.join(data, "investigations", f"{i['accession']}.json"), encoding="utf-8")) for i in INV}
+    bad = [i["accession"] for i in INV if "hardware_group" in i and (not i["hardware"] or " ".join(i["hardware"].split()) not in i["hardware_group"]["source"])]
+    groups = {i["acronym"]: i.get("hardware_group", {}).get("id") for i in INV if i["acronym"]}
+    expect = {"FLEX": "cir_mdca", "FLEX-2": "cir_mdca", "CFI": "cir_mdca", "ACME CFI-G": "cir", "BASS": "msg", "BASS-II": "msg", "SPICE": "msg", "SAME": "same"}
+    wrong = [k for k, g in expect.items() if groups.get(k) != g]
+    check("hardware groups come from the record's hardware field and match the challenge's grouping (FLEX/CFI in MDCA, ACME in CIR, BASS/SPICE in MSG)",
+          not bad and not wrong and len(rec) == len(INV), f"{bad} {wrong}")
+
+    # item 11: rover named on the challenge card; waiting places have no card and only checked links
+    W = load("places_waiting.json")
+    urls = {u for h in H for u in h.get("source_urls", [])}
+    check("challenge Moon Base card names pressurized rovers; spacecraft cabin and Mars habitat are listed as waiting, not as cards",
+          "rover" in moon["name"].lower() and {w["id"] for w in W} == {"spacecraft_cabin", "mars_habitat"}
+          and not {w["id"] for w in W} & {h["id"] for h in H} and all(set(w["source_urls"]) <= urls for w in W))
+
     # ---- report ------------------------------------------------------------------------------
     for name, ok, detail in results:
         print(f"{'PASS' if ok else 'FAIL'}  {name}{'' if ok or not detail else '  -> ' + detail}")

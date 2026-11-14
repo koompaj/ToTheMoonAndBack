@@ -209,7 +209,61 @@
   ],
   "fuel_class": "gas",
   "pillar": null,
-  "page": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-10"
+  "page": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-10",
+  "varied": [
+   {
+    "field": "o2_fraction",
+    "label": "Oxygen (cabin air)",
+    "unit": "%",
+    "min": 19.8,
+    "max": 40.0,
+    "values": null,
+    "distinct": 165,
+    "recorded": 207,
+    "total": 207
+   },
+   {
+    "field": "o2_fraction:burner",
+    "label": "Oxygen (burner gas)",
+    "unit": "%",
+    "min": 21.2,
+    "max": 85.0,
+    "values": null,
+    "distinct": 56,
+    "recorded": 109,
+    "total": 120
+   },
+   {
+    "field": "pressure_atm",
+    "label": "Pressure",
+    "unit": "psi",
+    "min": 6.24,
+    "max": 44.2,
+    "values": null,
+    "distinct": 129,
+    "recorded": 327,
+    "total": 327
+   },
+   {
+    "field": "fuel",
+    "label": "Fuel",
+    "unit": null,
+    "min": null,
+    "max": null,
+    "values": [
+     "C2H4",
+     "C3H8"
+    ],
+    "distinct": 2,
+    "recorded": 327,
+    "total": 327
+   }
+  ],
+  "hardware_group": {
+   "id": "cir",
+   "label": "Combustion Integrated Rack (CIR)",
+   "source": "PSI record hardware field: \"Advanced Combustion via Microgravity Experiments (ACME) Combustion Integrated Rack (CIR) Reconfiguration of Combustion Integrated Rack (CIR)\""
+  }
  },
  {
   "accession": "PSI-20",
@@ -335,7 +389,12 @@
   ],
   "fuel_class": "gas",
   "pillar": null,
-  "page": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-20"
+  "page": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-20",
+  "hardware_group": {
+   "id": "cir",
+   "label": "Combustion Integrated Rack (CIR)",
+   "source": "PSI record hardware field: \"Combustion Integrated Rack (CIR) ACME\""
+  }
  },
  {
   "accession": "PSI-21",
@@ -466,7 +525,12 @@
   ],
   "fuel_class": "gas",
   "pillar": null,
-  "page": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-21"
+  "page": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-21",
+  "hardware_group": {
+   "id": "cir",
+   "label": "Combustion Integrated Rack (CIR)",
+   "source": "PSI record hardware field: \"Combustion Integrated Rack (CIR) ACME\""
+  }
  },
  {
   "accession": "PSI-22",
@@ -638,7 +702,12 @@
   ],
   "fuel_class": "gas",
   "pillar": null,
-  "page": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-22"
+  "page": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-22",
+  "hardware_group": {
+   "id": "cir",
+   "label": "Combustion Integrated Rack (CIR)",
+   "source": "PSI record hardware field: \"Combustion Integrated Rack (CIR) ACME\""
+  }
  },
  {
   "accession": "PSI-23",
@@ -901,7 +970,12 @@
   ],
   "fuel_class": "gas",
   "pillar": null,
-  "page": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-23"
+  "page": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-23",
+  "hardware_group": {
+   "id": "cir",
+   "label": "Combustion Integrated Rack (CIR)",
+   "source": "PSI record hardware field: \"Combustion Integrated Rack (CIR) ACME\""
+  }
  },
  {
   "accession": "PSI-25",
@@ -1031,7 +1105,76 @@
   ],
   "fuel_class": "solid",
   "pillar": "prevention",
-  "page": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25"
+  "page": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+  "varied": [
+   {
+    "field": "o2_fraction",
+    "label": "Oxygen (cabin air)",
+    "unit": "%",
+    "min": 13.6,
+    "max": 22.2,
+    "values": null,
+    "distinct": 50,
+    "recorded": 129,
+    "total": 129
+   },
+   {
+    "field": "pressure_atm",
+    "label": "Pressure",
+    "unit": "psi",
+    "min": 14.696,
+    "max": 14.696,
+    "values": null,
+    "distinct": 1,
+    "recorded": 29,
+    "total": 129
+   },
+   {
+    "field": "fuel",
+    "label": "Fuel",
+    "unit": null,
+    "min": null,
+    "max": null,
+    "values": [
+     "0.5\" black rod",
+     "1 cm 0.2 mm PMMA film",
+     "1 cm SIBAL",
+     "1 cm SIBAL top side ign",
+     "1 cm wide 200 micron thick PMMA",
+     "1 cm wide PMMA 1 mm thick",
+     "1 cm wide PMMA 2 mm thick",
+     "1 cm wide PMMA 3 mm thick",
+     "1 cm wide PMMA 5 mm thick",
+     "1 mm thick PMMA 1 sided 2 cm",
+     "1 mm thick PMMA 2 cm wide",
+     "1/2\" clear PMMA rod"
+    ],
+    "distinct": 49,
+    "recorded": 129,
+    "total": 129
+   },
+   {
+    "field": "fuel_material",
+    "label": "Material",
+    "unit": null,
+    "min": null,
+    "max": null,
+    "values": [
+     "Japan wax",
+     "Nomex",
+     "PMMA",
+     "SIBAL (cotton-fiberglass blend)"
+    ],
+    "distinct": 4,
+    "recorded": 72,
+    "total": 129
+   }
+  ],
+  "hardware_group": {
+   "id": "msg",
+   "label": "Microgravity Science Glovebox (MSG)",
+   "source": "PSI record hardware field: \"Microgravity Science Glovebox (MSG)\""
+  }
  },
  {
   "accession": "PSI-26",
@@ -1126,7 +1269,57 @@
   ],
   "fuel_class": "solid",
   "pillar": "prevention",
-  "page": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-26"
+  "page": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-26",
+  "varied": [
+   {
+    "field": "fuel",
+    "label": "Fuel",
+    "unit": null,
+    "min": null,
+    "max": null,
+    "values": [
+     "1 cm sphere",
+     "1 cm sphere wake",
+     "1 cm wake sphere",
+     "2 cm pmma sphere",
+     "2 cm sphere",
+     "2 cm sphere wake ign",
+     "Japan Wax Candle wake",
+     "Nomex III Natural",
+     "Nomex blend 2 cm",
+     "PMMA 1 cm",
+     "PMMA 2 cm",
+     "PMMA slab"
+    ],
+    "distinct": 33,
+    "recorded": 121,
+    "total": 121
+   },
+   {
+    "field": "fuel_material",
+    "label": "Material",
+    "unit": null,
+    "min": null,
+    "max": null,
+    "values": [
+     "Japan wax",
+     "Nomex",
+     "PMMA",
+     "Paraffin wax",
+     "SIBAL (cotton-fiberglass blend)",
+     "Ultem",
+     "Wax (type not stated)"
+    ],
+    "distinct": 7,
+    "recorded": 91,
+    "total": 121
+   }
+  ],
+  "hardware_group": {
+   "id": "msg",
+   "label": "Microgravity Science Glovebox (MSG)",
+   "source": "PSI record hardware field: \"Microgravity Science Glovebox\""
+  }
  },
  {
   "accession": "PSI-39",
@@ -1208,7 +1401,62 @@
   ],
   "fuel_class": "droplet",
   "pillar": null,
-  "page": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-39"
+  "page": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-39",
+  "varied": [
+   {
+    "field": "o2_fraction",
+    "label": "Oxygen (cabin air)",
+    "unit": "%",
+    "min": 17.0,
+    "max": 21.0,
+    "values": null,
+    "distinct": 2,
+    "recorded": 87,
+    "total": 87
+   },
+   {
+    "field": "pressure_atm",
+    "label": "Pressure",
+    "unit": "psi",
+    "min": 7.348,
+    "max": 73.48,
+    "values": null,
+    "distinct": 7,
+    "recorded": 87,
+    "total": 87
+   },
+   {
+    "field": "he_fraction",
+    "label": "Helium added",
+    "unit": "%",
+    "min": 0.0,
+    "max": 59.0,
+    "values": null,
+    "distinct": 3,
+    "recorded": 87,
+    "total": 87
+   },
+   {
+    "field": "fuel",
+    "label": "Fuel",
+    "unit": null,
+    "min": null,
+    "max": null,
+    "values": [
+     "C12H26",
+     "[.60]/[.40] C12H26/iso-dodecane",
+     "[.75]/[.25] C12H26/iso-dodecane"
+    ],
+    "distinct": 3,
+    "recorded": 87,
+    "total": 87
+   }
+  ],
+  "hardware_group": {
+   "id": "cir_mdca",
+   "label": "Combustion Integrated Rack with the droplet apparatus (MDCA)",
+   "source": "PSI record hardware field: \"Multi-User Droplet Combustion Apparatus (MDCA) Combustion Integrated Rack (CIR)\""
+  }
  },
  {
   "accession": "PSI-47",
@@ -1265,7 +1513,12 @@
   ],
   "fuel_class": null,
   "pillar": null,
-  "page": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-47"
+  "page": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-47",
+  "hardware_group": {
+   "id": "p_trak",
+   "label": "Handheld particle counter (TSI P-Trak)",
+   "source": "PSI record hardware field: \"TSI P-Trak\""
+  }
  },
  {
   "accession": "PSI-60",
@@ -1647,7 +1900,12 @@
   ],
   "fuel_class": "droplet",
   "pillar": null,
-  "page": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-68"
+  "page": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-68",
+  "hardware_group": {
+   "id": "cir_mdca",
+   "label": "Combustion Integrated Rack with the droplet apparatus (MDCA)",
+   "source": "PSI record hardware field: \"Combustion Integrated Rack (CIR) Multi-user Droplet Combustion Appartatus (MDCA)\""
+  }
  },
  {
   "accession": "PSI-69",
@@ -1943,7 +2201,83 @@
   ],
   "fuel_class": "droplet",
   "pillar": "suppression",
-  "page": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-69"
+  "page": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-69",
+  "varied": [
+   {
+    "field": "o2_fraction",
+    "label": "Oxygen (cabin air)",
+    "unit": "%",
+    "min": 12.0,
+    "max": 34.0,
+    "values": null,
+    "distinct": 15,
+    "recorded": 274,
+    "total": 274
+   },
+   {
+    "field": "pressure_atm",
+    "label": "Pressure",
+    "unit": "psi",
+    "min": 10.177,
+    "max": 44.86,
+    "values": null,
+    "distinct": 182,
+    "recorded": 273,
+    "total": 274
+   },
+   {
+    "field": "co2_fraction",
+    "label": "CO2 added",
+    "unit": "%",
+    "min": 0.0,
+    "max": 70.0,
+    "values": null,
+    "distinct": 14,
+    "recorded": 274,
+    "total": 274
+   },
+   {
+    "field": "he_fraction",
+    "label": "Helium added",
+    "unit": "%",
+    "min": 0.0,
+    "max": 45.0,
+    "values": null,
+    "distinct": 10,
+    "recorded": 274,
+    "total": 274
+   },
+   {
+    "field": "droplet_diameter_mm",
+    "label": "Droplet diameter",
+    "unit": "mm",
+    "min": 1.1,
+    "max": 4.67,
+    "values": null,
+    "distinct": 163,
+    "recorded": 262,
+    "total": 274
+   },
+   {
+    "field": "fuel",
+    "label": "Fuel",
+    "unit": null,
+    "min": null,
+    "max": null,
+    "values": [
+     "Heptane",
+     "Methanol"
+    ],
+    "distinct": 2,
+    "recorded": 274,
+    "total": 274
+   }
+  ],
+  "hardware_group": {
+   "id": "cir_mdca",
+   "label": "Combustion Integrated Rack with the droplet apparatus (MDCA)",
+   "source": "PSI record hardware field: \"Combustion Integrated Rack (CIR)-Fluids and Combustion Facility (FCF) Multi-user Droplet Combustion Appartatus (MDCA)\""
+  }
  },
  {
   "accession": "PSI-98",
@@ -2021,7 +2355,109 @@
   ],
   "fuel_class": "solid",
   "pillar": "prevention",
-  "page": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-98"
+  "page": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-98",
+  "varied": [
+   {
+    "field": "o2_fraction",
+    "label": "Oxygen (cabin air)",
+    "unit": "%",
+    "min": 21.5,
+    "max": 21.5,
+    "values": null,
+    "distinct": 1,
+    "recorded": 1,
+    "total": 2
+   },
+   {
+    "field": "airflow_cm_s",
+    "label": "Airflow",
+    "unit": "cm/s",
+    "min": 20.0,
+    "max": 20.0,
+    "values": null,
+    "distinct": 1,
+    "recorded": 2,
+    "total": 2
+   },
+   {
+    "field": "sample_length_cm",
+    "label": "Sample length",
+    "unit": "cm",
+    "min": 94.0,
+    "max": 94.0,
+    "values": null,
+    "distinct": 1,
+    "recorded": 2,
+    "total": 2
+   },
+   {
+    "field": "sample_width_cm",
+    "label": "Sample width",
+    "unit": "cm",
+    "min": 40.6,
+    "max": 40.6,
+    "values": null,
+    "distinct": 1,
+    "recorded": 2,
+    "total": 2
+   },
+   {
+    "field": "sample_thickness_mm",
+    "label": "Sample thickness",
+    "unit": "mm",
+    "min": 3.7,
+    "max": 3.7,
+    "values": null,
+    "distinct": 1,
+    "recorded": 2,
+    "total": 2
+   },
+   {
+    "field": "fuel",
+    "label": "Fuel",
+    "unit": null,
+    "min": null,
+    "max": null,
+    "values": [
+     "SIBAL Fabric"
+    ],
+    "distinct": 1,
+    "recorded": 2,
+    "total": 2
+   },
+   {
+    "field": "flow_direction",
+    "label": "Flow direction",
+    "unit": null,
+    "min": null,
+    "max": null,
+    "values": [
+     "concurrent",
+     "opposed"
+    ],
+    "distinct": 2,
+    "recorded": 2,
+    "total": 2
+   },
+   {
+    "field": "fuel_material",
+    "label": "Material",
+    "unit": null,
+    "min": null,
+    "max": null,
+    "values": [
+     "SIBAL (cotton-fiberglass blend)"
+    ],
+    "distinct": 1,
+    "recorded": 2,
+    "total": 2
+   }
+  ],
+  "hardware_group": {
+   "id": "cygnus",
+   "label": "Saffire hardware in a Cygnus cargo craft",
+   "source": "PSI record hardware field: \"Saffire 1 enclosure in Cygnus\""
+  }
  },
  {
   "accession": "PSI-99",
@@ -2099,7 +2535,115 @@
   ],
   "fuel_class": "solid",
   "pillar": "prevention",
-  "page": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99"
+  "page": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99",
+  "varied": [
+   {
+    "field": "o2_fraction",
+    "label": "Oxygen (cabin air)",
+    "unit": "%",
+    "min": 21.5,
+    "max": 22.1,
+    "values": null,
+    "distinct": 2,
+    "recorded": 7,
+    "total": 9
+   },
+   {
+    "field": "airflow_cm_s",
+    "label": "Airflow",
+    "unit": "cm/s",
+    "min": 20.0,
+    "max": 20.0,
+    "values": null,
+    "distinct": 1,
+    "recorded": 9,
+    "total": 9
+   },
+   {
+    "field": "sample_length_cm",
+    "label": "Sample length",
+    "unit": "cm",
+    "min": 29.0,
+    "max": 29.0,
+    "values": null,
+    "distinct": 1,
+    "recorded": 8,
+    "total": 9
+   },
+   {
+    "field": "sample_width_cm",
+    "label": "Sample width",
+    "unit": "cm",
+    "min": 5.0,
+    "max": 5.0,
+    "values": null,
+    "distinct": 1,
+    "recorded": 9,
+    "total": 9
+   },
+   {
+    "field": "sample_thickness_mm",
+    "label": "Sample thickness",
+    "unit": "mm",
+    "min": 0.27,
+    "max": 10.0,
+    "values": null,
+    "distinct": 4,
+    "recorded": 4,
+    "total": 9
+   },
+   {
+    "field": "fuel",
+    "label": "Fuel",
+    "unit": null,
+    "min": null,
+    "max": null,
+    "values": [
+     "Cotton-Fiberglass (SIBAL)",
+     "PMMA",
+     "PMMA & Nomex",
+     "Silicone"
+    ],
+    "distinct": 4,
+    "recorded": 9,
+    "total": 9
+   },
+   {
+    "field": "flow_direction",
+    "label": "Flow direction",
+    "unit": null,
+    "min": null,
+    "max": null,
+    "values": [
+     "concurrent",
+     "opposed"
+    ],
+    "distinct": 2,
+    "recorded": 9,
+    "total": 9
+   },
+   {
+    "field": "fuel_material",
+    "label": "Material",
+    "unit": null,
+    "min": null,
+    "max": null,
+    "values": [
+     "PMMA",
+     "PMMA and Nomex",
+     "SIBAL (cotton-fiberglass blend)",
+     "Silicone"
+    ],
+    "distinct": 4,
+    "recorded": 9,
+    "total": 9
+   }
+  ],
+  "hardware_group": {
+   "id": "cygnus",
+   "label": "Saffire hardware in a Cygnus cargo craft",
+   "source": "PSI record hardware field: \"Cygnus Pressurized Cargo Module SAFFIRE\""
+  }
  },
  {
   "accession": "PSI-100",
@@ -2159,7 +2703,98 @@
   ],
   "fuel_class": "solid",
   "pillar": "prevention",
-  "page": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-100"
+  "page": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-100",
+  "varied": [
+   {
+    "field": "airflow_cm_s",
+    "label": "Airflow",
+    "unit": "cm/s",
+    "min": 30.0,
+    "max": 30.0,
+    "values": null,
+    "distinct": 1,
+    "recorded": 2,
+    "total": 2
+   },
+   {
+    "field": "sample_length_cm",
+    "label": "Sample length",
+    "unit": "cm",
+    "min": 94.0,
+    "max": 94.0,
+    "values": null,
+    "distinct": 1,
+    "recorded": 2,
+    "total": 2
+   },
+   {
+    "field": "sample_width_cm",
+    "label": "Sample width",
+    "unit": "cm",
+    "min": 40.6,
+    "max": 40.6,
+    "values": null,
+    "distinct": 1,
+    "recorded": 2,
+    "total": 2
+   },
+   {
+    "field": "sample_thickness_mm",
+    "label": "Sample thickness",
+    "unit": "mm",
+    "min": 3.3,
+    "max": 3.3,
+    "values": null,
+    "distinct": 1,
+    "recorded": 2,
+    "total": 2
+   },
+   {
+    "field": "fuel",
+    "label": "Fuel",
+    "unit": null,
+    "min": null,
+    "max": null,
+    "values": [
+     "SIBAL Fabric"
+    ],
+    "distinct": 1,
+    "recorded": 2,
+    "total": 2
+   },
+   {
+    "field": "flow_direction",
+    "label": "Flow direction",
+    "unit": null,
+    "min": null,
+    "max": null,
+    "values": [
+     "concurrent",
+     "opposed"
+    ],
+    "distinct": 2,
+    "recorded": 2,
+    "total": 2
+   },
+   {
+    "field": "fuel_material",
+    "label": "Material",
+    "unit": null,
+    "min": null,
+    "max": null,
+    "values": [
+     "SIBAL (cotton-fiberglass blend)"
+    ],
+    "distinct": 1,
+    "recorded": 2,
+    "total": 2
+   }
+  ],
+  "hardware_group": {
+   "id": "cygnus",
+   "label": "Saffire hardware in a Cygnus cargo craft",
+   "source": "PSI record hardware field: \"Saffire III enclosure in Cygnus\""
+  }
  },
  {
   "accession": "PSI-101",
@@ -2238,7 +2873,12 @@
   ],
   "fuel_class": null,
   "pillar": "detection",
-  "page": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101"
+  "page": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+  "hardware_group": {
+   "id": "same",
+   "label": "Smoke and soot hardware (SAME)",
+   "source": "PSI record hardware field: \"Comparitive Soot Diagnostic Hardware; Refer to final report\""
+  }
  },
  {
   "accession": "PSI-102",
@@ -2360,7 +3000,12 @@
   ],
   "fuel_class": null,
   "pillar": "detection",
-  "page": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-102"
+  "page": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-102",
+  "hardware_group": {
+   "id": "same",
+   "label": "Smoke and soot hardware (SAME)",
+   "source": "PSI record hardware field: \"Comparitive Soot Diagnostic Hardware\""
+  }
  },
  {
   "accession": "PSI-106",
@@ -2510,7 +3155,43 @@
   ],
   "fuel_class": null,
   "pillar": null,
-  "page": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-107"
+  "page": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-107",
+  "varied": [
+   {
+    "field": "airflow_cm_s",
+    "label": "Airflow",
+    "unit": "cm/s",
+    "min": 0.66,
+    "max": 85.28,
+    "values": null,
+    "distinct": 60,
+    "recorded": 407,
+    "total": 435
+   },
+   {
+    "field": "fuel",
+    "label": "Fuel",
+    "unit": null,
+    "min": null,
+    "max": null,
+    "values": [
+     "50% Propylene",
+     "75% Propylene",
+     "Ethylene",
+     "Methane",
+     "Propane",
+     "Propylene"
+    ],
+    "distinct": 6,
+    "recorded": 435,
+    "total": 435
+   }
+  ],
+  "hardware_group": {
+   "id": "msg",
+   "label": "Microgravity Science Glovebox (MSG)",
+   "source": "PSI record hardware field: \"Microgravity Science Glovebox (MSG)\""
+  }
  },
  {
   "accession": "PSI-115",
@@ -2748,7 +3429,12 @@
   ],
   "fuel_class": null,
   "pillar": null,
-  "page": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-142"
+  "page": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-142",
+  "hardware_group": {
+   "id": "pi_lab",
+   "label": "Researcher's own laboratory hardware",
+   "source": "PSI record hardware field: \"Principal Investigator Laboratory Hardware\""
+  }
  },
  {
   "accession": "PSI-159",
@@ -2808,6 +3494,65 @@
   ],
   "fuel_class": "gas",
   "pillar": null,
-  "page": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-159"
+  "page": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-159",
+  "varied": [
+   {
+    "field": "o2_fraction",
+    "label": "Oxygen (cabin air)",
+    "unit": "%",
+    "min": 17.97,
+    "max": 39.97,
+    "values": null,
+    "distinct": 121,
+    "recorded": 179,
+    "total": 179
+   },
+   {
+    "field": "o2_fraction:burner",
+    "label": "Oxygen (burner gas)",
+    "unit": "%",
+    "min": 12.0,
+    "max": 85.0,
+    "values": null,
+    "distinct": 12,
+    "recorded": 154,
+    "total": 154
+   },
+   {
+    "field": "pressure_atm",
+    "label": "Pressure",
+    "unit": "psi",
+    "min": 7.185,
+    "max": 48.006,
+    "values": null,
+    "distinct": 11,
+    "recorded": 333,
+    "total": 333
+   },
+   {
+    "field": "fuel",
+    "label": "Fuel",
+    "unit": null,
+    "min": null,
+    "max": null,
+    "values": [
+     "30% butane",
+     "30% ethane",
+     "30% propane",
+     "50% butane",
+     "butane",
+     "ethane",
+     "propane"
+    ],
+    "distinct": 7,
+    "recorded": 333,
+    "total": 333
+   }
+  ],
+  "hardware_group": {
+   "id": "cir",
+   "label": "Combustion Integrated Rack (CIR)",
+   "source": "PSI record hardware field: \"ACME Combustion Integrated Rack (CIR)\""
+  }
  }
 ]
