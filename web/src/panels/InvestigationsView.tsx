@@ -190,6 +190,9 @@ export function InvestigationsView({ data, ai }: { data: AppData; ai: AiContent 
   const [cmpIds] = useCompare()
   const [cmpView, setCmpView] = useHashParam('cmpview', 'split')
   const stats = useMemo(() => investigationStats(data), [data])
+  const nGround = data.investigations.filter((i) => i.project_type?.startsWith('Ground')).length
+  const nSmokeDust = new Set(data.otherTables.filter((o) => o.kind === 'smoke_tests' || o.kind === 'sessions').map((o) => o.investigation)).size
+  const nTests = stats.reduce((n, st) => n + st.tests.length, 0)
   const q = query.trim().toLowerCase()
   const tq = testQuery.trim().toLowerCase()
   const testMatches = (st: InvestigationStats) =>
@@ -220,9 +223,9 @@ export function InvestigationsView({ data, ai }: { data: AppData; ai: AiContent 
     <section className="view" aria-labelledby="inv-heading">
       <ViewHead
         art={<RingedPlanet size={190} />}
-        eyebrow={`${stats.length} NASA Fire Experiments · ${data.tests.length.toLocaleString("en")} Tests`}
-        title="NASA Fire Experiments"
-        lead="Each card is one experiment NASA ran in space, and each experiment ran many tests (single burns). Open one to see what it was for and every test it ran. Search tests to find which experiments hold them."
+        eyebrow={`${stats.length} NASA Investigations · ${nTests.toLocaleString("en")} Tests`}
+        title="NASA Combustion Experiments"
+        lead={`Each card is one NASA investigation: ${stats.length - nGround} flew in microgravity, mostly on the ISS (${nSmokeDust} of them measured smoke or dust rather than flames), and ${nGround} are ground studies. Most ran many tests (single burns). Open one to see what it was for and every test it ran.`}
       >
         <div className="search-pair">
           <label className="search">

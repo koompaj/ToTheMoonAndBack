@@ -9,21 +9,25 @@ export interface FuturePlace {
   why: string
 }
 
-export const FUTURE_PLACES: FuturePlace[] = [
-  { id: 'iss', name: 'Space Station (ISS)', why: 'Where almost every PSI test ran; its cabin air needs a NASA source.' },
-  { id: 'spacecraft', name: 'Spacecraft Cabin', why: 'Crew capsules on the way to the Moon, such as Orion.' },
-  { id: 'lunar_lander', name: 'Lunar Lander', why: 'The crewed lander between orbit and the surface.' },
-  { id: 'mars_habitat', name: 'Mars Habitat', why: 'A surface base on Mars; no NASA atmosphere numbers in the data yet.' },
-]
+// Empty by team decision: the app shows only the places with sourced NASA air numbers.
+export const FUTURE_PLACES: FuturePlace[] = []
 
 /** Short display names for real habitats. */
 export function placeName(id: string, fallback: string) {
-  return ({ moon_base: 'Moon Base & Rovers', spacesuit: 'Spacesuit', earth_sea_level: 'Earth (Sea Level)' } as Record<string, string>)[id] ?? fallback
+  return (
+    {
+      moon_base: 'Moon Base & Rovers (Challenge)',
+      moon_base_nasa: 'Moon Base (NASA Air)',
+      iss: 'Space Station (ISS)',
+      spacesuit: 'Spacesuit',
+      earth_sea_level: 'Earth (Sea Level)',
+    } as Record<string, string>
+  )[id] ?? fallback
 }
 
 /** Which illustration a place uses on its pages. */
 export function placeArt(id: string): 'moon' | 'earth' | 'planet' | 'sun' {
-  if (id === 'moon_base' || id === 'lunar_lander') return 'moon'
+  if (id === 'moon_base' || id === 'moon_base_nasa' || id === 'lunar_lander') return 'moon'
   if (id === 'earth_sea_level' || id === 'iss') return 'earth'
   if (id === 'spacesuit') return 'sun'
   return 'planet'

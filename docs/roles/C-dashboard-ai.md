@@ -15,6 +15,10 @@ You own the words, the ranking and the overall product. Read `CLAUDE.md` first.
 Branch `peach/dashbard`. **The user flow (Home -> place -> fuel fire -> point on the map) and B's
 side of it are specified in `docs/PLAN.md`.**
 
+- **Simulation tab** (`#simulation`, `panels/SimulationView.tsx`, `panels/sim/`): 3D holographic
+  cabin (drag to rotate), example cabin per place or an uploaded floor plan, fuel + material from
+  `fuels.json`, click a fire point, Simulate -> `markEvidence`, nearest tests of that material, the
+  three tasks. Replaces Fire-page step 4 and covers `docs/LAYOUT_PLAN.md`'s journey.
 - **Flow pages**: `HomeView` (animated summary of every place, future places as "waiting for a
   source" slots in `panels/places.ts`), `PlaceView` (`#place?h=`), `FireView` (`#fire?h=&fuel=`,
   with slots for B's `FireModel3D` and `HabitatSimMap`, contract in `web/src/types/sim.ts`).

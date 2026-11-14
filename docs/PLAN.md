@@ -5,6 +5,15 @@ Read `CLAUDE.md` and `docs/roles/B-3d.md` first; this file **adds** to B's brief
 differ, replaces B's tasks 4 to 6 (2D view, inverse flames, flame) with the components below.
 Branch with C's side of this: `peach/dashbard`.
 
+
+> **Update (Simulation tab).** Step 4 moved out of the Fire page into its own **Simulation** tab
+> (`#simulation`), built by C in `web/src/panels/SimulationView.tsx` and `web/src/panels/sim/`: pick a
+> place, see its example cabin in 3D (or upload a floor plan), choose the fuel and material (A's
+> `fuels.json`), click a fire point, press Simulate; the side bar shows `markEvidence`, the nearest
+> real tests of that material and the three tasks, all cited. It covers the journey in
+> `docs/LAYOUT_PLAN.md`, in 3D. So **B no longer needs `HabitatSimMap` or `LayoutCanvas`**;
+> `FireModel3D` is still wanted for the Fire page. The tab name "Simulation" was the team lead's call.
+
 ---
 
 ## 1. The flow the team agreed

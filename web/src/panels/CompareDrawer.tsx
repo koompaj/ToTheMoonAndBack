@@ -7,6 +7,7 @@ import { useMemo, type ReactNode } from 'react'
 import type { AppData, Test } from '../types/data'
 import { fmtPct, investigationStats, MOON_MAX_PSI, MOON_MIN_O2, psi, shortName, type InvestigationStats } from '../ai/evidence'
 import { DoiCite } from './Cite'
+import { airflowRange } from '../data/load'
 import { useHashParam } from './route'
 import { StarArt } from './SpaceArt'
 import { FuelTag, PillarTag } from './ui'
@@ -38,7 +39,7 @@ function details(s: InvestigationStats) {
   return {
     o2: range(amb.map((t) => t.o2_fraction).filter((v): v is number => v !== null)),
     p: range(s.tests.map((t) => t.pressure_atm).filter((v): v is number => v !== null).map(psi)),
-    air: range(s.tests.map((t) => t.airflow_cm_s).filter((v): v is number => v !== null)),
+    air: airflowRange(s.tests),
     fuels: [...new Set(s.tests.map((t) => t.fuel).filter((f): f is string => !!f))],
     outcomes: [...new Set(s.tests.map((t) => t.outcome).filter((o): o is string => !!o))],
     classes: [...new Set(s.tests.map((t) => t.fuel_class))],

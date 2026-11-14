@@ -28,8 +28,9 @@ export interface AiInvestigation {
   research_question: AiSentence | null
 }
 
-/** Suggestions for one place and fuel (key "habitat:fuel"), shown as "AI suggestion, not from the
- *  tables". They fill gaps the tables leave; any number in them must come from the fact pack. */
+/** Suggestions for one place and fuel (key "habitat:fuel"), shown as "AI suggestion, draft". Like all
+ *  AI text, every sentence cites test rows or accessions, and any number must come from the fact pack;
+ *  ai/generate.mjs rejects anything else. */
 export interface AiFireTasks {
   detection: AiSentence[]
   suppression: AiSentence[]

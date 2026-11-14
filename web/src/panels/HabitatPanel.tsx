@@ -231,7 +231,7 @@ export function HabitatPanel({ data, ai, embedded = false }: { data: AppData; ai
                     <FuelDot fuel={c.fuelClass} /> No {CLASS_NOUN[c.fuelClass]} test at these conditions.
                   </li>
                 ))}
-              <li>No partial-gravity tests. The challenge page says PSI has none yet, so Moon and Mars gravity can only be bounded by microgravity and Earth results.</li>
+              <li>No partial-gravity tests: every test in PSI&rsquo;s tables ran in microgravity. The challenge page suggests microgravity and Earth-gravity results could bound Moon and Mars, but Earth-gravity results are not in these tables.</li>
               {unplaced.noPressureInTable.length > 0 && (
                 <li>
                   {unplaced.noPressureInTable.length.toLocaleString('en')} tests come from tables with no pressure column, so they

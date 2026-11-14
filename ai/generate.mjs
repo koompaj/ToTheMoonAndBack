@@ -165,7 +165,7 @@ async function ask(client, pack, kind) {
     kind === 'habitat'
       ? 'Write a summary of what NASA tables show, and do not show, about fire in this habitat.'
       : kind === 'fire'
-        ? 'For each task (detection, suppression, prevention), write 1 or 2 short practical suggestions for this fuel in this place that fill the gaps the facts mark. These are shown as "AI suggestion, not from the tables". Do not repeat the facts; do not invent numbers; cite fact ids only when a suggestion rests on them, otherwise give an empty cites list.'
+        ? 'For each task (detection, suppression, prevention), write 1 or 2 short practical suggestions for this fuel in this place that fill the gaps the facts mark. They are shown as AI suggestions next to the NASA data they cite. Do not repeat the facts; do not invent numbers; every suggestion must cite the ids of the facts it rests on. If no fact supports a suggestion, leave it out.'
         : 'Write a plain-language summary of this investigation for fire safety, and one research question its data could answer.'
   const response = await client.messages.create({
     model: MODEL,
@@ -229,7 +229,7 @@ async function main() {
       const out = await ask(client, pack, 'fire')
       const allowed = allowedNumbers(pack)
       const problems = []
-      const keep = (list) => list.filter((s) => checkSentence(s, pack, allowed, problems, true))
+      const keep = (list) => list.filter((s) => checkSentence(s, pack, allowed, problems))
       items[pack.id] = { detection: keep(out.detection), suppression: keep(out.suppression), prevention: keep(out.prevention) }
       problems.forEach((p) => rejected.push(`${pack.id}: ${p}`))
       console.log(`fire ${pack.id}: kept ${items[pack.id].detection.length + items[pack.id].suppression.length + items[pack.id].prevention.length} suggestions`)

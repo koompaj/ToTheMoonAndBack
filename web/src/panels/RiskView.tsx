@@ -1,6 +1,6 @@
 // OWNER: dashboard + AI workstream.
 // "Risk": what NASA's fire data still does not cover, in plain words. A fire is most dangerous where
-// nobody has tested, so this page lists the gaps: by place and fuel, the biggest ones, and where the
+// PSI's tables hold no tests, so this page lists the gaps: by place and fuel, the biggest ones, and where the
 // data to close them may already exist (the relevance vs. study ranking). Every count is computed
 // live; every statement that is not a count names its source.
 import type { AppData, FuelClass } from '../types/data'
@@ -29,15 +29,15 @@ export function RiskView({ data, ai }: { data: AppData; ai: AiContent }) {
       source: 'Counted from tests.json (BASS, BASS-II, SAFFIRE tables have no pressure column)',
     },
     {
-      title: 'No solid material tested in Moon Base oxygen',
+      title: 'No solid material in PSI\u2019s tables at Moon Base oxygen',
       plain: `The most oxygen any solid-material test reached is ${h.topSolid ? fmtPct(h.topSolid.o2_fraction!) : 'not recorded'}. A Moon Base is expected at 30 % or more.`,
       why: 'More oxygen makes materials much more flammable, so results at lower oxygen may underestimate the danger.',
       source: 'tests.json; Moon Base air and flammability from the challenge page',
     },
     {
       title: 'No partial gravity at all',
-      plain: 'Every test is either in microgravity or on Earth. Nothing at Moon or Mars gravity.',
-      why: 'Fire behaves differently with some gravity than with none; for now the Moon can only be guessed between the two.',
+      plain: 'Every test in PSI\u2019s tables ran in microgravity. None ran at Moon or Mars gravity.',
+      why: 'Fire behaves differently with some gravity than with none. The challenge page suggests microgravity and Earth-gravity results could bound it, but Earth-gravity results are not in these tables.',
       source: 'Challenge page: no partial-gravity combustion data in PSI yet',
     },
     {
@@ -48,16 +48,16 @@ export function RiskView({ data, ai }: { data: AppData; ai: AiContent }) {
     },
     {
       title: 'Smoke data only from heated materials',
-      plain: `The ${sameRows} smoke tests (SAME, SAME-R) heat solid materials; none measure smoke from a gas or droplet flame.`,
+      plain: `The ${sameRows} smoke tests (SAME, SAME-R) heat materials without an open flame; none measure smoke from a gas or droplet flame.`,
       why: 'A detector tuned only for one kind of smoke may miss or be slow on another kind of fire.',
       source: 'other_tables.json (SAME, SAME-R)',
     },
-    {
+    ...(future.length === 0 ? [] : [{
       title: `${future.length} places have no NASA air numbers yet`,
       plain: `${future.map((f) => f.name).join(', ')}: we cannot place any test against them.`,
       why: 'Crews will live there, but without their oxygen and pressure we cannot say which fire data applies.',
       source: 'habitats.json lists only places with a sourced atmosphere',
-    },
+    }]),
   ]
 
   return (
@@ -66,7 +66,7 @@ export function RiskView({ data, ai }: { data: AppData; ai: AiContent }) {
         art={<Sun size={180} />}
         eyebrow="Risk"
         title="What We Still Don’t Know About Fire"
-        lead="A fire is most dangerous where nobody has tested it. This page shows the gaps in NASA’s fire data: which places and fuels have no tests, the biggest missing pieces, and which existing data could help fill them."
+        lead="The least is known where PSI’s tables hold no tests. This page shows those gaps: which places and fuels have no tests in the tables, the biggest missing pieces, and which existing data could help fill them. NASA may have tested more in work that is not in PSI."
       />
 
       <section className="panel" aria-labelledby="matrix-title">
@@ -75,8 +75,8 @@ export function RiskView({ data, ai }: { data: AppData; ai: AiContent }) {
           Gaps by place and fuel
         </h2>
         <p className="lead small risk-intro">
-          Each box counts the NASA tests that ran in that place&rsquo;s air with that fuel. <b className="t-gap">Coral</b> means nobody has tested it:
-          that is a risk. Click a box to see what a fire there would look like.
+          Each box counts the NASA tests that ran in that place&rsquo;s air with that fuel. <b className="t-gap">Coral</b> means PSI&rsquo;s tables hold no test
+          there: that is a risk. Click a box to see what a fire there would look like.
         </p>
         <div className="table-wrap">
           <table className="risk-matrix">
@@ -102,7 +102,7 @@ export function RiskView({ data, ai }: { data: AppData; ai: AiContent }) {
                         <td key={f}>
                           <a className={`risk-cell ${n === 0 ? 'risk-gap' : 'risk-ok'}`} href={`#fire?h=${hab.id}&fuel=${f}`}>
                             <b>{n}</b>
-                            <span>{n === 0 ? 'Not tested' : n === 1 ? 'test' : 'tests'}</span>
+                            <span>{n === 0 ? 'Not in PSI\u2019s tables' : n === 1 ? 'test' : 'tests'}</span>
                           </a>
                         </td>
                       )

@@ -6,7 +6,7 @@
 // "expected behaviour" is what the nearest real tests did, and it says so.
 import { useMemo, type ReactNode } from 'react'
 import type { AppData, FuelClass } from '../types/data'
-import type { FireModelProps, HabitatSimMapProps, SimPoint } from '../types/sim'
+import type { FireModelProps, SimPoint } from '../types/sim'
 import type { AiContent } from '../ai/content'
 import { defaultPoint, expectedBehaviour, nearestTests, taskAnswers, type Statement } from '../ai/fireTasks'
 import { fmtPct, PSI_PER_ATM } from '../ai/evidence'
@@ -41,10 +41,10 @@ function TaskCard({ title, tone, what, items, ai, data }: { title: string; tone:
       </ul>
       {ai && ai.length > 0 && (
         <div className="task-ai">
-          <span className="badge warn">AI Suggestion, Not From the Tables</span>
+          <span className="badge warn">AI Suggestion, Draft</span>
           {ai.map((s, i) => (
             <p key={i}>
-              {s.text} {s.cites.length > 0 && <SentenceCites sentence={s} data={data} />}
+              {s.text} <SentenceCites sentence={s} data={data} />
             </p>
           ))}
         </div>
@@ -69,12 +69,10 @@ export function FireView({
   data,
   ai,
   renderFire,
-  renderMap,
 }: {
   data: AppData
   ai: AiContent
   renderFire: (p: FireModelProps) => ReactNode
-  renderMap: (p: HabitatSimMapProps) => ReactNode
 }) {
   const [hid] = useHashParam('h', 'moon_base')
   const [fuelStr, setFuel] = useHashParam('fuel', 'gas')
@@ -112,17 +110,29 @@ export function FireView({
 
       <div className="fire-head">
         <div>
-          <p className="eyebrow">Step 3 · Fire Simulation</p>
+          <p className="eyebrow">Step 3 · Fire Illustration</p>
           <h1 id="fire-title">
             <FuelDot fuel={fuel} /> {FUEL_SHORT[fuel]} Fire in {name}
           </h1>
         </div>
-        <Choice
-          label="Fuel type"
-          value={fuel}
-          onChange={(f) => setFuel(f)}
-          options={FUELS.map((f) => ({ id: f, label: FUEL_SHORT[f], tone: f }))}
-        />
+        <div className="fuel-switch">
+          <span className="fuel-switch-label">What is burning?</span>
+          <Choice
+            label="Fuel type"
+            value={fuel}
+            onChange={(f) => setFuel(f)}
+            className="big"
+            options={FUELS.map((f) => ({
+              id: f,
+              tone: f,
+              label: (
+                <>
+                  <FuelDot fuel={f} /> {FUEL_SHORT[f]}
+                </>
+              ),
+            }))}
+          />
+        </div>
       </div>
 
       <div className="fire-grid">
@@ -189,6 +199,11 @@ export function FireView({
         </div>
       </div>
 
+      <a className="btn-sim cta-sim" href={`#simulation?h=${hab.id}&fuel=${fuel}`}>
+        Simulate Your Project!
+        <small>Place this fire in a 3D cabin or your own floor plan</small>
+      </a>
+
       <section aria-labelledby="tasks-title">
         <h2 id="tasks-title" className="section-title">
           The Three Fire-Safety Tasks
@@ -201,35 +216,6 @@ export function FireView({
         <p className="footnote">Grey chips open the NASA row or record behind each line. Coral lines are gaps: not in the tables.</p>
       </section>
 
-      <section aria-labelledby="simmap-title">
-        <h2 id="simmap-title" className="section-title">
-          Step 4 · Pick Where the Fire Starts
-        </h2>
-        <div className="panel simmap">
-          <PanelHead title={`${name} Simulation Map`} />
-          <div className="simmap-body">
-            <div className="simmap-stage">
-              {renderMap({ data, habitat: hab, fuel, point, nearestTestIds: near.map((n) => n.test.id), onPick: pick })}
-            </div>
-            <aside className="simmap-side">
-              <PlaceArt kind={placeArt(hab.id)} size={190} />
-              <dl className="kv">
-                <div>
-                  <dt>Fire point</dt>
-                  <dd>
-                    {fmtPct(point.o2Fraction)} · {(point.pressureAtm * PSI_PER_ATM).toFixed(1)} psi
-                  </dd>
-                </div>
-                <div>
-                  <dt>Fuel</dt>
-                  <dd>{FUEL_SHORT[fuel]}</dd>
-                </div>
-              </dl>
-              <p className="muted small">Pick a point on the map, or set it with the sliders above. Both move the same fire.</p>
-            </aside>
-          </div>
-        </div>
-      </section>
     </section>
   )
 }
