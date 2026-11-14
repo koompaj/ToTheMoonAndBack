@@ -4,7 +4,7 @@
 import { useEffect } from 'react'
 import type { AppData, FuelClass } from '../types/data'
 import type { AiContent } from '../ai/content'
-import { isSourced, testsInHabitat } from '../data/load'
+import { gravityNote, isSourced, testsInHabitat } from '../data/load'
 import { useApp } from '../state/store'
 import { fmtPct, fmtPsi } from '../ai/evidence'
 import { HabitatPanel } from './HabitatPanel'
@@ -63,6 +63,12 @@ export function PlaceView({ data, ai }: { data: AppData; ai: AiContent }) {
                 <small>Pressure</small>
                 {p}
               </span>
+              {hab.gravity && (
+                <span className="cond-pill">
+                  <small>Gravity</small>
+                  {hab.gravity.label}
+                </span>
+              )}
               {!isSourced(hab) && <span className="badge warn">Needs a Source</span>}
             </div>
             <p className="lead">
@@ -76,6 +82,15 @@ export function PlaceView({ data, ai }: { data: AppData; ai: AiContent }) {
               .
             </p>
             <p className="source-line">{hab.note}</p>
+            {hab.gravity && (
+              <p className="source-line">
+                {gravityNote(data.tests, hab)} Gravity source:{' '}
+                <a href={hab.gravity.source_url} target="_blank" rel="noreferrer">
+                  {hab.gravity.source}
+                </a>
+                .
+              </p>
+            )}
           </div>
           <div className="view-art">
             <PlaceArt kind={placeArt(hab.id)} size={210} />

@@ -83,7 +83,7 @@ function NearestRow({ c }: { c: ClassEvidence }) {
             : `Closest: ${t.acronym} at ${fmtPct(t.o2_fraction!)} oxygen, `}
           {near.o2Points >= 0.05 && <b className="gap-num">{n(near.o2Points)} points short</b>}
           {near.o2Points >= 0.05 ? '. ' : ' '}
-          Its table has no pressure, so it cannot be placed. <TestCite test={t} />
+          No pressure is recorded for it, so it cannot be placed. <TestCite test={t} />
         </span>
       </li>
     )
@@ -234,8 +234,12 @@ export function HabitatPanel({ data, ai, embedded = false }: { data: AppData; ai
               <li>No partial-gravity tests: every test in PSI&rsquo;s tables ran in microgravity. The challenge page suggests microgravity and Earth-gravity results could bound Moon and Mars, but Earth-gravity results are not in these tables.</li>
               {unplaced.noPressureInTable.length > 0 && (
                 <li>
-                  {unplaced.noPressureInTable.length.toLocaleString('en')} tests come from tables with no pressure column, so they
-                  cannot be placed in any box yet.
+                  {unplaced.noPressureInTable.length.toLocaleString('en')} tests come from tables with no pressure column and have no
+                  single pressure from NASA&rsquo;s reports, so they cannot be placed in any box yet (
+                  {unplaced.noPressureInTable.filter((t) => t.pressure_atm_min != null).length} of them have only a pressure range from a
+                  NASA report or sensor log).{' '}
+                  {data.tests.filter((t) => t.flags.includes('pressure_from_report') && t.pressure_atm !== null).length} solid tests
+                  from the same kind of table are placed, using the pressure in NASA&rsquo;s BASS-II report.
                 </li>
               )}
             </ul>

@@ -28,8 +28,9 @@ export interface NearTest {
 const placed = (t: Test) => t.o2_basis === 'ambient' && t.o2_fraction !== null && t.pressure_atm !== null
 
 /** The k nearest real tests of one fuel type to a point. Distance counts 1 percentage point of
- *  oxygen the same as 1 psi (the rule shown on screen). Solid tests have no pressure in their
- *  tables, so for them only oxygen is compared and the result says so. */
+ *  oxygen the same as 1 psi (the rule shown on screen). When no test of the fuel has a usable
+ *  pressure, only oxygen is compared and the result says so. Most solid tests have no pressure;
+ *  29 BASS-II tests take 1 atm from NASA's BASS-II report (pressure_source on each test). */
 export function nearestTests(data: AppData, fuel: FuelClass, point: SimPoint, k = 5): NearTest[] {
   const pool = data.tests.filter((t) => t.fuel_class === fuel && placed(t))
   if (pool.length > 0) {
@@ -103,12 +104,22 @@ export function taskAnswers(data: AppData, habitat: Habitat, fuel: FuelClass, po
   }
   if (pr) {
     const outside = point.pressureAtm < pr[0] || point.pressureAtm > pr[1]
+    const withP = ofFuel.filter((t) => t.pressure_atm !== null)
+    const pInvs = [...new Set(withP.map((t) => t.investigation))]
+    const n = withP.length
+    // Where the pressure comes from, when some of it is from NASA's reports rather than the tables.
+    const k = withP.filter((t) => t.pressure_source).length
+    const docs = k === 0 ? '' : k === n ? ' (all from NASA’s reports, not the tables)' : ` (${k} of the ${n} from NASA’s reports, not the tables)`
     prevention.push({
       kind: outside ? 'gap' : 'data',
       text: outside
-        ? `This point's pressure (${psiOf(point.pressureAtm)}) is outside the ${psiOf(pr[0])} to ${psiOf(pr[1])} the ${fuel} tests cover.`
-        : `Tested pressures for ${fuel} run from ${psiOf(pr[0])} to ${psiOf(pr[1])}, covering this point's ${psiOf(point.pressureAtm)}.`,
-      cites: invs,
+        ? pr[0] === pr[1]
+          ? `This point's pressure (${psiOf(point.pressureAtm)}) differs from the only pressure known for any ${fuel} test, ${psiOf(pr[0])}: ${n} tests${docs}.`
+          : `This point's pressure (${psiOf(point.pressureAtm)}) is outside the ${psiOf(pr[0])} to ${psiOf(pr[1])} the ${n} ${fuel} tests with a pressure cover${docs}.`
+        : pr[0] === pr[1]
+          ? `The only pressure known for any ${fuel} test is ${psiOf(pr[0])}, the same as this point's: ${n} tests${docs}.`
+          : `Tested pressures for ${fuel} run from ${psiOf(pr[0])} to ${psiOf(pr[1])}, covering this point's ${psiOf(point.pressureAtm)}: ${n} tests${docs}.`,
+      cites: pInvs,
     })
   } else if (ofFuel.length) {
     prevention.push({ kind: 'gap', text: `No ${fuel} table records pressure, so the effect of this habitat's pressure is not in the tables.`, cites: invs })
@@ -207,7 +218,8 @@ export function taskAnswers(data: AppData, habitat: Habitat, fuel: FuelClass, po
 }
 
 /** The default point for a habitat: its oxygen floor at its pressure ceiling (the challenge's
- *  "30 % or more at 10.2 psi or less" corner for the Moon Base), or its single point. */
+ *  "30 % or more at 10.2 psi or less" corner for the Moon Base). For a single-point place (the
+ *  spacesuit) that is its one point. */
 export function defaultPoint(h: Habitat): SimPoint {
   return { o2Fraction: h.o2_fraction[0], pressureAtm: h.pressure_atm[1] }
 }
