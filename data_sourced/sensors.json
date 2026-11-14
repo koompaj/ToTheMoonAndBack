@@ -660,7 +660,7 @@
    "investigation": "PSI-10",
    "kind": "other",
    "name": "CIR gas chromatograph",
-   "detail": "pre- and post-test analysis of the chamber atmosphere (oxygen, nitrogen, CO2, CO, fuel gases)",
+   "detail": "pre- and post-test analysis of the chamber atmosphere (oxygen, nitrogen, CO2, CO, fuel gases) (the report describes it in the future tense)",
    "source_file": "PSI-10_Reports_FinalRpt_ACMEFlameDesign.pdf",
    "source_where": "p. 17",
    "quote": "The ACME experiments will use the CIR's gas chromatograph for pre- and post-test analysis of the chamber atmosphere"
@@ -687,7 +687,7 @@
    "investigation": "PSI-159",
    "kind": "other",
    "name": "CIR gas chromatograph",
-   "detail": "pre- and post-test analysis of the chamber atmosphere (oxygen, nitrogen, CO2, CO, fuel gases)",
+   "detail": "pre- and post-test analysis of the chamber atmosphere (oxygen, nitrogen, CO2, CO, fuel gases) (the report describes it in the future tense)",
    "source_file": "PSI-159_Reports_FinalRpt_ACME.CFI-G.pdf",
    "source_where": "p. 14",
    "quote": "The ACME experiments will use the CIR's gas chromatograph for pre- and post-test analysis of the chamber atmosphere"
