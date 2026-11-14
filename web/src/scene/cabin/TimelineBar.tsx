@@ -71,7 +71,7 @@ export function TimelineBar({
         </div>
       )}
       <p className="cabin-b-timeline-note">
-        <b>{SPREAD_LABEL}</b> Items light one per step, nearest first, by distance in this example layout only. A step is not a length of time.
+        <b>{SPREAD_LABEL}</b> Items light one per step, nearest first, by distance along the deck of this example layout only: through its doorway and hatch, not through walls. A step is not a length of time.
       </p>
     </div>
   )

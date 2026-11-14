@@ -3,12 +3,14 @@
 //
 // SPREAD IS AN ILLUSTRATION, NEVER A RESULT (CLAUDE.md, "Rules of evidence"). NASA's tables hold
 // no spread rates, no room geometry and no partial-gravity data, so:
-//   - the order below comes ONLY from distance in this example layout;
+//   - the order below comes ONLY from distance through this example layout: along its deck and
+//     through its doorway and hatch, never through a bulkhead (path.ts);
 //   - the timeline counts steps: one more item per step. A step is not a length of time;
 //   - nothing computed here may be shown as a number, ranking or outcome, or change any evidence.
 // Only fuel items light. Plain furniture never does: nothing in the tables says what it is.
 //
 // No three.js here, so the order can be checked by a script.
+import { deckDistanceToItem } from './path'
 import { ITEMS, type CabinItem } from './spec'
 
 export interface SpreadEntry {
@@ -33,15 +35,8 @@ const PAST_ITEM = 0.35
 
 export const NO_SPREAD: SpreadPlan = { entries: [], steps: 0, radii: [START_REACH] }
 
-/** Smallest footprint an item is treated as having, so a bottle is as easy to start on as to click. */
-const MIN_FOOTPRINT = 0.4
-
-/** Distance on the deck from a point to an item's footprint; 0 when the point is on it. */
-export function distanceToItem(item: CabinItem, x: number, z: number) {
-  const dx = Math.max(0, Math.abs(x - item.x) - Math.max(item.w, MIN_FOOTPRINT) / 2)
-  const dz = Math.max(0, Math.abs(z - item.z) - Math.max(item.d, MIN_FOOTPRINT) / 2)
-  return Math.hypot(dx, dz)
-}
+/** Distance along the deck from a point to an item's footprint; 0 when the point is on it. */
+export const distanceToItem = (item: CabinItem, x: number, z: number) => deckDistanceToItem(item, x, z)
 
 /** Fuel items in the order the illustration lights them, starting from a point on the deck.
  *  Every fuel item is in the order whether or not it is shown: hiding furniture is a choice about

@@ -3,7 +3,7 @@
 import { useMemo } from 'react'
 import * as THREE from 'three'
 import { Box, Cyl, Glow, Holo, Ring, Segs, coneGeo } from './holo'
-import { AXIS_Y, DECK_X0, DECK_X1, HULL, deckHalfWidth, hullRadius } from './spec'
+import { AXIS_Y, BULKHEADS, CEILING, DECK_X0, DECK_X1, HULL, ceilingHalfWidth, deckHalfWidth, hullRadius } from './spec'
 
 const TAU = Math.PI * 2
 const STRINGERS = 12
@@ -60,6 +60,19 @@ function deckSegments(outline: [number, number][]) {
   return pts
 }
 
+/** The cabin ceiling: its edge and its panel joints. */
+function ceilingSegments() {
+  const { y, x0, x1 } = CEILING
+  const hw = ceilingHalfWidth()
+  const pts = [x0, y, -hw, x1, y, -hw, x1, y, -hw, x1, y, hw, x1, y, hw, x0, y, hw, x0, y, hw, x0, y, -hw]
+  for (let k = 1; k < 8; k++) {
+    const x = x0 + (k * (x1 - x0)) / 8
+    pts.push(x, y, -hw, x, y, hw)
+  }
+  for (const z of [-hw / 2, hw / 2]) pts.push(x0, y, z, x1, y, z)
+  return pts
+}
+
 /** Faint spokes on a bulkhead between an inner and an outer radius. */
 function spokes(x: number, inner: number, outer: number, n = 16) {
   const pts: number[] = []
@@ -113,8 +126,14 @@ export function Hull({ exterior = false }: { exterior?: boolean }) {
     const shape = new THREE.Shape(outline.map(([x, z]) => new THREE.Vector2(x, z)))
     return new THREE.ShapeGeometry(shape).rotateX(Math.PI / 2) // (x, z) on the page becomes (x, 0, z)
   }, [outline])
-  const bulkhead = useMemo(() => spokes(HULL.cabinEndX, 1.05, HULL.cabinR), [])
-  const frame = useMemo(() => spokes(HULL.coneEndX, 1.25, HULL.cabinR, 8), [])
+  const [doorway, hatch] = BULKHEADS
+  const bulkhead = useMemo(() => spokes(hatch.x, hatch.opening, HULL.cabinR), [hatch])
+  const frame = useMemo(() => spokes(doorway.x, doorway.opening, HULL.cabinR, 8), [doorway])
+  const ceiling = useMemo(ceilingSegments, [])
+  const ceilingFill = useMemo(
+    () => new THREE.PlaneGeometry(CEILING.x1 - CEILING.x0, ceilingHalfWidth() * 2).rotateX(Math.PI / 2).translate((CEILING.x0 + CEILING.x1) / 2, CEILING.y, 0),
+    [],
+  )
 
   return (
     <group>
@@ -122,11 +141,15 @@ export function Hull({ exterior = false }: { exterior?: boolean }) {
       <Glow geo={deckFill} opacity={0.1} />
       <Segs points={deckLines} opacity={0.32} />
 
+      {/* the cabin's ceiling; the vent duct lies on top of it (parts.tsx) */}
+      <Glow geo={ceilingFill} opacity={0.07} />
+      <Segs points={ceiling} opacity={0.4} />
+
       {/* doorway between the flight deck and the cabin, hatch between the cabin and the node */}
       <Segs points={frame} opacity={0.22} />
-      <Ring r={1.25} tube={0.04} position={[HULL.coneEndX, AXIS_Y, 0]} rotation={FACE_X} line={0.5} />
+      <Ring r={doorway.opening} tube={0.04} position={[doorway.x, AXIS_Y, 0]} rotation={FACE_X} line={0.5} />
       <Segs points={bulkhead} opacity={0.22} />
-      <Hatch x={HULL.cabinEndX} r={1.05} />
+      <Hatch x={hatch.x} r={hatch.opening} />
 
       {/* docking ring at the far end of the node */}
       <group position={[6.3, AXIS_Y, 0]}>
