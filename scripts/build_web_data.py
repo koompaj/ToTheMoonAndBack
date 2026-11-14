@@ -804,8 +804,9 @@ def build_fuels(tests, habitats):
             note.append("Pressure is not in these tables.")
         from_docs = [t for t in ts if t["pressure_atm"] is not None and t.get("pressure_source")]
         if from_docs:
-            note.append(f"Pressure for {len(from_docs)} of these {len(ts)} tests is from NASA's reports, not the tables "
-                        "(see each test's pressure_source).")
+            docs = sorted({t["pressure_source"].split(", chapter")[0].split(': "')[0] for t in from_docs})
+            note.append(f"Pressure for {len(from_docs)} of these {len(ts)} tests is from NASA's reports, not the tables: "
+                        + "; ".join(docs) + ".")
         out.append({
             "id": f"{cls}:{slug(name)}", "fuel_class": cls, "name": name,
             "test_ids": [t["id"] for t in ts], "test_count": len(ts),

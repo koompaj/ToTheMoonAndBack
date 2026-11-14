@@ -80,7 +80,10 @@ export function gravityNote(tests: Test[], h: Habitat): string | null {
   const both = testsInHabitatAndGravity(tests, h).length
   if (air === 0) return `Gravity here: ${h.gravity.label}. Every test in PSI's tables ran in microgravity.`
   if (both === air) return `Gravity here: ${h.gravity.label}. Air and gravity both match the ${air} tests.`
-  if (both === 0) return `Gravity here: ${h.gravity.label}. All ${air} tests in this air ran in microgravity, so none match this gravity yet.`
+  if (both === 0) {
+    const partial = h.gravity.g.some((g) => g > 0 && g < 1)
+    return `Gravity here: ${h.gravity.label}. All ${air} tests in this air ran in microgravity, so none match this gravity${partial ? ' yet' : ''}.`
+  }
   return `Gravity here: ${h.gravity.label}. ${both} of the ${air} tests in this air also match this gravity.`
 }
 

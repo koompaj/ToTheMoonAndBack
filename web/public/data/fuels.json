@@ -284,7 +284,7 @@
    },
    "earth_sea_level": null
   },
-  "note": "Pressure for 27 of these 45 tests is from NASA's reports, not the tables (see each test's pressure_source)."
+  "note": "Pressure for 27 of these 45 tests is from NASA's reports, not the tables: Burning and Suppression of Solids-II (BASS-II) Summary Report, NASA/TM-20210011385, p. 102."
  },
  {
   "id": "solid:japan-wax",
