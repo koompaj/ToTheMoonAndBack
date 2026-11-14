@@ -29,6 +29,18 @@ export interface FireModelProps {
   behaviour: ExpectedBehaviour
 }
 
+/** What the Simulation page knows about the fire at the chosen point, handed to the 3D stage so
+ *  the flame it draws can reflect the place and the user's choices. An ILLUSTRATION only. */
+export interface StageFire {
+  /** The chosen place's air: cabin-air oxygen as a fraction 0..1, pressure in atm. */
+  o2Fraction: number
+  pressureAtm: number
+  /** The user's "Still Air" / "Near a Vent" choice. It names no air speed. */
+  airflow: 'still' | 'vent'
+  /** What the nearest real NASA tests of the chosen material did. */
+  behaviour: ExpectedBehaviour
+}
+
 export interface HabitatSimMapProps {
   data: AppData
   habitat: Habitat

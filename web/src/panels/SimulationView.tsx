@@ -297,6 +297,7 @@ export function SimulationView({ data }: { data: AppData }) {
               point={point}
               fuel={fuel}
               lit={lit}
+              fire={hab && air0 ? { o2Fraction: air0.o2Fraction, pressureAtm: air0.pressureAtm, airflow: air === 'vent' ? 'vent' : 'still', behaviour: exp.behaviour } : null}
               onPick={pick}
             />
             <div className="sim-hint">{hab ? 'Drag to rotate · scroll to zoom · click the floor to place the fire' : 'Drag to rotate · choose a location to begin'}</div>
