@@ -14,7 +14,7 @@ import { SentenceCites, TestCite } from './Cite'
 import { useHashParam } from './route'
 import { placeArt, placeName } from './places'
 import { PlaceArt } from './SpaceArt'
-import { Choice, FUEL_LABEL, FUEL_SHORT, FuelDot, PanelHead } from './ui'
+import { Choice, FUEL_LABEL, FUEL_SHORT, FuelDot, PanelHead, FuelIcon } from './ui'
 
 const FUELS: FuelClass[] = ['gas', 'droplet', 'solid']
 const BEHAVIOUR_TEXT = {
@@ -127,7 +127,7 @@ export function FireView({
               tone: f,
               label: (
                 <>
-                  <FuelDot fuel={f} /> {FUEL_SHORT[f]}
+                  <FuelIcon fuel={f} /> {FUEL_SHORT[f]}
                 </>
               ),
             }))}

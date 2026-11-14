@@ -17,7 +17,7 @@ import { SentenceCites, TestCite } from './Cite'
 import { useHashParam } from './route'
 import { placeArt, placeName } from './places'
 import { PlaceArt } from './SpaceArt'
-import { Choice, FUEL_LABEL, FUEL_SHORT, FuelDot, PanelHead } from './ui'
+import { Choice, FUEL_LABEL, FUEL_SHORT, FuelDot, PanelHead, FuelIcon } from './ui'
 import { SimStage } from './sim/SimStage'
 import { templateFor } from './sim/templates'
 
@@ -183,7 +183,7 @@ export function SimulationView({ data }: { data: AppData }) {
                 tone: f,
                 label: (
                   <>
-                    <FuelDot fuel={f} /> {FUEL_SHORT[f]}
+                    <FuelIcon fuel={f} /> {FUEL_SHORT[f]}
                   </>
                 ),
               }))}

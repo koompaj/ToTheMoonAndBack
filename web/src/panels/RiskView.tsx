@@ -10,7 +10,7 @@ import { fmtPct, headline, isPlaced } from '../ai/evidence'
 import { UntappedPanel } from './UntappedPanel'
 import { FUTURE_PLACES, placeName } from './places'
 import { Sun } from './SpaceArt'
-import { FUEL_SHORT, FuelDot, PanelHead, ViewHead } from './ui'
+import { FUEL_SHORT, FuelDot, PanelHead, ViewHead, FuelIcon } from './ui'
 
 const FUELS: FuelClass[] = ['gas', 'droplet', 'solid']
 
@@ -85,7 +85,7 @@ export function RiskView({ data, ai }: { data: AppData; ai: AiContent }) {
                 <th scope="col">Place</th>
                 {FUELS.map((f) => (
                   <th key={f} scope="col">
-                    <FuelDot fuel={f} /> {FUEL_SHORT[f]}
+                    <FuelIcon fuel={f} /> {FUEL_SHORT[f]}
                   </th>
                 ))}
               </tr>
