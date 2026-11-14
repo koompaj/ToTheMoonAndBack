@@ -1,0 +1,18 @@
+{
+ "version": 1,
+ "habitat_id": "moon_base_nasa",
+ "image_name": null,
+ "note": "Example layout, not a NASA design. Names are labels only; each mark's material or fuel is the user's choice from what NASA tested.",
+ "marks": [
+  {"id": "m1", "kind": "area", "fuel_class": "solid", "fuel_option_id": "solid:nomex", "label": "Crew seats", "airflow": "vent", "shape": {"x": 0.08, "y": 0.12, "w": 0.22, "h": 0.16}},
+  {"id": "m2", "kind": "area", "fuel_class": "solid", "fuel_option_id": "solid:sibal-cotton-fiberglass-blend", "label": "Fabric stowage bags", "airflow": "still", "shape": {"x": 0.38, "y": 0.08, "w": 0.2, "h": 0.14}},
+  {"id": "m3", "kind": "area", "fuel_class": "solid", "fuel_option_id": "solid:pmma", "label": "Window frame and panels", "airflow": "still", "shape": {"x": 0.68, "y": 0.06, "w": 0.24, "h": 0.12}},
+  {"id": "m4", "kind": "area", "fuel_class": "solid", "fuel_option_id": "solid:silicone", "label": "Cable covers", "airflow": "vent", "shape": {"x": 0.08, "y": 0.72, "w": 0.3, "h": 0.1}},
+  {"id": "m5", "kind": "area", "fuel_class": "solid", "fuel_option_id": "solid:ultem", "label": "Equipment rack", "airflow": "still", "shape": {"x": 0.7, "y": 0.62, "w": 0.2, "h": 0.26}},
+  {"id": "m6", "kind": "area", "fuel_class": "solid", "fuel_option_id": "other", "label": "Wiring insulation (Kapton)", "airflow": "still", "shape": {"x": 0.44, "y": 0.78, "w": 0.2, "h": 0.08}},
+  {"id": "m7", "kind": "point", "fuel_class": "droplet", "fuel_option_id": "droplet:methanol", "label": "Cleaning solvent", "airflow": "still", "shape": {"x": 0.46, "y": 0.42}},
+  {"id": "m8", "kind": "point", "fuel_class": "droplet", "fuel_option_id": "droplet:heptane", "label": "Lab fuel sample", "airflow": "still", "shape": {"x": 0.58, "y": 0.5}},
+  {"id": "m9", "kind": "point", "fuel_class": "gas", "fuel_option_id": "gas:butane", "label": "Experiment gas bottle", "airflow": "vent", "shape": {"x": 0.24, "y": 0.48}},
+  {"id": "m10", "kind": "point", "fuel_class": "gas", "fuel_option_id": "gas:propane", "label": "Gas supply line", "airflow": "still", "shape": {"x": 0.84, "y": 0.4}}
+ ]
+}

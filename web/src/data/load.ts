@@ -1,5 +1,6 @@
 // SHARED - loads the generated JSON once. Owned by the data workstream.
 import type { AppData, DataQuality, Habitat, Investigation, OtherTable, OutcomeAnalysis, Test } from '../types/data'
+import type { FuelOption, Layout } from '../types/layout'
 
 async function get<T>(name: string): Promise<T> {
   const res = await fetch(`${import.meta.env.BASE_URL}data/${name}`)
@@ -8,15 +9,23 @@ async function get<T>(name: string): Promise<T> {
 }
 
 export async function loadData(): Promise<AppData> {
-  const [tests, investigations, habitats, otherTables, quality, outcomes] = await Promise.all([
+  const [tests, investigations, habitats, otherTables, quality, outcomes, fuels] = await Promise.all([
     get<Test[]>('tests.json'),
     get<Investigation[]>('investigations.json'),
     get<Habitat[]>('habitats.json'),
     get<OtherTable[]>('other_tables.json'),
     get<DataQuality>('data_quality.json'),
     get<OutcomeAnalysis>('outcomes.json').catch(() => undefined),
+    get<FuelOption[]>('fuels.json').catch(() => undefined),
   ])
-  return { tests, investigations, habitats, otherTables, quality, outcomes }
+  return { tests, investigations, habitats, otherTables, quality, outcomes, fuels }
+}
+
+/** The example layout for the habitat evidence map (marks only; not a NASA design). */
+export async function loadExampleLayout(): Promise<Layout> {
+  const res = await fetch(`${import.meta.env.BASE_URL}layouts/example-moon-habitat.json`)
+  if (!res.ok) throw new Error(`Could not load the example layout: ${res.status}`)
+  return (await res.json()) as Layout
 }
 
 /** Airflow range of some tests, leaving out values flagged airflow_negative_in_source (meaning not

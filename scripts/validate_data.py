@@ -210,6 +210,87 @@ def main():
           st["flex_oxygen"]["verdict"] == "clear" and st["flex_oxygen_matched"]["verdict"] == "clear"
           and st["cfig_oxygen"]["verdict"] == "no_clear_pattern" and st["cfig_pressure"]["verdict"] == "no_clear_pattern")
 
+    # ---- habitat evidence map: fuels.json and the example layout (docs/LAYOUT_PLAN.md) ---------
+    F = load("fuels.json")
+    distinct = [t for t in T if not any(f.startswith("duplicate_row") for f in t["flags"])]
+    gas_names = [("propylene", r"\bpropylene\b"), ("ethylene", r"\bethylene\b|\bc2h4\b"), ("methane", r"\bmethane\b|\bch4\b"),
+                 ("ethane", r"\bethane\b|\bc2h6\b"), ("propane", r"\bpropane\b|\bc3h8\b"), ("butane", r"\bbutane\b")]
+    dro_names = [("heptane", r"\bheptane\b"), ("methanol", r"\bmethanol\b"), ("dodecane", r"c12h26|dodecane")]
+
+    def first_name(t):
+        """The first fuel word whose pattern matches the fuel cell (same order as the build)."""
+        names = gas_names if t["fuel_class"] == "gas" else dro_names
+        return next((w for w, p in names if re.search(p, (t["fuel"] or "").lower())), None)
+
+    def recount(cls, word):
+        if cls == "solid":
+            return sorted(t["id"] for t in distinct if t["fuel_class"] == "solid" and t["fuel_material"] == word)
+        return sorted(t["id"] for t in distinct if t["fuel_class"] == cls and first_name(t) == word)
+    bad = []
+    for f in F:
+        word = f["name"] if f["fuel_class"] == "solid" else f["name"].split()[0].lower()
+        if sorted(f["test_ids"]) != recount(f["fuel_class"], word) or f["test_count"] != len(f["test_ids"]):
+            bad.append(f["id"])
+    check("every fuel option's tests match an independent recount", not bad, ", ".join(bad))
+    check("every fuel option has at least one test; ids unique; no hydrogen offered",
+          all(f["test_count"] > 0 for f in F) and len({f["id"] for f in F}) == len(F) and not any("hydrogen" in f["id"] for f in F))
+    solid_mats = {t["fuel_material"] for t in distinct if t["fuel_class"] == "solid" and t["fuel_material"]}
+    check("every named solid material is offered", solid_mats == {f["name"] for f in F if f["fuel_class"] == "solid"})
+    covered = {i for f in F if f["fuel_class"] != "solid" for i in f["test_ids"]}
+    missing = [t["id"] for t in distinct if t["fuel_class"] != "solid" and t["id"] not in covered]
+    check("every distinct gas and droplet test belongs to one fuel option", not missing, ", ".join(missing[:5]))
+
+    by_id = {t["id"]: t for t in T}
+    bad = []
+    for f in F:
+        for h in H:
+            exp_in = sorted(i for i in f["test_ids"] if by_id[i] in placed and by_id[i] in inside(h))
+            if sorted(f["inside_by_habitat"][h["id"]]) != exp_in:
+                bad.append(f"{f['id']}@{h['id']}")
+    check("tests inside each place's box match a recount for every fuel", not bad, ", ".join(bad[:5]))
+    teal = {h["id"]: sorted(f["id"] for f in F if f["inside_by_habitat"][h["id"]]) for h in H}
+    expect_teal = {
+        "moon_base": ["gas:butane", "gas:ethane"],
+        "moon_base_nasa": [],
+        "iss": ["droplet:dodecane-n-and-iso-mixes", "droplet:heptane", "droplet:methanol", "gas:ethane", "gas:propane"],
+        "spacesuit": [],
+        "earth_sea_level": ["droplet:dodecane-n-and-iso-mixes", "droplet:heptane", "droplet:methanol", "gas:ethane", "gas:propane"],
+    }
+    check("teal fuels per place match docs/LAYOUT_PLAN.md section 5", teal == expect_teal, str(teal))
+    bad = []
+    for f in F:
+        for h in H:
+            n = f["nearest_by_habitat"][h["id"]]
+            if f["inside_by_habitat"][h["id"]]:
+                if n is not None:
+                    bad.append(f"{f['id']}@{h['id']} has inside tests and a nearest")
+                continue
+            has_o2 = any(by_id[i]["o2_basis"] == "ambient" and by_id[i]["o2_fraction"] is not None for i in f["test_ids"])
+            if has_o2 != (n is not None) or (n and n["test_id"] not in f["test_ids"]):
+                bad.append(f"{f['id']}@{h['id']}")
+    check("every amber fuel with oxygen data names its nearest test", not bad, ", ".join(bad[:5]))
+
+    lay = json.load(open(os.path.join(web, "..", "layouts", "example-moon-habitat.json"), encoding="utf-8"))
+    fids = {f["id"]: f for f in F}
+    probs = []
+    if lay["version"] != 1 or lay["habitat_id"] not in {h["id"] for h in H}:
+        probs.append("version or place")
+    if "not a NASA design" not in (lay.get("note") or ""):
+        probs.append("note must say it is not a NASA design")
+    for m in lay["marks"]:
+        if (m["kind"] == "area") != (m["fuel_class"] == "solid"):
+            probs.append(f"{m['id']} kind/type")
+        if m["fuel_option_id"] != "other" and fids.get(m["fuel_option_id"], {}).get("fuel_class") != m["fuel_class"]:
+            probs.append(f"{m['id']} fuel")
+        s = m["shape"]
+        if not all(0 <= s.get(k, 0) <= 1 for k in "xywh") or s["x"] + s.get("w", 0) > 1 or s["y"] + s.get("h", 0) > 1:
+            probs.append(f"{m['id']} position")
+    kinds = {(m["kind"], m["fuel_class"]) for m in lay["marks"]}
+    check("example layout is valid and has every mark type, both airflows and an 'Other'",
+          not probs and kinds == {("area", "solid"), ("point", "droplet"), ("point", "gas")}
+          and {m["airflow"] for m in lay["marks"]} == {"still", "vent"} and any(m["fuel_option_id"] == "other" for m in lay["marks"]),
+          ", ".join(probs))
+
     # ---- report ------------------------------------------------------------------------------
     for name, ok, detail in results:
         print(f"{'PASS' if ok else 'FAIL'}  {name}{'' if ok or not detail else '  -> ' + detail}")

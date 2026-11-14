@@ -4,6 +4,7 @@ You own the truth of every number in the app. Read `CLAUDE.md` first.
 
 **New (2026-11-14): the habitat evidence map.** Your part is `docs/LAYOUT_PLAN.md` section 7, workstream A:
 `fuels.json`, `layout.ts`, `layoutEvidence.ts`, the example layout and their checks. Do it first.
+**Done 2026-11-14** (`docs/LAYOUT_PLAN.md` section 6).
 
 ## You own
 
@@ -29,7 +30,7 @@ Done so far: task 2 (ISS, Earth and NASA's Moon Base box; other places stay "wai
 (`outcomes.json`), task 7 (`data_quality.json`, with the distinct-test count), the Gemini check
 (`gemini_data/VERIFIED.md`) and the data part of the submission (`docs/SUBMISSION_DATA.md`).
 All 20 source-table problems in `docs/DATA_ISSUES.md` are handled and every source column is kept,
-each fix checked by `scripts/validate_data.py` (68 checks, run by every build).
+each fix checked by `scripts/validate_data.py` (76 checks, run by every build).
 Still open: task 1 (blocked: no openable source), and task 6 inputs beyond what
 `investigations.json` already gives.
 

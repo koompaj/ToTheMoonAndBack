@@ -156,77 +156,59 @@ placeholder for the cited test):
 Every line carries a citation (test row or DOI), as everywhere else in the app. Gap lines are coral
 and say "not in the tables", never "never tested".
 
-## 6. Data contract (workstream A provides; B and C read)
+## 6. Data contract (built by workstream A, 2026-11-14; B and C read)
 
-New, produced by `scripts/build_web_data.py` and checked by `scripts/validate_data.py`:
+**Status: done and merged with this spec.** Produced by `scripts/build_web_data.py`, checked by
+`scripts/validate_data.py` (76 checks, including 8 for this feature). The types are the source of
+truth; read them rather than copying from here.
 
-- **`web/public/data/fuels.json`**: the options in section 4.
-- **`web/src/types/layout.ts`** (shared contract; agree changes with all three).
-- **`web/src/data/layoutEvidence.ts`**: `markEvidence(data, habitat, mark)` returns the colour and
-  the card lines. Pure function, no React, so the AI script can reuse it.
+| File | What it gives you |
+|---|---|
+| `web/public/data/fuels.json` | The 18 fuel options in section 4, each with its evidence in every place (`inside_by_habitat`, `nearest_by_habitat`). Loaded into `data.fuels` by `loadData()` |
+| `web/src/types/layout.ts` (shared) | `FuelOption`, `LayoutMark`, `Layout`, `EvidenceTier`, `EvidenceStatement`, `MarkEvidence`, plus `OTHER_FUEL` (`'other'`), `TIER_LABEL` and `TIER_COLOR` |
+| `web/src/data/layoutEvidence.ts` | The functions below. Pure, type-only imports, so Node can run them too |
+| `web/src/data/load.ts` | `loadExampleLayout()` |
+| `web/public/layouts/example-moon-habitat.json` | The example layout: 10 marks (6 material areas incl. one "Other", 2 liquid points, 2 gas points), both airflow settings, `note` saying it is not a NASA design. Place: Moon Base (NASA exploration air) |
+
+Functions in `layoutEvidence.ts`:
 
 ```ts
-// web/src/types/layout.ts (proposed)
-export interface FuelOption {
-  id: string                    // "solid:nomex", "droplet:methanol", "gas:butane"
-  fuel_class: FuelClass
-  name: string                  // "Nomex"
-  test_ids: string[]            // distinct tests (duplicates left out)
-  test_count: number
-  investigations: string[]      // accessions
-  o2_range: [number, number] | null        // cabin-air oxygen fraction
-  pressure_psi_range: [number, number] | null
-  airflow_range: [number, number] | null   // via airflowRange(): negative values left out
-  endings: Record<string, number>          // as NASA records them
-  note: string | null           // e.g. "Pressure is not in these tables."
-}
-
-export interface LayoutMark {
-  id: string
-  kind: 'area' | 'point'        // area = solid; point = droplet or gas
-  fuel_class: FuelClass
-  fuel_option_id: string | 'other'
-  label: string                 // free text, never used for evidence
-  airflow: 'still' | 'vent'
-  // position on the plan as fractions of its width and height (0..1)
-  shape: { x: number; y: number; w?: number; h?: number }
-}
-
-export interface Layout {
-  version: 1
-  habitat_id: string
-  image_name: string | null     // the image itself is never saved or uploaded
-  marks: LayoutMark[]
-}
-
-export type EvidenceTier = 'tested_here' | 'tested_elsewhere' | 'not_in_tables'
-
-export interface MarkEvidence {
-  tier: EvidenceTier
-  tested: Statement[]           // "What NASA tested"  (Statement as in ai/fireTasks.ts)
-  gap: Statement[]              // "The gap"
-  airflow: Statement[]          // "Airflow"
-  endings: Record<string, number>
-  inside_test_ids: string[]     // tests inside the place's box
-  nearest_test_id: string | null
-}
+fuelOptionsFor(data, fuelClass): FuelOption[]          // the dropdown list for one tool, most-tested first
+kindAllows(kind, fuelClass): boolean                   // area -> solid; point -> droplet or gas
+tierOf(option | null, habitat): EvidenceTier           // the colour
+markEvidence(data, habitat, mark): MarkEvidence        // the colour and every card line, each with cites
+layoutSummary(data, habitat, layout)                   // { total, tested_here, tested_elsewhere, not_in_tables }
+layoutProblems(data, layout): string[]                 // check a layout opened from a file; [] = fine
 ```
 
-Workstream A also provides **`web/public/layouts/example-moon-habitat.json`**: an example layout
-(marks only) with one or more marks of each type, labelled "Example layout, not a NASA design".
+A mark's shape is in fractions of the plan's width and height (0..1): areas `{x, y, w, h}` from the
+top-left corner, points `{x, y}`. `fuel_option_id` is a `FuelOption.id` or `'other'`.
+
+Example card lines `markEvidence` writes (Nomex seats near a vent, NASA exploration air):
+
+```
+9 Nomex tests (BASS and BASS-II) at 21 % to 22.2 % cabin oxygen.                     {PSI-25, PSI-26}
+GAP Pressure is not in these tables.
+GAP This air: 32 % to 36 % oxygen, 8 psi to 8.4 psi. The highest-oxygen Nomex test ran at 22.2 %,
+    9.8 points short, and its table records no pressure.                              {PSI-25:bass-ii:23}
+GAP No Nomex test records airflow, so a fire near a vent is not in the tables.
+```
+
+`kind: 'gap'` lines are the coral ones. Show `option.endings` under "How the tests ended" when it is
+not empty.
 
 ## 7. Who builds what
 
-### Workstream A (data) - tonight
+### Workstream A (data) - done
 
 1. `fuels.json` built from `tests.json` with whole-word fuel matching (so "methane" is never read as
    "ethane"), distinct tests only.
-2. `layout.ts` and `layoutEvidence.ts` exactly as section 6.
+2. `layout.ts` and `layoutEvidence.ts` as in section 6.
 3. The example layout JSON.
-4. New checks in `validate_data.py`: every option's counts match `tests.json`; the colour of every
-   option for every place matches section 5's table; no option is offered without a test.
-
-Done when: `npm run build` passes, the validator passes, and C can import `markEvidence`.
+4. Checks in `validate_data.py`: every option matches an independent recount; every named material is
+   offered and every gas and droplet test belongs to an option; no option without a test, no
+   hydrogen; tests inside each place's box recounted; the teal list per place equals section 5's
+   table; every amber option with oxygen data names its nearest test; the example layout is valid.
 
 ### Workstream B (3D) - `web/src/scene/LayoutCanvas.tsx`
 
@@ -294,7 +276,7 @@ Done when: the journey in section 2 works end to end on the example layout and o
 
 | When | What |
 |---|---|
-| Saturday night | A: section 6 data, functions, example layout, checks; pushed and merged |
+| Saturday night | A: section 6 data, functions, example layout, checks (done) |
 | Sunday morning | B: `LayoutCanvas`. C: `LayoutView`, upload, panel, cards, report |
 | Sunday noon | Wire together; test on the example and on one uploaded image |
 | Sunday 3 p.m. | Feature freeze; record the 30-second video or build the 7 slides |

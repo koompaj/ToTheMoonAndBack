@@ -1,6 +1,7 @@
 // SHARED CONTRACT - the shape of the JSON in web/public/data/.
 // Produced by scripts/build_web_data.py (data workstream), read by everything else.
 // Change only by agreement of all three workstreams (see CLAUDE.md, "Shared files").
+import type { FuelOption } from './layout'
 
 export type FuelClass = 'solid' | 'droplet' | 'gas'
 
@@ -197,4 +198,6 @@ export interface AppData {
   quality: DataQuality
   /** Optional so older callers (ai/generate.mjs) keep working. */
   outcomes?: OutcomeAnalysis
+  /** Fuels a user can pick on the habitat evidence map (docs/LAYOUT_PLAN.md). */
+  fuels?: FuelOption[]
 }
