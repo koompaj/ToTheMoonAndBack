@@ -8,6 +8,7 @@ import { useApp } from '../state/store'
 import { fmtPct, fmtPsi, isDuplicate, isPlaced } from '../ai/evidence'
 import { TestCite } from './Cite'
 import { TestDetail } from './TestDetail'
+import { ConditionsBar, useConditions } from './Conditions'
 import { useHashParam } from './route'
 import { Choice, FUEL_SHORT, FuelTag, ViewHead } from './ui'
 
@@ -30,6 +31,7 @@ export function TestsView({ data, lockedInv, embedded = false }: { data: AppData
   const selectedTestId = useApp((s) => s.selectedTestId)
   const selectTest = useApp((s) => s.selectTest)
   const page = Math.max(1, Number(pageStr) || 1)
+  const cond = useConditions(data)
 
   const investigations = useMemo(
     () => [...new Map(data.tests.map((t) => [t.investigation, t.acronym])).entries()].sort((a, b) => a[1].localeCompare(b[1])),
@@ -40,6 +42,7 @@ export function TestsView({ data, lockedInv, embedded = false }: { data: AppData
     const needle = q.trim().toLowerCase()
     return data.tests.filter((t) => {
       if (isDuplicate(t)) return false // repeats an earlier row exactly; counted once
+      if (cond.active && !cond.insideIds.has(t.id)) return false // air-conditions filter (item 12)
       if (fuel !== 'all' && t.fuel_class !== fuel) return false
       if (inv !== 'all' && t.investigation !== inv) return false
       if (where === 'moon' && t.in_moon_envelope !== true) return false
@@ -49,7 +52,7 @@ export function TestsView({ data, lockedInv, embedded = false }: { data: AppData
       if (needle && ![t.fuel, t.test_label, t.acronym, t.outcome].filter(Boolean).join(' ').toLowerCase().includes(needle)) return false
       return true
     })
-  }, [data.tests, fuel, inv, where, q])
+  }, [data.tests, fuel, inv, where, q, cond.active, cond.insideIds])
 
   const hiddenRepeats = data.tests.filter((t) => isDuplicate(t) && (inv === 'all' || t.investigation === inv)).length
   const pages = Math.max(1, Math.ceil(rows.length / PAGE))
@@ -105,6 +108,7 @@ export function TestsView({ data, lockedInv, embedded = false }: { data: AppData
       </ViewHead>
       )}
 
+      <ConditionsBar data={data} c={cond} compact />
       <div className="filter-bar">
         <Choice
           label="Fuel type"

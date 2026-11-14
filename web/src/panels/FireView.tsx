@@ -11,6 +11,7 @@ import type { AiContent } from '../ai/content'
 import { defaultPoint, expectedBehaviour, nearestTests, taskAnswers, type Statement } from '../ai/fireTasks'
 import { fmtPct, PSI_PER_ATM } from '../ai/evidence'
 import { SentenceCites, TestCite } from './Cite'
+import { OutcomesPanel } from './OutcomesPanel'
 import { useHashParam } from './route'
 import { placeArt, placeName } from './places'
 import { PlaceArt } from './SpaceArt'
@@ -216,6 +217,7 @@ export function FireView({
         <p className="footnote">Grey chips open the NASA row or record behind each line. Coral lines are gaps: not in the tables.</p>
       </section>
 
+      <OutcomesPanel data={data} fuel={fuel} />
     </section>
   )
 }

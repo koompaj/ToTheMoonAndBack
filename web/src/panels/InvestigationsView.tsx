@@ -11,6 +11,7 @@ import { DoiCite, SentenceCites } from './Cite'
 import { useHashParam } from './route'
 import { Choice, FuelTag, PILLAR_HINT, PillarTag, ViewHead } from './ui'
 import { ComparePanel, useCompare, type CompareMode } from './CompareDrawer'
+import { ConditionsBar, useConditions } from './Conditions'
 import type { Test } from '../types/data'
 
 type Filter = Pillar | 'unstated' | 'all'
@@ -21,7 +22,7 @@ function clip(text: string | null, max: number) {
   return t.length > max ? `${t.slice(0, max).replace(/\s+\S*$/, '')}…` : t
 }
 
-function Card({ s, data, ai, testQuery, matches }: { s: InvestigationStats; data: AppData; ai: AiContent; testQuery: string; matches: Test[] }) {
+function Card({ s, data, ai, testQuery, matches, airCount, keep }: { s: InvestigationStats; data: AppData; ai: AiContent; testQuery: string; matches: Test[]; airCount: number | null; keep: string }) {
   const [cmp, toggleCmp] = useCompare()
   const starred = cmp.includes(s.inv.accession)
   const { inv } = s
@@ -33,7 +34,7 @@ function Card({ s, data, ai, testQuery, matches }: { s: InvestigationStats; data
       <header>
         <div className="inv-title">
           <h2>
-            <a className="card-link" href={`#experiments?id=${inv.accession}`}>
+            <a className="card-link" href={`#experiments?id=${inv.accession}${keep}`}>
               {shortName(inv)}
             </a>
           </h2>
@@ -167,14 +168,19 @@ function Card({ s, data, ai, testQuery, matches }: { s: InvestigationStats; data
           </>
         )}
       </details>
+      {airCount !== null && (
+        <p className="air-match">
+          <b>{airCount}</b> {airCount === 1 ? 'test' : 'tests'} in this air
+        </p>
+      )}
       {testQuery && (
-        <a className="test-match" href={`#experiments?id=${inv.accession}&q=${encodeURIComponent(testQuery)}`}>
+        <a className="test-match" href={`#experiments?id=${inv.accession}&q=${encodeURIComponent(testQuery)}${keep}`}>
           <b>{matches.length}</b> {matches.length === 1 ? 'test matches' : 'tests match'} “{testQuery}”
           <span className="muted small"> e.g. {matches.slice(0, 2).map((t) => t.test_label ?? `row ${t.source_row}`).join(', ')}</span>
         </a>
       )}
       <footer>
-        <a className="btn btn-primary btn-quiet" href={`#experiments?id=${inv.accession}${testQuery ? `&q=${encodeURIComponent(testQuery)}` : ''}`}>
+        <a className="btn btn-primary btn-quiet" href={`#experiments?id=${inv.accession}${testQuery ? `&q=${encodeURIComponent(testQuery)}` : ''}${keep}`}>
           {s.tests.length > 0 ? `See Its ${s.tests.length} Tests →` : 'Open Experiment →'}
         </a>
         <DoiCite inv={inv} />
@@ -183,11 +189,41 @@ function Card({ s, data, ai, testQuery, matches }: { s: InvestigationStats; data
   )
 }
 
+
+/** Item 9: cards grouped by pillar (challenge page) or by hardware (PSI record, via A's hardware_group). */
+function groupsOf(list: InvestigationStats[], by: 'pillar' | 'hardware') {
+  const out = new Map<string, InvestigationStats[]>()
+  const order: string[] = []
+  const add = (k: string, s: InvestigationStats) => {
+    if (!out.has(k)) {
+      out.set(k, [])
+      order.push(k)
+    }
+    out.get(k)!.push(s)
+  }
+  if (by === 'pillar') {
+    const names: Record<string, string> = { prevention: 'Prevention', detection: 'Detection', suppression: 'Suppression' }
+    for (const p of ['prevention', 'detection', 'suppression', 'none'])
+      for (const s of list) if ((s.inv.pillar ?? 'none') === p) add(p === 'none' ? 'Pillar Not Stated' : names[p], s)
+  } else {
+    const withHw = list.filter((s) => s.inv.hardware_group)
+    const labels = [...new Set(withHw.map((s) => s.inv.hardware_group!.label))].sort(
+      (a, b) => withHw.filter((s) => s.inv.hardware_group!.label === b).length - withHw.filter((s) => s.inv.hardware_group!.label === a).length,
+    )
+    for (const l of labels) for (const s of withHw) if (s.inv.hardware_group!.label === l) add(l, s)
+    for (const s of list) if (!s.inv.hardware_group) add('Hardware Not Listed', s)
+  }
+  return order.map((label) => ({ label, items: out.get(label)! }))
+}
+
 export function InvestigationsView({ data, ai }: { data: AppData; ai: AiContent }) {
   const [filter, setFilter] = useHashParam('pillar', 'all')
   const [query, setQuery] = useHashParam('eq', '')
   const [testQuery, setTestQuery] = useHashParam('tq', '')
   const [cmpIds] = useCompare()
+  const cond = useConditions(data)
+  const [groupBy, setGroupBy] = useHashParam('group', 'pillar')
+  const airCount = (st: InvestigationStats) => st.tests.filter((t) => cond.insideIds.has(t.id)).length
   const [cmpView, setCmpView] = useHashParam('cmpview', 'split')
   const stats = useMemo(() => investigationStats(data), [data])
   const nGround = data.investigations.filter((i) => i.project_type?.startsWith('Ground')).length
@@ -206,6 +242,7 @@ export function InvestigationsView({ data, ai }: { data: AppData; ai: AiContent 
         [s.inv.acronym, s.inv.title, s.inv.accession, s.inv.keywords.join(' '), s.inv.hardware].filter(Boolean).join(' ').toLowerCase().includes(q),
     )
     .filter((s) => !tq || testMatches(s).length > 0)
+    .filter((s) => !cond.active || airCount(s) > 0)
     .sort((a, b) => b.tests.length - a.tests.length || b.tableRows - a.tableRows)
   const count = (f: Filter) => stats.filter((s) => match(s, f)).length
   const opt = (id: Filter, label: string, tone?: string, title?: string) => ({
@@ -252,7 +289,14 @@ export function InvestigationsView({ data, ai }: { data: AppData; ai: AiContent 
               placeholder="PMMA, heptane, extinction, B12…"
             />
           </label>
+          <ConditionsBar data={data} c={cond} inline />
         </div>
+        <p className="csv-line">
+          <a className="link" href={`${import.meta.env.BASE_URL}data/tests.csv`} download>
+            Download All Tests (CSV)
+          </a>{' '}
+          <span className="muted small">Every row cites its NASA table row and DOI.</span>
+        </p>
       </ViewHead>
       {tq && (
         <p className="result-count" aria-live="polite">
@@ -260,6 +304,18 @@ export function InvestigationsView({ data, ai }: { data: AppData; ai: AiContent 
           {shown.length === 1 ? 'experiment' : 'experiments'}. Open one to see them.
         </p>
       )}
+      <div className="group-bar">
+        <span className="cond-g-label">Group by</span>
+        <Choice
+          label="Group by"
+          value={groupBy === 'hardware' ? 'hardware' : 'pillar'}
+          onChange={setGroupBy}
+          options={[
+            { id: 'pillar', label: 'Pillar' },
+            { id: 'hardware', label: 'Hardware' },
+          ]}
+        />
+      </div>
       <Choice
         label="Fire-safety pillar"
         value={filter as Filter}
@@ -274,9 +330,14 @@ export function InvestigationsView({ data, ai }: { data: AppData; ai: AiContent 
       />
       <div className={`exp-split cmp-${cmpIds.length === 0 ? 'off' : cmpView}`}>
       <div className="inv-grid">
-        {shown.map((s) => (
-          <Card key={s.inv.accession} s={s} data={data} ai={ai} testQuery={testQuery.trim()} matches={testMatches(s)} />
-        ))}
+        {groupsOf(shown, groupBy === 'hardware' ? 'hardware' : 'pillar').map((g) => [
+          <h2 key={`h-${g.label}`} className="group-head">
+            {g.label} <span className="count">{g.items.length}</span>
+          </h2>,
+          ...g.items.map((s) => (
+            <Card key={s.inv.accession} s={s} data={data} ai={ai} testQuery={testQuery.trim()} matches={testMatches(s)} airCount={cond.active ? airCount(s) : null} keep={cond.query} />
+          )),
+        ])}
         {shown.length === 0 && (
           <p className="empty-state">
             No experiment matches {query ? `“${query}”` : ''}{query && testQuery ? ' with ' : ''}{testQuery ? `a test matching “${testQuery}”` : ''}. Try a shorter word, or pick <b>All</b>.
