@@ -16,9 +16,14 @@ each carrying its source URL. Tasks G1 and G2 answer your tasks 1 and 2 below.
 
 ## Where things stand
 
-`scripts/build_web_data.py` converts 7 of the 22 tables into `tests.json` (1,150 tests) and writes
-`investigations.json` and `habitats.json`. It prints checks at the end; the Moon Base count must
-stay at 20 unless you can explain the change.
+`scripts/build_web_data.py` accounts for all 22 tables: 12 become `tests.json` (1,753 tests), 10 are
+published as-is in `other_tables.json`, and 9 non-test rows are left out with reasons in
+`data_quality.json`. It also writes `investigations.json` and `habitats.json`. It prints checks at
+the end; the Moon Base count must stay at 20 unless you can explain the change.
+
+Done so far: task 3 (tables), task 4 (airflow, except BASS-II whose display units are unknown) and
+the first version of task 7 (`data_quality.json`). Still open: tasks 1, 2, 5, 6 and the columns
+listed under "Not converted yet" in `docs/DATA_ISSUES.md`.
 
 ## Tasks, in priority order
 

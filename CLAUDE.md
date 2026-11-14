@@ -81,8 +81,9 @@ request, and merge it quickly so nobody builds on a stale copy.
 
 ## How the three parts connect
 
-- **Data contract:** `web/src/types/data.ts` describes `tests.json`, `investigations.json` and
-  `habitats.json`. A produces them; B and C only read them.
+- **Data contract:** `web/src/types/data.ts` describes `tests.json`, `investigations.json`,
+  `habitats.json`, `other_tables.json` and `data_quality.json`. A produces them; B and C only read
+  them. Count unplaced tests with `unplacedTests()` in `web/src/data/load.ts`.
 - **Selection state:** `web/src/state/store.ts`. The 3D scene and the panels talk to each other only
   through this store (selected habitat, selected test, inverse-flame toggle, 2D/3D view).
 - B and C never import from each other's folders, except `App.tsx` importing the two scene components.
@@ -119,17 +120,23 @@ cd web && npm run build
 ## Current state of the baseline
 
 - Raw data downloaded: 24 Combustion Science records and 22 experimental tables (2,009 rows).
-- `tests.json` v1: **1,150 real tests from 7 tables** (those with a usable oxygen column).
-  876 record cabin-air oxygen; 746 of those also record pressure; 270 are at >= 30 % oxygen;
-  20 are inside the Moon Base envelope. 274 are inverse-flame (burner-oxidizer) rows.
-- The other 15 tables are not converted yet. Their problems are listed in `docs/DATA_ISSUES.md`.
+- `tests.json`: **1,753 real tests from 12 tables** (263 solid, 361 droplet, 1,129 gas).
+  274 are inverse-flame (burner-oxidizer) rows. Of the 1,479 cabin-air tests, 884 record an oxygen
+  value, 746 record oxygen and pressure, 270 are at >= 30 % oxygen, and 20 are inside the Moon Base
+  envelope. 457 tests record airflow.
+- `other_tables.json`: the 10 tables that are not one-row-per-burn (per-day summaries, ranges,
+  smoke tests), cells exactly as published.
+- `data_quality.json`: what happened to every table and row, and what each flag means.
+- All 22 tables are accounted for: 2,009 source rows = 1,753 tests + 247 in other tables + 9 left
+  out (listed with reasons). Remaining source problems: `docs/DATA_ISSUES.md`.
 - The web app builds and shows: a stub 3D map, a stub flame, a habitat panel with live counts, and a
   stub untapped-data table. Stubs are marked `BASELINE STUB` at the top of the file.
 
 ## Open questions (owner in brackets)
 
 1. **[A] Pressure for solid-material tests.** BASS-II, BASS and SAFFIRE tables have no pressure
-   column, so 129 solid tests cannot be placed on the map. Needs a sourced cabin-pressure value.
+   column, so none of the 263 solid tests can be placed on the map (140 of them do record oxygen,
+   highest 22.2 %). Needs a sourced cabin-pressure value (Gemini task G2).
 2. **[A] Habitat numbers.** The challenge gives numbers for the Moon Base, spacesuit and Earth
    pressure only. ISS and Mars habitat boxes need a NASA source. A candidate Moon Base nominal point
    (8.2 psi, 34 % oxygen) is unverified: confirm against a NASA source before using it.
