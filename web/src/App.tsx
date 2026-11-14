@@ -26,7 +26,8 @@ export default function App() {
       <header>
         <h1>Flame in Freefall</h1>
         <span className="muted">
-          {data.tests.length} real tests from {data.investigations.length} NASA PSI combustion investigations
+          {data.tests.length} real NASA tests from {new Set(data.tests.map((t) => t.investigation)).size} of the{' '}
+          {data.investigations.length} PSI combustion investigations
         </span>
         <label>
           <input type="checkbox" checked={showBurnerOxidizer} onChange={(e) => setShowBurnerOxidizer(e.target.checked)} />

@@ -1,0 +1,2857 @@
+[
+ {
+  "investigation": "PSI-20",
+  "acronym": "ACME BRE",
+  "source_table": "tables/PSI-20/PSI-20_Experimental table_ACME BRE.csv",
+  "kind": "per_day_summary",
+  "why_not_tests": "One row per test day; oxygen cells list every concentration used that day.",
+  "columns": [
+   "Year",
+   "Month",
+   "Date",
+   "Burner Size (mm)",
+   "Fuel Bottle",
+   "Oxygen Conc (percent)",
+   "Flames Ignited",
+   "Notes"
+  ],
+  "rows": [
+   [
+    "2019",
+    "Feb",
+    "8",
+    "25",
+    "100% C2H4",
+    "21; 26.5; 40",
+    "10",
+    "Oxygen Conc. (as diluted with nitrogen on a volume basis) was varied between tests where approximate concentrations for tests that ignited are listed. The chamber pressures were also varied but are not identified in this summary table."
+   ],
+   [
+    "2019",
+    "Feb",
+    "20",
+    "25",
+    "100% C2H4",
+    "26.5; 34",
+    "8",
+    "Flames Ignited is the number ignited on that day (neglecting the day change on ISS)."
+   ],
+   [
+    "2019",
+    "Feb",
+    "25",
+    "25",
+    "50% C2H4",
+    "21; 26.5; 34; 40",
+    "8",
+    ""
+   ],
+   [
+    "2019",
+    "March",
+    "4",
+    "25",
+    "50% C2H4",
+    "26.5; 40",
+    "6",
+    ""
+   ],
+   [
+    "2019",
+    "March",
+    "7",
+    "25",
+    "50% C2H4",
+    "3400%",
+    "6",
+    ""
+   ],
+   [
+    "2019",
+    "March",
+    "11",
+    "25",
+    "50% C2H4",
+    "26.5; 34",
+    "7",
+    ""
+   ],
+   [
+    "2019",
+    "March",
+    "28",
+    "25",
+    "100%C2H4",
+    "26.5; 34",
+    "8",
+    ""
+   ],
+   [
+    "2019",
+    "April",
+    "1",
+    "25",
+    "100%C2H4",
+    "2100%",
+    "0",
+    ""
+   ],
+   [
+    "2019",
+    "April",
+    "4",
+    "25",
+    "100%C2H4",
+    "21; 26.5; 34",
+    "9",
+    ""
+   ],
+   [
+    "2020",
+    "Sept",
+    "3",
+    "50",
+    "100% C2H4",
+    "25; 34; 40",
+    "13",
+    ""
+   ],
+   [
+    "2020",
+    "Oct",
+    "17",
+    "25",
+    "100% C2H4",
+    "26.5; 34",
+    "13",
+    ""
+   ],
+   [
+    "2020",
+    "Dec",
+    "5",
+    "25",
+    "100% CH4",
+    "25; 34; 40",
+    "21",
+    ""
+   ],
+   [
+    "2020",
+    "Dec",
+    "4",
+    "25",
+    "100% CH4",
+    "25; 40",
+    "18",
+    ""
+   ],
+   [
+    "2020",
+    "Dec",
+    "11",
+    "25",
+    "50% C2H4",
+    "25; 40",
+    "12",
+    ""
+   ],
+   [
+    "2020",
+    "Dec",
+    "17",
+    "25",
+    "100% C2H4",
+    "34; 40",
+    "10",
+    ""
+   ],
+   [
+    "2020",
+    "Dec",
+    "23",
+    "25",
+    "100% C2H4",
+    "25; 34; 40",
+    "17",
+    ""
+   ],
+   [
+    "2021",
+    "Jan",
+    "20",
+    "25",
+    "100% C2H4",
+    "21; 26.5; 34",
+    "15",
+    ""
+   ],
+   [
+    "2021",
+    "Jan",
+    "28",
+    "50",
+    "100% C2H4",
+    "25; 34; 40",
+    "13",
+    ""
+   ]
+  ],
+  "known_issues": [
+   "Two oxygen cells read '2100%' and '3400%' (percent-format artefact); see corrections."
+  ],
+  "corrections": [
+   {
+    "row": 5,
+    "column": "Oxygen Conc (percent)",
+    "as_published": "3400%",
+    "read_as": "34",
+    "reason": "percent-format artefact; other rows list plain percentages"
+   },
+   {
+    "row": 8,
+    "column": "Oxygen Conc (percent)",
+    "as_published": "2100%",
+    "read_as": "21",
+    "reason": "percent-format artefact; other rows list plain percentages"
+   }
+  ]
+ },
+ {
+  "investigation": "PSI-21",
+  "acronym": "ACME CLD Flame",
+  "source_table": "tables/PSI-21/PSI-21_Experimental table_CLD Flame.csv",
+  "kind": "per_day_summary",
+  "why_not_tests": "One row per test day.",
+  "columns": [
+   "Test Type",
+   "Test Day",
+   "Fuel MFC",
+   "N2 MFC",
+   "Fuel Bottle",
+   "Fuel conc. Range",
+   "Flames ignited",
+   "Notes"
+  ],
+  "rows": [
+   [
+    "Methane based test",
+    "17319",
+    "0.1",
+    "0.1",
+    "40% CH4",
+    "30%-40%",
+    "10",
+    "Test Day - includes the year as the first two digits followed by the 3-digit day of the year (where any late-hour transition to the next day is neglected). MFC - identifies the maximum flow rate of the specified ACME Mass Flow Controller (MFC) in slpm on a nitrogen basis. Fuel conc. - (as diluted with nitrogen on a volume basis) was varied between tests and sometimes during tests where the listing here accounts for both. However, it does not account for extinction that sometimes occurred before the flame fully reached the lowest concentration. Flames ignited is the number ignited on that test day."
+   ],
+   [
+    "Methane based test",
+    "17324",
+    "0.1",
+    "0.1",
+    "40% CH5",
+    "30%-40%",
+    "5",
+    ""
+   ],
+   [
+    "Methane based test",
+    "17342",
+    "0.1",
+    "0.1",
+    "40% CH6",
+    "40%",
+    "8",
+    ""
+   ],
+   [
+    "Methane based test",
+    "17356",
+    "0.1",
+    "0.1",
+    "40% CH7",
+    "30%-40%",
+    "3",
+    ""
+   ],
+   [
+    "Methane based test",
+    "18003",
+    "0.1",
+    "0.1",
+    "40% CH8",
+    "25%-40%",
+    "9",
+    ""
+   ],
+   [
+    "Methane based test",
+    "18005",
+    "0.1",
+    "0.1",
+    "40% CH9",
+    "30%-40%",
+    "7",
+    ""
+   ],
+   [
+    "Methane based test",
+    "18008",
+    "0.1",
+    "0.1",
+    "40% CH10",
+    "25%-40%",
+    "8",
+    ""
+   ],
+   [
+    "Methane based test",
+    "18011",
+    "0.1",
+    "0.1",
+    "40% CH11",
+    "25%-40%",
+    "14",
+    ""
+   ],
+   [
+    "Methane based test",
+    "18022",
+    "0.1",
+    "0.1",
+    "40% CH12",
+    "30%-40%",
+    "3",
+    ""
+   ],
+   [
+    "Methane based test",
+    "18026",
+    "0.1",
+    "0.1",
+    "40% CH13",
+    "25%-40%",
+    "16",
+    ""
+   ],
+   [
+    "Methane based test",
+    "18032",
+    "0.1",
+    "0.1",
+    "40% CH14",
+    "30%-40%",
+    "13",
+    ""
+   ],
+   [
+    "Methane based test",
+    "18039",
+    "0.1",
+    "0.05",
+    "100% CH4",
+    "50%-80%",
+    "8",
+    ""
+   ],
+   [
+    "Methane based test",
+    "18043",
+    "0.1",
+    "0.05",
+    "100% CH5",
+    "50%-100%",
+    "10",
+    ""
+   ],
+   [
+    "Methane based test",
+    "18053",
+    "0.1",
+    "0.02",
+    "100% CH6",
+    "30%-40%",
+    "16",
+    ""
+   ],
+   [
+    "Ethylene based test",
+    "18145",
+    "0.2",
+    "0.1",
+    "100% C2H4",
+    "80%-100%",
+    "3",
+    ""
+   ],
+   [
+    "Ethylene based test",
+    "18151",
+    "0.2",
+    "0.1",
+    "100% C2H5",
+    "100%",
+    "2",
+    ""
+   ],
+   [
+    "Ethylene based test",
+    "18177",
+    "0.2",
+    "0.1",
+    "100% C2H6",
+    "80%-100%",
+    "9",
+    ""
+   ],
+   [
+    "Ethylene based test",
+    "18186",
+    "0.2",
+    "0.1",
+    "100% C2H7",
+    "60%-100%",
+    "14",
+    ""
+   ],
+   [
+    "Ethylene based test",
+    "18192",
+    "0.2",
+    "0.1",
+    "100% C2H8",
+    "50%-60%",
+    "10",
+    ""
+   ],
+   [
+    "Ethylene based test",
+    "18199",
+    "0.2",
+    "0.1",
+    "100% C2H9",
+    "40%-100%",
+    "16",
+    ""
+   ],
+   [
+    "Ethylene based test",
+    "18214",
+    "0.2",
+    "0.05",
+    "100% C2H10",
+    "100%",
+    "13",
+    ""
+   ],
+   [
+    "Ethylene based test",
+    "18218",
+    "0.2",
+    "0.05",
+    "100% C2H11",
+    "80%",
+    "18",
+    ""
+   ],
+   [
+    "Ethylene based test",
+    "18235",
+    "0.2",
+    "0.1",
+    "50% C2H4",
+    "50%",
+    "16",
+    ""
+   ],
+   [
+    "Ethylene based test",
+    "18239",
+    "0.2",
+    "0.1",
+    "50% C2H5",
+    "40%",
+    "14",
+    ""
+   ],
+   [
+    "Ethylene based test",
+    "18241",
+    "0.1",
+    "0.2",
+    "50% C2H6",
+    "10%-20%",
+    "6",
+    ""
+   ],
+   [
+    "Ethylene based test",
+    "18249",
+    "0.1",
+    "0.2",
+    "50% C2H7",
+    "10%-30%",
+    "12",
+    ""
+   ],
+   [
+    "Ethylene based test",
+    "18253",
+    "0.1",
+    "0.2",
+    "50% C2H8",
+    "15%-30%",
+    "14",
+    ""
+   ],
+   [
+    "Ethylene based test",
+    "18257",
+    "0.1",
+    "0.2",
+    "50% C2H9",
+    "15%-20%",
+    "15",
+    ""
+   ],
+   [
+    "Improved coflow tests",
+    "21041",
+    "0.2",
+    "0.2",
+    "30% C2H4",
+    "0%-30%",
+    "9",
+    ""
+   ],
+   [
+    "Improved coflow tests",
+    "21046",
+    "0.2",
+    "0.2",
+    "30% C2H5",
+    "15%-20%",
+    "16",
+    ""
+   ],
+   [
+    "Improved coflow tests",
+    "21050",
+    "0.2",
+    "0.2",
+    "40% CH4",
+    "20%-40%",
+    "16",
+    ""
+   ],
+   [
+    "Improved coflow tests",
+    "21062",
+    "0.2",
+    "0.2",
+    "40% CH5",
+    "30%-40%",
+    "11",
+    ""
+   ]
+  ],
+  "known_issues": [
+   "'Fuel Bottle' runs C2H4, C2H5 ... C2H11: looks like spreadsheet autofill. Not corrected; confirm the real fuel against the PSI record before quoting this column."
+  ],
+  "corrections": []
+ },
+ {
+  "investigation": "PSI-22",
+  "acronym": "ACME E-FIELD Flames",
+  "source_table": "tables/PSI-22/PSI-22_Experimental table_ACME E-FIELD Flames.csv",
+  "kind": "per_day_summary",
+  "why_not_tests": "One row per test day, with continuation rows.",
+  "columns": [
+   "Test Type",
+   "Test Day",
+   "Year",
+   "Month",
+   "Date",
+   "Mesh Polarity",
+   "Fuel Bottle",
+   "Fuel Conc",
+   "Flames Ignited",
+   "Notes"
+  ],
+  "rows": [
+   [
+    "First round of tests with coflow burner",
+    "18073",
+    "2018",
+    "3",
+    "14",
+    "negative",
+    "100% CH4",
+    "100%",
+    "10",
+    "Test day is formatted YYDDD where YY identifies year and DDD identifies day of year (GMT)."
+   ],
+   [
+    "First round of tests with coflow burner",
+    "18078",
+    "2018",
+    "3",
+    "19",
+    "negative",
+    "100% CH4",
+    "70%",
+    "10",
+    "Mesh polarity refers to the polarity of the high-voltage power supply and the copper electrode relative to the burner."
+   ],
+   [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "100%",
+    "",
+    "Fuel Conc. (diluted with nitrogen on a volume basis) was varied between tests, but typically matched the bottle. The list only accounts for flames ignited."
+   ],
+   [
+    "First round of tests with coflow burner",
+    "18080",
+    "2018",
+    "3",
+    "21",
+    "negative",
+    "40% CH4",
+    "40%",
+    "8",
+    "Flames Ignited is the number ignited on that day (neglecting the day change on ISS)."
+   ],
+   [
+    "First round of tests with coflow burner",
+    "18087",
+    "2018",
+    "3",
+    "28",
+    "negative",
+    "100% C2H4",
+    "80%",
+    "10",
+    ""
+   ],
+   [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "100%",
+    "",
+    ""
+   ],
+   [
+    "First round of tests with coflow burner",
+    "18092",
+    "2018",
+    "4",
+    "2",
+    "negative",
+    "30% C2H4",
+    "30%",
+    "11",
+    ""
+   ],
+   [
+    "First round of tests with coflow burner",
+    "18095",
+    "2018",
+    "4",
+    "5",
+    "positive",
+    "30% C2H4",
+    "30%",
+    "10",
+    ""
+   ],
+   [
+    "First round of tests with coflow burner",
+    "18102",
+    "2018",
+    "4",
+    "12",
+    "positive",
+    "40% CH4",
+    "40%",
+    "8",
+    ""
+   ],
+   [
+    "First round of tests with coflow burner",
+    "18106",
+    "2018",
+    "4",
+    "16",
+    "positive",
+    "40% CH4",
+    "40%",
+    "13",
+    ""
+   ],
+   [
+    "First round of tests with coflow burner",
+    "18113",
+    "2018",
+    "4",
+    "23",
+    "positive",
+    "100% CH4",
+    "100%",
+    "15",
+    ""
+   ],
+   [
+    "First round of tests with coflow burner",
+    "18130",
+    "2018",
+    "5",
+    "10",
+    "positive",
+    "100% CH4",
+    "70%",
+    "13",
+    ""
+   ],
+   [
+    "First round of tests with coflow burner",
+    "18137",
+    "2018",
+    "5",
+    "17",
+    "positive",
+    "100% C2H4",
+    "80%",
+    "12",
+    ""
+   ],
+   [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "100%",
+    "",
+    ""
+   ],
+   [
+    "Second round of tests with gas-jet burner",
+    "18269",
+    "2018",
+    "9",
+    "26",
+    "negative",
+    "40% CH4",
+    "40%",
+    "11",
+    ""
+   ],
+   [
+    "Second round of tests with gas-jet burner",
+    "18274",
+    "2018",
+    "10",
+    "1",
+    "negative",
+    "30% C2H4",
+    "30%",
+    "11",
+    ""
+   ],
+   [
+    "Second round of tests with gas-jet burner",
+    "18282",
+    "2018",
+    "10",
+    "9",
+    "negative",
+    "100% CH4",
+    "70%",
+    "13",
+    ""
+   ],
+   [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "100%",
+    "",
+    ""
+   ],
+   [
+    "Second round of tests with gas-jet burner",
+    "18285",
+    "2018",
+    "10",
+    "12",
+    "negative",
+    "100% C2H4",
+    "100%",
+    "10",
+    ""
+   ],
+   [
+    "Second round of tests with gas-jet burner",
+    "18290",
+    "2018",
+    "10",
+    "17",
+    "negative",
+    "100% C2H4",
+    "80%",
+    "11",
+    ""
+   ],
+   [
+    "Second round of tests with gas-jet burner",
+    "18298",
+    "2018",
+    "10",
+    "25",
+    "positive",
+    "40% CH4",
+    "40%",
+    "9",
+    ""
+   ],
+   [
+    "Second round of tests with gas-jet burner",
+    "18302",
+    "2018",
+    "10",
+    "29",
+    "positive",
+    "30% C2H4",
+    "30%",
+    "10",
+    ""
+   ],
+   [
+    "Second round of tests with gas-jet burner",
+    "18312",
+    "2018",
+    "11",
+    "8",
+    "positive",
+    "100% CH4",
+    "70%",
+    "13",
+    ""
+   ],
+   [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "100%",
+    "",
+    ""
+   ],
+   [
+    "Second round of tests with gas-jet burner",
+    "18319",
+    "2018",
+    "11",
+    "15",
+    "positive",
+    "100% C2H4",
+    "25%",
+    "11",
+    ""
+   ],
+   [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "50%",
+    "",
+    ""
+   ],
+   [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "80%",
+    "",
+    ""
+   ],
+   [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "100%",
+    "",
+    ""
+   ],
+   [
+    "Second round of tests with gas-jet burner",
+    "18319",
+    "2018",
+    "11",
+    "15",
+    "positive",
+    "100% C2H4",
+    "25%",
+    "11",
+    ""
+   ],
+   [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "50%",
+    "",
+    ""
+   ],
+   [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "80%",
+    "",
+    ""
+   ],
+   [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "100%",
+    "",
+    ""
+   ]
+  ],
+  "known_issues": [
+   "11 of 32 rows carry only a fuel concentration: they continue the row above. Not filled in."
+  ],
+  "corrections": []
+ },
+ {
+  "investigation": "PSI-23",
+  "acronym": "ACME s-Flame",
+  "source_table": "tables/PSI-23/PSI-23_Experimental table_ACME s-Flame.csv",
+  "kind": "per_day_summary",
+  "why_not_tests": "One row per test day.",
+  "columns": [
+   "Test Type",
+   "Test Day*",
+   "Year",
+   "Month",
+   "Date",
+   "Atmosphere*",
+   "Fuel Bottle",
+   "Flames Ignited*",
+   "Notes"
+  ],
+  "rows": [
+   [
+    "First round of tests with nitrogen-diluted fuel and oxygen",
+    "19254",
+    "2019",
+    "Sept.",
+    "11",
+    "~21% O2 with N2",
+    "50% C2H4 with N2",
+    "13",
+    "*Test Day is formatted YYDDD where YY identfies year and DDD identifies day of year (GMT)."
+   ],
+   [
+    "First round of tests with nitrogen-diluted fuel and oxygen",
+    "19256",
+    "2019",
+    "Sept.",
+    "13",
+    "~21% O2 with N3",
+    "50% C2H4 with N3",
+    "16",
+    "*Atmosphere is ~1 atm but pressure increases and O2% drops with vitiation."
+   ],
+   [
+    "First round of tests with nitrogen-diluted fuel and oxygen",
+    "19304",
+    "2019",
+    "Oct.",
+    "31",
+    "~21% O2 with N4",
+    "45% CH4 with N2",
+    "9",
+    "*Flames Ignited is the number ignited on that day (neglecting the day change on ISS)."
+   ],
+   [
+    "First round of tests with nitrogen-diluted fuel and oxygen",
+    "19308",
+    "2019",
+    "Nov.",
+    "4",
+    "~30% O2 with N2",
+    "45% CH4 with N3",
+    "21",
+    ""
+   ],
+   [
+    "First round of tests with nitrogen-diluted fuel and oxygen",
+    "19352",
+    "2019",
+    "Dec.",
+    "18",
+    "~21% O2 with N2",
+    "100% H2",
+    "10",
+    ""
+   ],
+   [
+    "First round of tests with nitrogen-diluted fuel and oxygen",
+    "20006",
+    "2020",
+    "Jan.",
+    "6",
+    "~21% O2 with N3",
+    "44.4% H2 with CH4",
+    "17",
+    ""
+   ],
+   [
+    "First round of tests with nitrogen-diluted fuel and oxygen",
+    "20013",
+    "2020",
+    "Jan.",
+    "13",
+    "~21% O2 with N4",
+    "66.7% H2 with CH4",
+    "22",
+    ""
+   ],
+   [
+    "First round of tests with nitrogen-diluted fuel and oxygen",
+    "20024",
+    "2020",
+    "Jan.",
+    "24",
+    "~21% O2 with N5",
+    "100% H2",
+    "16",
+    ""
+   ],
+   [
+    "First round of tests with nitrogen-diluted fuel and oxygen",
+    "20029",
+    "2020",
+    "Jan.",
+    "29",
+    "~21% O2 with N6",
+    "50% C2H4 with N2",
+    "21",
+    ""
+   ],
+   [
+    "First round of tests with nitrogen-diluted fuel and oxygen",
+    "20132",
+    "2020",
+    "May",
+    "11",
+    "~21% O2 with He",
+    "25% H2, 20% CH4, with He",
+    "7",
+    ""
+   ],
+   [
+    "Second round of tests with helium-diluted fuel and oxygen",
+    "20136",
+    "2020",
+    "May",
+    "15",
+    "~21% O2 with He",
+    "20% H2, 25% CH4, with He",
+    "11",
+    ""
+   ],
+   [
+    "Second round of tests with helium-diluted fuel and oxygen",
+    "20142",
+    "2020",
+    "May",
+    "21",
+    "~30% O2 with He",
+    "30% H2, 15% CH4, with He",
+    "17",
+    ""
+   ],
+   [
+    "Second round of tests with helium-diluted fuel and oxygen",
+    "20155",
+    "2020",
+    "June",
+    "3",
+    "~30% and ~21% O2 with He",
+    "45% H2 with He",
+    "9",
+    ""
+   ],
+   [
+    "Second round of tests with helium-diluted fuel and oxygen",
+    "20160",
+    "2020",
+    "June",
+    "8",
+    "~30% and ~21% O2 with He",
+    "45% CH4 with He",
+    "12",
+    ""
+   ],
+   [
+    "Second round of tests with helium-diluted fuel and oxygen",
+    "20164",
+    "2020",
+    "June",
+    "12",
+    "~30% O2 with He",
+    "20% C2H4 with He",
+    "11",
+    ""
+   ],
+   [
+    "Second round of tests with helium-diluted fuel and oxygen",
+    "20170",
+    "2020",
+    "June",
+    "18",
+    "~30% and ~21% O2 with He",
+    "25% C2H4 with He",
+    "20",
+    ""
+   ],
+   [
+    "Second round of tests with helium-diluted fuel and oxygen",
+    "20176",
+    "2020",
+    "June",
+    "24",
+    "~30% and ~21% O2 with He",
+    "30% C2H4 with He",
+    "23",
+    ""
+   ],
+   [
+    "Second round of tests with helium-diluted fuel and oxygen",
+    "20190",
+    "2020",
+    "July",
+    "8",
+    "~30% and ~21% O2 with He",
+    "35% H2 with He",
+    "21",
+    ""
+   ]
+  ],
+  "known_issues": [
+   "'Atmosphere*' runs N2, N3 ... N6: looks like spreadsheet autofill. Not corrected; confirm against the PSI record before quoting this column."
+  ],
+  "corrections": []
+ },
+ {
+  "investigation": "PSI-68",
+  "acronym": "FLEX-2",
+  "source_table": "tables/PSI-68/PSI-68_Experimental table_Flex2.csv",
+  "kind": "ranges",
+  "why_not_tests": "One row per fuel, giving the ranges tested rather than individual tests.",
+  "columns": [
+   "Sample (Fuel Type)",
+   "Initial Droplet Diameter (mm)",
+   "Ambient Gas Mixture",
+   "Oxygen Mole Fraction",
+   "Ambient Pressure (atm)",
+   "Ambient Temperature (C)",
+   "Flow Velocity (cm/s)"
+  ],
+  "rows": [
+   [
+    "IsoOctane (pure)",
+    "1.5 - 5",
+    "O2/N2 or O2/He",
+    "0.17; 0.21;0.25; 0.3",
+    "0.5; 1.0; 1.5; 2.0; or 3.0",
+    "25",
+    "0.1 - 5"
+   ],
+   [
+    "n-Octane (pure)",
+    "1.5 - 5",
+    "O2/N2 or O2/He",
+    "0.17; 0.21;0.25; 0.3",
+    "0.5; 1.0; 1.5; 2.0; or 3.0",
+    "25",
+    "0.1 - 5"
+   ],
+   [
+    "Heptane (pure)",
+    "1.5 - 5",
+    "O2/N2 or O2/He",
+    "0.17; 0.21;0.25; 0.3",
+    "0.5; 1.0; 1.5; 2.0; or 3.0",
+    "25",
+    "0.1 - 5"
+   ],
+   [
+    "Decane (pure)",
+    "1.5 - 5",
+    "O2/N2 or O2/He",
+    "0.17; 0.21;0.25; 0.3",
+    "0.5; 1.0; 1.5; 2.0; or 3.0",
+    "25",
+    "0.1 - 5"
+   ],
+   [
+    "Ethanol (pure)",
+    "1.5 - 5",
+    "O2/N2 or O2/He",
+    "0.17; 0.21;0.25; 0.3",
+    "0.5; 1.0; 1.5; 2.0; or 3.0",
+    "25",
+    "0.1 - 5"
+   ],
+   [
+    "Propanol (95%) Glycerol (5%) (mixture)",
+    "1.5 - 5",
+    "O2/N2 or O2/He",
+    "0.17; 0.21;0.25; 0.3",
+    "0.5; 1.0; 1.5; 2.0; or 3.0",
+    "25",
+    "0.1 - 5"
+   ],
+   [
+    "Heptane (50%) IsoOctane (50%) (mixture)",
+    "1.5 - 5",
+    "O2/N2 or O2/He",
+    "0.17; 0.21;0.25; 0.3",
+    "0.5; 1.0; 1.5; 2.0; or 3.0",
+    "25",
+    "0.1 - 5"
+   ],
+   [
+    "Propanol (80%) Glycerol (20%) (mixture)",
+    "1.5 - 5",
+    "O2/N2 or O2/He",
+    "0.17; 0.21;0.25; 0.3",
+    "0.5; 1.0; 1.5; 2.0; or 3.0",
+    "25",
+    "0.1 - 5"
+   ]
+  ],
+  "known_issues": [],
+  "corrections": []
+ },
+ {
+  "investigation": "PSI-106",
+  "acronym": "SLICE",
+  "source_table": "tables/PSI-106/PSI-106_Experimental table_Slice.csv",
+  "kind": "per_day_summary",
+  "why_not_tests": "One row per test date with the fuel used.",
+  "columns": [
+   "Test Date",
+   "Fuel Type"
+  ],
+  "rows": [
+   [
+    "2012-FEB-09",
+    "100% CH4"
+   ],
+   [
+    "2012-FEB-13 SLICE testing with",
+    "40% CH4 (balance N2) including 2 pyrometry calibration tests and 2 fan calibrations"
+   ],
+   [
+    "2012-FEB-17",
+    "70% CH4 (balance N2) including 1 pyrometry calibration test"
+   ],
+   [
+    "2012-FEB-20",
+    "20% C2H4 (balance N2)"
+   ],
+   [
+    "2012-FEB-27",
+    "100% CH4"
+   ],
+   [
+    "2012-MAR-01",
+    "40% CH4 (balance N2)"
+   ],
+   [
+    "2012-MAR-05 SLICE testing with",
+    "70% CH4 (balance N2) where the fuel bottle was not emptied (in contrast to most days)"
+   ],
+   [
+    "2012-MAR-09",
+    "100% C2H6"
+   ],
+   [
+    "2012-MAR-12",
+    "100% CH4"
+   ],
+   [
+    "2012-MAR-15",
+    "20% C2H4 (balance N2)"
+   ],
+   [
+    "2012-MAR-19 SLICE testing with",
+    "70% CH4 (balance N2) including 1 pyrometry calibration test and 2 fan calibrations"
+   ],
+   [
+    "2012-MAR-23 Last day of testing: SPICE testing with 100% C3H8 and then 100%",
+    "100% C2H4"
+   ]
+  ],
+  "known_issues": [
+   "One 'Test Date' cell also contains free text ('2012-FEB-13 SLICE testing with')."
+  ],
+  "corrections": []
+ },
+ {
+  "investigation": "PSI-142",
+  "acronym": null,
+  "source_table": "tables/PSI-142/PSI-142_Experimental table_Data Summary Table.csv",
+  "kind": "figure_index",
+  "why_not_tests": "An index of published figures, not tests.",
+  "columns": [
+   "Data ID",
+   "Data Description",
+   "Reference Publication Link",
+   "Figure ID in Reference"
+  ],
+  "rows": [
+   [
+    "1",
+    "CFE limit with ozone",
+    "http://dx.doi.org/10.1016/j.combustflame.2017.01.028",
+    "4"
+   ],
+   [
+    "2",
+    "CFE limit without ozone",
+    "http://dx.doi.org/10.1016/j.combustflame.2017.01.028",
+    "5"
+   ],
+   [
+    "3",
+    "CFE and HFE Predicted vs Measured",
+    "http://dx.doi.org/10.1016/j.combustflame.2017.01.028",
+    "7"
+   ],
+   [
+    "4",
+    "Measured and computed DME/O2/O3 CFE and HFE",
+    "https://doi.org/10.1016/j.proci.2018.07.050",
+    "2"
+   ],
+   [
+    "5",
+    "CH2O PLIF and thermometry",
+    "https://doi.org/10.1016/j.combustflame.2018.03.013",
+    "8"
+   ],
+   [
+    "6",
+    "nC7/nC10/nC12 chemiluminescence",
+    "https://doi.org/10.1016/j.proci.2018.06.161",
+    "2"
+   ],
+   [
+    "7",
+    "nC12 chemiluminescence",
+    "https://doi.org/10.1016/j.proci.2018.06.162",
+    "7"
+   ],
+   [
+    "8",
+    "nC12 thermometry",
+    "https://doi.org/10.1016/j.proci.2018.06.163",
+    "9"
+   ]
+  ],
+  "known_issues": [],
+  "corrections": []
+ },
+ {
+  "investigation": "PSI-47",
+  "acronym": "DAFT / DAFT-2",
+  "source_table": "tables/PSI-47/PSI-47_Experimental table_DAFT.csv",
+  "kind": "sessions",
+  "why_not_tests": "Two dust-measurement sessions; no combustion.",
+  "columns": [
+   "Session Name",
+   "Actual Day",
+   "Hardware Description",
+   "Sample Material",
+   "Sampled Location"
+  ],
+  "rows": [
+   [
+    "D1",
+    "GMT 54 (2005)",
+    "Contained the modified P-Trak with Alcohol Wick and batteries",
+    "Arizona Road Dust (ARD Fine) in combination with ISS GN2 to create an aerosol for measurement purposes.",
+    "Sampled air near Express rack 4"
+   ],
+   [
+    "D2",
+    "GMT 63 (2005)",
+    "Contained DustTrak and batteries",
+    "Arizona Road Dust (ARD Fine) in combination with ISS GN2 to create an aerosol for measurement purposes.",
+    "Sampled separated Velcro and the air near Port rack 6 and in Node 1"
+   ]
+  ],
+  "known_issues": [],
+  "corrections": []
+ },
+ {
+  "investigation": "PSI-102",
+  "acronym": "SAME",
+  "source_table": "tables/PSI-102/PSI-102_Experimental table_SAME.csv",
+  "kind": "smoke_tests",
+  "why_not_tests": "Smoke from heated materials, for detector research; not flame tests.",
+  "columns": [
+   "Sample #",
+   "Sample Material",
+   "Air Flow (cm/s)",
+   "Weight loss rate (mg/min)",
+   "Aging Duration (minutes)"
+  ],
+  "rows": [
+   [
+    "1",
+    "Teflon",
+    "5",
+    "2",
+    "1"
+   ],
+   [
+    "2",
+    "Teflon",
+    "5",
+    "1",
+    "1"
+   ],
+   [
+    "3",
+    "Teflon",
+    "5",
+    "2",
+    "20"
+   ],
+   [
+    "4",
+    "Teflon",
+    "10",
+    "2",
+    "1"
+   ],
+   [
+    "5",
+    "Kapton: same conditions as 1-4",
+    "",
+    "",
+    ""
+   ],
+   [
+    "6",
+    "Silicone Rubber: same conditions as 1-4",
+    "",
+    "",
+    ""
+   ],
+   [
+    "7",
+    "Lampwick: same conditions as 1-4",
+    "",
+    "",
+    ""
+   ],
+   [
+    "8",
+    "Dibutyl Phthalate: same conditions as 1-4",
+    "",
+    "",
+    ""
+   ]
+  ],
+  "known_issues": [
+   "Rows 5-8 say 'same conditions as 1-4' instead of repeating the values."
+  ],
+  "corrections": []
+ },
+ {
+  "investigation": "PSI-101",
+  "acronym": "SAME-R",
+  "source_table": "tables/PSI-101/PSI-101_Experimental table_SAME-R.csv",
+  "kind": "smoke_tests",
+  "why_not_tests": "Smoke from heated materials, for detector research; not flame tests.",
+  "columns": [
+   "Sample Type",
+   "SAME Test #",
+   "Description",
+   "Date",
+   "Inlet velocity (cm/s)",
+   "Rt/R0",
+   "Duration (sec)",
+   "Primary aging time (sec)",
+   "Primary mixing time (sec)",
+   "Net aging time (sec)"
+  ],
+  "rows": [
+   [
+    "Kapton",
+    "51",
+    "B.L. new formula",
+    "21-Jul",
+    "8.1",
+    "1.38",
+    "60",
+    "11",
+    "8",
+    "38"
+   ],
+   [
+    "Kapton",
+    "51a",
+    "B.L. new formula",
+    "22-Jul",
+    "8.1",
+    "1.38",
+    "60",
+    "",
+    "",
+    "261"
+   ],
+   [
+    "Kapton",
+    "61",
+    "Baseline Aging",
+    "2-Aug",
+    "8.1",
+    "1.38",
+    "60",
+    "11",
+    "8",
+    "38"
+   ],
+   [
+    "Kapton",
+    "61a",
+    "aged",
+    "2-Aug",
+    "8.1",
+    "1.38",
+    "",
+    "",
+    "",
+    "807"
+   ],
+   [
+    "Kapton",
+    "62",
+    "High Temp aging",
+    "2-Aug",
+    "8.1",
+    "1.48",
+    "60",
+    "11",
+    "8",
+    "39"
+   ],
+   [
+    "Kapton",
+    "62a",
+    "aged",
+    "2-Aug",
+    "8.1",
+    "1.48",
+    "",
+    "",
+    "",
+    "808"
+   ],
+   [
+    "Kapton",
+    "70",
+    "High temp aged STS det",
+    "24-Aug",
+    "8.1",
+    "1.48",
+    "60",
+    "720",
+    "8",
+    "747"
+   ],
+   [
+    "Kapton",
+    "73",
+    "Baseline Aging",
+    "26-Aug",
+    "8.1",
+    "1.38",
+    "60",
+    "11",
+    "8",
+    "33"
+   ],
+   [
+    "Kapton",
+    "73a",
+    "aged",
+    "26-Aug",
+    "8.1",
+    "1.38",
+    "",
+    "",
+    "",
+    "560"
+   ],
+   [
+    "Kapton",
+    "75",
+    "Mid Temp aging (no Ptrak)",
+    "26-Aug",
+    "8.1",
+    "1.43",
+    "60",
+    "11",
+    "8",
+    "32"
+   ],
+   [
+    "Kapton",
+    "75a",
+    "aged",
+    "26-Aug",
+    "8.1",
+    "1.43",
+    "",
+    "",
+    "",
+    "563"
+   ],
+   [
+    "Kapton",
+    "77",
+    "High Temp aging",
+    "26-Aug",
+    "8.1",
+    "1.48",
+    "60",
+    "11",
+    "8",
+    "31"
+   ],
+   [
+    "Kapton",
+    "77a",
+    "aged",
+    "26-Aug",
+    "8.1",
+    "1.48",
+    "",
+    "",
+    "",
+    "559"
+   ],
+   [
+    "Kapton",
+    "85",
+    "Mid Temp aging run. Repeat 75",
+    "30-Aug",
+    "8.1",
+    "1.43",
+    "60",
+    "11",
+    "8",
+    "33"
+   ],
+   [
+    "Kapton",
+    "85a",
+    "aged",
+    "30-Aug",
+    "8.1",
+    "1.43",
+    "",
+    "",
+    "",
+    "563"
+   ],
+   [
+    "Kapton",
+    "90",
+    "Mid Temp aging reburn 85",
+    "30-Aug",
+    "8.1",
+    "1.43",
+    "60",
+    "11",
+    "8",
+    "38"
+   ],
+   [
+    "Kapton",
+    "90a",
+    "aged",
+    "30-Aug",
+    "8.1",
+    "1.43",
+    "",
+    "",
+    "",
+    "569"
+   ],
+   [
+    "Kapton",
+    "92",
+    "Baseline STS det",
+    "7-Sep",
+    "8.1",
+    "1.38",
+    "60",
+    "11",
+    "8",
+    "35"
+   ],
+   [
+    "Kapton",
+    "93",
+    "Mid Temp aging run 75 repeat",
+    "7-Sep",
+    "8.1",
+    "1.43",
+    "60",
+    "11",
+    "8",
+    "36"
+   ],
+   [
+    "Kapton",
+    "93a",
+    "aged",
+    "7-Sep",
+    "8.1",
+    "1.43",
+    "",
+    "",
+    "",
+    "568"
+   ],
+   [
+    "Kapton",
+    "94",
+    "Mid Temp aging run mid high",
+    "7-Sep",
+    "8.1",
+    "1.45",
+    "60",
+    "11",
+    "8",
+    "42"
+   ],
+   [
+    "Kapton",
+    "94a",
+    "aged",
+    "7-Sep",
+    "8.1",
+    "1.45",
+    "",
+    "",
+    "",
+    "567"
+   ],
+   [
+    "Kapton",
+    "101",
+    "No flow run w/ aging",
+    "8-Sep",
+    "0",
+    "1.48",
+    "60",
+    "11",
+    "8",
+    "29"
+   ],
+   [
+    "Kapton",
+    "101a",
+    "aged",
+    "8-Sep",
+    "0",
+    "1.48",
+    "",
+    "",
+    "",
+    "561"
+   ],
+   [
+    "Kapton",
+    "102",
+    "No flow run w/ aging",
+    "8-Sep",
+    "0",
+    "1.48",
+    "120",
+    "11",
+    "8",
+    "28"
+   ],
+   [
+    "Kapton",
+    "102a",
+    "aged",
+    "8-Sep",
+    "0",
+    "1.48",
+    "",
+    "",
+    "",
+    "563"
+   ],
+   [
+    "Kapton",
+    "108",
+    "Low flow run w/aging",
+    "9-Sep",
+    "1",
+    "1.48",
+    "60",
+    "11",
+    "8",
+    "30"
+   ],
+   [
+    "Kapton",
+    "108a",
+    "aged",
+    "9-Sep",
+    "1",
+    "1.48",
+    "",
+    "",
+    "",
+    "560"
+   ],
+   [
+    "Kapton",
+    "114",
+    "low flow run w STS no Ptrak",
+    "9-Sep",
+    "2",
+    "1.43",
+    "60",
+    "11",
+    "8",
+    "28"
+   ],
+   [
+    "Silicone",
+    "48",
+    "Low Temp",
+    "16-Jul",
+    "8",
+    "1.304",
+    "60",
+    "11",
+    "8",
+    "62"
+   ],
+   [
+    "Silicone",
+    "53",
+    "HighTemp",
+    "22-Jul",
+    "8.1",
+    "1.35",
+    "60",
+    "1",
+    "8",
+    "52"
+   ],
+   [
+    "Silicone",
+    "59",
+    "baseline aged",
+    "30-Jul",
+    "8.1",
+    "1.327",
+    "60",
+    "11",
+    "8",
+    "24"
+   ],
+   [
+    "Silicone",
+    "59a",
+    "aged",
+    "30-Jul",
+    "8.1",
+    "1.327",
+    "",
+    "",
+    "",
+    "856"
+   ],
+   [
+    "Silicone",
+    "60",
+    "Htemp ageing",
+    "30-Jul",
+    "8.1",
+    "1.35",
+    "60",
+    "11",
+    "8",
+    "49"
+   ],
+   [
+    "Silicone",
+    "60a",
+    "aged",
+    "30-Jul",
+    "8.1",
+    "1.35",
+    "",
+    "",
+    "",
+    "856"
+   ],
+   [
+    "Silicone",
+    "65",
+    "Baseline long aging",
+    "23-Aug",
+    "8.1",
+    "1.327",
+    "60",
+    "11",
+    "8",
+    "50"
+   ],
+   [
+    "Silicone",
+    "65a",
+    "aged",
+    "23-Aug",
+    "8.1",
+    "1.327",
+    "",
+    "",
+    "",
+    "1923"
+   ],
+   [
+    "Silicone",
+    "66",
+    "High T aging",
+    "23-Aug",
+    "8.1",
+    "1.36",
+    "60",
+    "11",
+    "8",
+    "42"
+   ],
+   [
+    "Silicone",
+    "66a",
+    "aged",
+    "23-Aug",
+    "8.1",
+    "1.36",
+    "",
+    "",
+    "",
+    "837"
+   ],
+   [
+    "Silicone",
+    "67",
+    "High temp aged",
+    "24-Aug",
+    "8.1",
+    "1.35",
+    "60",
+    "720",
+    "8",
+    "751"
+   ],
+   [
+    "Silicone",
+    "72",
+    "Baseline STS det",
+    "25-Aug",
+    "8.1",
+    "1.327",
+    "60",
+    "11",
+    "8",
+    "42"
+   ],
+   [
+    "Silicone",
+    "86",
+    "Mid temp aging",
+    "30-Aug",
+    "8.1",
+    "1.345",
+    "60",
+    "11",
+    "8",
+    "50"
+   ],
+   [
+    "Silicone",
+    "86a",
+    "aged",
+    "30-Aug",
+    "8.1",
+    "1.345",
+    "",
+    "",
+    "",
+    "628"
+   ],
+   [
+    "Silicone",
+    "91",
+    "Baseline STS det",
+    "7-Sep",
+    "8.1",
+    "1.327",
+    "60",
+    "11",
+    "8",
+    "46"
+   ],
+   [
+    "Silicone",
+    "99",
+    "No flow run w/aging",
+    "8-Sep",
+    "0",
+    "1.35",
+    "60",
+    "11",
+    "8",
+    "48"
+   ],
+   [
+    "Silicone",
+    "99a",
+    "aged",
+    "8-Sep",
+    "0",
+    "1.35",
+    "",
+    "",
+    "",
+    "627"
+   ],
+   [
+    "Silicone",
+    "103",
+    "low flow run w/ aging",
+    "9-Sep",
+    "1",
+    "1.35",
+    "60",
+    "11",
+    "8",
+    "48"
+   ],
+   [
+    "Silicone",
+    "103a",
+    "aged",
+    "9-Sep",
+    "1",
+    "1.35",
+    "",
+    "",
+    "",
+    "619"
+   ],
+   [
+    "Silicone",
+    "104",
+    "No flow run w/ aging",
+    "9-Sep",
+    "0",
+    "1.35",
+    "60",
+    "11",
+    "8",
+    "51"
+   ],
+   [
+    "Silicone",
+    "104a",
+    "aged",
+    "9-Sep",
+    "0",
+    "1.35",
+    "",
+    "",
+    "",
+    "636"
+   ],
+   [
+    "Silicone",
+    "109",
+    "low flow run w STS",
+    "9-Sep",
+    "2",
+    "1.35",
+    "60",
+    "11",
+    "8",
+    "28"
+   ],
+   [
+    "Lampwick",
+    "49",
+    "B.L. High RT/R0",
+    "19-Jul",
+    "8",
+    "1.251",
+    "60",
+    "11",
+    "8",
+    "51"
+   ],
+   [
+    "Lampwick",
+    "54",
+    "Baseline",
+    "29-Jul",
+    "8.1",
+    "1.245",
+    "60",
+    "11",
+    "8",
+    "57"
+   ],
+   [
+    "Lampwick",
+    "55",
+    "High RT/R0 test aging",
+    "29-Jul",
+    "8.1",
+    "1.245",
+    "60",
+    "11",
+    "8",
+    "47"
+   ],
+   [
+    "Lampwick",
+    "55a",
+    "aged",
+    "29-Jul",
+    "8.1",
+    "1.245",
+    "",
+    "",
+    "",
+    "218"
+   ],
+   [
+    "Lampwick",
+    "57",
+    "High RT/R0 reburn sample",
+    "29-Jul",
+    "8.1",
+    "1.253",
+    "60",
+    "11",
+    "8",
+    "n/a"
+   ],
+   [
+    "Lampwick",
+    "68",
+    "High temp aged STS det",
+    "24-Aug",
+    "8.1",
+    "1.28",
+    "60",
+    "720",
+    "8",
+    "747"
+   ],
+   [
+    "Lampwick",
+    "78",
+    "Baseline aging",
+    "26-Aug",
+    "8.1",
+    "1.245",
+    "60",
+    "11",
+    "8",
+    "37"
+   ],
+   [
+    "Lampwick",
+    "78a",
+    "aged",
+    "26-Aug",
+    "8.1",
+    "1.245",
+    "",
+    "",
+    "",
+    "581"
+   ],
+   [
+    "Lampwick",
+    "80",
+    "High temp aging",
+    "26-Aug",
+    "8.1",
+    "1.28",
+    "60",
+    "11",
+    "8",
+    "40"
+   ],
+   [
+    "Lampwick",
+    "80a",
+    "aged",
+    "26-Aug",
+    "8.1",
+    "1.28",
+    "",
+    "",
+    "",
+    "580"
+   ],
+   [
+    "Lampwick",
+    "82",
+    "Mid temp aging",
+    "26-Aug",
+    "8.1",
+    "1.265",
+    "60",
+    "11",
+    "8",
+    "39"
+   ],
+   [
+    "Lampwick",
+    "82a",
+    "aged",
+    "27-Aug",
+    "8.1",
+    "1.265",
+    "",
+    "",
+    "",
+    "579"
+   ],
+   [
+    "Lampwick",
+    "88",
+    "Baseline STS det",
+    "30-Aug",
+    "8.1",
+    "1.245",
+    "60",
+    "11",
+    "8",
+    "n/a"
+   ],
+   [
+    "Lampwick",
+    "96",
+    "No flow run w/aging",
+    "7-Sep",
+    "0",
+    "1.245",
+    "60",
+    "11",
+    "8",
+    "34"
+   ],
+   [
+    "Lampwick",
+    "96a",
+    "aged",
+    "7-Sep",
+    "0",
+    "1.245",
+    "",
+    "",
+    "",
+    "582"
+   ],
+   [
+    "Lampwick",
+    "98",
+    "No flow run w/aging",
+    "8-Sep",
+    "0",
+    "1.28",
+    "60",
+    "11",
+    "8",
+    "37"
+   ],
+   [
+    "Lampwick",
+    "98a",
+    "aged",
+    "8-Sep",
+    "0",
+    "1.28",
+    "",
+    "",
+    "",
+    "585"
+   ],
+   [
+    "Lampwick",
+    "106",
+    "No flow run w/aging",
+    "9-Sep",
+    "0",
+    "1.28",
+    "60",
+    "11",
+    "8",
+    "30"
+   ],
+   [
+    "Lampwick",
+    "106a",
+    "aged",
+    "9-Sep",
+    "0",
+    "1.28",
+    "",
+    "",
+    "",
+    "558"
+   ],
+   [
+    "Lampwick",
+    "110",
+    "low flow run w/STS",
+    "9-Sep",
+    "2",
+    "1.28",
+    "60",
+    "11",
+    "8",
+    "21"
+   ],
+   [
+    "Teflon",
+    "50",
+    "B.L. High RT/R0",
+    "20-Jul",
+    "8.1",
+    "1.452",
+    "60",
+    "11",
+    "8",
+    "33"
+   ],
+   [
+    "Teflon",
+    "56",
+    "Baseline",
+    "29-Jul",
+    "8.1",
+    "1.445",
+    "60",
+    "11",
+    "8",
+    "41"
+   ],
+   [
+    "Teflon",
+    "57",
+    "High RT/R0 reburn sample",
+    "29-Jul",
+    "8.1",
+    "1.253",
+    "60",
+    "11",
+    "8",
+    "n/a"
+   ],
+   [
+    "Teflon",
+    "58",
+    "Baseline aging",
+    "30-Jul",
+    "8.1",
+    "1.445",
+    "60",
+    "11",
+    "8",
+    "34"
+   ],
+   [
+    "Teflon",
+    "58a",
+    "aged",
+    "30-Jul",
+    "8.1",
+    "1.445",
+    "",
+    "",
+    "",
+    "805"
+   ],
+   [
+    "Teflon",
+    "69",
+    "High temp aged STS det",
+    "24-Aug",
+    "8.1",
+    "1.45",
+    "60",
+    "720",
+    "8",
+    "745"
+   ],
+   [
+    "Teflon",
+    "79",
+    "Baseline aging",
+    "26-Aug",
+    "8.1",
+    "1.445",
+    "60",
+    "11",
+    "8",
+    "33"
+   ],
+   [
+    "Teflon",
+    "79a",
+    "aged",
+    "26-Aug",
+    "8.1",
+    "1.445",
+    "",
+    "",
+    "",
+    "560"
+   ],
+   [
+    "Teflon",
+    "81",
+    "High temp aging",
+    "26-Aug",
+    "8.1",
+    "1.45",
+    "60",
+    "11",
+    "8",
+    "30"
+   ],
+   [
+    "Teflon",
+    "81a",
+    "aged",
+    "27-Aug",
+    "8.1",
+    "1.45",
+    "",
+    "",
+    "",
+    "559"
+   ],
+   [
+    "Teflon",
+    "83",
+    "Mid temp aging",
+    "26-Aug",
+    "8.1",
+    "1.448",
+    "60",
+    "11",
+    "8",
+    "30"
+   ],
+   [
+    "Teflon",
+    "83a",
+    "aged",
+    "27-Aug",
+    "8.1",
+    "1.448",
+    "",
+    "",
+    "",
+    "557"
+   ],
+   [
+    "Teflon",
+    "89",
+    "Baseline STS det",
+    "30-Aug",
+    "8.1",
+    "1.445",
+    "60",
+    "11",
+    "8",
+    "31"
+   ],
+   [
+    "Teflon",
+    "100",
+    "No flow run w/ aging",
+    "8-Sep",
+    "0",
+    "1.45",
+    "60",
+    "11",
+    "8",
+    "29"
+   ],
+   [
+    "Teflon",
+    "100a",
+    "aged",
+    "8-Sep",
+    "0",
+    "1.45",
+    "",
+    "",
+    "",
+    "560"
+   ],
+   [
+    "Teflon",
+    "105",
+    "No flow run w/ aging",
+    "9-Sep",
+    "0",
+    "1.45",
+    "60",
+    "11",
+    "8",
+    "24"
+   ],
+   [
+    "Teflon",
+    "105a",
+    "aged",
+    "9-Sep",
+    "0",
+    "1.45",
+    "",
+    "",
+    "",
+    "559"
+   ],
+   [
+    "Teflon",
+    "111",
+    "low flow run w/ STS",
+    "9-Sep",
+    "2",
+    "1.45",
+    "60",
+    "11",
+    "8",
+    "43"
+   ],
+   [
+    "Pyrell",
+    "52",
+    "Baseline",
+    "22-Jul",
+    "8.1",
+    "1.22",
+    "60",
+    "11",
+    "8",
+    "n/a"
+   ],
+   [
+    "Pyrell",
+    "63",
+    "Baseline Aging",
+    "23-Aug",
+    "8.1",
+    "1.22",
+    "60",
+    "11",
+    "8",
+    "56"
+   ],
+   [
+    "Pyrell",
+    "63a",
+    "aged",
+    "23-Aug",
+    "8.1",
+    "1.22",
+    "",
+    "",
+    "",
+    "840"
+   ],
+   [
+    "Pyrell",
+    "64",
+    "High Temp aging",
+    "23-Aug",
+    "8.1",
+    "1.23",
+    "60",
+    "11",
+    "8",
+    "47"
+   ],
+   [
+    "Pyrell",
+    "64a",
+    "aged",
+    "23-Aug",
+    "8.1",
+    "1.23",
+    "",
+    "",
+    "",
+    "842"
+   ],
+   [
+    "Pyrell",
+    "71",
+    "High temp aged STS det",
+    "24-Aug",
+    "8.1",
+    "1.23",
+    "60",
+    "720",
+    "8",
+    "750"
+   ],
+   [
+    "Pyrell",
+    "74",
+    "Baseline Aging",
+    "26-Aug",
+    "8.1",
+    "1.22",
+    "60",
+    "11",
+    "8",
+    "48"
+   ],
+   [
+    "Pyrell",
+    "74a",
+    "aged",
+    "26-Aug",
+    "8.1",
+    "1.22",
+    "",
+    "",
+    "",
+    "623"
+   ],
+   [
+    "Pyrell",
+    "76",
+    "High Temp aging",
+    "26-Aug",
+    "8.1",
+    "1.23",
+    "60",
+    "11",
+    "8",
+    "51"
+   ],
+   [
+    "Pyrell",
+    "76a",
+    "aged",
+    "26-Aug",
+    "8.1",
+    "1.23",
+    "",
+    "",
+    "",
+    "625"
+   ],
+   [
+    "Pyrell",
+    "84",
+    "Mid Temp aging retry",
+    "30-Aug",
+    "8.1",
+    "1.225",
+    "60",
+    "11",
+    "8",
+    "53"
+   ],
+   [
+    "Pyrell",
+    "84a",
+    "aged",
+    "30-Aug",
+    "8.1",
+    "1.225",
+    "",
+    "",
+    "",
+    "632"
+   ],
+   [
+    "Pyrell",
+    "87",
+    "Baseline STS det",
+    "30-Aug",
+    "8.1",
+    "1.22",
+    "60",
+    "11",
+    "8",
+    "45"
+   ],
+   [
+    "Pyrell",
+    "95",
+    "No flow run w/ aging",
+    "7-Sep",
+    "0",
+    "1.22",
+    "60",
+    "11",
+    "8",
+    "38"
+   ],
+   [
+    "Pyrell",
+    "95a",
+    "aged",
+    "7-Sep",
+    "0",
+    "1.22",
+    "",
+    "",
+    "",
+    "n/a"
+   ],
+   [
+    "Pyrell",
+    "97",
+    "No flow run w/aging",
+    "8-Sep",
+    "0",
+    "1.23",
+    "60",
+    "11",
+    "8",
+    "48"
+   ],
+   [
+    "Pyrell",
+    "97a",
+    "aged",
+    "8-Sep",
+    "0",
+    "1.23",
+    "",
+    "",
+    "",
+    "624"
+   ],
+   [
+    "Pyrell",
+    "107",
+    "Low flow run w/aging",
+    "9-Sep",
+    "1",
+    "1.23",
+    "60",
+    "11",
+    "8",
+    "32"
+   ],
+   [
+    "Pyrell",
+    "107a",
+    "aged",
+    "9-Sep",
+    "1",
+    "1.23",
+    "",
+    "",
+    "",
+    "559"
+   ],
+   [
+    "Pyrell",
+    "113",
+    "low flow run w STS",
+    "9-Sep",
+    "2",
+    "1.23",
+    "60",
+    "11",
+    "8",
+    "31"
+   ]
+  ],
+  "known_issues": [
+   "The 'Date' column has no year."
+  ],
+  "corrections": []
+ }
+]

@@ -198,11 +198,13 @@
   "tables": [
    {
     "file": "tables/PSI-10/PSI-10_Experimental table_Flame Design_Normal Flame.csv",
-    "rows": 207
+    "rows": 207,
+    "used_in": "tests.json"
    },
    {
     "file": "tables/PSI-10/PSI-10_Experimental table_Flame Design_Inverse Flame.csv",
-    "rows": 120
+    "rows": 120,
+    "used_in": "tests.json"
    }
   ],
   "fuel_class": "gas",
@@ -327,7 +329,8 @@
   "tables": [
    {
     "file": "tables/PSI-20/PSI-20_Experimental table_ACME BRE.csv",
-    "rows": 18
+    "rows": 18,
+    "used_in": "other_tables.json"
    }
   ],
   "fuel_class": "gas",
@@ -457,7 +460,8 @@
   "tables": [
    {
     "file": "tables/PSI-21/PSI-21_Experimental table_CLD Flame.csv",
-    "rows": 32
+    "rows": 32,
+    "used_in": "other_tables.json"
    }
   ],
   "fuel_class": "gas",
@@ -628,7 +632,8 @@
   "tables": [
    {
     "file": "tables/PSI-22/PSI-22_Experimental table_ACME E-FIELD Flames.csv",
-    "rows": 32
+    "rows": 32,
+    "used_in": "other_tables.json"
    }
   ],
   "fuel_class": "gas",
@@ -890,7 +895,8 @@
   "tables": [
    {
     "file": "tables/PSI-23/PSI-23_Experimental table_ACME s-Flame.csv",
-    "rows": 18
+    "rows": 18,
+    "used_in": "other_tables.json"
    }
   ],
   "fuel_class": "gas",
@@ -1019,7 +1025,8 @@
   "tables": [
    {
     "file": "tables/PSI-25/PSI-25_Experimental table_BASS-II.csv",
-    "rows": 129
+    "rows": 129,
+    "used_in": "tests.json"
    }
   ],
   "fuel_class": "solid",
@@ -1113,7 +1120,8 @@
   "tables": [
    {
     "file": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
-    "rows": 122
+    "rows": 122,
+    "used_in": "tests.json"
    }
   ],
   "fuel_class": "solid",
@@ -1194,7 +1202,8 @@
   "tables": [
    {
     "file": "tables/PSI-39/PSI-39_Experimental table_CFI.csv",
-    "rows": 87
+    "rows": 87,
+    "used_in": "tests.json"
    }
   ],
   "fuel_class": "droplet",
@@ -1250,7 +1259,8 @@
   "tables": [
    {
     "file": "tables/PSI-47/PSI-47_Experimental table_DAFT.csv",
-    "rows": 2
+    "rows": 2,
+    "used_in": "other_tables.json"
    }
   ],
   "fuel_class": null,
@@ -1631,7 +1641,8 @@
   "tables": [
    {
     "file": "tables/PSI-68/PSI-68_Experimental table_Flex2.csv",
-    "rows": 8
+    "rows": 8,
+    "used_in": "other_tables.json"
    }
   ],
   "fuel_class": "droplet",
@@ -1926,7 +1937,8 @@
   "tables": [
    {
     "file": "tables/PSI-69/PSI-69_Experimental table_FLEX.csv",
-    "rows": 274
+    "rows": 274,
+    "used_in": "tests.json"
    }
   ],
   "fuel_class": "droplet",
@@ -2003,7 +2015,8 @@
   "tables": [
    {
     "file": "tables/PSI-98/PSI-98_Experimental table_SAFFIRE-1.csv",
-    "rows": 4
+    "rows": 4,
+    "used_in": "tests.json"
    }
   ],
   "fuel_class": "solid",
@@ -2080,7 +2093,8 @@
   "tables": [
    {
     "file": "tables/PSI-99/PSI-99_Experimental table_SAFFIRE-2.csv",
-    "rows": 15
+    "rows": 15,
+    "used_in": "tests.json"
    }
   ],
   "fuel_class": "solid",
@@ -2139,7 +2153,8 @@
   "tables": [
    {
     "file": "tables/PSI-100/PSI-100_Experimental table_SAFFIRE-3.csv",
-    "rows": 2
+    "rows": 2,
+    "used_in": "tests.json"
    }
   ],
   "fuel_class": "solid",
@@ -2217,7 +2232,8 @@
   "tables": [
    {
     "file": "tables/PSI-101/PSI-101_Experimental table_SAME-R.csv",
-    "rows": 109
+    "rows": 109,
+    "used_in": "other_tables.json"
    }
   ],
   "fuel_class": null,
@@ -2338,7 +2354,8 @@
   "tables": [
    {
     "file": "tables/PSI-102/PSI-102_Experimental table_SAME.csv",
-    "rows": 8
+    "rows": 8,
+    "used_in": "other_tables.json"
    }
   ],
   "fuel_class": null,
@@ -2403,7 +2420,8 @@
   "tables": [
    {
     "file": "tables/PSI-106/PSI-106_Experimental table_Slice.csv",
-    "rows": 12
+    "rows": 12,
+    "used_in": "other_tables.json"
    }
   ],
   "fuel_class": null,
@@ -2486,7 +2504,8 @@
   "tables": [
    {
     "file": "tables/PSI-107/PSI-107_Experimental table_Spice.csv",
-    "rows": 469
+    "rows": 469,
+    "used_in": "tests.json"
    }
   ],
   "fuel_class": null,
@@ -2723,7 +2742,8 @@
   "tables": [
    {
     "file": "tables/PSI-142/PSI-142_Experimental table_Data Summary Table.csv",
-    "rows": 8
+    "rows": 8,
+    "used_in": "other_tables.json"
    }
   ],
   "fuel_class": null,
@@ -2777,11 +2797,13 @@
   "tables": [
    {
     "file": "tables/PSI-159/PSI-159_Experimental table_CFI-G_Normal Flames.csv",
-    "rows": 179
+    "rows": 179,
+    "used_in": "tests.json"
    },
    {
     "file": "tables/PSI-159/PSI-159_Experimental table_CFI-G_Inverse Flames.csv",
-    "rows": 154
+    "rows": 154,
+    "used_in": "tests.json"
    }
   ],
   "fuel_class": "gas",

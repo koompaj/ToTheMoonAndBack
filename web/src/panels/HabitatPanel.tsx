@@ -3,7 +3,7 @@
 // To add: nearest evidence outside the box, "will it go out", untested conditions,
 // and the cited AI summary.
 import type { AppData, FuelClass } from '../types/data'
-import { testsInHabitat } from '../data/load'
+import { testsInHabitat, unplacedTests } from '../data/load'
 import { useApp } from '../state/store'
 
 const CLASSES: FuelClass[] = ['solid', 'droplet', 'gas']
@@ -14,9 +14,8 @@ export function HabitatPanel({ data }: { data: AppData }) {
   const inside = habitat ? testsInHabitat(data.tests, habitat) : []
   const byInvestigation = new Map<string, number>()
   inside.forEach((t) => byInvestigation.set(t.investigation, (byInvestigation.get(t.investigation) ?? 0) + 1))
-  const noPressure = data.tests.filter((t) => t.o2_basis === 'ambient' && t.pressure_atm === null)
-  const unplacedSolid = noPressure.filter((t) => t.fuel_class === 'solid').length
-  const unplacedOther = noPressure.length - unplacedSolid
+  const unplaced = unplacedTests(data.tests)
+  const noPressureSolid = unplaced.noPressureInTable.filter((t) => t.fuel_class === 'solid').length
 
   return (
     <section className="panel">
@@ -56,9 +55,13 @@ export function HabitatPanel({ data }: { data: AppData }) {
             })}
           </ul>
           <p className="muted">
-            Counts only tests whose table records cabin-air oxygen and pressure. {unplacedSolid} solid-material tests
-            record oxygen but no pressure, so they cannot be placed yet
-            {unplacedOther > 0 ? `; ${unplacedOther} other test(s) have an unusable pressure value` : ''}.
+            Counts only tests whose table records cabin-air oxygen and pressure. {unplaced.noPressureInTable.length}{' '}
+            tests come from tables with no pressure column ({noPressureSolid} of them solid materials), so they cannot
+            be placed yet
+            {unplaced.pressureUnusable.length > 0
+              ? `; ${unplaced.pressureUnusable.length} more ${unplaced.pressureUnusable.length === 1 ? 'has' : 'have'} an unusable pressure value`
+              : ''}
+            .
           </p>
         </>
       )}
