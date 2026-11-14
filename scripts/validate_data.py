@@ -456,6 +456,53 @@ def main():
           "rover" in moon["name"].lower() and {w["id"] for w in W} == {"spacecraft_cabin", "mars_habitat"}
           and not {w["id"] for w in W} & {h["id"] for h in H} and all(set(w["source_urls"]) <= urls for w in W))
 
+    # ---- item 10: fuel shape and size ----------------------------------------------------------
+    SH = json.load(open(os.path.join(os.path.dirname(data), "data_sourced", "shapes.json"), encoding="utf-8"))["facts"]
+    no_src = [t["id"] for t in T if (t.get("fuel_shape") or t.get("fuel_size_text")) and not t.get("fuel_shape_source")]
+    flag_bad = [t["id"] for t in T if (t.get("fuel_shape") is None) != ("shape_not_stated" in t["flags"])]
+    check("every fuel shape or size has a source, and every test without a shape has the flag shape_not_stated",
+          not no_src and not flag_bad and all("fuel_shape" in t for t in T), f"{no_src[:3]} {flag_bad[:3]}")
+    # solid shapes: the shape word must be in the raw fuel cell of that very row
+    bad = []
+    for acc, rel in (("PSI-25", "PSI-25/PSI-25_Experimental table_BASS-II.csv"), ("PSI-26", "PSI-26/PSI-26_Experimental table_BASS.csv")):
+        header, body = raw_rows(data, rel)
+        col = header.index("Fuel Sample Material")
+        for t in by_inv(acc):
+            cell = " ".join(body[t["source_row"] - 1][col].split()).lower()
+            word = {"spherical section": "spherical section", "sphere": "sphere"}.get(t["fuel_shape"], t["fuel_shape"])
+            if t["fuel_shape"] and word not in cell:
+                bad.append(t["id"])
+            if t["fuel_size_text"] and not all(x.strip().split()[0] in cell for x in t["fuel_size_text"].split(",")):
+                bad.append(t["id"] + " size")
+    solid_doc = [t["id"] for t in T if t["fuel_class"] == "solid" and t.get("fuel_shape") and "column 'Fuel Sample Material'" not in t["fuel_shape_source"]]
+    check("solid shapes come only from the row's own fuel cell (the word is in the raw cell), sizes only from its numbers",
+          not bad and not solid_doc, f"{bad[:3]} {solid_doc[:3]}")
+    # report-sourced shapes: each test of the investigation carries the fact's shape and quote
+    bad = []
+    for f in SH:
+        a = f["applies_to"]
+        rows = [t for t in by_inv(f["investigation"]) if a.get("all_rows") or (t["source_extra"] or {}).get(a["column"], "") == a["value"]]
+        if not rows:
+            bad.append(f["id"] + ": no rows")
+        bad += [f"{f['id']}: {t['id']}" for t in rows if t["fuel_shape"] != f["fuel_shape"] or f["quote"] not in t["fuel_shape_source"]]
+    shaped = {t["investigation"] for t in T if t.get("fuel_shape")}
+    check("report-sourced fuel shapes match data_sourced/shapes.json (ACME burners, SPICE nozzle, CFI droplets); FLEX droplets from its diameter column",
+          not bad and shaped == {"PSI-10", "PSI-159", "PSI-107", "PSI-39", "PSI-69", "PSI-25", "PSI-26"}
+          and all(t["fuel_shape"] == "droplet" for t in by_inv("PSI-69")), f"{bad[:4]} {sorted(shaped)}")
+    txt_root = os.path.join(os.path.dirname(data), "data_extra", "_text")
+    if os.path.isdir(txt_root):
+        missing = []
+        for f in SH:
+            path = os.path.join(txt_root, f["investigation"], f["source_file"] + ".txt")
+            pages = open(path, encoding="utf-8", errors="replace").read().split("\f") if os.path.exists(path) else []
+            pages = [" ".join(pg.split()) for pg in pages]
+            for k in ("quote", "shape_quote", "size_quote"):
+                if f.get(k):
+                    on = [str(n + 1) for n, pg in enumerate(pages) if f[k] in pg]
+                    if not any(re.search(r"\bp\. " + n + r"\b", f["location"]) for n in on):
+                        missing.append(f"{f['id']}.{k}")
+        check("every fuel-shape quote is found in NASA's file on the page given (data_extra/_text)", not missing, ", ".join(missing))
+
     # ---- report ------------------------------------------------------------------------------
     for name, ok, detail in results:
         print(f"{'PASS' if ok else 'FAIL'}  {name}{'' if ok or not detail else '  -> ' + detail}")
