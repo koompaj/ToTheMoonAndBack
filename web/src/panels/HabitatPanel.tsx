@@ -5,7 +5,7 @@
 // offline generator has written it, and is labelled as a draft until a person reviews it.
 import type { AppData, FuelClass, Habitat } from '../types/data'
 import type { AiContent } from '../ai/content'
-import { testsInHabitat, unplacedTests } from '../data/load'
+import { isSourced, testsInHabitat, unplacedTests } from '../data/load'
 import { useApp } from '../state/store'
 import { fmtPct, fmtPsi, habitatEvidence, type ClassEvidence } from '../ai/evidence'
 import { DoiCite, SentenceCites, TestCite } from './Cite'
@@ -152,7 +152,7 @@ export function HabitatPanel({ data, ai, embedded = false }: { data: AppData; ai
                 <small>Pressure</small>
                 {cond.p}
               </span>
-              {habitat.status !== 'from_challenge' && <span className="badge warn">Needs a Source</span>}
+              {!isSourced(habitat) && <span className="badge warn">Needs a Source</span>}
             </div>
             <p className="source-line">{habitat.note}</p>
           </div>
