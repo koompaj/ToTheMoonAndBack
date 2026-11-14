@@ -30,8 +30,23 @@ export interface Test {
   flow_direction: string | null // "concurrent" | "opposed" where the source says
   co2_fraction: number | null // suppressant added (FLEX)
   he_fraction: number | null
-  burn_time_s: number | null
+  burn_time_s: number | null // SPICE: flame-off minus ignition time (flag burn_time_from_gmt_times)
   outcome: string | null // as recorded by NASA, normalised wording
+  /** Solid materials: the base material named in the fuel cell (e.g. "PMMA"); null when the cell names
+   *  only a shape (flag material_not_stated). Null for gas and droplet tests. */
+  fuel_material?: string | null
+  // Typed values from columns only some tables have; null elsewhere. Units are in the names.
+  sample_length_cm?: number | null // SAFFIRE (SAFFIRE-I corrected, flag dimensions_swapped_in_source)
+  sample_width_cm?: number | null
+  sample_thickness_mm?: number | null
+  droplet_diameter_mm?: number | null // FLEX, initial droplet
+  extinction_diameter_mm?: number | null // FLEX, visible flame extinction
+  burning_rate?: number | null // FLEX, unit unclear in NASA's header (flag burning_rate_unit_unclear)
+  cool_flame?: string | null // ACME CFI-G normal flames, as written ("yes, PCI-A")
+  hot_ignition?: 'yes' | 'no' | 'flash' | null // ACME CFI-G
+  peak_burner_temp_c?: number | null // ACME CFI-G
+  ignition_time?: string | null // SPICE, GMT "HH:MM:SS"
+  flame_off_time?: string | null
   /** ambient O2 >= 0.30 and pressure <= 10.2 psi; null when either value is unknown
    *  or the oxygen is burner_oxidizer. */
   in_moon_envelope: boolean | null
@@ -146,6 +161,8 @@ export interface OtherTable {
   why_not_tests: string
   columns: string[]
   rows: string[][]
+  /** The same rows with `corrections` applied (autofill, continuation rows, stray text). */
+  rows_read_as?: string[][]
   known_issues: string[] // show these next to the table
   corrections: { row: number; column: string; as_published: string; read_as: string; reason: string }[]
 }

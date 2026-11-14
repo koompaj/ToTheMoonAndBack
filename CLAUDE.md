@@ -110,6 +110,12 @@ cd web && npm run build
 ```
 
 `npm run build` type-checks and builds. It must pass on `main` at all times.
+The data build ends by running `scripts/validate_data.py` (68 independent checks against the raw
+files); it stops on any failure. To run the checks alone:
+
+```bash
+python -I scripts/validate_data.py data web/public/data
+```
 `python -I scripts/fetch_psi.py data` re-downloads the raw data; you should not need it.
 
 ## Git workflow
@@ -128,8 +134,12 @@ cd web && npm run build
   274 are inverse-flame (burner-oxidizer) rows. Of the 1,479 cabin-air tests, 884 record an oxygen
   value, 746 record oxygen and pressure, 270 are at >= 30 % oxygen, and 20 are inside the Moon Base
   envelope. 457 tests record airflow.
+- Every source column is in `tests.json`: typed fields where the unit is clear (solid
+  `fuel_material`, SAFFIRE sample size, FLEX droplet and extinction diameters, CFI-G hot ignition and
+  peak burner temperature, SPICE ignition and flame-off times), `source_extra` word-for-word for the
+  rest. Use `airflowRange()` for airflow ranges (it leaves out NASA's unexplained negative values).
 - `other_tables.json`: the 10 tables that are not one-row-per-burn (per-day summaries, ranges,
-  smoke tests), cells exactly as published.
+  smoke tests): `rows` exactly as published, `rows_read_as` with each correction applied and explained.
 - `data_quality.json`: what happened to every table and row, what each flag means, and the
   distinct-test count.
 - `habitats.json`: 5 places, every number from a source workstream A opened and checked

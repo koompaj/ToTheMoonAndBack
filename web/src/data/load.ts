@@ -19,6 +19,15 @@ export async function loadData(): Promise<AppData> {
   return { tests, investigations, habitats, otherTables, quality, outcomes }
 }
 
+/** Airflow range of some tests, leaving out values flagged airflow_negative_in_source (meaning not
+ *  stated by NASA). Null when no test records airflow. */
+export function airflowRange(tests: Test[]): [number, number] | null {
+  const v = tests
+    .filter((t) => t.airflow_cm_s !== null && !t.flags.includes('airflow_negative_in_source'))
+    .map((t) => t.airflow_cm_s as number)
+  return v.length ? [Math.min(...v), Math.max(...v)] : null
+}
+
 /** True when every number of a habitat has a checked source (status "from_..."). */
 export function isSourced(h: Habitat) {
   return h.status.startsWith('from_')
