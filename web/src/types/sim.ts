@@ -36,8 +36,12 @@ export interface StageFire {
   /** The chosen place's air: cabin-air oxygen as a fraction 0..1, pressure in atm. */
   o2Fraction: number
   pressureAtm: number
-  /** The user's "Still Air" / "Near a Vent" choice. It names no air speed. */
+  /** "still" when the airflow set is 0, otherwise "vent" (what the evidence line is keyed on). */
   airflow: 'still' | 'vent'
+  /** The airflow the user set, in cm/s, and gravity from 0 (microgravity) to 1 (Earth). They only
+   *  change how the flame is drawn: every PSI test ran in microgravity. Absent on older callers. */
+  airflowCmS?: number
+  gravity?: number
   /** What the nearest real NASA tests of the chosen material did. */
   behaviour: ExpectedBehaviour
 }
