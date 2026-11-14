@@ -32,6 +32,9 @@ Only rows marked **USE** may enter the app, with the source given here (not Gemi
 | Space Apps rule on SI tools | "Each team's project submission must include a description of how SI tools were used during the development of their project." | https://www.spaceappschallenge.org/resources/participant-faqs/ (Gemini cited `/participant-faq/`, which is a 404) | G7-12, G7-13 |
 | Saffire-VI ran crewed-spacecraft conditions | "...higher oxygen concentration and lower pressure generated in the test unit to simulate the conditions within crewed spacecraft." 19 runs. No numbers on the page. | NASA Glenn article, Feb 14, 2024, https://www.nasa.gov/centers-and-facilities/glenn/flame-burns-out-on-nasas-long-running-spacecraft-fire-experiment/ | G5 (Saffire-VI) |
 | Saffire-IV, -V, -VI are not in PSI | Only Saffire-I, -II, -III appear among the 24 Combustion Science records | Our own PSI download (`data/search_combustion.json`) | G5 |
+| Moon surface gravity | 1.62 m/s2, 0.165 of Earth's (about 1/6) | NASA NSSDC Moon Fact Sheet: "Surface gravity (m/s 2 ) 1.62 9.80 0.165" (Moon, Earth, ratio), https://nssdc.gsfc.nasa.gov/planetary/factsheet/moonfact.html. Also "the gravity on the surface of the Moon is one-sixth of Earth's", https://science.nasa.gov/moon/facts/ (both opened 2026-11-14) | none (checked by A) |
+| Gravity of every PSI test | Microgravity | Each of the 10 investigations with tests in `tests.json` has NASA project type "Microgravity Investigation" in its PSI record; flight platform ISS (9) or Cygnus Spacecraft (SAFFIRE-II). Our own PSI download (`investigations.json`) | none (checked by A) |
+| Spacesuit gravity | Microgravity (ISS spacewalks) or Moon gravity | ExpAtm.pdf p. 6 names "the ISS construction and maintenance EVAs" and "exploration EVAs" | none (checked by A) |
 
 ## 2. PSI-text items - quote confirmed, citation link wrong
 
