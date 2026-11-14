@@ -111,7 +111,7 @@ export function SimulationView({ data, renderStage }: { data: AppData; renderSta
   const started = hid !== '' || o2Str !== '' || pStr !== ''
   // Evidence is per listed place: find the place these values are the air of, if any.
   const matches = useMemo(() => placesContaining(data.habitats, o2, pAtm), [data.habitats, o2, pAtm])
-  const hab = started ? evidencePlace(matches, hid) : null
+  const hab = started ? evidencePlace(matches, hid, gravity) : null
   // The list shows a place only while the values are still its air.
   const pickedFits = matches.some((m) => m.id === hid)
   const air0: SimPoint = { o2Fraction: o2, pressureAtm: pAtm }
@@ -167,6 +167,8 @@ export function SimulationView({ data, renderStage }: { data: AppData; renderSta
     const d = defaultPoint(place)
     setO2(d.o2Fraction.toFixed(4))
     setP(d.pressureAtm.toFixed(4))
+    // A place carries its own sourced gravity (habitats.json); a spacesuit has two, the first is used.
+    if (place.gravity) setG(place.gravity.g[0].toFixed(3))
   }
   const upload = (f: File | undefined) => {
     if (!f) return
@@ -241,13 +243,14 @@ export function SimulationView({ data, renderStage }: { data: AppData; renderSta
             <Condition label="Cabin oxygen" unit="%" value={o2 * 100} min={10} max={100} step={0.5} digits={1} onChange={(v) => setO2((v / 100).toFixed(4))} />
             <Condition label="Pressure" unit="psi" value={psiNow} min={3} max={73.4} step={0.1} digits={1} onChange={(v) => setP((v / PSI_PER_ATM).toFixed(4))} />
             <Condition label="Airflow" unit="cm/s" value={flow} min={0} max={50} step={1} digits={0} onChange={(v) => setFlow(String(v))} />
-            <Condition label="Gravity" unit="% of Earth" value={gravity * 100} min={0} max={100} step={1} digits={0} onChange={(v) => setG((v / 100).toFixed(2))} />
+            <Condition label="Gravity" unit="% of Earth" value={gravity * 100} min={0} max={100} step={0.5} digits={1} onChange={(v) => setG((v / 100).toFixed(3))} />
             {!started ? (
               <p className="muted small">Pick a place or move a slider to begin.</p>
             ) : hab ? (
               <p className="sim-match">
                 These values are the air of: <b>{matches.map((m) => placeName(m.id, m.name)).join(', ')}</b>.
                 {matches.length > 1 && <> Evidence is shown for {placeName(hab.id, hab.name)}.</>}
+                {hab.gravity && <> Gravity there: {hab.gravity.label}.</>}
               </p>
             ) : (
               <p className="sim-warn" role="status">
