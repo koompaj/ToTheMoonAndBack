@@ -10,7 +10,7 @@ import type { FireModelProps, HabitatSimMapProps } from './types/sim'
 import { loadData } from './data/load'
 import { loadAiContent, type AiContent } from './ai/content'
 import { HabitatMap3D } from './scene/HabitatMap3D'
-import { Flame3D } from './scene/Flame3D'
+import { FireModel3D } from './scene/FireModel3D'
 import { HomeView } from './panels/HomeView'
 import { PlaceView } from './panels/PlaceView'
 import { FireView } from './panels/FireView'
@@ -38,7 +38,7 @@ function viewFromHash(): ViewId {
 }
 
 // ---- workstream B slots (swap these two lines when B's components land; see docs/PLAN.md) ----
-const renderFire = (p: FireModelProps) => <Flame3D gravity={p.params.gravity} />
+const renderFire = (p: FireModelProps) => <FireModel3D {...p} />
 const renderMap = (p: HabitatSimMapProps) => <HabitatMap3D data={p.data} />
 
 function Mark() {
