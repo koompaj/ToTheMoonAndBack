@@ -503,6 +503,69 @@ def main():
                         missing.append(f"{f['id']}.{k}")
         check("every fuel-shape quote is found in NASA's file on the page given (data_extra/_text)", not missing, ", ".join(missing))
 
+    # ---- item 5: what each investigation measured ----------------------------------------------
+    SE = json.load(open(os.path.join(os.path.dirname(data), "data_sourced", "sensors.json"), encoding="utf-8"))["sensors"]
+    kinds = {"thermocouple", "radiometer", "pressure", "oxygen", "co2", "flow", "camera", "spectral", "smoke", "soot", "humidity", "other"}
+    keys5 = ("kind", "name", "detail", "source_file", "source_where", "quote")
+    shipped = [(i["accession"], s) for i in INV for s in i.get("sensors", [])]
+    want = [(s["investigation"], {k: s[k] for k in keys5}) for s in SE]
+    bad = [s["name"] for _, s in shipped if s["kind"] not in kinds or not s["source_file"] or not s["source_where"] or not s["quote"]
+           or set(s) != set(keys5)]
+    check("every sensor has a kind from the contract, a source file, a place in it and NASA's words; investigations.json matches data_sourced/sensors.json",
+          not bad and sorted(map(json.dumps, shipped)) == sorted(map(json.dumps, want)), ", ".join(bad[:4]))
+    bad = []
+    for s in SE:
+        if "table_columns" in s:   # experiment-table headers, from data/ (always available)
+            header, _ = raw_rows(data, f"{s['investigation']}/{s['source_file']}")
+            if not all(c in [h.strip() for h in header] for c in s["table_columns"]) or s["quote"] != "; ".join(s["table_columns"]):
+                bad.append(s["investigation"] + " " + s["name"])
+    check("sensors read from experiment tables name real column headers (Saffire-I, -II, -III cameras)", not bad, ", ".join(bad))
+    if os.path.isdir(txt_root):
+        import zipfile
+        import xml.etree.ElementTree as ET
+        M = "{http://schemas.openxmlformats.org/spreadsheetml/2006/main}"
+
+        def first_rows(path, n=2):   # header and unit rows of the first sheet
+            z = zipfile.ZipFile(path)
+            ss = ["".join(t.text or "" for t in si.iter(M + "t")) for si in ET.fromstring(z.read("xl/sharedStrings.xml")).iter(M + "si")]
+            got = []
+            with z.open("xl/worksheets/sheet1.xml") as f:
+                for _, el in ET.iterparse(f):
+                    if el.tag == M + "row":
+                        r = {}
+                        for c in el.iter(M + "c"):
+                            v = c.find(M + "v")
+                            r[re.match(r"[A-Z]+", c.get("r")).group(0)] = None if v is None else (ss[int(v.text)] if c.get("t") == "s" else v.text)
+                        got.append(r)
+                        el.clear()
+                        if len(got) >= n:
+                            break
+            return got
+        missing = []
+        for s in SE:
+            if "table_columns" in s:
+                continue
+            if "cells" in s:
+                for fn, want_unit in zip([s["source_file"]] + s["also_in"], [s["unit"]] + s["also_in_units"]):
+                    txt = os.path.join(txt_root, s["investigation"], fn + ".txt")
+                    raw = os.path.join(os.path.dirname(txt_root), s["investigation"], fn)
+                    text = open(txt, encoding="utf-8", errors="replace").read() if os.path.exists(txt) else ""
+                    sheet = text.split(f"--- sheet '{s['sheet']}'")[1].split("--- sheet")[0] if f"--- sheet '{s['sheet']}'" in text else ""
+                    ok = all(f"[{c}]" in sheet for c in s["columns"])
+                    if ok and os.path.exists(raw):
+                        hdr, unit = first_rows(raw)
+                        ok = all(hdr.get(l) == c and unit.get(l) == s["unit"] for l, c in zip(s["cells"], s["columns"])) if fn == s["source_file"] \
+                            else all(any(hdr.get(l) == c and unit.get(l) == want_unit for l in hdr) for c in s["columns"])
+                    if not ok:
+                        missing.append(f"{s['investigation']} {s['name']} in {fn}")
+            else:
+                txt = os.path.join(txt_root, s["investigation"], s["source_file"] + ".txt")
+                pages = [" ".join(pg.split()) for pg in open(txt, encoding="utf-8", errors="replace").read().split("\f")] if os.path.exists(txt) else []
+                on = [str(n + 1) for n, pg in enumerate(pages) if s["quote"] in pg]
+                if not any(re.fullmatch(r"p\. " + n, s["source_where"]) for n in on):
+                    missing.append(f"{s['investigation']} {s['name']} ({s['source_where']}, found on {on})")
+        check("every sensor quote is on the page given, and every sensor-log column and unit is in NASA's file (data_extra)", not missing, "; ".join(missing[:4]))
+
     # ---- report ------------------------------------------------------------------------------
     for name, ok, detail in results:
         print(f"{'PASS' if ok else 'FAIL'}  {name}{'' if ok or not detail else '  -> ' + detail}")

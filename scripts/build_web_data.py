@@ -246,6 +246,18 @@ def shape_fact_text(f):
     return f"{f['source_title']} ({f['source_file']}), {f['location']}: " + "; ".join(f'"{w}"' for w in words)
 
 
+SENSOR_KEYS = ("kind", "name", "detail", "source_file", "source_where", "quote")
+
+
+def sensors_by_investigation(data):
+    """Item 5: what each investigation measured, from data_sourced/sensors.json (hand-checked against NASA's files)."""
+    path = os.path.join(os.path.dirname(os.path.abspath(data)), "data_sourced", "sensors.json")
+    out = {}
+    for s in (json.load(open(path, encoding="utf-8"))["sensors"] if os.path.exists(path) else []):
+        out.setdefault(s["investigation"], []).append({k: s[k] for k in SENSOR_KEYS})
+    return out
+
+
 def apply_shapes(tests, facts):
     """fuel_shape, fuel_size_text, fuel_shape_source: only where the row or a NASA document states them."""
     for t in tests:
@@ -1003,7 +1015,10 @@ def main():
                      f"not a Microgravity Investigation; its gravity is not known")
         t["gravity_g"] = 0.0
     fuels = build_fuels(tests, hab)
+    sensors = sensors_by_investigation(data)
     for i in inv:
+        if i["accession"] in sensors:
+            i["sensors"] = sensors[i["accession"]]
         mine = [t for t in tests if t["investigation"] == i["accession"]]
         if mine:
             i["varied"] = varied_conditions(mine)

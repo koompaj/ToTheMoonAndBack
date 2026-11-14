@@ -1,0 +1,732 @@
+{
+ "about": "What each investigation measured (item 5): one entry per sensor or group of sensors, as NASA names it, with the file and place it is read from and NASA's words. Report entries quote the report (page numbers count the page breaks pdftotext writes, one per PDF page, as in solid_conditions.json). Sensor-log entries name the sheet, the column letters, the header (quote) and the unit from the log's own unit row. Experiment-table entries name the table's column headers. Hand-checked by workstream A against data_extra/ (not in git). build_web_data.py copies these to investigations.json as Investigation.sensors; validate_data.py re-finds every quote, header and unit when data_extra/ exists, and every table header always. A sensor listed here is one NASA's documents name; an investigation with no entry is one we have not read for sensors yet, not one that measured nothing.",
+ "checked": "2026-11-15",
+ "sensors": [
+  {
+   "investigation": "PSI-98",
+   "kind": "oxygen",
+   "name": "O2",
+   "detail": "unit %; same column in the Sample 2 log",
+   "source_file": "PSI-98_Raw Data_Saffire-I Sample 1 Sensor Data Complete TM graphs.xlsx",
+   "sheet": "Anemometer Tach and Igniter",
+   "columns": [
+    "O2"
+   ],
+   "cells": [
+    "G"
+   ],
+   "unit": "%",
+   "also_in": [
+    "PSI-98_Raw Data_Saffire-I Sample 2 Sensor Data Complete TM graphs.xlsx"
+   ],
+   "source_where": "sheet 'Anemometer Tach and Igniter', column G (header row 1, unit row 2: %)",
+   "quote": "O2",
+   "also_in_units": [
+    "%"
+   ]
+  },
+  {
+   "investigation": "PSI-98",
+   "kind": "co2",
+   "name": "CO2",
+   "detail": "unit %; same column in the Sample 2 log",
+   "source_file": "PSI-98_Raw Data_Saffire-I Sample 1 Sensor Data Complete TM graphs.xlsx",
+   "sheet": "Anemometer Tach and Igniter",
+   "columns": [
+    "CO2"
+   ],
+   "cells": [
+    "F"
+   ],
+   "unit": "%",
+   "also_in": [
+    "PSI-98_Raw Data_Saffire-I Sample 2 Sensor Data Complete TM graphs.xlsx"
+   ],
+   "source_where": "sheet 'Anemometer Tach and Igniter', column F (header row 1, unit row 2: %)",
+   "quote": "CO2",
+   "also_in_units": [
+    "%"
+   ]
+  },
+  {
+   "investigation": "PSI-98",
+   "kind": "flow",
+   "name": "Anemometers",
+   "detail": "2 anemometers, unit cm/sec; same column in the Sample 2 log",
+   "source_file": "PSI-98_Raw Data_Saffire-I Sample 1 Sensor Data Complete TM graphs.xlsx",
+   "sheet": "Anemometer Tach and Igniter",
+   "columns": [
+    "Anemometer 1",
+    "Anemometer 2"
+   ],
+   "cells": [
+    "H",
+    "I"
+   ],
+   "unit": "cm/sec",
+   "also_in": [
+    "PSI-98_Raw Data_Saffire-I Sample 2 Sensor Data Complete TM graphs.xlsx"
+   ],
+   "source_where": "sheet 'Anemometer Tach and Igniter', columns H, I (header row 1, unit row 2: cm/sec)",
+   "quote": "Anemometer 1; Anemometer 2",
+   "also_in_units": [
+    "cm/sec"
+   ]
+  },
+  {
+   "investigation": "PSI-98",
+   "kind": "pressure",
+   "name": "Ambient Pressure",
+   "detail": "unit PSIA; same column in the Sample 2 log",
+   "source_file": "PSI-98_Raw Data_Saffire-I Sample 1 Sensor Data Complete TM graphs.xlsx",
+   "sheet": "Anemometer Tach and Igniter",
+   "columns": [
+    "Ambient Pressure"
+   ],
+   "cells": [
+    "J"
+   ],
+   "unit": "PSIA",
+   "also_in": [
+    "PSI-98_Raw Data_Saffire-I Sample 2 Sensor Data Complete TM graphs.xlsx"
+   ],
+   "source_where": "sheet 'Anemometer Tach and Igniter', column J (header row 1, unit row 2: PSIA)",
+   "quote": "Ambient Pressure",
+   "also_in_units": [
+    "PSIA"
+   ]
+  },
+  {
+   "investigation": "PSI-98",
+   "kind": "radiometer",
+   "name": "Radiometers",
+   "detail": "4 radiometers, unit mW/cm2; same column in the Sample 2 log, whose unit row writes it mw/cm^2",
+   "source_file": "PSI-98_Raw Data_Saffire-I Sample 1 Sensor Data Complete TM graphs.xlsx",
+   "sheet": "Anemometer Tach and Igniter",
+   "columns": [
+    "Radiometer 1",
+    "Radiometer 2",
+    "Radiometer 3",
+    "Radiometer 4"
+   ],
+   "cells": [
+    "K",
+    "N",
+    "Q",
+    "T"
+   ],
+   "unit": "mW/cm2",
+   "also_in": [
+    "PSI-98_Raw Data_Saffire-I Sample 2 Sensor Data Complete TM graphs.xlsx"
+   ],
+   "source_where": "sheet 'Anemometer Tach and Igniter', columns K, N, Q, T (header row 1, unit row 2: mW/cm2)",
+   "quote": "Radiometer 1; Radiometer 2; Radiometer 3; Radiometer 4",
+   "also_in_units": [
+    "mw/cm^2"
+   ]
+  },
+  {
+   "investigation": "PSI-98",
+   "kind": "humidity",
+   "name": "Humidity",
+   "detail": "unit %; same column in the Sample 2 log",
+   "source_file": "PSI-98_Raw Data_Saffire-I Sample 1 Sensor Data Complete TM graphs.xlsx",
+   "sheet": "Anemometer Tach and Igniter",
+   "columns": [
+    "Humidity"
+   ],
+   "cells": [
+    "W"
+   ],
+   "unit": "%",
+   "also_in": [
+    "PSI-98_Raw Data_Saffire-I Sample 2 Sensor Data Complete TM graphs.xlsx"
+   ],
+   "source_where": "sheet 'Anemometer Tach and Igniter', column W (header row 1, unit row 2: %)",
+   "quote": "Humidity",
+   "also_in_units": [
+    "%"
+   ]
+  },
+  {
+   "investigation": "PSI-98",
+   "kind": "thermocouple",
+   "name": "Test Section Inlet Temp",
+   "detail": "inlet air temperature, unit Degrees C; same column in the Sample 2 log",
+   "source_file": "PSI-98_Raw Data_Saffire-I Sample 1 Sensor Data Complete TM graphs.xlsx",
+   "sheet": "Anemometer Tach and Igniter",
+   "columns": [
+    "Test Section Inlet Temp"
+   ],
+   "cells": [
+    "X"
+   ],
+   "unit": "Degrees C",
+   "also_in": [
+    "PSI-98_Raw Data_Saffire-I Sample 2 Sensor Data Complete TM graphs.xlsx"
+   ],
+   "source_where": "sheet 'Anemometer Tach and Igniter', column X (header row 1, unit row 2: Degrees C)",
+   "quote": "Test Section Inlet Temp",
+   "also_in_units": [
+    "Degrees C"
+   ]
+  },
+  {
+   "investigation": "PSI-98",
+   "kind": "thermocouple",
+   "name": "Plume thermocouples",
+   "detail": "6 plume thermocouples (TC1-TC6), unit Degrees C; same column in the Sample 2 log",
+   "source_file": "PSI-98_Raw Data_Saffire-I Sample 1 Sensor Data Complete TM graphs.xlsx",
+   "sheet": "Anemometer Tach and Igniter",
+   "columns": [
+    "Plume Temp 1 (TC1)",
+    "Plume Temp 2 (TC2)",
+    "Plume Temp 3 (TC3)",
+    "Plume Temp 4 (TC4)",
+    "Plume Temp 5 (TC5)",
+    "Plume Temp 6 (TC6)"
+   ],
+   "cells": [
+    "Y",
+    "Z",
+    "AA",
+    "AB",
+    "AC",
+    "AD"
+   ],
+   "unit": "Degrees C",
+   "also_in": [
+    "PSI-98_Raw Data_Saffire-I Sample 2 Sensor Data Complete TM graphs.xlsx"
+   ],
+   "source_where": "sheet 'Anemometer Tach and Igniter', columns Y, Z, AA, AB, AC, AD (header row 1, unit row 2: Degrees C)",
+   "quote": "Plume Temp 1 (TC1); Plume Temp 2 (TC2); Plume Temp 3 (TC3); Plume Temp 4 (TC4); Plume Temp 5 (TC5); Plume Temp 6 (TC6)",
+   "also_in_units": [
+    "Degrees C"
+   ]
+  },
+  {
+   "investigation": "PSI-98",
+   "kind": "thermocouple",
+   "name": "Sample thermocouples",
+   "detail": "6 sample thermocouples (TC7-TC12), unit Degrees C; same column in the Sample 2 log",
+   "source_file": "PSI-98_Raw Data_Saffire-I Sample 1 Sensor Data Complete TM graphs.xlsx",
+   "sheet": "Anemometer Tach and Igniter",
+   "columns": [
+    "Sample Temp 1 (TC7)",
+    "Sample Temp 2 (TC8)",
+    "Sample Temp 3 (TC9)",
+    "Sample Temp 4 (TC10)",
+    "Sample Temp 5 (TC11)",
+    "Sample Temp 6 (TC12)"
+   ],
+   "cells": [
+    "AE",
+    "AF",
+    "AG",
+    "AH",
+    "AI",
+    "AJ"
+   ],
+   "unit": "Degrees C",
+   "also_in": [
+    "PSI-98_Raw Data_Saffire-I Sample 2 Sensor Data Complete TM graphs.xlsx"
+   ],
+   "source_where": "sheet 'Anemometer Tach and Igniter', columns AE, AF, AG, AH, AI, AJ (header row 1, unit row 2: Degrees C)",
+   "quote": "Sample Temp 1 (TC7); Sample Temp 2 (TC8); Sample Temp 3 (TC9); Sample Temp 4 (TC10); Sample Temp 5 (TC11); Sample Temp 6 (TC12)",
+   "also_in_units": [
+    "Degrees C"
+   ]
+  },
+  {
+   "investigation": "PSI-98",
+   "kind": "other",
+   "name": "Average Fan Speed",
+   "detail": "flow-duct fan speed, unit RPM; same column in the Sample 2 log",
+   "source_file": "PSI-98_Raw Data_Saffire-I Sample 1 Sensor Data Complete TM graphs.xlsx",
+   "sheet": "Anemometer Tach and Igniter",
+   "columns": [
+    "Average Fan Speed"
+   ],
+   "cells": [
+    "E"
+   ],
+   "unit": "RPM",
+   "also_in": [
+    "PSI-98_Raw Data_Saffire-I Sample 2 Sensor Data Complete TM graphs.xlsx"
+   ],
+   "source_where": "sheet 'Anemometer Tach and Igniter', column E (header row 1, unit row 2: RPM)",
+   "quote": "Average Fan Speed",
+   "also_in_units": [
+    "RPM"
+   ]
+  },
+  {
+   "investigation": "PSI-100",
+   "kind": "oxygen",
+   "name": "O2",
+   "detail": "unit %; same column in the Sample 2 log",
+   "source_file": "PSI-100_Raw Data_Saffire III Sample 1 Sensors.xlsx",
+   "sheet": "Anemometer Tach and Igniter",
+   "columns": [
+    "O2"
+   ],
+   "cells": [
+    "G"
+   ],
+   "unit": "%",
+   "also_in": [
+    "PSI-100_Raw Data_Saffire III Sample 2 Sensors.xlsx"
+   ],
+   "source_where": "sheet 'Anemometer Tach and Igniter', column G (header row 1, unit row 2: %)",
+   "quote": "O2",
+   "also_in_units": [
+    "%"
+   ]
+  },
+  {
+   "investigation": "PSI-100",
+   "kind": "co2",
+   "name": "CO2",
+   "detail": "unit %; same column in the Sample 2 log",
+   "source_file": "PSI-100_Raw Data_Saffire III Sample 1 Sensors.xlsx",
+   "sheet": "Anemometer Tach and Igniter",
+   "columns": [
+    "CO2"
+   ],
+   "cells": [
+    "F"
+   ],
+   "unit": "%",
+   "also_in": [
+    "PSI-100_Raw Data_Saffire III Sample 2 Sensors.xlsx"
+   ],
+   "source_where": "sheet 'Anemometer Tach and Igniter', column F (header row 1, unit row 2: %)",
+   "quote": "CO2",
+   "also_in_units": [
+    "%"
+   ]
+  },
+  {
+   "investigation": "PSI-100",
+   "kind": "flow",
+   "name": "Anemometers",
+   "detail": "2 anemometers, unit cm/sec; same column in the Sample 2 log",
+   "source_file": "PSI-100_Raw Data_Saffire III Sample 1 Sensors.xlsx",
+   "sheet": "Anemometer Tach and Igniter",
+   "columns": [
+    "Anemometer 1",
+    "Anemometer 2"
+   ],
+   "cells": [
+    "H",
+    "I"
+   ],
+   "unit": "cm/sec",
+   "also_in": [
+    "PSI-100_Raw Data_Saffire III Sample 2 Sensors.xlsx"
+   ],
+   "source_where": "sheet 'Anemometer Tach and Igniter', columns H, I (header row 1, unit row 2: cm/sec)",
+   "quote": "Anemometer 1; Anemometer 2",
+   "also_in_units": [
+    "cm/sec"
+   ]
+  },
+  {
+   "investigation": "PSI-100",
+   "kind": "pressure",
+   "name": "Ambient Pressure",
+   "detail": "unit PSIA; same column in the Sample 2 log",
+   "source_file": "PSI-100_Raw Data_Saffire III Sample 1 Sensors.xlsx",
+   "sheet": "Anemometer Tach and Igniter",
+   "columns": [
+    "Ambient Pressure"
+   ],
+   "cells": [
+    "J"
+   ],
+   "unit": "PSIA",
+   "also_in": [
+    "PSI-100_Raw Data_Saffire III Sample 2 Sensors.xlsx"
+   ],
+   "source_where": "sheet 'Anemometer Tach and Igniter', column J (header row 1, unit row 2: PSIA)",
+   "quote": "Ambient Pressure",
+   "also_in_units": [
+    "PSIA"
+   ]
+  },
+  {
+   "investigation": "PSI-100",
+   "kind": "radiometer",
+   "name": "Radiometers",
+   "detail": "4 radiometers, unit mw/cm^2; same column in the Sample 2 log",
+   "source_file": "PSI-100_Raw Data_Saffire III Sample 1 Sensors.xlsx",
+   "sheet": "Anemometer Tach and Igniter",
+   "columns": [
+    "Radiometer 1",
+    "Radiometer 2",
+    "Radiometer 3",
+    "Radiometer 4"
+   ],
+   "cells": [
+    "K",
+    "L",
+    "M",
+    "N"
+   ],
+   "unit": "mw/cm^2",
+   "also_in": [
+    "PSI-100_Raw Data_Saffire III Sample 2 Sensors.xlsx"
+   ],
+   "source_where": "sheet 'Anemometer Tach and Igniter', columns K, L, M, N (header row 1, unit row 2: mw/cm^2)",
+   "quote": "Radiometer 1; Radiometer 2; Radiometer 3; Radiometer 4",
+   "also_in_units": [
+    "mw/cm^2"
+   ]
+  },
+  {
+   "investigation": "PSI-100",
+   "kind": "humidity",
+   "name": "Humidity",
+   "detail": "unit %; same column in the Sample 2 log",
+   "source_file": "PSI-100_Raw Data_Saffire III Sample 1 Sensors.xlsx",
+   "sheet": "Anemometer Tach and Igniter",
+   "columns": [
+    "Humidity"
+   ],
+   "cells": [
+    "O"
+   ],
+   "unit": "%",
+   "also_in": [
+    "PSI-100_Raw Data_Saffire III Sample 2 Sensors.xlsx"
+   ],
+   "source_where": "sheet 'Anemometer Tach and Igniter', column O (header row 1, unit row 2: %)",
+   "quote": "Humidity",
+   "also_in_units": [
+    "%"
+   ]
+  },
+  {
+   "investigation": "PSI-100",
+   "kind": "thermocouple",
+   "name": "Test Section Inlet Temp",
+   "detail": "inlet air temperature, unit Degrees C; same column in the Sample 2 log",
+   "source_file": "PSI-100_Raw Data_Saffire III Sample 1 Sensors.xlsx",
+   "sheet": "Anemometer Tach and Igniter",
+   "columns": [
+    "Test Section Inlet Temp"
+   ],
+   "cells": [
+    "P"
+   ],
+   "unit": "Degrees C",
+   "also_in": [
+    "PSI-100_Raw Data_Saffire III Sample 2 Sensors.xlsx"
+   ],
+   "source_where": "sheet 'Anemometer Tach and Igniter', column P (header row 1, unit row 2: Degrees C)",
+   "quote": "Test Section Inlet Temp",
+   "also_in_units": [
+    "Degrees C"
+   ]
+  },
+  {
+   "investigation": "PSI-100",
+   "kind": "thermocouple",
+   "name": "Plume thermocouples",
+   "detail": "6 plume thermocouples (TC1-TC6), unit Degrees C; same column in the Sample 2 log",
+   "source_file": "PSI-100_Raw Data_Saffire III Sample 1 Sensors.xlsx",
+   "sheet": "Anemometer Tach and Igniter",
+   "columns": [
+    "Plume Temp 1 (TC1)",
+    "Plume Temp 2 (TC2)",
+    "Plume Temp 3 (TC3)",
+    "Plume Temp 4 (TC4)",
+    "Plume Temp 5 (TC5)",
+    "Plume Temp 6 (TC6)"
+   ],
+   "cells": [
+    "Q",
+    "R",
+    "S",
+    "T",
+    "U",
+    "V"
+   ],
+   "unit": "Degrees C",
+   "also_in": [
+    "PSI-100_Raw Data_Saffire III Sample 2 Sensors.xlsx"
+   ],
+   "source_where": "sheet 'Anemometer Tach and Igniter', columns Q, R, S, T, U, V (header row 1, unit row 2: Degrees C)",
+   "quote": "Plume Temp 1 (TC1); Plume Temp 2 (TC2); Plume Temp 3 (TC3); Plume Temp 4 (TC4); Plume Temp 5 (TC5); Plume Temp 6 (TC6)",
+   "also_in_units": [
+    "Degrees C"
+   ]
+  },
+  {
+   "investigation": "PSI-100",
+   "kind": "thermocouple",
+   "name": "Sample thermocouples",
+   "detail": "6 sample thermocouples (TC7-TC12), unit Degrees C; same column in the Sample 2 log",
+   "source_file": "PSI-100_Raw Data_Saffire III Sample 1 Sensors.xlsx",
+   "sheet": "Anemometer Tach and Igniter",
+   "columns": [
+    "Sample Temp 1 (TC7)",
+    "Sample Temp 2 (TC8)",
+    "Sample Temp 3 (TC9)",
+    "Sample Temp 4 (TC10)",
+    "Sample Temp 5 (TC11)",
+    "Sample Temp 6 (TC12)"
+   ],
+   "cells": [
+    "W",
+    "X",
+    "Y",
+    "Z",
+    "AA",
+    "AB"
+   ],
+   "unit": "Degrees C",
+   "also_in": [
+    "PSI-100_Raw Data_Saffire III Sample 2 Sensors.xlsx"
+   ],
+   "source_where": "sheet 'Anemometer Tach and Igniter', columns W, X, Y, Z, AA, AB (header row 1, unit row 2: Degrees C)",
+   "quote": "Sample Temp 1 (TC7); Sample Temp 2 (TC8); Sample Temp 3 (TC9); Sample Temp 4 (TC10); Sample Temp 5 (TC11); Sample Temp 6 (TC12)",
+   "also_in_units": [
+    "Degrees C"
+   ]
+  },
+  {
+   "investigation": "PSI-100",
+   "kind": "other",
+   "name": "Average Fan Speed",
+   "detail": "flow-duct fan speed, unit RPM; same column in the Sample 2 log",
+   "source_file": "PSI-100_Raw Data_Saffire III Sample 1 Sensors.xlsx",
+   "sheet": "Anemometer Tach and Igniter",
+   "columns": [
+    "Average Fan Speed"
+   ],
+   "cells": [
+    "E"
+   ],
+   "unit": "RPM",
+   "also_in": [
+    "PSI-100_Raw Data_Saffire III Sample 2 Sensors.xlsx"
+   ],
+   "source_where": "sheet 'Anemometer Tach and Igniter', column E (header row 1, unit row 2: RPM)",
+   "quote": "Average Fan Speed",
+   "also_in_units": [
+    "RPM"
+   ]
+  },
+  {
+   "investigation": "PSI-98",
+   "kind": "camera",
+   "name": "Camera 1, Camera 2",
+   "detail": "2 cameras; the table names each burn's image set (e.g. S1C1)",
+   "source_file": "PSI-98_Experimental table_SAFFIRE-1.csv",
+   "table_columns": [
+    "Camera 1",
+    "Camera 2"
+   ],
+   "source_where": "experiment table, columns 'Camera 1' and 'Camera 2'",
+   "quote": "Camera 1; Camera 2"
+  },
+  {
+   "investigation": "PSI-99",
+   "kind": "camera",
+   "name": "Camera 1, Camera 2",
+   "detail": "2 cameras; the table names each burn's image set (e.g. S1C1)",
+   "source_file": "PSI-99_Experimental table_SAFFIRE-2.csv",
+   "table_columns": [
+    "Camera 1",
+    "Camera 2"
+   ],
+   "source_where": "experiment table, columns 'Camera 1' and 'Camera 2'",
+   "quote": "Camera 1; Camera 2"
+  },
+  {
+   "investigation": "PSI-100",
+   "kind": "camera",
+   "name": "Camera 1, Camera 2",
+   "detail": "2 cameras; the table names each burn's image set (e.g. S1C1)",
+   "source_file": "PSI-100_Experimental table_SAFFIRE-3.csv",
+   "table_columns": [
+    "Camera 1",
+    "Camera 2"
+   ],
+   "source_where": "experiment table, columns 'Camera 1' and 'Camera 2'",
+   "quote": "Camera 1; Camera 2"
+  },
+  {
+   "investigation": "PSI-25",
+   "kind": "camera",
+   "name": "Video camera and 35-mm still camera",
+   "detail": "video with a data overlay",
+   "source_file": "PSI-25_Reports_BASS-II Summary Report.pdf",
+   "source_where": "p. 9",
+   "quote": "A video camera with a data overlay and a 35-mm still camera record the combustion events."
+  },
+  {
+   "investigation": "PSI-25",
+   "kind": "radiometer",
+   "name": "Radiometer",
+   "detail": "not calibrated; the table records its gain setting per test",
+   "source_file": "PSI-25_Reports_BASS-II Summary Report.pdf",
+   "source_where": "p. 13",
+   "quote": "The radiometer signal was not calibrated but provided a measure of the flame dynamics and steadiness."
+  },
+  {
+   "investigation": "PSI-25",
+   "kind": "oxygen",
+   "name": "CSA-CP (Compound Specific Analyzer-Combustion Products)",
+   "detail": "O2 before and after each test; the table records calibrated O2 % by vol",
+   "source_file": "PSI-25_Reports_BASS-II Summary Report.pdf",
+   "source_where": "p. 9",
+   "quote": "also utilized the onboard CSA-CP for O2 and CO readings, and the Carbon Dioxide Monitor for CO2 readings before and after each test."
+  },
+  {
+   "investigation": "PSI-25",
+   "kind": "co2",
+   "name": "Carbon Dioxide Monitor",
+   "detail": "CO2 before and after each test; the table records initial and final CO2 % by vol",
+   "source_file": "PSI-25_Reports_BASS-II Summary Report.pdf",
+   "source_where": "p. 9",
+   "quote": "also utilized the onboard CSA-CP for O2 and CO readings, and the Carbon Dioxide Monitor for CO2 readings before and after each test."
+  },
+  {
+   "investigation": "PSI-25",
+   "kind": "other",
+   "name": "CSA-CP carbon monoxide reading",
+   "detail": "CO before and after each test; the table records initial and final CO (ppm)",
+   "source_file": "PSI-25_Reports_BASS-II Summary Report.pdf",
+   "source_where": "p. 9",
+   "quote": "also utilized the onboard CSA-CP for O2 and CO readings, and the Carbon Dioxide Monitor for CO2 readings before and after each test."
+  },
+  {
+   "investigation": "PSI-25",
+   "kind": "flow",
+   "name": "Hot wire anemometer",
+   "detail": "used to calibrate flow velocity against fan voltage (chapter 2, Bhattacharjee)",
+   "source_file": "PSI-25_Reports_BASS-II Summary Report.pdf",
+   "source_where": "p. 46",
+   "quote": "A hot wire anemometer is used to calibrate the flow velocity with the voltage of the fan"
+  },
+  {
+   "investigation": "PSI-25",
+   "kind": "flow",
+   "name": "Air velocity transducer",
+   "detail": "reading shown on the video overlay (cm/s)",
+   "source_file": "PSI-25_Reports_BASS-II Summary Report.pdf",
+   "source_where": "p. 13",
+   "quote": "air velocity transducer reading (cm/s)"
+  },
+  {
+   "investigation": "PSI-25",
+   "kind": "flow",
+   "name": "N2 mass flowmeter",
+   "detail": "MKS Instruments 179A, for the nitrogen used to lower the oxygen",
+   "source_file": "PSI-25_Reports_BASS-II Summary Report.pdf",
+   "source_where": "p. 14",
+   "quote": "MKS Instruments 179A mass flowmeter"
+  },
+  {
+   "investigation": "PSI-25",
+   "kind": "pressure",
+   "name": "Total pressure",
+   "detail": "monitored in the Bhattacharjee tests (99.2-99.5 kPa); no pressure stated for the other chapters",
+   "source_file": "PSI-25_Reports_BASS-II Summary Report.pdf",
+   "source_where": "p. 46",
+   "quote": "The total pressure is also monitored, which varied from 99.2 to 99.5 kPa in the tests reported."
+  },
+  {
+   "investigation": "PSI-10",
+   "kind": "camera",
+   "name": "Five video cameras",
+   "detail": "ACME's imaging suite, three of them CIR facility cameras",
+   "source_file": "PSI-10_Reports_FinalRpt_ACMEFlameDesign.pdf",
+   "source_where": "p. 11",
+   "quote": "ACME's primary flame diagnostics are a suite of imaging systems including five video cameras and two illumination systems"
+  },
+  {
+   "investigation": "PSI-10",
+   "kind": "radiometer",
+   "name": "Thermopile radiometers and photomultiplier tubes",
+   "detail": "non-imaging optical diagnostics of the ACME chamber insert (the report describes the hardware in the future tense)",
+   "source_file": "PSI-10_Reports_FinalRpt_ACMEFlameDesign.pdf",
+   "source_where": "p. 14",
+   "quote": "The ACME chamber insert will also be equipped with non-imaging optical diagnostics including both thermopile radiometers and Photomultiplier Tubes (PMTs)."
+  },
+  {
+   "investigation": "PSI-10",
+   "kind": "other",
+   "name": "CIR gas chromatograph",
+   "detail": "pre- and post-test analysis of the chamber atmosphere (oxygen, nitrogen, CO2, CO, fuel gases)",
+   "source_file": "PSI-10_Reports_FinalRpt_ACMEFlameDesign.pdf",
+   "source_where": "p. 17",
+   "quote": "The ACME experiments will use the CIR's gas chromatograph for pre- and post-test analysis of the chamber atmosphere"
+  },
+  {
+   "investigation": "PSI-159",
+   "kind": "camera",
+   "name": "Five video cameras",
+   "detail": "ACME's imaging suite, three of them CIR facility cameras",
+   "source_file": "PSI-159_Reports_FinalRpt_ACME.CFI-G.pdf",
+   "source_where": "p. 9",
+   "quote": "ACME's primary flame diagnostics are a suite of imaging systems including five video cameras and two illumination systems"
+  },
+  {
+   "investigation": "PSI-159",
+   "kind": "radiometer",
+   "name": "Thermopile radiometers and photomultiplier tubes",
+   "detail": "non-imaging optical diagnostics of the ACME chamber insert (the report describes the hardware in the future tense)",
+   "source_file": "PSI-159_Reports_FinalRpt_ACME.CFI-G.pdf",
+   "source_where": "p. 11",
+   "quote": "The ACME chamber insert will also be equipped with non-imaging optical diagnostics including both thermopile radiometers and Photomultiplier Tubes (PMTs)."
+  },
+  {
+   "investigation": "PSI-159",
+   "kind": "other",
+   "name": "CIR gas chromatograph",
+   "detail": "pre- and post-test analysis of the chamber atmosphere (oxygen, nitrogen, CO2, CO, fuel gases)",
+   "source_file": "PSI-159_Reports_FinalRpt_ACME.CFI-G.pdf",
+   "source_where": "p. 14",
+   "quote": "The ACME experiments will use the CIR's gas chromatograph for pre- and post-test analysis of the chamber atmosphere"
+  },
+  {
+   "investigation": "PSI-10",
+   "kind": "thermocouple",
+   "name": "Thermocouple rakes",
+   "detail": "long (near) rake on one test day to calibrate TFP; short (far) rake on all other days",
+   "source_file": "PSI-10_Reports_FinalRpt_ACMEFlameDesign.pdf",
+   "source_where": "p. 3",
+   "quote": "the short (far) thermocouple rake was used on all other Flame Design test days"
+  },
+  {
+   "investigation": "PSI-10",
+   "kind": "soot",
+   "name": "Thin Filament Pyrometry (TFP)",
+   "detail": "optical flame temperature, calibrated with the thermocouple rake",
+   "source_file": "PSI-10_Reports_FinalRpt_ACMEFlameDesign.pdf",
+   "source_where": "p. 3",
+   "quote": "to acquire data to calibrate optical measurements of the flame temperature through Thin Filament Pyrometry (TFP)"
+  },
+  {
+   "investigation": "PSI-159",
+   "kind": "thermocouple",
+   "name": "Thermocouple rakes",
+   "detail": "four-thermocouple rakes, type B nearest the burner, type K beyond",
+   "source_file": "PSI-159_Reports_FinalRpt_ACME.CFI-G.pdf",
+   "source_where": "p. 14",
+   "quote": "The two thermocouples closest to the burner outlets on each four-thermocouple rake are type B, while the others are type K."
+  },
+  {
+   "investigation": "PSI-159",
+   "kind": "soot",
+   "name": "Soot pyrometry and Thin Filament Pyrometry (TFP)",
+   "detail": "array of 5 silicon carbide fibers; the CFI-G table has a TFP column",
+   "source_file": "PSI-159_Reports_FinalRpt_ACME.CFI-G.pdf",
+   "source_where": "p. 10",
+   "quote": "Both soot pyrometry and Thin Filament Pyrometry (TFP) are possible, where ACME is equipped with a crew-replaceable array of 5 silicon carbide (SiC) fibers."
+  }
+ ]
+}
