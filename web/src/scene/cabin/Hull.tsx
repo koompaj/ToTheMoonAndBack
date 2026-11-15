@@ -1,5 +1,6 @@
 // OWNER: 3D workstream. The sample spacecraft's shell: hull ribs and stringers, the deck, the
-// hatches, the docking ring, and (optionally) the outside fittings. Example layout, not a NASA design.
+// closed flight deck door, the node hatch, the docking ring, and (optionally) the outside
+// fittings. Example layout, not a NASA design.
 import { useMemo } from 'react'
 import * as THREE from 'three'
 import { Box, Cyl, Glow, Holo, Ring, Segs, coneGeo } from './holo'
@@ -98,6 +99,41 @@ function Hatch({ x, r }: { x: number; r: number }) {
   )
 }
 
+/** A shut door filling a bulkhead's opening: a pale panel with bars and a hand wheel, so it reads
+ *  as closed without its label. Only the part above the deck is drawn. */
+function ClosedDoor({ x, r }: { x: number; r: number }) {
+  const first = Math.asin(-AXIS_Y / r) // where the opening's circle meets the deck
+  const panel = useMemo(() => {
+    const pts: number[] = []
+    const n = 40
+    for (let k = 0; k < n; k++) {
+      const a = first + (k / n) * (Math.PI - 2 * first)
+      const b = first + ((k + 1) / n) * (Math.PI - 2 * first)
+      pts.push(x, AXIS_Y, 0, x, AXIS_Y + r * Math.sin(a), r * Math.cos(a), x, AXIS_Y + r * Math.sin(b), r * Math.cos(b))
+    }
+    pts.push(x, AXIS_Y, 0, x, 0, -r * Math.cos(first), x, 0, r * Math.cos(first)) // down to the deck
+    const g = new THREE.BufferGeometry()
+    g.setAttribute('position', new THREE.Float32BufferAttribute(pts, 3))
+    return g
+  }, [x, r, first])
+  const bars = useMemo(() => {
+    const pts: number[] = []
+    for (const y of [-0.6, -0.2, 0.2, 0.6, 1]) {
+      const half = Math.sqrt(r * r - y * y)
+      pts.push(x, AXIS_Y + y, -half, x, AXIS_Y + y, half)
+    }
+    return pts
+  }, [x, r])
+  return (
+    <group>
+      <Glow geo={panel} color="#dff4ff" opacity={0.2} />
+      <Segs points={bars} color="#dff4ff" opacity={0.75} />
+      <Ring r={r} tube={0.06} position={[x, AXIS_Y, 0]} rotation={FACE_X} color="#dff4ff" />
+      <Ring r={0.26} tube={0.03} position={[x, AXIS_Y, 0]} rotation={FACE_X} color="#dff4ff" line={0.9} />
+    </group>
+  )
+}
+
 function Exterior() {
   const wings = [-1, 1]
   return (
@@ -145,9 +181,9 @@ export function Hull({ exterior = false }: { exterior?: boolean }) {
       <Glow geo={ceilingFill} opacity={0.07} />
       <Segs points={ceiling} opacity={0.4} />
 
-      {/* doorway between the flight deck and the cabin, hatch between the cabin and the node */}
+      {/* door between the flight deck and the cabin (shut in this example), hatch between the cabin and the node */}
       <Segs points={frame} opacity={0.22} />
-      <Ring r={doorway.opening} tube={0.04} position={[doorway.x, AXIS_Y, 0]} rotation={FACE_X} line={0.5} />
+      {doorway.closed ? <ClosedDoor x={doorway.x} r={doorway.opening} /> : <Ring r={doorway.opening} tube={0.04} position={[doorway.x, AXIS_Y, 0]} rotation={FACE_X} line={0.5} />}
       <Segs points={bulkhead} opacity={0.22} />
       <Hatch x={hatch.x} r={hatch.opening} />
 

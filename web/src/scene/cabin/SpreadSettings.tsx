@@ -13,8 +13,8 @@ interface Row {
   key: keyof EffectSettings
   name: string
   max: number
-  /** The rule, in plain words, for a strength of x. */
-  rule: (x: string) => string
+  /** The rule, in plain words, for a strength of x. `air` says which way the air moves. */
+  rule: (x: string, air: string) => string
   /** What it comes to with the conditions set right now. */
   now: (settings: EffectSettings, c: CabinConditions) => string
 }
@@ -24,8 +24,8 @@ const ROWS: Row[] = [
     key: 'airflow',
     name: 'Airflow effect',
     max: 0.8,
-    rule: (x) =>
-      `With the airflow at ${AIRFLOW_FULL_CMS} cm/s, anything straight downstream of the fire counts as ${x} nearer and anything straight upstream as ${x} farther; less airflow, less effect. In this example layout the air moves along the craft toward the node.`,
+    rule: (x, air) =>
+      `With the airflow at ${AIRFLOW_FULL_CMS} cm/s, anything straight downstream of the fire counts as ${x} nearer and anything straight upstream as ${x} farther; less airflow, less effect. ${air}`,
     now: (s, c) => (c.airflowCmS <= 0 ? 'Airflow is 0 cm/s, so there is nothing for this to act on.' : `At ${c.airflowCmS} cm/s: ${pct(biasFrom(s, c).downstream)} nearer downstream.`),
   },
   {
@@ -51,7 +51,10 @@ const ROWS: Row[] = [
   },
 ]
 
-export function SpreadSettings({ settings, conditions, onChange }: { settings: EffectSettings; conditions: CabinConditions; onChange: (s: EffectSettings) => void }) {
+/** Which way the air moves in the sample spacecraft, as written beside the airflow setting. */
+const SAMPLE_AIR = 'In this example layout the air moves along the craft toward the node.'
+
+export function SpreadSettings({ settings, conditions, onChange, air = SAMPLE_AIR }: { settings: EffectSettings; conditions: CabinConditions; onChange: (s: EffectSettings) => void; air?: string }) {
   const active = ROWS.filter((r) => settings[r.key] > 0).length
   return (
     <details className="cabin-b-settings">
@@ -68,7 +71,7 @@ export function SpreadSettings({ settings, conditions, onChange }: { settings: E
               <b>{v === 0 ? 'no effect' : pct(v)}</b>
               <input type="range" min={0} max={r.max} step={0.05} value={v} onChange={(e) => onChange({ ...settings, [r.key]: Number(e.target.value) })} aria-label={`${r.name}, your assumption`} />
             </label>
-            <small>{r.rule(pct(v))}</small>
+            <small>{r.rule(pct(v), air)}</small>
             {v > 0 && <small className="cabin-b-now">{r.now(settings, conditions)}</small>}
           </div>
         )

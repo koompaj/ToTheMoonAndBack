@@ -5,7 +5,7 @@
 // illustration, never a result"). The order comes from timeline.ts (distance in the example layout
 // only). The flame reuses the fire page's drawing (fire/look.ts): every mapping is a drawing
 // choice. Nothing here reads or changes evidence. Goes inside a react-three-fiber <Canvas>.
-import { useMemo, useRef, type MutableRefObject } from 'react'
+import { useMemo, useRef, type MutableRefObject, type ReactNode } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import type { FuelClass } from '../../types/data'
@@ -55,11 +55,18 @@ function ItemBurn({ entry, from, plan, clock, state }: { entry: SpreadEntry; fro
   const vis = useRef(0)
   const glow = useRef<THREE.MeshBasicMaterial>(null)
   const linkMaterial = useRef<THREE.LineBasicMaterial>(null)
+  // The line from where the fire started to this item. Where the way runs along the vent duct
+  // (into or out of the closed room) the line goes up to the duct, along it and down again.
+  const way = useMemo(() => {
+    const points: [number, number, number][] = [[from[0], from[1] + 0.2, from[2]], ...(entry.way ?? []), [item.x, top, item.z]]
+    const lengths = points.slice(1).map((p, k) => Math.hypot(p[0] - points[k][0], p[1] - points[k][1], p[2] - points[k][2]))
+    return { points, lengths, total: lengths.reduce((a, b) => a + b, 0) }
+  }, [from[0], from[1], from[2], entry, item, top])
   const link = useMemo(() => {
     const g = new THREE.BufferGeometry()
-    g.setAttribute('position', new THREE.Float32BufferAttribute([from[0], from[1] + 0.2, from[2], from[0], from[1] + 0.2, from[2]], 3))
+    g.setAttribute('position', new THREE.Float32BufferAttribute(way.lengths.flatMap((_, k) => [...way.points[k], ...way.points[k]]), 3))
     return g
-  }, [from[0], from[1], from[2]])
+  }, [way])
 
   useFrame(() => {
     const a = litAmount(step, itemsAt(plan, clock.current.t))
@@ -69,7 +76,14 @@ function ItemBurn({ entry, from, plan, clock, state }: { entry: SpreadEntry; fro
     if (step > 0) {
       // a line from where the fire started, growing as this item lights
       const p = link.attributes.position as THREE.BufferAttribute
-      p.setXYZ(1, from[0] + (item.x - from[0]) * a, from[1] + 0.2 + (top - from[1] - 0.2) * a, from[2] + (item.z - from[2]) * a)
+      let done = 0
+      way.lengths.forEach((len, k) => {
+        const part = len > 0 ? clamp((a * way.total - done) / len, 0, 1) : 0
+        const [ax, ay, az] = way.points[k]
+        const [bx, by, bz] = way.points[k + 1]
+        p.setXYZ(k * 2 + 1, ax + (bx - ax) * part, ay + (by - ay) * part, az + (bz - az) * part)
+        done += len
+      })
       p.needsUpdate = true
       if (linkMaterial.current) linkMaterial.current.opacity = a > 0 ? 0.5 : 0
     }
@@ -106,6 +120,8 @@ export interface CabinFireProps {
   bias: SpreadBias
   /** Draw the coloured cloud that shows how far the spread has reached. */
   field: boolean
+  /** The cloud to draw instead of the sample spacecraft's, for a layout the user loaded. */
+  renderField?: (still: boolean) => ReactNode
   /** Items the user has hidden. They stay in the order, but no glow or flame is drawn on them. */
   hiddenIds?: ReadonlySet<string>
   /** Called a few times a second with the timeline position, for the controls. */
@@ -114,7 +130,7 @@ export interface CabinFireProps {
   onEnd: () => void
 }
 
-export function CabinFire({ position, fuel, fire, plan, bias, clock, field, hiddenIds, onShow, onEnd }: CabinFireProps) {
+export function CabinFire({ position, fuel, fire, plan, bias, clock, field, renderField, hiddenIds, onShow, onEnd }: CabinFireProps) {
   const still = useReducedMotion()
   const params: FireParams = {
     fuel,
@@ -177,7 +193,7 @@ export function CabinFire({ position, fuel, fire, plan, bias, clock, field, hidd
         </group>
         <Label text="Fire starts here · illustration" position={[0, 1.35, 0]} color="#ffd9a0" height={0.32} />
       </group>
-      {field && plan.entries.length > 0 && <ReachField start={position} plan={plan} bias={bias} clock={clock} still={still} />}
+      {field && plan.entries.length > 0 && (renderField ? renderField(still) : <ReachField start={position} plan={plan} bias={bias} clock={clock} still={still} />)}
       {plan.entries
         .filter((entry) => !hiddenIds?.has(entry.item.id))
         .map((entry) => (

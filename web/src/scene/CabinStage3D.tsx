@@ -3,7 +3,12 @@
 //   - place chosen:    the sample spacecraft with its fuel items coloured by how much NASA evidence
 //                      exists (colours arrive as props), or the user's own floor plan flat on a deck;
 //   - double-click an object or the deck to place the fire point; after "Simulate" a flame starts
-//     there and an illustrated spread reaches the other fuel items, with a timeline to play or drag.
+//     there and an illustrated spread reaches the other fuel items, with a timeline to play or drag;
+//   - the file the user uploads on the page may be a picture of a floor plan or a 3D layout file
+//     of their own (rooms, doors, a vent duct, objects: cabin/layoutFile.ts). The page hands over
+//     one file either way; this view reads it to tell which. A layout is drawn in 3D and the
+//     illustrated spread runs through it. The page knows nothing of what is in it, so its items
+//     are coloured by fuel type and have no evidence colours or cards.
 //
 // Everything here is an ILLUSTRATION on an EXAMPLE LAYOUT, NOT A NASA DESIGN. The stage works out
 // no evidence and no outcome, and where the fire is placed changes nothing about the evidence.
@@ -17,11 +22,15 @@ import type { CabinStageProps } from '../types/sim'
 import { Label } from './Label'
 import { useReducedMotion } from './fire/state'
 import { CabinFire, type SpreadClock } from './cabin/CabinFire'
+import { LayoutField } from './cabin/LayoutField'
+import { LayoutModel } from './cabin/LayoutModel'
 import { SpreadSettings } from './cabin/SpreadSettings'
 import { Spacecraft } from './cabin/Spacecraft'
 import { TimelineBar } from './cabin/TimelineBar'
 import { groupItems, hiddenFor } from './cabin/groups'
 import { HOLO, Segs } from './cabin/holo'
+import { parseLayout, roomAt, type Layout3D } from './cabin/layoutFile'
+import { buildGrid, distanceField, planLayoutSpread, type LayoutGrid } from './cabin/layoutGrid'
 import { ITEMS, PLAN, deckHalfWidth } from './cabin/spec'
 import { NO_EFFECTS, NO_SPREAD, biasFrom, planSpread, type CabinConditions, type EffectSettings } from './cabin/timeline'
 import './scene.css'
@@ -70,6 +79,65 @@ function PickSurface({ w, d, deckOnly, onPick }: { w: number; d: number; deckOnl
       <meshBasicMaterial transparent opacity={0} depthWrite={false} />
     </mesh>
   )
+}
+
+/** Unseen floor of a loaded layout: a double-click inside a room places the fire there (reported
+ *  as fractions of the plan, like every other pick). */
+function LayoutPick({ layout, onPick }: { layout: Layout3D; onPick: (x: number, y: number) => void }) {
+  return (
+    <mesh
+      rotation={[-Math.PI / 2, 0, 0]}
+      position={[0, 0.002, 0]}
+      onDoubleClick={(e: ThreeEvent<MouseEvent>) => {
+        e.stopPropagation()
+        const { x, z } = e.point
+        if (roomAt(layout.rooms, x, z) >= 0) onPick(round3(clamp01(x / layout.size[0] + 0.5)), round3(clamp01(z / layout.size[1] + 0.5)))
+      }}
+    >
+      <planeGeometry args={layout.size} />
+      <meshBasicMaterial transparent opacity={0} depthWrite={false} />
+    </mesh>
+  )
+}
+
+/** The ids of the fuels NASA's tables cover, to check a loaded layout against. */
+async function testedFuelIds(): Promise<Set<string>> {
+  const res = await fetch(`${import.meta.env.BASE_URL}data/fuels.json`)
+  if (!res.ok) throw new Error(`fuels.json: ${res.status}`)
+  const json: unknown = await res.json()
+  const list = (Array.isArray(json) ? json : (json as { fuels?: unknown }).fuels) as { id: string }[] | undefined
+  if (!Array.isArray(list)) throw new Error('fuels.json is not a list')
+  return new Set(list.map((f) => f.id))
+}
+
+interface LoadedLayout {
+  layout: Layout3D
+  grid: LayoutGrid
+}
+
+/** What the uploaded file turned out to be. */
+type Upload = { url: string } & ({ kind: 'checking' | 'picture' } | { kind: 'layout'; loaded: LoadedLayout } | { kind: 'refused'; problems: string[] })
+
+/** Reads the uploaded file to tell a picture from a 3D layout file. A layout with a problem is
+ *  refused whole, with every problem listed; it is never shown as an empty plan. */
+async function readUpload(url: string): Promise<Upload> {
+  try {
+    const blob = await (await fetch(url)).blob()
+    if (blob.type.startsWith('image/')) return { url, kind: 'picture' }
+    if (!(await blob.slice(0, 64).text()).trimStart().startsWith('{')) return { url, kind: 'picture' }
+    if (blob.size > 300_000) return { url, kind: 'refused', problems: ['The file is larger than 300 kB; a layout file is a few kB.'] }
+    const result = parseLayout(await blob.text(), await testedFuelIds())
+    if ('problems' in result) return { url, kind: 'refused', problems: result.problems }
+    return { url, kind: 'layout', loaded: { layout: result.layout, grid: buildGrid(result.layout) } }
+  } catch (e) {
+    return { url, kind: 'refused', problems: [e instanceof Error ? `The file could not be checked: ${e.message}` : 'The file could not be checked.'] }
+  }
+}
+
+/** Height at which the fire sits in a loaded layout: on the fuel item under the point, or on the floor. */
+function restingHeightIn(layout: Layout3D, x: number, z: number) {
+  const item = layout.items.find((i) => i.fuel && Math.abs(x - i.x) <= Math.max(i.w, 0.4) / 2 && Math.abs(z - i.z) <= Math.max(i.d, 0.4) / 2)
+  return item ? (item.y ?? 0) + Math.min(item.h, 1) * 0.6 : 0
 }
 
 /** The user's floor plan, flat on a plain deck. The picture is never stretched or uploaded anywhere. */
@@ -140,8 +208,29 @@ export function CabinStage3D({ placeChosen, markColors, selectedMarkId, imageUrl
   const [furniture, setFurniture] = useState(true)
   const [off, setOff] = useState<ReadonlySet<string>>(new Set())
   const [planSize, setPlanSize] = useState<[number, number]>([PLAN.w, PLAN.d])
-  const upload = placeChosen && !!imageUrl
-  const [w, d] = upload ? planSize : [PLAN.w, PLAN.d]
+
+  // ---- what the uploaded file is: a picture of a floor plan, or a 3D layout file of the user's
+  // own. Until it has been read, and when a layout file is refused, nothing is drawn in its place.
+  const [read, setRead] = useState<Upload | null>(null)
+  useEffect(() => {
+    if (!imageUrl) return setRead(null)
+    let live = true
+    setRead({ url: imageUrl, kind: 'checking' })
+    void readUpload(imageUrl).then((result) => {
+      if (!live) return
+      if (result.kind === 'layout') setOff(new Set())
+      setRead(result)
+    })
+    return () => {
+      live = false
+    }
+  }, [imageUrl])
+  const current = placeChosen && imageUrl ? (read && read.url === imageUrl ? read : { url: imageUrl, kind: 'checking' as const }) : null
+  const upload = current?.kind === 'picture'
+  const custom = current?.kind === 'layout' ? current.loaded : null
+  const refused = current?.kind === 'refused' ? current.problems : null
+  const waiting = current?.kind === 'checking'
+  const [w, d] = custom ? custom.layout.size : upload ? planSize : [PLAN.w, PLAN.d]
 
   // The page sends colours, not their meaning; read the evidence level back from the colour so
   // the groups match what is on screen.
@@ -153,7 +242,7 @@ export function CabinStage3D({ placeChosen, markColors, selectedMarkId, imageUrl
     }
     return Object.keys(out).length ? out : null
   }, [markColors])
-  const groups = useMemo(() => groupItems(tiers), [tiers])
+  const groups = useMemo(() => (custom ? groupItems(null, custom.layout.items) : groupItems(tiers)), [tiers, custom])
   const { hiddenIds, showFittings } = useMemo(() => hiddenFor(groups, furniture, off), [groups, furniture, off])
   const toggleGroup = (id: string) =>
     setOff((prev) => {
@@ -169,10 +258,11 @@ export function CabinStage3D({ placeChosen, markColors, selectedMarkId, imageUrl
 
   const fireX = point ? (point.x - 0.5) * w : null
   const fireZ = point ? (point.y - 0.5) * d : null
-  const fireAt = useMemo<[number, number, number] | null>(
-    () => (fireX === null || fireZ === null ? null : [fireX, upload ? 0 : restingHeight(fireX, fireZ), fireZ]),
-    [fireX, fireZ, upload],
-  )
+  const fireAt = useMemo<[number, number, number] | null>(() => {
+    if (fireX === null || fireZ === null || waiting || refused) return null
+    if (custom) return roomAt(custom.layout.rooms, fireX, fireZ) >= 0 ? [fireX, restingHeightIn(custom.layout, fireX, fireZ), fireZ] : null // a point left over from another plan
+    return [fireX, upload ? 0 : restingHeight(fireX, fireZ), fireZ]
+  }, [fireX, fireZ, upload, custom, waiting, refused])
 
   // ---- illustrated spread: which fuel items light, in what order, and the timeline that plays it.
   // The order comes from distance through this example layout (cabin/timeline.ts) and from the
@@ -186,7 +276,12 @@ export function CabinStage3D({ placeChosen, markColors, selectedMarkId, imageUrl
   )
   const bias = useMemo(() => biasFrom(effects, conditions), [effects, conditions])
   const assumed = effects.airflow > 0 || effects.gravity > 0 || effects.oxygen > 0 || effects.pressure > 0
-  const plan = useMemo(() => (fireAt && lit && !upload ? planSpread(fireAt[0], fireAt[2], fireAt[1], bias) : NO_SPREAD), [fireAt, lit, upload, bias])
+  const layoutField = useMemo(() => (custom && fireAt && lit ? distanceField(custom.layout, custom.grid, fireAt) : null), [custom, fireAt, lit])
+  const plan = useMemo(() => {
+    if (!fireAt || !lit || upload) return NO_SPREAD
+    if (custom) return layoutField ? planLayoutSpread(custom.layout, custom.grid, layoutField, fireAt, bias) : NO_SPREAD
+    return planSpread(fireAt[0], fireAt[2], fireAt[1], bias)
+  }, [custom, layoutField, fireAt, lit, upload, bias])
   const clock = useRef<SpreadClock>({ t: 0, playing: false, rate: 1, shown: 0 })
   const [shownT, setShownT] = useState(0)
   const [playing, setPlaying] = useState(false)
@@ -198,7 +293,7 @@ export function CabinStage3D({ placeChosen, markColors, selectedMarkId, imageUrl
     c.playing = lit && !still
     setShownT(0)
     setPlaying(c.playing)
-  }, [lit, fireX, fireZ, still])
+  }, [lit, fireAt?.[0], fireAt?.[2], still])
   // A setting can shorten the timeline: never sit past its end.
   useEffect(() => {
     const c = clock.current
@@ -233,10 +328,15 @@ export function CabinStage3D({ placeChosen, markColors, selectedMarkId, imageUrl
         <Stars />
         {!placeChosen ? (
           <Spacecraft exterior showLabels={false} />
-        ) : upload ? (
+        ) : waiting || refused ? null : upload ? (
           <>
             <UploadedPlan imageUrl={imageUrl!} onSize={(pw, pd) => setPlanSize((prev) => (prev[0] === pw && prev[1] === pd ? prev : [pw, pd]))} />
             <PickSurface w={w} d={d} deckOnly={false} onPick={onPick} />
+          </>
+        ) : custom ? (
+          <>
+            <LayoutModel layout={custom.layout} showLabels={labels} hiddenIds={hiddenIds} showDuct={showFittings} />
+            <LayoutPick layout={custom.layout} onPick={onPick} />
           </>
         ) : (
           <>
@@ -255,19 +355,37 @@ export function CabinStage3D({ placeChosen, markColors, selectedMarkId, imageUrl
         )}
         {placeChosen && fireAt && !lit && <FireMarker position={fireAt} />}
         {placeChosen && fireAt && lit && (
-          <CabinFire position={fireAt} fuel={fuel} fire={fire} plan={plan} bias={bias} clock={clock} field={field} hiddenIds={hiddenIds} onShow={setShownT} onEnd={() => setPlaying(false)} />
+          <CabinFire
+            position={fireAt}
+            fuel={fuel}
+            fire={fire}
+            plan={plan}
+            bias={bias}
+            clock={clock}
+            field={field}
+            renderField={
+              custom && layoutField
+                ? (isStill) => <LayoutField grid={custom.grid} field={layoutField} start={fireAt} plan={plan} bias={bias} air={custom.layout.air.direction} clock={clock} still={isStill} />
+                : undefined
+            }
+            hiddenIds={hiddenIds}
+            onShow={setShownT}
+            onEnd={() => setPlaying(false)}
+          />
         )}
         <OrbitControls target={[0, 0.8, 0]} enablePan={false} autoRotate={!placeChosen && !still} autoRotateSpeed={0.5} minDistance={5} maxDistance={40} maxPolarAngle={Math.PI * 0.49} />
       </Canvas>
 
-      {placeChosen && !upload && (
+      {placeChosen && !upload && !waiting && !refused && (
         <div className="cabin-b-panel">
           <label className="cabin-b-main">
             <input type="checkbox" checked={labels} onChange={(e) => setLabels(e.target.checked)} /> Labels
           </label>
-          <label className="cabin-b-main">
-            <input type="checkbox" checked={exterior} onChange={(e) => setExterior(e.target.checked)} /> Outside fittings
-          </label>
+          {!custom && (
+            <label className="cabin-b-main">
+              <input type="checkbox" checked={exterior} onChange={(e) => setExterior(e.target.checked)} /> Outside fittings
+            </label>
+          )}
           <label className="cabin-b-main">
             <input type="checkbox" checked={field} onChange={(e) => setField(e.target.checked)} /> Spread colours
           </label>
@@ -281,10 +399,28 @@ export function CabinStage3D({ placeChosen, markColors, selectedMarkId, imageUrl
               {g.name} <span>{g.itemIds.length}</span>
             </label>
           ))}
-          <SpreadSettings settings={effects} conditions={conditions} onChange={setEffects} />
+          <SpreadSettings
+            settings={effects}
+            conditions={conditions}
+            onChange={setEffects}
+            air={custom ? `In this layout the air moves ${custom.layout.air.toward ? `toward ${custom.layout.air.toward}` : 'along +x'}, as the layout file says.` : undefined}
+          />
         </div>
       )}
-      {placeChosen && lit && plan.steps > 0 && <TimelineBar t={shownT} steps={plan.steps} playing={playing} rate={rate} onPlay={togglePlay} onRate={changeRate} onScrub={scrub} field={field} assumed={assumed} />}
+      {refused && (
+        <div className="cabin-b-refused" role="alert">
+          <b>This file was not loaded.</b> It reads as a 3D layout file, but:
+          <ul className="cabin-b-problems">
+            {refused.slice(0, 8).map((problem) => (
+              <li key={problem}>{problem}</li>
+            ))}
+          </ul>
+          <small>The format is described in web/src/scene/cabin/samples/README.md.</small>
+        </div>
+      )}
+      {placeChosen && lit && plan.steps > 0 && (
+        <TimelineBar t={shownT} steps={plan.steps} playing={playing} rate={rate} onPlay={togglePlay} onRate={changeRate} onScrub={scrub} field={field} assumed={assumed} loaded={!!custom} />
+      )}
       {placeChosen && upload && <div className="cabin-b-tag" style={{ color: HOLO }}>Double-click your plan to place the fire</div>}
     </div>
   )

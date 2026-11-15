@@ -352,9 +352,10 @@ export function SimulationView({ data, renderStage }: { data: AppData; renderSta
             />
             {mapMode === 'upload' && (
               <label className="sim-upload">
-                <input type="file" accept="image/png,image/jpeg" onChange={(e) => upload(e.target.files?.[0])} disabled={!started} />
-                <span>{imageName ? `Using ${imageName}` : 'Upload a PNG or JPG floor plan'}</span>
-                <small>Your image stays on this computer.</small>
+                {/* A .json here is a 3D layout file; the 3D stage reads the file and tells it from a picture (scene/cabin/layoutFile.ts). */}
+                <input type="file" accept="image/png,image/jpeg,.json,application/json" onChange={(e) => upload(e.target.files?.[0])} disabled={!started} />
+                <span>{imageName ? `Using ${imageName}` : 'Upload a PNG or JPG floor plan, or a 3D layout file (.json)'}</span>
+                <small>Your file stays on this computer.</small>
               </label>
             )}
             {template && !usingUpload && <p className="muted small">Now showing the {layoutTitle} (example layout, not a NASA design). Upload your own plan to place the fire on it instead.</p>}

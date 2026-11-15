@@ -1,10 +1,19 @@
 # Workstream B - implementation plan
 
-**Status: steps 0 to 7 are merged (pull requests 7, 9, 12, 13 and 14). Of step 9: parts 9a (the
-rule change, pull request 21), 9b and 9c (the Cabin Conditions panel and place matching, pull
-request 20) are merged. Part 9d (the spread follows the deck through the doorway and hatch) is
-built on branch `scene/settings-driven-spread`, uncommitted, waiting for review. Parts 9e and 9f
-are not started. Step 8 is not started.**
+**Status (2026-11-15): steps 0 to 7 are merged (pull requests 7, 9, 12, 13 and 14). Of step 9:
+parts 9a (the rule change, pull request 21), 9b and 9c (the Cabin Conditions panel and place
+matching, pull request 20), 9d (the spread follows the room, with a ceiling and vent duct, pull
+request 23) and 9e (the spread settings, pull request 24) are merged. Part 9f (a published
+formula as a cited preset) is NOT done: no source holding the formula could be opened from this
+computer; see section 9f. Step 8 is not started. Of step 10, B's human chose the small version
+(choice B): the example spacecraft now has a closed room reached only along the vent duct. It is
+built on branch `scene/closed-room` and is not committed. On the same branch, also not
+committed: the uploadable layout. The page's floor-plan upload box takes a 3D layout file
+(`.json`) as well as a picture, and the L-shaped sample file is in the repo. Evidence colours and
+cards for the items of an uploaded layout (the rest of 10e) are not built.**
+
+The paragraphs below were written as each part was built and still say "uncommitted" or "waiting
+for review" in places; the status above is the current one.
 
 Built for 9d: `cabin/spec.ts` gains the two bulkheads with their openings, and the vents (grilles,
 fan, direction of air) as data; `cabin/path.ts` gives the shortest distance along the deck, going
@@ -542,6 +551,35 @@ Open one of the flame-spread papers, confirm the formula and what it applies to,
 cited preset for the oxygen and airflow settings on a single surface. Only if the source can be
 opened and read.
 
+**Tried 2026-11-15: not done. Nothing was built.** What happened with each source:
+
+| Source | Result |
+|---|---|
+| NASA NTRS 20040053557, "Opposed-flow flame spread in microgravity" (Bhattacharjee and others) | 403 Forbidden from this computer, as `CLAUDE.md` already notes for NTRS |
+| San Diego State abstract, "Opposed-Flow Flame Spread Over Thin Films of PMMA in a Microgravity Environment" | Opened and read in full. It says closed-form formulas for spread rate over thin and thick fuels in the radiation-dominated microgravity regime exist, and that a computational model and three years of drop-tower tests on thin PMMA films agree with them. It gives no formula. |
+| A SciSpace page citing de Ris's expression | Stopped at a "confirm you are human" check, which was not bypassed |
+| A Lund University file | Offered a file download instead of a page; not downloaded |
+
+So no formula has been read, and the condition for this part is not met.
+
+Even with the formula in hand, a numeric preset looks hard to defend, for reasons to weigh before
+anyone spends time on it (the last two come from search summaries, not from a source read here):
+
+- These formulas give the spread rate along ONE thin sheet of ONE material. The spread settings
+  act on fire getting from one object to another across a cabin, which the formulas do not cover.
+- They need material properties (thickness, density, heat capacity, vaporisation temperature) and
+  a flame temperature. None of those is in the PSI tables, so each would be one more unsourced
+  input.
+- A 1996 study is reported to have found the classic de Ris formula in error by as much as a
+  factor of 10 because of its simplifying assumptions.
+- In its simplest regime the classic result is reported to depend on oxygen (through flame
+  temperature) but not on flow speed or pressure, which would argue against, not for, presets for
+  the airflow and pressure settings.
+
+Ways forward, for B's human to choose: someone on another network opens the NTRS paper and puts
+the PDF in the repo for reading; or 9f is closed as not done and the settings stay as the user's
+assumptions with no preset.
+
 ### Order, branches and size
 
 | Part | Branch | Files | Owner |
@@ -556,12 +594,267 @@ change since the cabin itself; the feature freeze is Sunday 15 November, 3 p.m.
 
 ---
 
-## 10. Questions
+## 10. Step 10 - a second 3D layout the user can upload (DRAFT, not approved)
+
+### What B's human asked for (2026-11-15, 11:30)
+
+"Create another sample 3d on my local so that i can upload and test simulation on the web. I want
+it to have diff shape from the sample one, and also have 1 closed door/room but still have vent
+that connected to the closed room."
+
+### Decision (2026-11-15): choice B, with the flight deck as the closed room
+
+B's human chose choice B from the table at the end of this section, said any upload format that
+is easy will do, said no pull request is needed for the rule's wording (10a), and asked for the
+second sample to be simpler, with no lab (10f is changed to match).
+
+Choice B was written as "close the node hatch". That cannot take a duct: just behind that
+bulkhead the node is only as wide as the hatch (hull radius 1.05 at x = 2.8, the same as the
+hatch's opening), so there is nowhere for a duct to pass. B's human agreed to close the **flight
+deck door** instead, where the hull is wide enough for the ceiling duct to run straight on.
+
+Built on `scene/closed-room` (B's folder only, not committed):
+
+- `cabin/spec.ts`: the flight deck bulkhead is `closed`; the duct runs on through it above the
+  door and ends 0.48 inside the flight deck (`DUCT.x0` = -3.88), with a short grille under its end
+  (`OUTLET`); `DUCT_OPENINGS` lists the three ways into the duct; `checkSpec` now checks that the
+  duct stays inside the hull and that each grille is under it and not across a bulkhead.
+- `cabin/path.ts`: a closed door cannot be passed along the deck. `routeToItem` gives the way to
+  an item: along the deck where there is one (unchanged), otherwise up to a grille, along the
+  duct and down from another grille.
+- `cabin/timeline.ts`: the order uses `routeToItem`; an entry records when its way is the duct.
+- `cabin/ReachField.tsx`: the cloud stops at the closed door and reaches the other side in
+  through one grille, along the duct and out through another.
+- `cabin/Hull.tsx`, `cabin/parts.tsx`: the door is drawn shut (pale panel, bars, hand wheel) with
+  a "Closed door" label; the outlet grille and a "Vent into flight deck" label.
+- `cabin/CabinFire.tsx`: the line from the fire to an item behind the door runs up to the duct,
+  along it and down, not through the door.
+- `cabin/TimelineBar.tsx`: the note now says the door is drawn closed, that the drawing gets in
+  and out of the flight deck only along the duct, and that this is our choice, not a finding.
+
+Checked by script (`closed.cjs` in the session's scratch folder): no way along the deck across
+the closed door; from 263 start points on the deck every fuel item can be reached; a fire in the
+cabin or node lights the two flight deck items by the duct and nothing else by it; a fire in the
+flight deck lights its own two items first and the other nine by the duct; on one side of the
+door the distances are exactly what they were; the airflow setting still changes the order.
+Checked in the browser: the door and labels; a fire in the flight deck fills it, stops at the
+door, runs along the duct and comes down into the cabin under the first grille; no console
+errors. `npm run build` passes.
+
+Not checked: the line that runs along the duct (too thin to make out in the screenshots), the
+gravity setting with this layout, a phone, a projector, a weaker laptop, reduced motion.
+
+**Open issue, reported not fixed.** `CLAUDE.md` words the source of the order as "distance
+through the example layout (along its deck and through its doorways)". The duct now decides the
+order for the closed room, which those words in brackets do not mention. The screen does say it.
+B's human decided no change to `CLAUDE.md` is needed; A and C have not been asked.
+
+### Built 2026-11-15: the small version of the uploadable layout (B's folder only)
+
+B's human asked again for the L-shaped sample to load and test, and chose the small version: the
+file is loaded inside the 3D view, so C's page and the shared `types/sim.ts` are not touched. The
+cost, agreed: the page never learns what is in a loaded layout, so it has no evidence colours and
+no cards, and its fire is placed and started in the view, not with the page's fire point and
+"Simulate".
+
+- `cabin/samples/l-shaped-habitat.layout.json`: the sample (main hall, crew quarters, a storage
+  room with a closed door, a duct with a grille in each room, 7 fuel items and 2 plain ones).
+  `cabin/samples/README.md` describes the format.
+- `cabin/layoutFile.ts`: reads and checks a file. A file with any problem is refused whole and
+  each problem is listed; nothing is guessed. A fuel that is not in `fuels.json` is refused. Every
+  room must be reachable by an open door or a grille.
+- `cabin/layoutGrid.ts`: cuts the layout into 0.2 m cells and works out the shortest way from the
+  fire to every cell (inside rooms, through open doors only, into the duct only at a grille). One
+  table gives the order and the cloud.
+- `cabin/LayoutModel.tsx`, `cabin/LayoutField.tsx`: the drawing and the cloud for a loaded layout.
+- `CabinStage3D.tsx`: the load button, "Back to the example spacecraft", "Clear the fire", the
+  note saying what a loaded layout does not have, and the list of problems when a file is refused.
+- Shared spread code made general so both layouts count steps the same way: `planFrom` and
+  `SpreadItem` in `cabin/timeline.ts`; the line to an item now follows `way` points; the airflow
+  rule and the note under the timeline have wording for a loaded layout.
+
+Checked by script (`layout.cjs` in the session's scratch folder) on the sample: from a fire in
+each room all 13,862 open cells and all 7 fuel items are reached; the storage room's items are
+reached only by way of the duct; two points 0.4 m apart across the closed door are 9.5 m apart
+by the only way there is; the table takes about 45 ms; eight broken files are each refused with
+the right message. The spacecraft's own checks give the same results as before.
+Checked in the browser: the sample loads and draws; a fire in the hall fills the hall, passes
+the open door, runs along the duct and reaches the storage room last, with a sharp edge at the
+closed door; a file naming `solid:wood` is refused and the layout on show stays; no console
+errors. `npm run build` passes.
+
+Not checked: choosing the file through the real file dialog (the test put the file into the
+input by script), a fire started in the storage room in the browser, the spread settings with a
+loaded layout in the browser (by script only), a phone, a projector, a weaker laptop, reduced
+motion.
+
+**Changed the same day, asked for by B's human** after trying the page's upload box with the
+`.json` (it was shown as an empty picture, and the button inside the view was not found):
+
+- The page's floor-plan upload box now lists `.json` and says so (two lines in C's
+  `SimulationView.tsx`; B's human has leave to edit C's files; C has not seen it). The shared
+  `types/sim.ts` is not touched: the page still hands the view one file as `imageUrl`.
+- `CabinStage3D.tsx` reads that file to tell a picture from a layout (`readUpload`). A layout is
+  drawn in 3D; a layout with a problem shows the list of problems in the middle of the view and
+  is never drawn as an empty plan; anything else is treated as a picture, as before.
+- A layout's fire is now placed and started like every other: double-click a floor, then the
+  page's "Simulate". The page's cards describe the fuel chosen in step 2, as for a picture.
+- Removed, as asked: the "Load 3D layout", "Back to the example spacecraft" and "Clear the fire"
+  buttons and the paragraph under them. "Example Cabin" on the page goes back to the spacecraft
+  and "Clear Point" clears the fire.
+
+Checked in the browser after the change: the sample goes in through the page's box and draws; a
+fire in the hall and "Simulate" give 7 steps, with the storage room reached last; the file naming
+`solid:wood` shows the problem list; a PNG still shows as a flat plan; no console errors. The
+file was put into the input by script, not through the real file dialog.
+
+**Reported, not fixed:** with the paragraph removed, nothing in the view's panel says that a
+layout's items are coloured by fuel type and not by evidence. The colour key in the panel names
+the fuel types, and the label under the layout says "Your layout file, not a NASA design". After
+a refused file, a fire point left from before leaves the page's "Simulate" button enabled; it
+draws nothing.
+
+Known limits: the panel covers the right-hand end of a wide layout until the view is turned;
+distances follow the 0.2 m cells, so the cloud's edge is a little blocky under its ragged
+texture; one ceiling height and one duct per layout.
+
+### What exists today, and why this is a new feature
+
+- **The upload takes a picture only.** `SimulationView.tsx` accepts PNG or JPG. The stage lays the
+  picture flat on a plain deck and lets the user place the fire. It has no walls, doors, vents or
+  items, so **no spread is drawn on an upload** (`CabinStage3D.tsx`: "An uploaded plan has no
+  items").
+- **The one 3D layout is code, not a file.** The spacecraft is `cabin/spec.ts`, read by nine scene
+  files. Its shape (a body of revolution with two bulkheads) is written into the distance code
+  (`path.ts`) and into the cloud's shader (`ReachField.tsx`). A different shape cannot be dropped
+  in as data.
+- **A 3D model file (glTF, OBJ) would not help.** A mesh does not say which gap is a door, which
+  door is shut, where the duct runs or what an object is made of. The spread and the evidence both
+  need that, so the file has to be our own format.
+
+So "upload a 3D layout" means: a layout file format, a second way of working out distance that
+reads any layout, a drawing of any layout, and an upload that accepts the file.
+
+### 10a. The rule's wording (shared file, all three humans)
+
+`CLAUDE.md` says the order comes from "distance through the example layout (along its deck and
+through its doorways)". Two things in this step go beyond those words:
+
+1. The layout may be the user's own file, not only our example.
+2. A closed room is reached only through its vent duct, so the duct becomes part of the distance
+   that decides the order. (Today the duct carries the cloud but never changes the order.)
+
+Proposed wording: "distance through the layout on screen (along its floor, through its open
+doorways and along its vent ducts)". A closed door stopping the drawing and a duct carrying it are
+shapes of our own and must be written on screen as such, like the other effects. Nothing else in
+the rule changes: steps not time, nothing derived, evidence does not move.
+
+### 10b. The layout file
+
+One JSON file, lengths in metres, every value the author's own. It is a drawing aid, so the file
+and the screen both say "Example layout, not a NASA design" (or "Your layout" for an upload).
+
+| Part | Fields |
+|---|---|
+| Rooms | `id`, `name`, a box on the floor (`x0`, `x1`, `z0`, `z1`), `height` |
+| Doors | the two rooms it joins, position along the shared wall, `width`, `open: true / false` |
+| Ducts | a run of straight pieces above the ceiling, and its grilles (each names the room it opens into) |
+| Air | the direction the air moves, for the airflow setting |
+| Items | `id`, `label`, box, and either a fuel id from `fuels.json` or `plain` |
+
+Checks on load, with a plain message for each failure and no guessing: rooms that overlap, a door
+not on a shared wall, a grille outside its room, an item outside every room, a fuel id that is not
+one of the 18 tested options (the item is refused, never mapped to a near match).
+
+### 10c. Distance through any layout (B, new files)
+
+A grid of small cells (about 0.2 m) over the layout. A cell is open if it is inside a room, in an
+open doorway or inside a duct; a grille joins a duct to its room. From the fire's cell, the
+shortest way to every other open cell is worked out once per fire point, with the same four
+settings as today (`biasFactor`). That one table gives both the order of the items and the cloud.
+The largest layout we would accept is about 60 x 60 x 20 cells, which takes a few milliseconds.
+
+- A closed door is simply not open cells, so the only way into the closed room is the duct.
+- `planSpread` gains a form that takes distances from the table instead of from `path.ts`.
+- The cloud samples the table as a 3D texture, so it needs no shape written into the shader.
+
+The spacecraft stays on its existing code. Moving it to the grid is not part of this step.
+
+### 10d. Drawing any layout (B, new files)
+
+Same blue wireframe: room outlines, walls with a gap at each open door, a closed door drawn as a
+filled panel labelled "Closed", the duct and its grilles, items as labelled boxes. Not included
+for these layouts: the detailed furniture kit, the outside view, the fittings toggle.
+
+### 10e. The upload (C's page, one shared type)
+
+- The upload input also accepts `.json`. A picture behaves as it does now.
+- `CabinStageProps` (shared, `web/src/types/sim.ts`) gains two optional fields: the file's text
+  going in, and a callback giving back the layout's marks or an error message. All reading and
+  checking stays in B's folder; C's page takes the marks and colours them with A's
+  `markEvidence()` exactly as it does for the example.
+- The file never leaves the browser.
+
+### 10f. The second sample: an L-shaped surface habitat (simplified: no lab)
+
+EXAMPLE LAYOUT, NOT A NASA DESIGN. Flat walls and box rooms, so it does not look like the
+spacecraft. Three rooms only, as B's human asked. Saved in the repo at
+`web/src/scene/cabin/samples/l-shaped-habitat.layout.json`, so B's human can pick it in the upload
+dialog. Not built.
+
+```
+z
+10.5 +-----------+
+     |  STORAGE  |   closed door; one grille from the duct
+ 8   +---XXXX----+   XXXX = closed door
+     |           |
+     |   CREW    |   duct runs above the ceiling:
+     | QUARTERS  |   hall -> quarters -> storage
+ 4   +--     ----+-----------+
+     |                       |
+     |       MAIN HALL       |
+ 0   +-----------------------+
+     0           4           6   x
+```
+
+Three rooms, two doors (one open, one closed), one duct with three grilles, about seven items
+using fuels from `fuels.json` (for example PMMA panels, a methanol bottle and silicone cable
+covers in the hall, cotton-blend bedding and Nomex in the quarters, a butane bottle and stowage
+bags in the closed storage room). What it should show: start a fire in the hall and the storage
+room's items light last, by way of the duct, with the cloud running along the duct and out of
+the grille.
+
+### Size, order and the freeze
+
+| Part | Branch | Files | Owner | Size |
+|---|---|---|---|---|
+| 10a | `docs/layout-rule` | `CLAUDE.md`, `docs/LAYOUT_PLAN.md` | shared | 15 min plus agreement |
+| 10b, 10c | `scene/layout-grid` | new files in `web/src/scene/cabin/`, `timeline.ts` | B | about 2 h |
+| 10d, 10f | same | new files in `web/src/scene/cabin/`, `CabinStage3D.tsx` | B | about 2 h |
+| 10e | `app/upload-layout` | `SimulationView.tsx`, `types/sim.ts` | C, shared | about 1 h |
+
+About five to six hours with checks. It was drafted at 11:30 on Sunday; the feature freeze is 3
+p.m. the same day and submission is 9 p.m. **It does not fit before the freeze.**
+
+Smaller choices:
+
+| Choice | What you get | What you do not | Size |
+|---|---|---|---|
+| A. All of step 10 | Upload a layout file; the L-shaped sample; closed room reached by the duct | Nothing merged before the freeze | 5 to 6 h |
+| B. Close the node hatch on the spacecraft and run its duct into the node (**chosen; built with the flight deck door instead, see the decision above**) | A closed room reached only through the vent, in the layout already on screen | A different shape; an upload | about 1.5 h |
+| C. Step 10 without the upload: the L-shaped sample as a second built-in layout | A different shape and the closed room | An upload; C's page still needs a switch and the marks | about 4 h |
+
+B still needs 10a, because the duct starts to decide the order.
+
+---
+
+## 11. Questions
 
 ### Open
 
 | # | Question | Who | Affects |
 |---|---|---|---|
+| Q15 | Step 10, answered by B's human 2026-11-15: choice B (built with the flight deck as the closed room); any easy upload format; no wording change. Still open: A and C have not seen that the duct now decides the order for the closed room (10a). | **A and C** | Step 10 |
 | Q11 | Do all three humans agree to change the rule again (9a), so settings on screen may change the order of spread? | **Whole team** | Steps 9d, 9e |
 | Q12 | What should the task cards show when the values are not the air of any listed place? | C | Step 9b |
 | Q13 | Single-point places match only at exactly their values (open question 10 in `CLAUDE.md`). Keep exact matching, or agree a tolerance? | A, C | Step 9c |
@@ -612,7 +905,7 @@ already accepts the marks.
 - `showLabel` on the fire: not needed; `FireModel3D` draws its own label and C's CSS hides the
   duplicate on the fire page.
 
-## 11. Not in this plan
+## 12. Not in this plan
 
 - A physics model of fire, or any time, speed or number derived from the picture. (Whether an
   illustrated spread is allowed at all is Q2.)
