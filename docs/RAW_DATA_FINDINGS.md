@@ -178,30 +178,36 @@ group them by `name`. The other investigations' sensor files are still downloadi
 - **SAFFIRE-II:** "each 5 cm x 29 cm" (`SAFFIRE Objectives, Development and Status.pdf`) agrees with
   its table.
 
-### F8. ACME s-Flame (PSI-23): 276 flames that are not in PSI's tables (new tests, conditions nominal only)
+### F8. ACME s-Flame (PSI-23): 276 flames, only per-day summaries in PSI (conditions nominal only)
 
 - **File:** `PSI-23_Engineering Documents_s-Flame_data_interpretation_20210920.pdf` (NASA's data guide),
   pdftotext page 3 (printed page 3): "A total of 276 flames were ignited for the s-Flame experiment,
   with 29, 116, and 131 respectively ignited during Increments 60, 61, and 63." Page 4: the first round
   "featured 145 flames (nominally) in which the fuel and oxygen (i.e., in the chamber atmosphere) were
   diluted with nitrogen"; the second "featured 131 flames (nominally) ... diluted with helium".
-- **Table 1** (pdftotext page 5, printed page 5, "Flames ignited for the s-Flame experiment") lists test days 19254 to
-  20190, the fuel bottle (for example "50% C2H4 with N2", "100% H2", "45% H2 with He") and the flames
-  per day, with the atmosphere only as **"~21% O2"** or **"~30% O2"** with N2 or He. Footnote 2:
-  "Atmosphere is ~1 atm but pressure increases and O2% drops with vitiation."
-- **Why it matters:** PSI has no experimental table for s-Flame, so none of these flames is in
-  `tests.json`. They are gas flames in the CIR chamber atmosphere (like CFI-G's "ambient" rows), at
-  about 1 atm, so they would **not** change the Moon Base counts (pressure far above 10.2 psi). The
-  "~" values are nominal, so they are **not** usable as test values, and no candidate is written.
-- **Where per-test values would be:** the same guide (pdftotext page 19) says the "chamber calculator provides the
-  chamber pressure before and after each operation", is "the more reliable source of the chamber
-  pressure" (CIR transducers checked every six months, averaged from PT16 and PT17 after PT28 proved
-  an outlier), and "also provides concentration estimates" of O2, N2, He, CO2 and H2O. Those files are
-  in PSI-23's 1,861 bulk files, which were still downloading when this was written.
+- **Table 1** (pdftotext page 5, "Flames ignited for the s-Flame experiment") is the same table PSI
+  publishes as `PSI-23_Experimental table_ACME s-Flame.csv`: 18 rows, one per test day, flames per day
+  adding up to **276**, which agrees with the text. It is in `other_tables.json` as a per-day summary,
+  so **none of the 276 flames is a row in `tests.json`**. The atmosphere is only **"~21% O2"** or
+  **"~30% O2"** with N2 or He; footnote 2: "Atmosphere is ~1 atm but pressure increases and O2% drops
+  with vitiation."
+- **Agrees with a correction we already make:** the guide's Table 1 reads "with N2" where PSI's CSV
+  has the autofill values "N3" to "N6" (`docs/DATA_ISSUES.md` item 6). NASA's own report therefore
+  confirms that `rows_read_as` is right to read them as N2. Proposed: cite this page in that
+  correction's reason.
+- **Why it matters:** these are gas flames in the CIR chamber atmosphere (like CFI-G's "ambient"
+  rows), at about 1 atm, so they would **not** change the Moon Base counts (pressure far above
+  10.2 psi). The "~" values are nominal, so they are **not** usable as test values, and no candidate
+  is written.
+- **Where per-test values would be:** the same guide (pdftotext page 19) says the "chamber calculator
+  provides the chamber pressure before and after each operation", is "the more reliable source of the
+  chamber pressure" (CIR transducers checked every six months, averaged from PT16 and PT17 after PT28
+  proved an outlier), and "also provides concentration estimates" of O2, N2, He, CO2 and H2O. Those
+  files are in PSI-23's 1,861 bulk files, which were still downloading when this was written.
 - **Next:** when PSI-23's files are down, find the chamber calculator file and the daily test point
   logs ("19254 daily test point log.pdf" and so on), and match flames to test points (for example
-  "Test Point: 20190A1"). Only then could s-Flame tests be proposed as new rows, and that needs the
-  team's agreement, because they would be tests from outside PSI's tables.
+  "Test Point: 20190A1"). Only then could s-Flame flames be proposed as test rows, and that needs the
+  team's agreement, because PSI's table does not list them one by one.
 
 ### F9. CFI (PSI-39): the report describes more tests than the table holds
 
@@ -219,6 +225,22 @@ group them by `name`. The other investigations' sensor files are still downloadi
   ... 29% Helium". Test 1268 is **not in the CFI table**, and 12 % is below the table's lowest CFI oxygen
   (17 %). The stated mix adds up to only 91 %, so the caption is not usable as a test's values. This is
   in the unmatched list.
+
+### F10. ACME flame counts: reports and tables nearly agree (differences noted, not resolved)
+
+- **Flame Design (PSI-10):** `PSI-10_Reports_FinalRpt_ACMEFlameDesign.pdf`, pdftotext page 45: "A total
+  of 326 flames were ignited for the Flame Design experiment during Increments 59/50 [sic] and 66,
+  where 188 and 138 flames were ignited". The table has **327** rows with 327 distinct test labels,
+  one more than the report's count. Not explained in either source. Proposed fix: none to the data;
+  list it in `docs/DATA_ISSUES.md` as "report says 326 flames, table has 327 rows" so nobody quotes
+  "326" and "327" as the same thing.
+- **CFI-G (PSI-159):** `PSI-159_Reports_FinalRpt_ACME.CFI-G.pdf`, pdftotext page 38: "A total of 280 hot
+  flames were ignited (or in some cases naturally reignited)". The table has 333 rows, with hot ignition
+  "yes" in 263, "flash" in 8 and "no" in 62. The report counts reignitions too, so 280 and 263 are not
+  the same measure. No conflict claimed.
+- **CLD Flame (PSI-21):** the same CFI-G report, pdftotext page 51: "the over 300 that were ignited for
+  all of CLD Flame". PSI's CLD Flame table has 32 rows, one per test day (`other_tables.json`), so no
+  CLD flame is a row in `tests.json`.
 
 ## Searched and not found (so far)
 
@@ -243,7 +265,7 @@ group them by `name`. The other investigations' sensor files are still downloadi
 
 - CFI test 1268 (F9): a figure caption only ("3 atm ... 12%O2 ... 50% N2 ... 29% Helium", adds to 91 %);
   no table row.
-- s-Flame (F8): 276 flames with nominal conditions only; no table rows.
+- s-Flame (F8): 276 flames with nominal conditions only; PSI's table has one row per test day.
 
 ## Other things noticed
 
