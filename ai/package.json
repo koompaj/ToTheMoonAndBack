@@ -5,7 +5,8 @@
   "description": "Offline generator for the cited AI summaries in web/public/ai/. Never runs in the browser.",
   "scripts": {
     "facts": "node --experimental-strip-types --no-warnings generate.mjs --dry-run",
-    "generate": "node --experimental-strip-types --no-warnings generate.mjs"
+    "generate": "node --experimental-strip-types --no-warnings generate.mjs",
+    "risk-server": "node risk-server.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^1.8.0"

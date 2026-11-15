@@ -12,6 +12,10 @@ import { DoiCite, TestCite } from './Cite'
 import { FUTURE_PLACES, placeName } from './places'
 import { Sun } from './SpaceArt'
 import { FUEL_SHORT, FuelDot, PanelHead, ViewHead, FuelIcon, PILLAR_LABEL } from './ui'
+import { RiskReviewSection } from './RiskReviewPanel'
+import { uploadedTests, type UserUpload } from './uploads'
+import { uploadLine } from './riskReview'
+import { UserMark } from './Cite'
 
 const FUELS: FuelClass[] = ['gas', 'droplet', 'solid']
 
@@ -32,9 +36,10 @@ function GapCites({ g, data }: { g: GapStatement; data: AppData }) {
   )
 }
 
-export function RiskView({ data, ai }: { data: AppData; ai: AiContent }) {
+export function RiskView({ data, ai, uploads = [] }: { data: AppData; ai: AiContent; uploads?: UserUpload[] }) {
   const h = headline(data)
   const solidTotal = data.tests.filter((t) => t.fuel_class === 'solid').length
+  const mineTests = uploadedTests(uploads)
   const solidPlaced = data.tests.filter((t) => t.fuel_class === 'solid' && isPlaced(t)).length
   const solidSources = pressureSources(data.tests.filter((t) => t.fuel_class === 'solid'))
   const solidSrc = pressureSourcesText(solidSources)
@@ -94,6 +99,8 @@ export function RiskView({ data, ai }: { data: AppData; ai: AiContent }) {
         lead="The least is known where PSI’s tables hold no tests. This page shows those gaps: which places and fuels have no tests in the tables, the biggest missing pieces, and which existing data could help fill them. NASA may have tested more in work that is not in PSI."
       />
 
+      <RiskReviewSection uploads={uploads} data={data} />
+
       <section className="panel" aria-labelledby="matrix-title">
         <PanelHead title="Gaps by Place and Fuel" />
         <h2 id="matrix-title" className="sr-only">
@@ -102,6 +109,7 @@ export function RiskView({ data, ai }: { data: AppData; ai: AiContent }) {
         <p className="lead small risk-intro">
           Each box counts the NASA tests that ran in that place&rsquo;s air with that fuel. <b className="t-gap">Coral</b> means PSI&rsquo;s tables hold no test
           there: that is a risk. Click a box to see what a fire there would look like.
+          {uploads.length > 0 && <> Pink <span className="user-plus">✦ yours</span> counts are your uploads; they never change NASA&rsquo;s numbers or colours.</>}
         </p>
         <div className="table-wrap">
           <table className="risk-matrix">
@@ -118,16 +126,19 @@ export function RiskView({ data, ai }: { data: AppData; ai: AiContent }) {
             <tbody>
               {data.habitats.map((hab) => {
                 const inside = testsInHabitat(data.tests, hab)
+                const yours = testsInHabitat(mineTests, hab)
                 return (
                   <tr key={hab.id}>
                     <th scope="row">{placeName(hab.id, hab.name)}</th>
                     {FUELS.map((f) => {
                       const n = inside.filter((t) => t.fuel_class === f).length
+                      const y = yours.filter((t) => t.fuel_class === f).length
                       return (
                         <td key={f}>
                           <a className={`risk-cell ${n === 0 ? 'risk-gap' : 'risk-ok'}`} href={`#fire?h=${hab.id}&fuel=${f}`}>
                             <b>{n}</b>
                             <span>{n === 0 ? 'Not in PSI\u2019s tables' : n === 1 ? 'test' : 'tests'}</span>
+                            {y > 0 && <span className="user-plus">✦ +{y} yours</span>}
                           </a>
                         </td>
                       )
@@ -181,6 +192,7 @@ export function RiskView({ data, ai }: { data: AppData; ai: AiContent }) {
                   <span className="task-dot" aria-hidden />
                   {PILLAR_LABEL[p.pillar]}
                 </h3>
+                <div className="needed-scroll" tabIndex={0} aria-label={`${PILLAR_LABEL[p.pillar]}: what is and is not in the tables`}>
                 <h4>In the tables</h4>
                 <ul className="sim-lines">
                   {p.tested.map((g, i) => (
@@ -189,6 +201,21 @@ export function RiskView({ data, ai }: { data: AppData; ai: AiContent }) {
                     </li>
                   ))}
                 </ul>
+                {uploads.filter((u) => u.investigation.pillar === p.pillar).length > 0 && (
+                  <>
+                    <h4 className="user-h4">From your uploads ✦</h4>
+                    <ul className="sim-lines">
+                      {uploads
+                        .filter((u) => u.investigation.pillar === p.pillar)
+                        .map((u) => (
+                          <li key={u.id} className="user-line">
+                            <a href={`#experiments?id=${u.investigation.accession}`}>{u.investigation.acronym}</a>: {uploadLine(u)}
+                            {u.investigation.flight_platform ? ` · for ${u.investigation.flight_platform}` : ''} <UserMark />
+                          </li>
+                        ))}
+                    </ul>
+                  </>
+                )}
                 <h4>Not in the tables</h4>
                 <ul className="sim-lines">
                   {p.not_in_tables.map((g, i) => (
@@ -197,9 +224,20 @@ export function RiskView({ data, ai }: { data: AppData; ai: AiContent }) {
                     </li>
                   ))}
                 </ul>
+                </div>
               </article>
             ))}
           </div>
+          {uploads.some((u) => !u.investigation.pillar) && (
+            <p className="user-note">
+              ✦ Your uploads with no fire-safety job chosen:{' '}
+              {uploads
+                .filter((u) => !u.investigation.pillar)
+                .map((u) => `${u.investigation.acronym} (${uploadLine(u)})`)
+                .join('; ')}
+              .
+            </p>
+          )}
           <ul className="out-caveats">
             {data.gaps.caveats.map((c) => (
               <li key={c}>{c}</li>
@@ -216,7 +254,7 @@ export function RiskView({ data, ai }: { data: AppData; ai: AiContent }) {
           Some NASA data is very relevant to crew fire safety but has been used in few papers. Studying it is the fastest way to close
           a gap. Dots further right are more relevant; higher up means more data per paper, so less studied.
         </p>
-        <UntappedPanel data={data} ai={ai} embedded />
+        <UntappedPanel data={data} ai={ai} embedded uploads={uploads} />
       </section>
     </section>
   )

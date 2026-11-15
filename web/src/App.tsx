@@ -132,7 +132,7 @@ export default function App() {
         {view === 'place' && <PlaceView data={data} ai={ai} />}
         {view === 'fire' && <FireView data={data} ai={ai} renderFire={renderFire} />}
         {view === 'experiments' && <ExperimentsView data={data} rows={rows!} ai={ai} uploads={uploads} />}
-        {view === 'risk' && <RiskView data={data} ai={ai} />}
+        {view === 'risk' && <RiskView data={data} ai={ai} uploads={uploads} />}
         {view === 'simulation' && <SimulationView data={data} renderStage={renderStage} />}
       </main>
 
