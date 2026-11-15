@@ -147,7 +147,8 @@ separate reader (rows 1, 7, 20, 42, 43, 51, 67, 77, 84, 122): every match and va
 | 121 BASS | `o2_fraction` and `pressure_atm` from the matrix (`data_sourced/bass_conditions.json`), flag `conditions_from_test_matrix`, cells in `pressure_source` | **Yes** (placed tests 775 -> 896) |
 | 26 of them | also flag `o2_diluted_work_volume`: nitrogen-diluted glovebox air, oxygen calculated by NASA (16-18 %) | Yes, but inside no place's box |
 
-- Place counts: 20 / 0 / **209** / 0 / **209** (38 more BASS tests in ISS / Earth air). Moon Base unchanged.
+- Place counts: 20 / 0 / **209** / 0 / **209** rows (38 more BASS tests in ISS / Earth air). Moon Base unchanged. Later on 2026-11-15 the
+  place counts became distinct tests: 3 CFI repeat rows (80-87 repeat 23-30; 3 at 21 % / 1 atm) count once, giving **206**.
 - Highest solid oxygen is now BASS's 22.7 %. The headline holds: no solid-material test reaches 30 %.
 - CO2 from the matrix is kept in `bass_conditions.json` but not applied: `co2_fraction` means CO2 added as a
   suppressant (FLEX), while BASS's CO2 is the cabin level.

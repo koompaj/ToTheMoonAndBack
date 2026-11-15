@@ -198,7 +198,7 @@ For every place, A's validator checks that a preset gives exactly that place car
 
 **Done when:**
 - The Moon preset gives 20 tests, all CFI-G.
-- The ISS preset gives 209 (171 before the BASS conditions were added).
+- The ISS preset gives 206 distinct tests (171 before the BASS conditions; repeat rows count once).
 - The NASA Moon box gives 0 and shows the nearest tests.
 - Moon gravity gives 0 with the gravity note.
 
