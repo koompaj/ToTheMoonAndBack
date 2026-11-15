@@ -7,8 +7,9 @@ import { Earth } from './SpaceArt'
 import { useMemo } from 'react'
 import type { AppData } from '../types/data'
 import type { AiContent } from '../ai/content'
+import type { UserUpload } from './uploads'
 import { investigationStats, RELEVANCE_RULES, reuseLinks, shortName, type InvestigationStats } from '../ai/evidence'
-import { DoiCite, SentenceCites } from './Cite'
+import { DoiCite, SentenceCites, UserMark } from './Cite'
 import { useHashParam } from './route'
 import { Choice, PILLAR_LABEL, PillarTag, ViewHead } from './ui'
 
@@ -79,7 +80,7 @@ function Scatter({ rows, active, onPick }: { rows: InvestigationStats[]; active:
   )
 }
 
-export function UntappedPanel({ data, ai, embedded = false }: { data: AppData; ai: AiContent; embedded?: boolean }) {
+export function UntappedPanel({ data, ai, embedded = false, uploads = [] }: { data: AppData; ai: AiContent; embedded?: boolean; uploads?: UserUpload[] }) {
   const stats = useMemo(() => investigationStats(data), [data])
   const links = useMemo(() => reuseLinks(data), [data])
   const [sort, setSort] = useHashParam('sort', 'relevance')
@@ -219,6 +220,24 @@ export function UntappedPanel({ data, ai, embedded = false }: { data: AppData; a
                   <td className="num">{r.pubs}</td>
                   <td className="num">{r.rowsPerPub === null ? 'none listed' : r.rowsPerPub.toFixed(1)}</td>
                   <td className="num mono">{r.releaseYear ?? '–'}</td>
+                </tr>
+              ))}
+              {uploads.length > 0 && (
+                <tr className="user-sep">
+                  <td colSpan={7}>✦ Your uploads: listed for reference, not scored or ranked</td>
+                </tr>
+              )}
+              {uploads.map((u) => (
+                <tr key={u.id} className="user-row">
+                  <td className="mono">✦</td>
+                  <td>
+                    <a href={`#experiments?id=${u.investigation.accession}`}>{u.investigation.acronym}</a> <UserMark />
+                  </td>
+                  <td className="num muted">not scored</td>
+                  <td className="num">{u.tests.length}</td>
+                  <td className="num">0</td>
+                  <td className="num muted">–</td>
+                  <td className="num mono">{u.submitted_at.slice(0, 4)}</td>
                 </tr>
               ))}
             </tbody>

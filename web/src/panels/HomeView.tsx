@@ -127,7 +127,7 @@ export function HomeView({ data }: { data: AppData }) {
         <div className="folder-body">
           {tab === 'upload' ? (
             <div role="tabpanel" id="panel-upload" aria-labelledby="tab-upload">
-              <UploadPanel habitats={data.habitats} />
+              <UploadPanel data={data} />
             </div>
           ) : (
             <div role="tabpanel" id="panel-places" aria-labelledby="tab-places">

@@ -3,7 +3,8 @@
 // preview, and submits. A space-themed warning asks them to confirm, because an upload cannot be
 // edited afterwards. Saved in this browser only (uploads.ts); every upload is marked as user-uploaded.
 import { useEffect, useRef, useState, type ReactNode } from 'react'
-import type { FuelClass, Habitat, Pillar } from '../types/data'
+import type { AppData, FuelClass, Pillar } from '../types/data'
+import { ReviewSummary } from './RiskReviewPanel'
 import { placeName } from './places'
 import { buildUpload, CSV_TEMPLATE, isValidSource, parseTestsCsv, saveUpload, type RowResult, type UploadForm, type UserUpload } from './uploads'
 import { Stars } from './SpaceArt'
@@ -100,7 +101,8 @@ function ConfirmDialog({ form, rows, fileName, onCancel, onConfirm }: { form: Up
   )
 }
 
-export function UploadPanel({ habitats }: { habitats: Habitat[] }) {
+export function UploadPanel({ data }: { data: AppData }) {
+  const habitats = data.habitats
   const [form, setForm] = useState<UploadForm>(EMPTY)
   const [fileName, setFileName] = useState('')
   const [parsed, setParsed] = useState<ReturnType<typeof parseTestsCsv> | null>(null)
@@ -156,6 +158,7 @@ export function UploadPanel({ habitats }: { habitats: Habitat[] }) {
         <p>
           {done.tests.length} tests were added and marked <span className="user-mark">✦ User-uploaded</span>. You&rsquo;ll find them in the Your Uploads group in Experiments. NASA&rsquo;s own counts don&rsquo;t change.
         </p>
+        <ReviewSummary upload={done} data={data} />
         <div className="up-dialog-actions">
           <a className="btn btn-primary" href={`#experiments?id=${done.investigation.accession}`}>
             Open the Experiment →
