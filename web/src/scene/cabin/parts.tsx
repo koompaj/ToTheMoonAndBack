@@ -5,7 +5,8 @@ import { useMemo, useRef, type ReactNode } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import { Box, Cyl, Glow, HOLO, Holo, Ring, Segs, ballGeo, type Vec3 } from './holo'
-import { AXIS_Y, HULL, type CabinItem } from './spec'
+import { Label } from '../Label'
+import { AXIS_Y, CEILING, DUCT, GRILLE, HULL, VENTS, type CabinItem } from './spec'
 
 export interface PartLook {
   color: string
@@ -274,11 +275,11 @@ function Fan({ still }: { still: boolean }) {
     if (!still && blades.current) blades.current.rotation.x += Math.min(dt, 0.1) * 2.2
   })
   return (
-    <group position={[2.35, 2.95, 0]}>
-      <Ring r={0.3} tube={0.03} rotation={[0, Math.PI / 2, 0]} line={0.7} />
+    <group position={[VENTS.fan, CEILING.y + DUCT.height / 2, 0]}>
+      <Ring r={0.19} tube={0.025} rotation={[0, Math.PI / 2, 0]} line={0.7} />
       <group ref={blades}>
         {[0, 1, 2, 3].map((k) => (
-          <Box key={k} size={[0.02, 0.26, 0.1]} position={[0, 0.14 * Math.cos((k * TAU) / 4), 0.14 * Math.sin((k * TAU) / 4)]} rotation={[(k * TAU) / 4, 0, 0]} {...DIM} line={0.7} />
+          <Box key={k} size={[0.02, 0.17, 0.07]} position={[0, 0.09 * Math.cos((k * TAU) / 4), 0.09 * Math.sin((k * TAU) / 4)]} rotation={[(k * TAU) / 4, 0, 0]} {...DIM} line={0.7} />
         ))}
       </group>
     </group>
@@ -287,26 +288,29 @@ function Fan({ still }: { still: boolean }) {
 
 const SLATS = [-0.24, -0.12, 0, 0.12, 0.24].flatMap((x) => [x, 0, -0.18, x, 0, 0.18])
 
-/** Vent duct, fan and grilles, lights, smoke detectors, extinguisher, handrails. */
-export function Systems({ still }: { still: boolean }) {
+/** Vent duct above the ceiling with its fan, the ceiling grilles that open into it, lights, smoke
+ *  detectors, extinguisher, handrails. */
+export function Systems({ still, showLabel = false }: { still: boolean; showLabel?: boolean }) {
+  const ductMid = (DUCT.x0 + DUCT.x1) / 2
   return (
     <group>
-      <Box size={[5.5, 0.28, 0.45]} position={[-0.45, 2.95, 0]} {...DIM} />
+      <Box size={[DUCT.x1 - DUCT.x0, DUCT.height, DUCT.halfWidth * 2]} position={[ductMid, CEILING.y + DUCT.height / 2, 0]} color={HOLO} line={0.75} fill={0.05} />
       <Fan still={still} />
-      {[-2, 1.2].map((x) => (
-        <group key={x} position={[x, 2.79, 0]}>
-          <Box size={[0.62, 0.03, 0.42]} {...DIM} line={0.7} />
-          <Segs points={SLATS} opacity={0.6} position={[0, -0.02, 0]} />
+      {showLabel && <Label text="Vent duct" position={[ductMid, CEILING.y + DUCT.height + 0.4, 0]} color="#9fdcff" height={0.3} />}
+      {VENTS.grilles.map((x) => (
+        <group key={x} position={[x, CEILING.y, 0]}>
+          <Box size={[GRILLE.along, 0.03, GRILLE.across]} color="#dff4ff" line={0.9} fill={0.12} />
+          <Segs points={SLATS} opacity={0.7} position={[0, -0.02, 0]} />
         </group>
       ))}
       {[-1.05, 1.05].map((z) => (
-        <Box key={z} size={[5.6, 0.04, 0.1]} position={[-0.4, 2.72, z]} color="#dff4ff" line={0.7} fill={0.35} />
+        <Box key={z} size={[5.6, 0.04, 0.1]} position={[-0.4, CEILING.y - 0.05, z]} color="#dff4ff" line={0.7} fill={0.35} />
       ))}
       {[
         [-1.1, -0.45],
         [1.5, 0.45],
       ].map(([x, z]) => (
-        <group key={x} position={[x, 3.22, z]}>
+        <group key={x} position={[x, CEILING.y - 0.04, z]}>
           <Cyl r={0.12} h={0.06} {...DIM} line={0.7} />
           <Holo geo={ballGeo(0.03)} position={[0, -0.05, 0]} color="#dff4ff" fill={0.8} />
         </group>

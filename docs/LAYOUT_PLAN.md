@@ -73,20 +73,21 @@ As soon as a mark is placed, a panel opens:
 ## 4. What the user can pick (from NASA's tables)
 
 Counts are distinct tests (duplicate rows left out). They come from the data at build time; the app
-must read them from `fuels.json` (section 6), never hard-code them. Snapshot 2026-11-14:
+must read them from `fuels.json` (section 6), never hard-code them. Snapshot 2026-11-15 (after BASS's test-matrix
+conditions were added; pressures for solids come from NASA's reports and BASS's test matrix, not the tables):
 
 **Material area (solid)**
 
 | Option | Tests | Experiments | Oxygen tested | Pressure |
 |---|---|---|---|---|
-| PMMA (acrylic) | 91 | BASS, BASS-II, SAFFIRE-II | 14.2-22.2 % | not in the tables |
-| Cotton-fiberglass fabric (SIBAL) | 45 | BASS, BASS-II, SAFFIRE-I to III | 16.4-22.1 % | not in the tables |
-| Japan wax | 11 | BASS, BASS-II | 17.4 % | not in the tables |
-| Nomex | 9 | BASS, BASS-II | 21.0-22.2 % | not in the tables |
-| Paraffin wax | 7 | BASS | not in the tables | not in the tables |
-| Wax (type not stated) | 6 | BASS | not in the tables | not in the tables |
+| PMMA (acrylic) | 91 | BASS, BASS-II, SAFFIRE-II | 14.2-22.6 % | 14.3-14.8 psi (48 tests) |
+| Cotton-fiberglass fabric (SIBAL) | 45 | BASS, BASS-II, SAFFIRE-I to III | 16.4-22.7 % | 14.3-14.8 psi (39 tests) |
+| Japan wax | 11 | BASS, BASS-II | 15.9-21.2 % | 14.3-14.4 psi (10 tests) |
+| Nomex | 9 | BASS, BASS-II | 21.0-22.5 % | 14.3-14.8 psi (6 tests) |
+| Paraffin wax | 7 | BASS | 16.1-21.9 % | 14.3-14.4 psi (7 tests) |
+| Wax (type not stated) | 6 | BASS | 17.4-22.2 % | 14.5-14.6 psi (6 tests) |
 | Silicone | 4 | SAFFIRE-II | 21.5-22.1 % | not in the tables |
-| Ultem | 2 | BASS | not in the tables | not in the tables |
+| Ultem | 2 | BASS | 21.9-22.5 % | 14.5-14.8 psi (2 tests) |
 | PMMA and Nomex | 1 | SAFFIRE-II | 22.1 % | not in the tables |
 
 (87 more solid tests name only a shape, such as "1/4\" black rod", so they are not offered as a
@@ -127,13 +128,13 @@ individual test. Rocket propellants are out of scope (challenge page).
 **Colours mean "how much evidence", never "how dangerous".** An amber mark is not safer than a coral
 one; there is just more data. The legend and the summary must say so.
 
-Expected result (snapshot 2026-11-14, after the ISS / Earth control band):
+Expected result (snapshot 2026-11-15, after the ISS / Earth control band and BASS's test-matrix conditions):
 
 | Place | Teal | Amber |
 |---|---|---|
 | Moon Base (challenge box) | Butane (14 tests inside), Ethane (6) | everything else |
 | Moon Base (NASA exploration air) | none | everything |
-| Space Station (ISS), Earth | Ethylene (55), Heptane (29), Dodecane (28), Methanol (26), Propane (11), Ethane (10), Butane (6), SIBAL (6) | other solids, other gases |
+| Space Station (ISS), Earth | Ethylene (55), Heptane (29), Dodecane (28), Methanol (26), PMMA (14), SIBAL (12), Propane (11), Ethane (10), Butane (6), Wax, type not stated (5), Nomex (2), Ultem (2) | other solids, other gases |
 | Spacesuit | none | everything |
 
 ### The evidence card (one per mark)
@@ -144,11 +145,11 @@ placeholder for the cited test):
 ```
 ┌ Crew seats · Nomex · near a vent ─────────────────── AMBER ┐
 │ What NASA tested                                          │
-│  9 Nomex tests (BASS, BASS-II) at 21.0-22.2 % oxygen.     │
-│  Pressure: not in the tables.             [BASS-II · row n]│
+│  9 Nomex tests (BASS, BASS-II) at 21.0-22.5 % oxygen.     │
+│  Pressure 14.3-14.8 psi, from BASS's test matrix. [row n] │
 │ The gap                                                   │
 │  This air: 32-36 % oxygen, 8.0-8.4 psi. The highest       │
-│  Nomex test is 22.2 %: about 10 points short.             │
+│  Nomex test is 22.5 %: about 9.5 points short.            │
 │ Airflow                                                   │
 │  No Nomex test records airflow. Near a vent is not in the │
 │  tables.                                                  │
@@ -191,10 +192,11 @@ top-left corner, points `{x, y}`. `fuel_option_id` is a `FuelOption.id` or `'oth
 Example card lines `markEvidence` writes (Nomex seats near a vent, NASA exploration air):
 
 ```
-9 Nomex tests (BASS and BASS-II) at 21 % to 22.2 % cabin oxygen.                     {PSI-25, PSI-26}
-GAP Pressure is not in these tables.
-GAP This air: 32 % to 36 % oxygen, 8 psi to 8.4 psi. The highest-oxygen Nomex test ran at 22.2 %,
-    9.8 points short, and its table records no pressure.                              {PSI-25:bass-ii:23}
+9 Nomex tests (BASS and BASS-II) at 21 % to 22.5 % cabin oxygen.                     {PSI-25, PSI-26}
+Pressures tested: 14.3 psi to 14.8 psi. Oxygen and pressure for 6 of these 9 tests are from NASA's
+    BASS as-run test matrix (PSI-26 Science Documents), not the tables.              {PSI-25, PSI-26}
+GAP This air: 32 % to 36 % oxygen, 8 psi to 8.4 psi. No Nomex test in the tables ran in it. The
+    nearest ran at 22.5 % oxygen and 14.8 psi, 9.5 points of oxygen and 6.4 psi away. {PSI-26:bass:57}
 GAP No Nomex test records airflow, so a fire near a vent is not in the tables.
 ```
 
@@ -311,5 +313,5 @@ Done when: the journey in section 2 works end to end on the example layout and o
 
 1. Moon Base (NASA exploration air) -> **Use Example Layout**.
 2. The plan lights up almost entirely amber: "NASA tested these materials, but not in this air."
-3. Click the crew seats (Nomex): "highest Nomex test 22.2 % oxygen; this cabin is 34 %."
+3. Click the crew seats (Nomex): "highest Nomex test 22.5 % oxygen; this cabin is 34 %."
 4. Click **Start a Fire Here**: illustration plus what the nearest real tests did.

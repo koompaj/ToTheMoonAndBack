@@ -39,8 +39,9 @@ Audience: professors, students, aerospace researchers and engineers. Full notes:
 **Headline finding (reproduced by `scripts/build_web_data.py`):** of the tests whose tables record
 cabin-air oxygen and pressure, only **20** sit in Moon Base conditions (oxygen >= 30 %, pressure
 <= 10.2 psi). All 20 are gas flames from one investigation (ACME CFI-G, PSI-159). **No solid-material
-test in the tables reaches 30 % oxygen** (BASS-II tops out at 22.2 %), and only 29 solid tests have a pressure
-(from NASA's BASS-II report, at 1 atm). In NASA's own exploration
+test in the tables reaches 30 % oxygen** (the highest is BASS at 22.7 %, from NASA's BASS test matrix), and only
+150 solid tests have a single pressure (29 BASS-II from NASA's report at 1 atm, 121 BASS from its test matrix at
+0.97-1.01 atm). In NASA's own exploration
 atmosphere box (8.2 psia / 34 % O2, +-0.2 psia / +-2 %), the tables hold **0** tests. NASA did burn
 materials at other pressures and oxygen levels in Saffire-IV to VI, but those results are not in PSI:
 say "not in the tables", never "never tested".
@@ -144,8 +145,9 @@ cd web && npm run build
 ```
 
 `npm run build` type-checks and builds. It must pass on `main` at all times.
-The data build ends by running `scripts/validate_data.py` (80 independent checks against the raw
-files); it stops on any failure. To run the checks alone:
+The data build ends by running `scripts/validate_data.py` (101 independent checks against the raw
+files; 97 when `data_extra/` is absent, because 4 of them re-read NASA's downloaded documents and spreadsheets);
+it stops on any failure. To run the checks alone:
 
 ```bash
 python -I scripts/validate_data.py data web/public/data
@@ -168,7 +170,9 @@ python -I scripts/validate_data.py data web/public/data
   274 are inverse-flame (burner-oxidizer) rows. Of the 1,479 cabin-air tests, 884 record an oxygen
   value, 746 record oxygen and pressure, 270 are at >= 30 % oxygen, and 20 are inside the Moon Base
   envelope. 457 tests record airflow. With pressures from NASA's own reports and sensor logs
-  (`data_sourced/solid_conditions.json`), **775** tests can be placed, 29 of them solid (BASS-II, 1 atm).
+  (`data_sourced/solid_conditions.json`) and BASS's as-run test matrix (`data_sourced/bass_conditions.json`,
+  121 tests; 26 are nitrogen-diluted glovebox tests, flagged `o2_diluted_work_volume`), **896** tests can be
+  placed, 150 of them solid (29 BASS-II at 1 atm, 121 BASS at 0.97-1.01 atm).
 - Every source column is in `tests.json`: typed fields where the unit is clear (solid
   `fuel_material`, SAFFIRE sample size, FLEX droplet and extinction diameters, CFI-G hot ignition and
   peak burner temperature, SPICE ignition and flame-off times), `source_extra` word-for-word for the
@@ -179,13 +183,13 @@ python -I scripts/validate_data.py data web/public/data
   distinct-test count.
 - `habitats.json`: 5 places, every number from a source workstream A opened and checked
   (`source_urls`; `gemini_data/VERIFIED.md`): Moon Base (challenge box, 20 tests), Moon Base (NASA
-  exploration air, 0 tests), ISS (171), spacesuit (0), Earth sea level (171). ISS and Earth are boxes:
+  exploration air, 0 tests), ISS (209), spacesuit (0), Earth sea level (209). ISS and Earth are boxes:
   NASA's +-2 % O2 / +-0.2 psia control band (NASA/TP-2010-216134 p. 11) around 21 % / 14.7 psia, so
   19-23 % and 14.5-14.9 psi; applying that band to these places is our step and the note says so.
 - Gravity: every test has `gravity_g` 0 (its PSI record says "Microgravity Investigation"); every
   place has a sourced `gravity` (Moon 0.165 g from the NASA NSSDC Moon Fact Sheet, ISS 0, Earth 1,
   spacesuit 0 or 0.165). `testsInHabitatAndGravity()` (tolerance 0.02 g) matches air and gravity:
-  today only the ISS matches (171); it is ready for partial-gravity data (LUCI, FM2 may add some).
+  today only the ISS matches (209); it is ready for partial-gravity data (LUCI, FM2 may add some).
   Counts on screen still match air only; each card and place page says whether gravity matches.
 - `outcomes.json`: the "will it go out" analysis (`scripts/outcome_analysis.py`). FLEX droplet
   flames went out less often as oxygen rose (17 of 17 at 12-14 %, 0 of 9 at 34-36 %), and the trend
@@ -194,6 +198,18 @@ python -I scripts/validate_data.py data web/public/data
 - `fuels.json` + `web/src/data/layoutEvidence.ts` + `web/src/types/layout.ts`: the data side of the
   habitat evidence map (18 tested fuel options, their evidence in every place, `markEvidence()`), and
   an example layout in `web/public/layouts/`. See `docs/LAYOUT_PLAN.md` section 6.
+- `tests.csv`: every `tests.json` row as one CSV line with its table, row, DOI, oxygen, pressure, shape and flags.
+- `places_waiting.json`: places without a card yet (spacecraft cabin, Mars habitat), why, and what would change it.
+- Fuel shape (item 10): `Test.fuel_shape`, `fuel_size_text`, `fuel_shape_source`, only where the row or a NASA
+  report says so (1,646 rows have a shape, 1,608 a size). BASS and BASS-II shapes come from the row's own fuel cell;
+  ACME burners, SPICE nozzles and CFI droplets from reports quoted with page (`data_sourced/shapes.json`); FLEX from
+  its droplet-diameter column. SAFFIRE has sizes but no stated shape. The rest are null with `shape_not_stated`.
+- Sensors (item 5): `Investigation.sensors` for 11 investigations (55 entries, `data_sourced/sensors.json`), each
+  with file, page or sheet and column, and NASA's words. Saffire-I and -III come from the burn sensor logs (header
+  and unit rows). An investigation without `sensors` has not been read for them yet.
+- `gaps.json` (item 8, `scripts/gaps_analysis.py`): per pillar (prevention, detection, suppression), 27
+  statements of what the tables cover and what is not in them, each with its test ids, investigations and caveats.
+  Investigations without a stated pillar (ACME, SPICE, CFI) are in no column.
 - All 22 tables are accounted for: 2,009 source rows = 1,753 tests + 247 in other tables + 9 left
   out (listed with reasons). Remaining source problems: `docs/DATA_ISSUES.md`.
 - The web app builds and shows: a stub 3D map, a stub flame, a habitat panel with live counts, and a
@@ -201,10 +217,10 @@ python -I scripts/validate_data.py data web/public/data
 
 ## Open questions (owner in brackets)
 
-1. **[A] Pressure for solid-material tests (partly resolved).** NASA's own files in PSI give it for 55 of the
-   263 solid tests: 29 BASS-II at 1 atm (now placed), 22 BASS-II as a 99.2-99.5 kPa range and 4 Saffire burns as
-   sensor-log ranges (not placed). BASS's 121 tests and BASS-II's other 78 still have none; the BASS Final
-   Report is a broken link on NASA's side. See `docs/PSI_DOCUMENTS.md`.
+1. **[A] Pressure for solid-material tests (mostly resolved).** NASA's own files in PSI give it for 176 of the
+   263 solid tests: 29 BASS-II at 1 atm and all 121 BASS tests from BASS's as-run test matrix (placed), 22 BASS-II as
+   a 99.2-99.5 kPa range and 4 Saffire burns as sensor-log ranges (not placed). BASS-II's other 78 tests,
+   SAFFIRE-II and SPICE still have none in anything PSI holds (`docs/RAW_DATA_FINDINGS.md`).
 2. **[A] Habitat numbers.** Done for ISS, Earth and NASA's Moon Base box. Spacecraft cabin
    (Orion), lunar lander and Mars habitat stay "waiting": only superseded 2010-11 proposals found.
 3. **[C] "Will it go out" on screen.** The analysis is in `outcomes.json` (verdicts, counts, test
@@ -220,7 +236,7 @@ python -I scripts/validate_data.py data web/public/data
 8. **[all] Judging criteria.** Check the official Space Apps 2026 criteria and tune the demo to them.
 9. **[C] Deployment.** Not set up. The build is a static site with a relative base path.
 10. **[A and C] Single-point habitats.** Resolved 2026-11-14 for ISS and Earth: they use NASA's
-    control band (19-23 % O2, 14.5-14.9 psi; 171 tests each), labelled as our step. The spacesuit
+    control band (19-23 % O2, 14.5-14.9 psi; 209 tests each), labelled as our step. The spacesuit
     stays one point (100 % O2, 4.3 psi; 0 tests), which the habitat panel words as "exactly these values".
 11. **[B or C] Bundle size.** The build warns that the script is over 500 kB (three.js). Harmless
     now; loading the 3D scene lazily would fix it.

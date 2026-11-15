@@ -5,15 +5,17 @@
 // IT LOOKS LIKE THE OUTPUT OF A FIRE MODEL. IT IS NOT ONE. The colour is only "how far the drawing
 // has reached": red at the start, blue at the edge. It is not temperature, smoke, air speed or
 // anything measured, and it has no scale. The edge sits where timeline.ts says the spread has got
-// to (distance in the example layout only); the ragged, drifting texture is decoration. It passes
-// straight through bulkheads, because the order it follows is straight-line distance. See
-// CLAUDE.md, "Spread is an illustration, never a result".
+// to (distance through the example layout only); the ragged, drifting texture is decoration. Like
+// the order it follows, it goes through the doorway and the hatch and never through a bulkhead.
+// In the crew cabin it stays under the ceiling, and gets into the vent duct above only through the
+// ceiling grilles, then runs along the duct.
+// See CLAUDE.md, "Spread is an illustration, never a result".
 import { useEffect, useMemo, type MutableRefObject } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import type { SpreadClock } from './CabinFire'
-import { AXIS_Y, DECK_X0, DECK_X1, HULL } from './spec'
-import { reachAt, type SpreadPlan } from './timeline'
+import { AXIS_Y, BULKHEADS, CEILING, DECK_X0, DECK_X1, DUCT, HULL, VENTS } from './spec'
+import { MIN_FACTOR, reachAt, smallestFactor, type SpreadBias, type SpreadPlan } from './timeline'
 
 /** Box that holds the whole inside of the craft, deck to ceiling. */
 const TOP = AXIS_Y + HULL.cabinR
@@ -21,7 +23,7 @@ const BOX_MIN = new THREE.Vector3(DECK_X0 - 0.5, 0, -HULL.cabinR)
 const BOX_MAX = new THREE.Vector3(DECK_X1 + 0.3, TOP, HULL.cabinR)
 
 /** Samples taken along each line of sight. More is smoother and slower. */
-const STEPS = 26
+const STEPS = 40 // enough to catch the thin vent duct
 
 const f = (v: number) => v.toFixed(4)
 
@@ -40,9 +42,34 @@ const FRAG = /* glsl */ `
   uniform vec3 uStart;
   uniform float uReach;
   uniform float uTime;
+  uniform vec2 uBias;   // the user's spread settings: nearer downstream (x), nearer above (y)
+  uniform float uSpan;  // how much farther than uReach a straight line can go and still be inside
   uniform vec3 uMin;
   uniform vec3 uMax;
+  uniform vec2 uWalls[${BULKHEADS.length}]; // each bulkhead: where it stands, and the radius of its opening
   varying vec3 vWorld;
+
+  // Distance from the fire point to p without passing through a bulkhead: where the straight line
+  // would hit a wall, it bends round the nearest edge of that wall's opening instead.
+  float pathDistance(vec3 s, vec3 p) {
+    vec3 from = s;
+    float d = 0.0;
+    bool forward = p.x > s.x;
+    for (int k = 0; k < ${BULKHEADS.length}; k++) {
+      int i = forward ? k : ${BULKHEADS.length - 1} - k;
+      float xw = uWalls[i].x;
+      if ((from.x - xw) * (p.x - xw) >= 0.0) continue; // this bulkhead is not in between
+      vec3 c = from + (p - from) * ((xw - from.x) / (p.x - from.x));
+      vec2 off = c.yz - vec2(${f(AXIS_Y)}, 0.0);
+      float r = length(off);
+      if (r > uWalls[i].y) {
+        c.yz = vec2(${f(AXIS_Y)}, 0.0) + off / r * uWalls[i].y;
+        d += distance(from, c);
+        from = c;
+      }
+    }
+    return d + distance(from, p);
+  }
 
   // the craft's inside: the same profile as spec.ts (hullRadius), above the deck
   float hullRadius(float x) {
@@ -52,12 +79,22 @@ const FRAG = /* glsl */ `
     float b = x - ${f(HULL.nodeX)};
     return abs(b) < ${f(HULL.nodeR)} ? sqrt(${f(HULL.nodeR * HULL.nodeR)} - b * b) : 0.0;
   }
+  // above the crew cabin's ceiling there is only the vent duct
+  bool aboveCeiling(vec3 p) { return p.x > ${f(CEILING.x0)} && p.x < ${f(CEILING.x1)} && p.y > ${f(CEILING.y)}; }
+  bool inDuct(vec3 p) {
+    return p.x > ${f(DUCT.x0)} && p.x < ${f(DUCT.x1)} && abs(p.z) < ${f(DUCT.halfWidth)} && p.y < ${f(CEILING.y + DUCT.height)};
+  }
   bool inside(vec3 p) {
     if (p.y < 0.0) return false;
     float r = hullRadius(p.x);
     float y = p.y - ${f(AXIS_Y)};
-    return y * y + p.z * p.z < r * r;
+    if (y * y + p.z * p.z >= r * r) return false;
+    return aboveCeiling(p) ? inDuct(p) : true;
   }
+
+  const float CEIL_Y = ${f(CEILING.y)};
+  const float GRILLE_X_0 = ${f(VENTS.grilles[0])};
+  const float GRILLE_X_1 = ${f(VENTS.grilles[1])};
 
   // 0 = the edge of reach (blue) .. 1 = where the fire starts (red)
   vec3 ramp(float h) {
@@ -81,9 +118,10 @@ const FRAG = /* glsl */ `
     vec3 lo = min(a, b), hi = max(a, b);
     float t0 = max(max(max(lo.x, lo.y), lo.z), 0.0);
     float t1 = min(min(hi.x, hi.y), hi.z);
-    // ...and inside the ball the spread has reached (plus room for the ragged edge)
+    // ...and inside the ball the spread could have reached (plus room for the ragged edge). The
+    // path round an opening is never shorter than the straight line, so nothing is cut off.
     vec3 oc = ro - uStart;
-    float R = uReach + 0.7;
+    float R = uReach * uSpan + 0.7;
     float bq = dot(oc, rd);
     float disc = bq * bq - (dot(oc, oc) - R * R);
     if (disc <= 0.0) discard;
@@ -101,7 +139,19 @@ const FRAG = /* glsl */ `
       vec3 p = ro + rd * t;
       t += dt;
       if (!inside(p)) continue;
-      float d = distance(p, uStart);
+      float d;
+      if (aboveCeiling(p)) {
+        // in the duct: the only ways in are the ceiling grilles, so go to a grille and then along
+        d = 1.0e9;
+        d = min(d, pathDistance(uStart, vec3(GRILLE_X_0, CEIL_Y, 0.0)) + distance(vec3(GRILLE_X_0, CEIL_Y, 0.0), p));
+        d = min(d, pathDistance(uStart, vec3(GRILLE_X_1, CEIL_Y, 0.0)) + distance(vec3(GRILLE_X_1, CEIL_Y, 0.0), p));
+      } else {
+        d = pathDistance(uStart, p);
+      }
+      // the same lean as the order (timeline.ts, biasFactor): 1 when no setting is in use
+      vec3 away = p - uStart;
+      float len = length(away);
+      if (len > 1.0e-4) d *= max(${f(MIN_FACTOR)}, 1.0 - uBias.x * away.x / len - uBias.y * away.y / len);
       // decoration only: a ragged, slowly drifting edge and a mottled inside
       float n = texture(uNoise, p * 0.11 + drift).r;
       float m = texture(uNoise, p * 0.29 - drift * 1.7).r;
@@ -135,7 +185,7 @@ function makeNoise() {
   return texture
 }
 
-export function ReachField({ start, plan, clock, still }: { start: [number, number, number]; plan: SpreadPlan; clock: MutableRefObject<SpreadClock>; still: boolean }) {
+export function ReachField({ start, plan, bias, clock, still }: { start: [number, number, number]; plan: SpreadPlan; bias: SpreadBias; clock: MutableRefObject<SpreadClock>; still: boolean }) {
   const noise = useMemo(makeNoise, [])
   const geometry = useMemo(() => {
     const size = new THREE.Vector3().subVectors(BOX_MAX, BOX_MIN)
@@ -157,8 +207,11 @@ export function ReachField({ start, plan, clock, still }: { start: [number, numb
           uStart: { value: new THREE.Vector3() },
           uReach: { value: 0 },
           uTime: { value: 0 },
+          uBias: { value: new THREE.Vector2() },
+          uSpan: { value: 1 },
           uMin: { value: BOX_MIN },
           uMax: { value: BOX_MAX },
+          uWalls: { value: BULKHEADS.map((b) => new THREE.Vector2(b.x, b.opening)) },
         },
       }),
     [noise],
@@ -176,6 +229,8 @@ export function ReachField({ start, plan, clock, still }: { start: [number, numb
     const u = material.uniforms
     if (!still) u.uTime.value += Math.min(delta, 0.1)
     u.uReach.value = reachAt(plan, clock.current.t)
+    u.uBias.value.set(bias.downstream, bias.up)
+    u.uSpan.value = 1 / smallestFactor(bias)
     u.uStart.value.set(start[0], start[1], start[2])
   })
 

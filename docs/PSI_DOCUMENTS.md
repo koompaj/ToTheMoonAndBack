@@ -108,3 +108,46 @@ Later the same day (branch `app/gravity-and-band`) ISS and Earth became NASA's c
 14.5-14.9 psi), giving 20 / 0 / 171 / 0 / 171; 6 of these solid tests (SIBAL) now fall in ISS / Earth air.
 The Saffire-I oxygen conflict is flagged, not resolved. BASS (121 tests), BASS-II's other 78 tests, SAFFIRE-II and
 SPICE still have no pressure.
+
+## Done (2026-11-15, branch `data/items-5-12`): items 10, 5 and 8
+
+| Item | What was added | Where it comes from |
+|---|---|---|
+| 10. Fuel shape and size | `Test.fuel_shape`, `fuel_size_text`, `fuel_shape_source` on 1,646 rows (size on 1,608); 107 rows flagged `shape_not_stated` | BASS / BASS-II: shape and size words in the row's own fuel cell. FLEX: droplet, from its initial-diameter column. SAFFIRE: size only, from its sample-size columns. ACME Flame Design and CFI-G ("porous spherical burner", 6.35 mm, final reports pp. 25 / 29 and 10 / 8), SPICE (round nozzle, final report p. 2, size from the `Nozzle (mm)` column) and CFI (fiber-supported or free-floated droplet, final report pp. 6 and 9, from its `Fiber` column): `data_sourced/shapes.json` |
+| 5. What NASA measured | `Investigation.sensors`: 55 entries for 11 investigations | Saffire-I and -III: each burn's sensor log (sheet, column letters, header and unit row; both samples' logs checked). SAFFIRE-I to -III cameras: the experiment tables. BASS-II, ACME Flame Design, CFI-G, CFI, SPICE, SAME, SAME-R: report pages. BASS: overview presentation p. 10. `data_sourced/sensors.json` |
+| 8. Gaps by pillar | `web/public/data/gaps.json`, 27 statements | Worked out by `scripts/gaps_analysis.py` from `tests.json`, `habitats.json`, `outcomes.json` and `other_tables.json` |
+
+The validator now has 99 checks. With `data_extra/` present it re-finds every shape and sensor quote on the
+page given, and reads each Saffire log's header and unit rows from the .xlsx itself.
+
+Found while doing this:
+- Saffire-I's two logs write the radiometer unit differently: "mW/cm2" (Sample 1) and "mw/cm^2" (Sample 2).
+  Both are kept as written.
+- Solid tests with a pressure range sit below 1 atm: BASS-II's report gives 99.2-99.5 kPa (14.39-14.43 psi) and
+  Saffire-III's log reads 14.40-14.50 psia. So `gaps.json` says the lowest is 14.39 psi, not "nothing below 1 atm".
+- Shapes are left null when the row does not name one, even where a report describes the experiment's samples in
+  general (for example, the BASS-II report p. 13 lists rods, slabs and a spherical section). Solid shapes come only
+  from the row itself, so a row is never given a shape it does not state.
+- The ACME reports describe some hardware (radiometers, gas chromatograph) in the future tense, copied from the
+  proposal. Those entries quote it as written, and the detail says so where it matters.
+- Not read for sensors yet: FLEX, FLEX-2, DAFT, s-Flame and the other ACME records, SLICE, and PSI-115 / -117 / -142.
+
+
+## Done (2026-11-15, branch `data/bass-conditions`): BASS oxygen and pressure
+
+The raw scan (`docs/RAW_DATA_FINDINGS.md` F1) found that BASS's as-run test matrix
+(`PSI-26_Science Documents_As Run_Test Matrix.xlsx`, sheet "as run matrix", columns AA "O2 % by volume" and AB
+"pressure, atm" under "ISS environment") logs both for every BASS test. Workstream A re-read 10 rows by hand with a
+separate reader (rows 1, 7, 20, 42, 43, 51, 67, 77, 84, 122): every match and value was equal.
+
+| Tests | What was added | Placed on the map? |
+|---|---|---|
+| 121 BASS | `o2_fraction` and `pressure_atm` from the matrix (`data_sourced/bass_conditions.json`), flag `conditions_from_test_matrix`, cells in `pressure_source` | **Yes** (placed tests 775 -> 896) |
+| 26 of them | also flag `o2_diluted_work_volume`: nitrogen-diluted glovebox air, oxygen calculated by NASA (16-18 %) | Yes, but inside no place's box |
+
+- Place counts: 20 / 0 / **209** / 0 / **209** (38 more BASS tests in ISS / Earth air). Moon Base unchanged.
+- Highest solid oxygen is now BASS's 22.7 %. The headline holds: no solid-material test reaches 30 %.
+- CO2 from the matrix is kept in `bass_conditions.json` but not applied: `co2_fraction` means CO2 added as a
+  suppressant (FLEX), while BASS's CO2 is the cabin level.
+- `validate_data.py` re-reads all 121 cells from the spreadsheet with its own reader when `data_extra/` exists.
+- Still without pressure: BASS-II's other 78 tests, SAFFIRE-II and SPICE.

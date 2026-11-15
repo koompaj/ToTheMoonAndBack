@@ -44,6 +44,49 @@ const reach = (r: number) => Math.sqrt(r * r - AXIS_Y * AXIS_Y)
 export const DECK_X0 = HULL.domeX - reach(HULL.domeR)
 export const DECK_X1 = HULL.nodeX + reach(HULL.nodeR)
 
+/** A wall across the craft with one round opening on the centre line. Example layout. */
+export interface Bulkhead {
+  name: string
+  /** Where it stands along the craft. */
+  x: number
+  /** Radius of its opening, centred on the hull's centre line. */
+  opening: number
+}
+
+export const BULKHEADS: Bulkhead[] = [
+  { name: 'Flight deck doorway', x: HULL.coneEndX, opening: 1.25 },
+  { name: 'Node hatch', x: HULL.cabinEndX, opening: 1.05 },
+]
+
+/** Half the width of a bulkhead's opening where it meets the deck. */
+export const openingHalfWidth = (b: Bulkhead) => Math.sqrt(Math.max(0, b.opening * b.opening - AXIS_Y * AXIS_Y))
+
+/** The crew cabin's ceiling: a flat panel between the two bulkheads. The space above it holds
+ *  the vent duct. Example layout. */
+export const CEILING = { y: 2.55, x0: HULL.coneEndX, x1: HULL.cabinEndX }
+
+/** Half the ceiling's width: where it meets the hull. */
+export const ceilingHalfWidth = () => Math.sqrt(HULL.cabinR * HULL.cabinR - (CEILING.y - AXIS_Y) * (CEILING.y - AXIS_Y))
+
+/** The vent duct: a straight channel lying on top of the ceiling, along the craft. The only ways
+ *  into it are the grilles in the ceiling. Example layout. */
+export const DUCT = { x0: -3.1, x1: 2.6, halfWidth: 0.32, height: 0.45 }
+
+/** Size of one ceiling grille, along and across the craft. */
+export const GRILLE = { along: 0.62, across: 0.42 }
+
+/** Ventilation in the example layout: grilles in the ceiling that open into the duct, and the fan
+ *  in the duct that draws the air along the craft toward the node. Positions and direction are
+ *  part of the example, not of any real cabin. */
+export const VENTS = {
+  /** Where the grilles sit along the craft. */
+  grilles: [-2, 1.2],
+  /** Where the fan sits along the craft. */
+  fan: 2.35,
+  /** Which way the air moves. */
+  direction: [1, 0, 0] as [number, number, number],
+}
+
 export type ZoneId = 'flight' | 'work' | 'quarters' | 'node'
 
 export const ZONES: { id: ZoneId; name: string; x0: number; x1: number }[] = [
@@ -168,6 +211,7 @@ export function checkSpec(knownFuelIds?: Iterable<string>): string[] {
       for (const [x, z] of corners(item)) {
         if (Math.hypot(z, top - AXIS_Y) > hullRadius(x) + 1e-6) problems.push(`${item.id} pokes through the hull at its top`)
       }
+      if (item.x > CEILING.x0 && item.x < CEILING.x1 && top > CEILING.y) problems.push(`${item.id} pokes through the cabin ceiling`)
     }
     if (item.fuel && known && item.fuel.fuel_option_id !== 'other' && !known.has(item.fuel.fuel_option_id)) {
       problems.push(`${item.id} names ${item.fuel.fuel_option_id}, which is not in fuels.json`)

@@ -1,0 +1,78 @@
+{
+ "about": "Fuel shape and size for tests whose own table does not state them, taken from NASA's reports in PSI (item 10). Each entry is one investigation-level statement: the shape (and size, when given) of the burner or sample used for the listed tests, the file, page and NASA's exact words. Hand-checked by workstream A against data_extra/_text (scripts/fetch_psi_docs.py, scripts/extract_docs.py). build_web_data.py applies these to tests.json; validate_data.py checks them and re-finds every quote when data_extra/_text exists. Solid samples are never given a shape from here: only their own fuel cell or size columns are used.",
+ "checked": "2026-11-15",
+ "facts": [
+  {
+   "id": "flame-design-burner",
+   "investigation": "PSI-10",
+   "applies_to": {"all_rows": true},
+   "fuel_shape": "porous sphere (gas burner)",
+   "fuel_size_text": "6.35 mm diameter",
+   "source_file": "PSI-10_Reports_FinalRpt_ACMEFlameDesign.pdf",
+   "source_title": "ACME/Flame Design Final Report (2023)",
+   "location": "p. 25 (shape, normal and inverse flames); p. 10 (size)",
+   "quote": "Gaseous spherical diffusion flames stabilized on a porous spherical burner are employed in normal",
+   "size_quote": "Ultimately, the spherical burners were limited to a single diameter of 6.35 mm"
+  },
+  {
+   "id": "cfi-g-burner",
+   "investigation": "PSI-159",
+   "applies_to": {"all_rows": true},
+   "fuel_shape": "porous sphere (gas burner)",
+   "fuel_size_text": "6.35 mm diameter",
+   "source_file": "PSI-159_Reports_FinalRpt_ACME.CFI-G.pdf",
+   "source_title": "ACME/CFI-G Final Report (2022)",
+   "location": "p. 29 (shape); p. 8 (size)",
+   "quote": "The tests, performed with gaseous fuel and a porous spherical burner",
+   "size_quote": "Ultimately, the spherical burners were limited to a single diameter of 6.35 mm"
+  },
+  {
+   "id": "spice-nozzle",
+   "investigation": "PSI-107",
+   "applies_to": {"all_rows": true},
+   "fuel_shape": "gas jet from a round nozzle, in co-flowing air",
+   "fuel_size_text": null,
+   "size_column": "Nozzle (mm)",
+   "source_file": "PSI-107_Reports_SPICE_FinalReport.pdf",
+   "source_title": "SPICE Final Report",
+   "location": "p. 2",
+   "quote": "Burner diameters were 0.41, 0.76, and 1.6 mm",
+   "shape_quote": "laminar jet diffusion flames in co-flowing air"
+  },
+  {
+   "id": "cfi-fiber-yes",
+   "investigation": "PSI-39",
+   "applies_to": {"column": "Fiber", "value": "Yes"},
+   "fuel_shape": "fiber-supported droplet",
+   "fuel_size_text": null,
+   "source_file": "PSI-39_Reports_CFI Science Final Report.pdf",
+   "source_title": "CFI Science Final Report",
+   "location": "p. 6 (fiber); p. 9 (the two kinds); the table's 'Fiber' column says which",
+   "quote": "When required a 40 micron silicon-carbide fiber is used to tether the droplet",
+   "shape_quote": "free-floated and fiber-supported droplets"
+  },
+  {
+   "id": "cfi-fiber-no",
+   "investigation": "PSI-39",
+   "applies_to": {"column": "Fiber", "value": "No"},
+   "fuel_shape": "free-floated droplet",
+   "fuel_size_text": null,
+   "source_file": "PSI-39_Reports_CFI Science Final Report.pdf",
+   "source_title": "CFI Science Final Report",
+   "location": "p. 6 (free deployment); p. 9 (the two kinds); the table's 'Fiber' column says which",
+   "quote": "a droplet of desired size is dispensed between the hypodermic needles and freely deployed, and ignited",
+   "shape_quote": "free-floated and fiber-supported droplets"
+  },
+  {
+   "id": "cfi-fiber-blank",
+   "investigation": "PSI-39",
+   "applies_to": {"column": "Fiber", "value": ""},
+   "fuel_shape": "droplet",
+   "fuel_size_text": null,
+   "source_file": "PSI-39_Reports_CFI Science Final Report.pdf",
+   "source_title": "CFI Science Final Report",
+   "location": "p. 6; the table's 'Fiber' cell is blank, so whether it was on a fiber is not stated",
+   "quote": "a droplet of desired size is dispensed between the hypodermic needles and freely deployed, and ignited"
+  }
+ ]
+}

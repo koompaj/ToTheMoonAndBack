@@ -66,7 +66,7 @@ export function Spacecraft({ markColors, selectedMarkId = null, showLabels = tru
   return (
     <group>
       <Hull exterior={exterior} />
-      {showFittings && <Systems still={still} />}
+      {showFittings && <Systems still={still} showLabel={showLabels} />}
       {ITEMS.filter((item) => !hiddenIds?.has(item.id)).map((item) => (
         <Item key={item.id} item={item} color={markColors?.[item.id]} selected={item.id === selectedMarkId} showLabel={showLabels} labelLift={LABEL_LIFT[item.id] ?? 0} pickOn={pickOn} onPick={onPickMark} />
       ))}

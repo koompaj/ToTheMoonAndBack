@@ -1,9 +1,60 @@
 # Workstream B - implementation plan
 
-**Status: steps 0 to 7 are merged (pull requests 7, 9, 12, 13 and 14). Step 9 was approved by B's
-human on 2026-11-14. Parts 9b and 9c (the Cabin Conditions panel and place matching) are built on
-branch `app/cabin-conditions`, uncommitted, waiting for review. Parts 9a, 9d, 9e and 9f are not
-started; 9d and 9e wait for the team to agree the rule change (9a). Step 8 is not started.**
+**Status: steps 0 to 7 are merged (pull requests 7, 9, 12, 13 and 14). Of step 9: parts 9a (the
+rule change, pull request 21), 9b and 9c (the Cabin Conditions panel and place matching, pull
+request 20) are merged. Part 9d (the spread follows the deck through the doorway and hatch) is
+built on branch `scene/settings-driven-spread`, uncommitted, waiting for review. Parts 9e and 9f
+are not started. Step 8 is not started.**
+
+Built for 9d: `cabin/spec.ts` gains the two bulkheads with their openings, and the vents (grilles,
+fan, direction of air) as data; `cabin/path.ts` gives the shortest distance along the deck, going
+round the edge of an opening where a bulkhead is in the way; `cabin/timeline.ts` uses it for the
+order; the cloud in `cabin/ReachField.tsx` bends through the same openings; the note on the
+timeline bar says so. Checked by script: a point in the node 0.8 from a point across the bulkhead
+is 2.08 away along the deck; within one room the distance is unchanged. Checked in the browser: a
+fire started in the node beside the bulkhead sends its cloud into the cabin through the hatch
+only. `npm run build` passes. The vents are data only so far; nothing uses the direction until 9e.
+Not checked: a phone, a projector, the cloud's path where it crosses both openings at once.
+
+Also on this branch, asked for by B's human so the spread in the vent can be seen: the crew cabin
+now has a **ceiling** (a flat panel between the two bulkheads at `CEILING.y`), with the **vent
+duct** lying on top of it and two grilles in the ceiling opening into it (`CEILING`, `DUCT`,
+`GRILLE`, `VENTS` in `cabin/spec.ts`). Lights and smoke detectors moved under the ceiling. The
+cloud stays under the ceiling in the cabin and gets into the duct only through a grille, then runs
+along it. The flight deck and the node have no ceiling. The spread ORDER is unchanged by the duct:
+items sit on the deck, and going up through one grille and down through another is never shorter
+than the deck. Checked in the browser with a fire under a grille: a coloured band runs along the
+duct above the ceiling. With the cloud at its largest the frame rate on B's machine fell from 125
+to 92 a second (the cloud now takes 40 samples per line of sight, up from 26, to catch the thin
+duct). Not measured on a weaker laptop.
+
+**Part 9e (2026-11-15), built on branch `scene/spread-effects`, uncommitted, waiting for review.**
+Pull request 23 (9d and the ceiling) is merged. A "Spread settings" section in the stage's panel
+has four sliders, each the user's assumption and each starting at "no effect", with its rule
+written beside it (`cabin/SpreadSettings.tsx`, logic in `cabin/timeline.ts`):
+
+| Setting | Rule as written on screen | What it changes |
+|---|---|---|
+| Airflow effect (0 to 80 %) | With the airflow at 50 cm/s, anything straight downstream counts that much nearer and upstream that much farther; less airflow, less effect | The order, and the cloud leans downstream |
+| Gravity effect (0 to 80 %) | At Earth gravity, anything straight above counts that much nearer and below that much farther | The order (slightly: items sit on the deck), and the cloud lifts |
+| Oxygen effect (0 to 100 %) | More items light per step as oxygen rises above 21 %, fewer below | The number of steps |
+| Pressure effect (0 to 100 %) | The same against 14.7 psi | The number of steps |
+
+A distance is never counted as less than 15 % of itself. When any setting is in use the timeline
+label gains "It follows the settings you chose, which are your assumptions, not NASA data."
+Checked by script: with every setting at "no effect" the order is identical whatever the
+conditions; airflow at 80 % and 50 cm/s moves downstream items earlier and upstream ones last;
+airflow effect with 0 cm/s changes nothing; oxygen at 100 % and 34 % gives 1.62 items a step (7
+steps for 11 items). Checked in the browser: the panel, the rule text, the added label, and the
+cloud leaning downstream. Also checked in the browser, in NASA's Moon Base air (34 % oxygen,
+8.2 psi) at Earth gravity: the gravity effect at 80 % lifts the cloud to the ceiling at the same
+step and leaves the number of steps at 11; the pressure effect at 100 % gives 0.56 items a step
+and 20 steps; with the oxygen effect also at 100 % the two multiply to 13 steps; setting all back
+to zero restores 11 steps and the original label. Not checked: a phone, a projector, frame rate
+with the wider region the cloud is now drawn in.
+
+Notes from the merges: pull requests 20, 21 and 23 were merged by B's human's request with no
+review or comment from A or C on any of them.
 
 Built for 9b and 9c: `web/src/data/placeMatch.ts` (A's folder), the panel in C's
 `SimulationView.tsx` and `styles.css`, two optional fields on `StageFire` in the shared

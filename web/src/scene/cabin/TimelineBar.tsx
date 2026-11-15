@@ -4,10 +4,12 @@
 // It counts STEPS, never seconds, and the rate is how fast the animation plays, not how fast a
 // fire moves. The label below must stay on screen whenever spread is shown (CLAUDE.md, "Spread is
 // an illustration, never a result"). Plain HTML, drawn over the canvas.
-import { stepReached } from './timeline'
+import { lastStep, stepReached } from './timeline'
 
 /** The wording is fixed by CLAUDE.md. Do not shorten it. */
 export const SPREAD_LABEL = "Illustration of spread, not a prediction. NASA's tables do not model how fire spreads."
+/** Added whenever any spread setting is above "no effect". Also fixed by CLAUDE.md. */
+export const ASSUMED_LABEL = 'It follows the settings you chose, which are your assumptions, not NASA data.'
 
 const RATES = [1, 2, 4]
 
@@ -20,6 +22,7 @@ export function TimelineBar({
   onRate,
   onScrub,
   field = false,
+  assumed = false,
 }: {
   t: number
   steps: number
@@ -30,6 +33,8 @@ export function TimelineBar({
   onScrub: (t: number) => void
   /** True when the coloured reach slices are on, so the key for their colours is shown. */
   field?: boolean
+  /** True when any spread setting is above "no effect". */
+  assumed?: boolean
 }) {
   const step = stepReached(t, steps)
   const atEnd = t >= steps
@@ -56,10 +61,10 @@ export function TimelineBar({
           value={t}
           onChange={(e) => onScrub(Number(e.target.value))}
           aria-label="Timeline, in steps"
-          aria-valuetext={`Step ${step} of ${steps}`}
+          aria-valuetext={`Step ${step} of ${lastStep(steps)}`}
         />
         <span className="cabin-b-step">
-          Step {step} of {steps}
+          Step {step} of {lastStep(steps)}
         </span>
       </div>
       {field && (
@@ -71,7 +76,14 @@ export function TimelineBar({
         </div>
       )}
       <p className="cabin-b-timeline-note">
-        <b>{SPREAD_LABEL}</b> Items light one per step, nearest first, by distance in this example layout only. A step is not a length of time.
+        <b>
+          {SPREAD_LABEL}
+          {assumed && ` ${ASSUMED_LABEL}`}
+        </b>{' '}
+        {assumed
+          ? 'Items light nearest first, by distance along the deck of this example layout (through its doorway and hatch, not through walls), changed by the spread settings you set.'
+          : 'Items light one per step, nearest first, by distance along the deck of this example layout only: through its doorway and hatch, not through walls.'}{' '}
+        A step is not a length of time.
       </p>
     </div>
   )
