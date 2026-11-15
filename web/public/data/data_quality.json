@@ -242,12 +242,13 @@
   "o2_not_in_table": 471,
   "pressure_not_in_table": 582,
   "burn_time_from_gmt_times": 435,
-  "duplicate_row": 34,
+  "duplicate_row": 42,
   "time_not_recorded": 18,
   "airflow_negative_in_source": 8,
   "burning_rate_unit_unclear": 258,
   "pressure_missing": 1,
   "extinction_diameter_above_initial": 1,
+  "o2_differs_from_test_sheet": 1,
   "pressure_range_from_report": 22,
   "material_not_stated": 87,
   "shape_not_stated": 107,
@@ -288,6 +289,7 @@
   "pressure_range_from_sensor_log": "NASA's sensor log for this burn records ambient pressure in PSIA; pressure_atm_min / max is its range over the log (pressure_source says where). No single value, so the test is not placed on the map.",
   "conditions_from_test_matrix": "The table has no oxygen or pressure; both come from NASA's BASS as-run test matrix ('ISS environment' columns), matched on As Run Test #, Test # and Sample # (pressure_source gives the cells). They describe the test session's atmosphere, not a reading during the burn. See data_sourced/bass_conditions.json.",
   "o2_diluted_work_volume": "A nitrogen-diluted BASS test: the oxygen is the glovebox work volume after NASA added nitrogen, calculated by NASA (its notes say e.g. 'Calc 17.07% O2'), not ISS cabin air.",
+  "o2_differs_from_test_sheet": "NASA's per-test sheet for this test gives a different oxygen value (after the colon) from the table's. The table's value is kept; NASA does not say which is right. See data_sourced/table_conflicts.json.",
   "o2_from_sensor_log": "NASA's sensor log for this burn records oxygen (%); o2_sensor_min / max is its range over the log. The table's own oxygen value, if any, is kept unchanged.",
   "o2_differs_from_sensor_log": "The table's oxygen and the sensor log's oxygen for this burn do not overlap (e.g. 21.5-21.7 % against 22.2-22.7 %). NASA does not say which is right.",
   "extinction_diameter_above_initial": "The extinction diameter is a little larger than the initial droplet diameter (by no more than the table's 0.01 mm step, in a flame that went out within a second). Kept as written.",
@@ -295,7 +297,7 @@
   "temperature_placeholder": "The peak burner temperature cell holds a placeholder ('-', '#VALUE!', or 273.15 K beside an empty Celsius cell), so peak_burner_temp_c is null."
  },
  "tests_total": 1753,
- "duplicate_rows": 34,
- "distinct_tests": 1719,
+ "duplicate_rows": 42,
+ "distinct_tests": 1711,
  "source_problems": "docs/DATA_ISSUES.md"
 }
