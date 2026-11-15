@@ -130,7 +130,7 @@ Found while doing this:
   from the row itself, so a row is never given a shape it does not state.
 - The ACME reports describe some hardware (radiometers, gas chromatograph) in the future tense, copied from the
   proposal. Those entries quote it as written, and the detail says so where it matters.
-- Not read for sensors yet: FLEX, FLEX-2, DAFT, ACME BRE / CLD / E-FIELD (no report or data files in PSI for them beyond the table), SLICE, and PSI-115 / -117 / -142.
+- Not read for sensors yet: FLEX, FLEX-2, DAFT, ACME BRE / CLD / E-FIELD (their PSI records hold no `_data.csv` files and no channel description; their other files were not searched for sensors), SLICE, and PSI-115 / -117 / -142.
 - The ACME non-imaging description is filed only under s-Flame and does not name Flame Design or CFI-G, so it is applied to s-Flame only, even though those two records' `_data.csv` files have the same column headings. Their new entries (flow controllers, chamber and burner pressure, burner thermocouple, ion current) quote their own final reports.
 - CFI's per-test RadiometerData, DropletData, ColorCamData and CoolFlameData files are outputs of the cameras and radiometers already listed from its report, so they add no new sensor.
 
