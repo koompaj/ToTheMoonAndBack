@@ -181,10 +181,6 @@ export function UploadPanel({ data }: { data: AppData }) {
         if (ok) setConfirming(true)
       }}
     >
-      <p className="up-intro">
-        Add an experiment that isn&rsquo;t in NASA&rsquo;s PSI tables. It is saved in this browser only and marked{' '}
-        <span className="user-mark">✦ User-uploaded</span> wherever it appears.
-      </p>
 
       <fieldset className="up-group">
         <legend>1 · The Experiment</legend>
