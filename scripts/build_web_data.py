@@ -75,6 +75,12 @@ FLAG_MEANINGS = {
     "pressure_range_from_sensor_log": "NASA's sensor log for this burn records ambient pressure in PSIA; "
                                       "pressure_atm_min / max is its range over the log (pressure_source says where). "
                                       "No single value, so the test is not placed on the map.",
+    "conditions_from_test_matrix": "The table has no oxygen or pressure; both come from NASA's BASS as-run test "
+                                   "matrix ('ISS environment' columns), matched on As Run Test #, Test # and Sample # "
+                                   "(pressure_source gives the cells). They describe the test session's atmosphere, not a "
+                                   "reading during the burn. See data_sourced/bass_conditions.json.",
+    "o2_diluted_work_volume": "A nitrogen-diluted BASS test: the oxygen is the glovebox work volume after NASA added "
+                              "nitrogen, calculated by NASA (its notes say e.g. 'Calc 17.07% O2'), not ISS cabin air.",
     "o2_from_sensor_log": "NASA's sensor log for this burn records oxygen (%); o2_sensor_min / max is its range over "
                           "the log. The table's own oxygen value, if any, is kept unchanged.",
     "o2_differs_from_sensor_log": "The table's oxygen and the sensor log's oxygen for this burn do not overlap "
@@ -310,6 +316,10 @@ class Builder:
         # docs/PSI_DOCUMENTS.md). Kept outside data/, which stays exactly as downloaded.
         path = os.path.join(os.path.dirname(os.path.abspath(data)), "data_sourced", "solid_conditions.json")
         self.facts = json.load(open(path, encoding="utf-8"))["facts"] if os.path.exists(path) else []
+        path = os.path.join(os.path.dirname(os.path.abspath(data)), "data_sourced", "bass_conditions.json")
+        bc = json.load(open(path, encoding="utf-8")) if os.path.exists(path) else {"tests": [], "source_title": ""}
+        self.bass_cond = {t["source_row"]: t for t in bc["tests"]}
+        self.bass_src = bc.get("source_title") or bc.get("source_file", "")
 
     def fact(self, acc, quantity, pi=None, label=None):
         for f in self.facts:
@@ -501,9 +511,22 @@ class Builder:
             if not r[3] and not r[2]:
                 q["rows_left_out"].append({"row": i, "reason": f"not a test: '{r[5]}' with no test number"})
                 continue
-            self.add(q, "PSI-26", "BASS", i, r[3], "solid", r[5], None, "ambient", None,
-                     ["o2_not_in_table", "pressure_not_in_table"],
-                     source_extra={"Date": r[0], "As Run Test #": r[2], "Sample #": r[4]})
+            # The table has no oxygen or pressure. NASA's as-run test matrix logs both for every test
+            # (data_sourced/bass_conditions.json, matched on As Run Test #, Test # and Sample #).
+            c = self.bass_cond.get(i)
+            o2 = p = None
+            flags, more = ["o2_not_in_table", "pressure_not_in_table"], {}
+            if c:
+                if (c["as_run_test"], c["test"], c["sample"]) != (r[2].strip(), r[3].strip(), r[4].strip()):
+                    sys.exit(f"BASS row {i}: test numbers {r[2:5]} differ from bass_conditions.json {c}")
+                o2, p = c["oxygen"]["value"], c["pressure"]["value"]
+                flags = ["conditions_from_test_matrix"]
+                if c.get("diluted"):
+                    flags.append("o2_diluted_work_volume")
+                more = {"pressure_source": f"{self.bass_src}, {c['oxygen']['location']} and {c['pressure']['location']}: "
+                                           f"\"{c['oxygen']['quote']}\"; \"{c['pressure']['quote']}\""}
+            self.add(q, "PSI-26", "BASS", i, r[3], "solid", r[5], o2, "ambient", p, flags,
+                     source_extra={"Date": r[0], "As Run Test #": r[2], "Sample #": r[4]}, **more)
 
     def saffire(self):
         # column positions differ between the three SAFFIRE tables
@@ -877,10 +900,15 @@ def build_fuels(tests, habitats):
         if not [t for t in ts if t["pressure_atm"] is not None]:
             note.append("Pressure is not in these tables.")
         from_docs = [t for t in ts if t["pressure_atm"] is not None and t.get("pressure_source")]
-        if from_docs:
-            docs = sorted({t["pressure_source"].split(", chapter")[0].split(': "')[0] for t in from_docs})
-            note.append(f"Pressure for {len(from_docs)} of these {len(ts)} tests is from NASA's reports, not the tables: "
+        matrix = [t for t in from_docs if "conditions_from_test_matrix" in t["flags"]]
+        report = [t for t in from_docs if t not in matrix]
+        if report:
+            docs = sorted({t["pressure_source"].split(", chapter")[0].split(': "')[0] for t in report})
+            note.append(f"Pressure for {len(report)} of these {len(ts)} tests is from NASA's reports, not the tables: "
                         + "; ".join(docs) + ".")
+        if matrix:
+            note.append(f"Oxygen and pressure for {len(matrix)} of these {len(ts)} tests are from NASA's BASS as-run "
+                        "test matrix (PSI-26 Science Documents), not the tables.")
         out.append({
             "id": f"{cls}:{slug(name)}", "fuel_class": cls, "name": name,
             "test_ids": [t["id"] for t in ts], "test_count": len(ts),

@@ -109,9 +109,12 @@
   ],
   "o2_range": [
    0.142,
-   0.222
+   0.2258
   ],
-  "pressure_psi_range": null,
+  "pressure_psi_range": [
+   14.26,
+   14.82
+  ],
   "airflow_range": [
    20.0,
    20.0
@@ -122,43 +125,63 @@
   "inside_by_habitat": {
    "moon_base": [],
    "moon_base_nasa": [],
-   "iss": [],
+   "iss": [
+    "PSI-26:bass:9",
+    "PSI-26:bass:10",
+    "PSI-26:bass:11",
+    "PSI-26:bass:50",
+    "PSI-26:bass:51",
+    "PSI-26:bass:60",
+    "PSI-26:bass:61",
+    "PSI-26:bass:62",
+    "PSI-26:bass:63",
+    "PSI-26:bass:64",
+    "PSI-26:bass:65",
+    "PSI-26:bass:69",
+    "PSI-26:bass:121",
+    "PSI-26:bass:122"
+   ],
    "spacesuit": [],
-   "earth_sea_level": []
+   "earth_sea_level": [
+    "PSI-26:bass:9",
+    "PSI-26:bass:10",
+    "PSI-26:bass:11",
+    "PSI-26:bass:50",
+    "PSI-26:bass:51",
+    "PSI-26:bass:60",
+    "PSI-26:bass:61",
+    "PSI-26:bass:62",
+    "PSI-26:bass:63",
+    "PSI-26:bass:64",
+    "PSI-26:bass:65",
+    "PSI-26:bass:69",
+    "PSI-26:bass:121",
+    "PSI-26:bass:122"
+   ]
   },
   "nearest_by_habitat": {
    "moon_base": {
-    "test_id": "PSI-25:bass-ii:1",
-    "o2_points": 7.8,
-    "psi_gap": 0.0,
-    "oxygen_only": true
+    "test_id": "PSI-26:bass:61",
+    "o2_points": 7.42,
+    "psi_gap": 4.62,
+    "oxygen_only": false
    },
    "moon_base_nasa": {
-    "test_id": "PSI-25:bass-ii:1",
-    "o2_points": 9.8,
-    "psi_gap": 0.0,
-    "oxygen_only": true
+    "test_id": "PSI-26:bass:51",
+    "o2_points": 9.62,
+    "psi_gap": 6.12,
+    "oxygen_only": false
    },
-   "iss": {
-    "test_id": "PSI-25:bass-ii:1",
-    "o2_points": 0,
-    "psi_gap": 0.0,
-    "oxygen_only": true
-   },
+   "iss": null,
    "spacesuit": {
-    "test_id": "PSI-25:bass-ii:1",
-    "o2_points": 77.8,
-    "psi_gap": 0.0,
-    "oxygen_only": true
+    "test_id": "PSI-26:bass:61",
+    "o2_points": 77.42,
+    "psi_gap": 10.52,
+    "oxygen_only": false
    },
-   "earth_sea_level": {
-    "test_id": "PSI-25:bass-ii:1",
-    "o2_points": 0,
-    "psi_gap": 0.0,
-    "oxygen_only": true
-   }
+   "earth_sea_level": null
   },
-  "note": "Pressure is not in these tables."
+  "note": "Oxygen and pressure for 48 of these 91 tests are from NASA's BASS as-run test matrix (PSI-26 Science Documents), not the tables."
  },
  {
   "id": "solid:sibal-cotton-fiberglass-blend",
@@ -228,11 +251,11 @@
   ],
   "o2_range": [
    0.164,
-   0.221
+   0.2272
   ],
   "pressure_psi_range": [
-   14.7,
-   14.7
+   14.26,
+   14.75
   ],
   "airflow_range": [
    20.0,
@@ -250,7 +273,13 @@
     "PSI-25:bass-ii:126",
     "PSI-25:bass-ii:127",
     "PSI-25:bass-ii:128",
-    "PSI-25:bass-ii:129"
+    "PSI-25:bass-ii:129",
+    "PSI-26:bass:45",
+    "PSI-26:bass:46",
+    "PSI-26:bass:55",
+    "PSI-26:bass:56",
+    "PSI-26:bass:67",
+    "PSI-26:bass:68"
    ],
    "spacesuit": [],
    "earth_sea_level": [
@@ -259,32 +288,38 @@
     "PSI-25:bass-ii:126",
     "PSI-25:bass-ii:127",
     "PSI-25:bass-ii:128",
-    "PSI-25:bass-ii:129"
+    "PSI-25:bass-ii:129",
+    "PSI-26:bass:45",
+    "PSI-26:bass:46",
+    "PSI-26:bass:55",
+    "PSI-26:bass:56",
+    "PSI-26:bass:67",
+    "PSI-26:bass:68"
    ]
   },
   "nearest_by_habitat": {
    "moon_base": {
-    "test_id": "PSI-25:bass-ii:124",
-    "o2_points": 9.2,
-    "psi_gap": 4.5,
+    "test_id": "PSI-26:bass:55",
+    "o2_points": 7.28,
+    "psi_gap": 4.42,
     "oxygen_only": false
    },
    "moon_base_nasa": {
-    "test_id": "PSI-25:bass-ii:124",
-    "o2_points": 11.2,
-    "psi_gap": 6.3,
+    "test_id": "PSI-26:bass:55",
+    "o2_points": 9.28,
+    "psi_gap": 6.22,
     "oxygen_only": false
    },
    "iss": null,
    "spacesuit": {
-    "test_id": "PSI-25:bass-ii:124",
-    "o2_points": 79.2,
-    "psi_gap": 10.4,
+    "test_id": "PSI-26:bass:55",
+    "o2_points": 77.28,
+    "psi_gap": 10.32,
     "oxygen_only": false
    },
    "earth_sea_level": null
   },
-  "note": "Pressure for 27 of these 45 tests is from NASA's reports, not the tables: Burning and Suppression of Solids-II (BASS-II) Summary Report, NASA/TM-20210011385, p. 102."
+  "note": "Pressure for 27 of these 45 tests is from NASA's reports, not the tables: Burning and Suppression of Solids-II (BASS-II) Summary Report, NASA/TM-20210011385, p. 102. Oxygen and pressure for 12 of these 45 tests are from NASA's BASS as-run test matrix (PSI-26 Science Documents), not the tables."
  },
  {
   "id": "solid:japan-wax",
@@ -313,10 +348,13 @@
    "BASS-II"
   ],
   "o2_range": [
-   0.174,
-   0.174
+   0.159,
+   0.2124
   ],
-  "pressure_psi_range": null,
+  "pressure_psi_range": [
+   14.26,
+   14.43
+  ],
   "airflow_range": null,
   "airflow_test_count": 0,
   "still_air_test_count": 0,
@@ -330,37 +368,37 @@
   },
   "nearest_by_habitat": {
    "moon_base": {
-    "test_id": "PSI-25:bass-ii:26",
-    "o2_points": 12.6,
-    "psi_gap": 0.0,
-    "oxygen_only": true
+    "test_id": "PSI-26:bass:70",
+    "o2_points": 8.76,
+    "psi_gap": 4.09,
+    "oxygen_only": false
    },
    "moon_base_nasa": {
-    "test_id": "PSI-25:bass-ii:26",
-    "o2_points": 14.6,
-    "psi_gap": 0.0,
-    "oxygen_only": true
+    "test_id": "PSI-26:bass:70",
+    "o2_points": 10.76,
+    "psi_gap": 5.89,
+    "oxygen_only": false
    },
    "iss": {
-    "test_id": "PSI-25:bass-ii:26",
-    "o2_points": 1.6,
-    "psi_gap": 0.0,
-    "oxygen_only": true
+    "test_id": "PSI-26:bass:70",
+    "o2_points": 0,
+    "psi_gap": 0.21,
+    "oxygen_only": false
    },
    "spacesuit": {
-    "test_id": "PSI-25:bass-ii:26",
-    "o2_points": 82.6,
-    "psi_gap": 0.0,
-    "oxygen_only": true
+    "test_id": "PSI-26:bass:70",
+    "o2_points": 78.76,
+    "psi_gap": 9.99,
+    "oxygen_only": false
    },
    "earth_sea_level": {
-    "test_id": "PSI-25:bass-ii:26",
-    "o2_points": 1.6,
-    "psi_gap": 0.0,
-    "oxygen_only": true
+    "test_id": "PSI-26:bass:70",
+    "o2_points": 0,
+    "psi_gap": 0.21,
+    "oxygen_only": false
    }
   },
-  "note": "Pressure is not in these tables."
+  "note": "Oxygen and pressure for 10 of these 11 tests are from NASA's BASS as-run test matrix (PSI-26 Science Documents), not the tables."
  },
  {
   "id": "solid:nomex",
@@ -388,9 +426,12 @@
   ],
   "o2_range": [
    0.21,
-   0.222
+   0.2253
   ],
-  "pressure_psi_range": null,
+  "pressure_psi_range": [
+   14.29,
+   14.81
+  ],
   "airflow_range": null,
   "airflow_test_count": 0,
   "still_air_test_count": 0,
@@ -398,43 +439,39 @@
   "inside_by_habitat": {
    "moon_base": [],
    "moon_base_nasa": [],
-   "iss": [],
+   "iss": [
+    "PSI-26:bass:57",
+    "PSI-26:bass:58"
+   ],
    "spacesuit": [],
-   "earth_sea_level": []
+   "earth_sea_level": [
+    "PSI-26:bass:57",
+    "PSI-26:bass:58"
+   ]
   },
   "nearest_by_habitat": {
    "moon_base": {
-    "test_id": "PSI-25:bass-ii:23",
-    "o2_points": 7.8,
-    "psi_gap": 0.0,
-    "oxygen_only": true
+    "test_id": "PSI-26:bass:57",
+    "o2_points": 7.47,
+    "psi_gap": 4.61,
+    "oxygen_only": false
    },
    "moon_base_nasa": {
-    "test_id": "PSI-25:bass-ii:23",
-    "o2_points": 9.8,
-    "psi_gap": 0.0,
-    "oxygen_only": true
+    "test_id": "PSI-26:bass:57",
+    "o2_points": 9.47,
+    "psi_gap": 6.41,
+    "oxygen_only": false
    },
-   "iss": {
-    "test_id": "PSI-25:bass-ii:23",
-    "o2_points": 0,
-    "psi_gap": 0.0,
-    "oxygen_only": true
-   },
+   "iss": null,
    "spacesuit": {
-    "test_id": "PSI-25:bass-ii:23",
-    "o2_points": 77.8,
-    "psi_gap": 0.0,
-    "oxygen_only": true
+    "test_id": "PSI-26:bass:57",
+    "o2_points": 77.47,
+    "psi_gap": 10.51,
+    "oxygen_only": false
    },
-   "earth_sea_level": {
-    "test_id": "PSI-25:bass-ii:23",
-    "o2_points": 0,
-    "psi_gap": 0.0,
-    "oxygen_only": true
-   }
+   "earth_sea_level": null
   },
-  "note": "Pressure is not in these tables."
+  "note": "Oxygen and pressure for 6 of these 9 tests are from NASA's BASS as-run test matrix (PSI-26 Science Documents), not the tables."
  },
  {
   "id": "solid:paraffin-wax",
@@ -456,8 +493,14 @@
   "acronyms": [
    "BASS"
   ],
-  "o2_range": null,
-  "pressure_psi_range": null,
+  "o2_range": [
+   0.1605,
+   0.2193
+  ],
+  "pressure_psi_range": [
+   14.29,
+   14.43
+  ],
   "airflow_range": null,
   "airflow_test_count": 0,
   "still_air_test_count": 0,
@@ -470,13 +513,38 @@
    "earth_sea_level": []
   },
   "nearest_by_habitat": {
-   "moon_base": null,
-   "moon_base_nasa": null,
-   "iss": null,
-   "spacesuit": null,
-   "earth_sea_level": null
+   "moon_base": {
+    "test_id": "PSI-26:bass:80",
+    "o2_points": 8.07,
+    "psi_gap": 4.09,
+    "oxygen_only": false
+   },
+   "moon_base_nasa": {
+    "test_id": "PSI-26:bass:80",
+    "o2_points": 10.07,
+    "psi_gap": 5.89,
+    "oxygen_only": false
+   },
+   "iss": {
+    "test_id": "PSI-26:bass:90",
+    "o2_points": 0,
+    "psi_gap": 0.1,
+    "oxygen_only": false
+   },
+   "spacesuit": {
+    "test_id": "PSI-26:bass:80",
+    "o2_points": 78.07,
+    "psi_gap": 9.99,
+    "oxygen_only": false
+   },
+   "earth_sea_level": {
+    "test_id": "PSI-26:bass:90",
+    "o2_points": 0,
+    "psi_gap": 0.1,
+    "oxygen_only": false
+   }
   },
-  "note": "Oxygen is not in these tables. Pressure is not in these tables."
+  "note": "Oxygen and pressure for 7 of these 7 tests are from NASA's BASS as-run test matrix (PSI-26 Science Documents), not the tables."
  },
  {
   "id": "solid:wax-type-not-stated",
@@ -497,8 +565,14 @@
   "acronyms": [
    "BASS"
   ],
-  "o2_range": null,
-  "pressure_psi_range": null,
+  "o2_range": [
+   0.174,
+   0.2222
+  ],
+  "pressure_psi_range": [
+   14.51,
+   14.64
+  ],
   "airflow_range": null,
   "airflow_test_count": 0,
   "still_air_test_count": 0,
@@ -506,18 +580,45 @@
   "inside_by_habitat": {
    "moon_base": [],
    "moon_base_nasa": [],
-   "iss": [],
+   "iss": [
+    "PSI-26:bass:47",
+    "PSI-26:bass:48",
+    "PSI-26:bass:49",
+    "PSI-26:bass:119",
+    "PSI-26:bass:120"
+   ],
    "spacesuit": [],
-   "earth_sea_level": []
+   "earth_sea_level": [
+    "PSI-26:bass:47",
+    "PSI-26:bass:48",
+    "PSI-26:bass:49",
+    "PSI-26:bass:119",
+    "PSI-26:bass:120"
+   ]
   },
   "nearest_by_habitat": {
-   "moon_base": null,
-   "moon_base_nasa": null,
+   "moon_base": {
+    "test_id": "PSI-26:bass:47",
+    "o2_points": 7.78,
+    "psi_gap": 4.31,
+    "oxygen_only": false
+   },
+   "moon_base_nasa": {
+    "test_id": "PSI-26:bass:47",
+    "o2_points": 9.78,
+    "psi_gap": 6.11,
+    "oxygen_only": false
+   },
    "iss": null,
-   "spacesuit": null,
+   "spacesuit": {
+    "test_id": "PSI-26:bass:47",
+    "o2_points": 77.78,
+    "psi_gap": 10.21,
+    "oxygen_only": false
+   },
    "earth_sea_level": null
   },
-  "note": "Oxygen is not in these tables. Pressure is not in these tables."
+  "note": "Oxygen and pressure for 6 of these 6 tests are from NASA's BASS as-run test matrix (PSI-26 Science Documents), not the tables."
  },
  {
   "id": "solid:silicone",
@@ -604,8 +705,14 @@
   "acronyms": [
    "BASS"
   ],
-  "o2_range": null,
-  "pressure_psi_range": null,
+  "o2_range": [
+   0.2189,
+   0.2253
+  ],
+  "pressure_psi_range": [
+   14.5,
+   14.81
+  ],
   "airflow_range": null,
   "airflow_test_count": 0,
   "still_air_test_count": 0,
@@ -613,18 +720,39 @@
   "inside_by_habitat": {
    "moon_base": [],
    "moon_base_nasa": [],
-   "iss": [],
+   "iss": [
+    "PSI-26:bass:44",
+    "PSI-26:bass:59"
+   ],
    "spacesuit": [],
-   "earth_sea_level": []
+   "earth_sea_level": [
+    "PSI-26:bass:44",
+    "PSI-26:bass:59"
+   ]
   },
   "nearest_by_habitat": {
-   "moon_base": null,
-   "moon_base_nasa": null,
+   "moon_base": {
+    "test_id": "PSI-26:bass:59",
+    "o2_points": 7.47,
+    "psi_gap": 4.61,
+    "oxygen_only": false
+   },
+   "moon_base_nasa": {
+    "test_id": "PSI-26:bass:59",
+    "o2_points": 9.47,
+    "psi_gap": 6.41,
+    "oxygen_only": false
+   },
    "iss": null,
-   "spacesuit": null,
+   "spacesuit": {
+    "test_id": "PSI-26:bass:59",
+    "o2_points": 77.47,
+    "psi_gap": 10.51,
+    "oxygen_only": false
+   },
    "earth_sea_level": null
   },
-  "note": "Oxygen is not in these tables. Pressure is not in these tables."
+  "note": "Oxygen and pressure for 2 of these 2 tests are from NASA's BASS as-run test matrix (PSI-26 Science Documents), not the tables."
  },
  {
   "id": "solid:pmma-and-nomex",

@@ -132,3 +132,22 @@ Found while doing this:
   proposal. Those entries quote it as written, and the detail says so where it matters.
 - Not read for sensors yet: FLEX, FLEX-2, DAFT, s-Flame and the other ACME records, SLICE, and PSI-115 / -117 / -142.
 
+
+## Done (2026-11-15, branch `data/bass-conditions`): BASS oxygen and pressure
+
+The raw scan (`docs/RAW_DATA_FINDINGS.md` F1) found that BASS's as-run test matrix
+(`PSI-26_Science Documents_As Run_Test Matrix.xlsx`, sheet "as run matrix", columns AA "O2 % by volume" and AB
+"pressure, atm" under "ISS environment") logs both for every BASS test. Workstream A re-read 10 rows by hand with a
+separate reader (rows 1, 7, 20, 42, 43, 51, 67, 77, 84, 122): every match and value was equal.
+
+| Tests | What was added | Placed on the map? |
+|---|---|---|
+| 121 BASS | `o2_fraction` and `pressure_atm` from the matrix (`data_sourced/bass_conditions.json`), flag `conditions_from_test_matrix`, cells in `pressure_source` | **Yes** (placed tests 775 -> 896) |
+| 26 of them | also flag `o2_diluted_work_volume`: nitrogen-diluted glovebox air, oxygen calculated by NASA (16-18 %) | Yes, but inside no place's box |
+
+- Place counts: 20 / 0 / **209** / 0 / **209** (38 more BASS tests in ISS / Earth air). Moon Base unchanged.
+- Highest solid oxygen is now BASS's 22.7 %. The headline holds: no solid-material test reaches 30 %.
+- CO2 from the matrix is kept in `bass_conditions.json` but not applied: `co2_fraction` means CO2 added as a
+  suppressant (FLEX), while BASS's CO2 is the cabin level.
+- `validate_data.py` re-reads all 121 cells from the spreadsheet with its own reader when `data_extra/` exists.
+- Still without pressure: BASS-II's other 78 tests, SAFFIRE-II and SPICE.

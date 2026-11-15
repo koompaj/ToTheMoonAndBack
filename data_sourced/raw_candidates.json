@@ -29,7 +29,7 @@
   },
   {
    "id": "bass-asrun-row1-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -49,7 +49,7 @@
   },
   {
    "id": "bass-asrun-row1-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -69,7 +69,7 @@
   },
   {
    "id": "bass-asrun-row1-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -89,7 +89,7 @@
   },
   {
    "id": "bass-asrun-row2-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -109,7 +109,7 @@
   },
   {
    "id": "bass-asrun-row2-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -129,7 +129,7 @@
   },
   {
    "id": "bass-asrun-row2-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -149,7 +149,7 @@
   },
   {
    "id": "bass-asrun-row3-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -169,7 +169,7 @@
   },
   {
    "id": "bass-asrun-row3-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -189,7 +189,7 @@
   },
   {
    "id": "bass-asrun-row3-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -209,7 +209,7 @@
   },
   {
    "id": "bass-asrun-row4-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -229,7 +229,7 @@
   },
   {
    "id": "bass-asrun-row4-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -249,7 +249,7 @@
   },
   {
    "id": "bass-asrun-row4-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -269,7 +269,7 @@
   },
   {
    "id": "bass-asrun-row5-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -289,7 +289,7 @@
   },
   {
    "id": "bass-asrun-row5-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -309,7 +309,7 @@
   },
   {
    "id": "bass-asrun-row5-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -329,7 +329,7 @@
   },
   {
    "id": "bass-asrun-row6-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -349,7 +349,7 @@
   },
   {
    "id": "bass-asrun-row6-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -369,7 +369,7 @@
   },
   {
    "id": "bass-asrun-row6-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -389,7 +389,7 @@
   },
   {
    "id": "bass-asrun-row7-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -409,7 +409,7 @@
   },
   {
    "id": "bass-asrun-row7-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -429,7 +429,7 @@
   },
   {
    "id": "bass-asrun-row7-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -449,7 +449,7 @@
   },
   {
    "id": "bass-asrun-row8-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -469,7 +469,7 @@
   },
   {
    "id": "bass-asrun-row8-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -489,7 +489,7 @@
   },
   {
    "id": "bass-asrun-row8-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -509,7 +509,7 @@
   },
   {
    "id": "bass-asrun-row9-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -529,7 +529,7 @@
   },
   {
    "id": "bass-asrun-row9-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -549,7 +549,7 @@
   },
   {
    "id": "bass-asrun-row9-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -569,7 +569,7 @@
   },
   {
    "id": "bass-asrun-row10-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -589,7 +589,7 @@
   },
   {
    "id": "bass-asrun-row10-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -609,7 +609,7 @@
   },
   {
    "id": "bass-asrun-row10-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -629,7 +629,7 @@
   },
   {
    "id": "bass-asrun-row11-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -649,7 +649,7 @@
   },
   {
    "id": "bass-asrun-row11-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -669,7 +669,7 @@
   },
   {
    "id": "bass-asrun-row11-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -689,7 +689,7 @@
   },
   {
    "id": "bass-asrun-row12-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -709,7 +709,7 @@
   },
   {
    "id": "bass-asrun-row12-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -729,7 +729,7 @@
   },
   {
    "id": "bass-asrun-row12-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -749,7 +749,7 @@
   },
   {
    "id": "bass-asrun-row13-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -769,7 +769,7 @@
   },
   {
    "id": "bass-asrun-row13-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -789,7 +789,7 @@
   },
   {
    "id": "bass-asrun-row13-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -809,7 +809,7 @@
   },
   {
    "id": "bass-asrun-row14-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -829,7 +829,7 @@
   },
   {
    "id": "bass-asrun-row14-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -849,7 +849,7 @@
   },
   {
    "id": "bass-asrun-row14-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -869,7 +869,7 @@
   },
   {
    "id": "bass-asrun-row15-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -889,7 +889,7 @@
   },
   {
    "id": "bass-asrun-row15-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -909,7 +909,7 @@
   },
   {
    "id": "bass-asrun-row16-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -929,7 +929,7 @@
   },
   {
    "id": "bass-asrun-row16-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -949,7 +949,7 @@
   },
   {
    "id": "bass-asrun-row17-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -969,7 +969,7 @@
   },
   {
    "id": "bass-asrun-row17-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -989,7 +989,7 @@
   },
   {
    "id": "bass-asrun-row18-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -1009,7 +1009,7 @@
   },
   {
    "id": "bass-asrun-row18-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -1029,7 +1029,7 @@
   },
   {
    "id": "bass-asrun-row19-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -1049,7 +1049,7 @@
   },
   {
    "id": "bass-asrun-row19-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -1069,7 +1069,7 @@
   },
   {
    "id": "bass-asrun-row20-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -1089,7 +1089,7 @@
   },
   {
    "id": "bass-asrun-row20-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -1109,7 +1109,7 @@
   },
   {
    "id": "bass-asrun-row20-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -1129,7 +1129,7 @@
   },
   {
    "id": "bass-asrun-row21-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -1149,7 +1149,7 @@
   },
   {
    "id": "bass-asrun-row21-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -1169,7 +1169,7 @@
   },
   {
    "id": "bass-asrun-row21-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -1189,7 +1189,7 @@
   },
   {
    "id": "bass-asrun-row22-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -1209,7 +1209,7 @@
   },
   {
    "id": "bass-asrun-row22-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -1229,7 +1229,7 @@
   },
   {
    "id": "bass-asrun-row22-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -1249,7 +1249,7 @@
   },
   {
    "id": "bass-asrun-row23-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -1269,7 +1269,7 @@
   },
   {
    "id": "bass-asrun-row23-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -1289,7 +1289,7 @@
   },
   {
    "id": "bass-asrun-row23-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -1309,7 +1309,7 @@
   },
   {
    "id": "bass-asrun-row24-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -1329,7 +1329,7 @@
   },
   {
    "id": "bass-asrun-row24-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -1349,7 +1349,7 @@
   },
   {
    "id": "bass-asrun-row24-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -1369,7 +1369,7 @@
   },
   {
    "id": "bass-asrun-row25-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -1389,7 +1389,7 @@
   },
   {
    "id": "bass-asrun-row25-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -1409,7 +1409,7 @@
   },
   {
    "id": "bass-asrun-row25-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -1429,7 +1429,7 @@
   },
   {
    "id": "bass-asrun-row26-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -1449,7 +1449,7 @@
   },
   {
    "id": "bass-asrun-row26-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -1469,7 +1469,7 @@
   },
   {
    "id": "bass-asrun-row26-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -1489,7 +1489,7 @@
   },
   {
    "id": "bass-asrun-row27-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -1509,7 +1509,7 @@
   },
   {
    "id": "bass-asrun-row27-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -1529,7 +1529,7 @@
   },
   {
    "id": "bass-asrun-row27-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -1549,7 +1549,7 @@
   },
   {
    "id": "bass-asrun-row28-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -1569,7 +1569,7 @@
   },
   {
    "id": "bass-asrun-row28-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -1589,7 +1589,7 @@
   },
   {
    "id": "bass-asrun-row28-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -1609,7 +1609,7 @@
   },
   {
    "id": "bass-asrun-row29-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -1629,7 +1629,7 @@
   },
   {
    "id": "bass-asrun-row29-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -1649,7 +1649,7 @@
   },
   {
    "id": "bass-asrun-row29-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -1669,7 +1669,7 @@
   },
   {
    "id": "bass-asrun-row30-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -1689,7 +1689,7 @@
   },
   {
    "id": "bass-asrun-row30-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -1709,7 +1709,7 @@
   },
   {
    "id": "bass-asrun-row30-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -1729,7 +1729,7 @@
   },
   {
    "id": "bass-asrun-row31-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -1749,7 +1749,7 @@
   },
   {
    "id": "bass-asrun-row31-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -1769,7 +1769,7 @@
   },
   {
    "id": "bass-asrun-row31-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -1789,7 +1789,7 @@
   },
   {
    "id": "bass-asrun-row32-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -1809,7 +1809,7 @@
   },
   {
    "id": "bass-asrun-row32-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -1829,7 +1829,7 @@
   },
   {
    "id": "bass-asrun-row32-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -1849,7 +1849,7 @@
   },
   {
    "id": "bass-asrun-row33-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -1869,7 +1869,7 @@
   },
   {
    "id": "bass-asrun-row33-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -1889,7 +1889,7 @@
   },
   {
    "id": "bass-asrun-row33-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -1909,7 +1909,7 @@
   },
   {
    "id": "bass-asrun-row34-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -1929,7 +1929,7 @@
   },
   {
    "id": "bass-asrun-row34-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -1949,7 +1949,7 @@
   },
   {
    "id": "bass-asrun-row34-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -1969,7 +1969,7 @@
   },
   {
    "id": "bass-asrun-row35-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -1989,7 +1989,7 @@
   },
   {
    "id": "bass-asrun-row35-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -2009,7 +2009,7 @@
   },
   {
    "id": "bass-asrun-row35-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -2029,7 +2029,7 @@
   },
   {
    "id": "bass-asrun-row36-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -2049,7 +2049,7 @@
   },
   {
    "id": "bass-asrun-row36-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -2069,7 +2069,7 @@
   },
   {
    "id": "bass-asrun-row36-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -2089,7 +2089,7 @@
   },
   {
    "id": "bass-asrun-row37-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -2109,7 +2109,7 @@
   },
   {
    "id": "bass-asrun-row37-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -2129,7 +2129,7 @@
   },
   {
    "id": "bass-asrun-row37-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -2149,7 +2149,7 @@
   },
   {
    "id": "bass-asrun-row38-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -2169,7 +2169,7 @@
   },
   {
    "id": "bass-asrun-row38-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -2189,7 +2189,7 @@
   },
   {
    "id": "bass-asrun-row38-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -2209,7 +2209,7 @@
   },
   {
    "id": "bass-asrun-row39-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -2229,7 +2229,7 @@
   },
   {
    "id": "bass-asrun-row39-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -2249,7 +2249,7 @@
   },
   {
    "id": "bass-asrun-row39-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -2269,7 +2269,7 @@
   },
   {
    "id": "bass-asrun-row40-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -2289,7 +2289,7 @@
   },
   {
    "id": "bass-asrun-row40-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -2309,7 +2309,7 @@
   },
   {
    "id": "bass-asrun-row40-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -2329,7 +2329,7 @@
   },
   {
    "id": "bass-asrun-row41-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -2349,7 +2349,7 @@
   },
   {
    "id": "bass-asrun-row41-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -2369,7 +2369,7 @@
   },
   {
    "id": "bass-asrun-row41-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -2389,7 +2389,7 @@
   },
   {
    "id": "bass-asrun-row42-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -2409,7 +2409,7 @@
   },
   {
    "id": "bass-asrun-row42-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -2429,7 +2429,7 @@
   },
   {
    "id": "bass-asrun-row42-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -2449,7 +2449,7 @@
   },
   {
    "id": "bass-asrun-row43-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -2469,7 +2469,7 @@
   },
   {
    "id": "bass-asrun-row43-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -2489,7 +2489,7 @@
   },
   {
    "id": "bass-asrun-row43-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -2509,7 +2509,7 @@
   },
   {
    "id": "bass-asrun-row44-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -2529,7 +2529,7 @@
   },
   {
    "id": "bass-asrun-row44-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -2549,7 +2549,7 @@
   },
   {
    "id": "bass-asrun-row44-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -2569,7 +2569,7 @@
   },
   {
    "id": "bass-asrun-row45-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -2589,7 +2589,7 @@
   },
   {
    "id": "bass-asrun-row45-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -2609,7 +2609,7 @@
   },
   {
    "id": "bass-asrun-row45-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -2629,7 +2629,7 @@
   },
   {
    "id": "bass-asrun-row46-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -2649,7 +2649,7 @@
   },
   {
    "id": "bass-asrun-row46-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -2669,7 +2669,7 @@
   },
   {
    "id": "bass-asrun-row46-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -2689,7 +2689,7 @@
   },
   {
    "id": "bass-asrun-row47-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -2709,7 +2709,7 @@
   },
   {
    "id": "bass-asrun-row47-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -2729,7 +2729,7 @@
   },
   {
    "id": "bass-asrun-row47-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -2749,7 +2749,7 @@
   },
   {
    "id": "bass-asrun-row48-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -2769,7 +2769,7 @@
   },
   {
    "id": "bass-asrun-row48-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -2789,7 +2789,7 @@
   },
   {
    "id": "bass-asrun-row48-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -2809,7 +2809,7 @@
   },
   {
    "id": "bass-asrun-row49-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -2829,7 +2829,7 @@
   },
   {
    "id": "bass-asrun-row49-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -2849,7 +2849,7 @@
   },
   {
    "id": "bass-asrun-row49-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -2869,7 +2869,7 @@
   },
   {
    "id": "bass-asrun-row50-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -2889,7 +2889,7 @@
   },
   {
    "id": "bass-asrun-row50-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -2909,7 +2909,7 @@
   },
   {
    "id": "bass-asrun-row50-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -2929,7 +2929,7 @@
   },
   {
    "id": "bass-asrun-row51-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -2949,7 +2949,7 @@
   },
   {
    "id": "bass-asrun-row51-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -2969,7 +2969,7 @@
   },
   {
    "id": "bass-asrun-row51-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -2989,7 +2989,7 @@
   },
   {
    "id": "bass-asrun-row52-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -3009,7 +3009,7 @@
   },
   {
    "id": "bass-asrun-row52-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -3029,7 +3029,7 @@
   },
   {
    "id": "bass-asrun-row52-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -3049,7 +3049,7 @@
   },
   {
    "id": "bass-asrun-row53-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -3069,7 +3069,7 @@
   },
   {
    "id": "bass-asrun-row53-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -3089,7 +3089,7 @@
   },
   {
    "id": "bass-asrun-row53-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -3109,7 +3109,7 @@
   },
   {
    "id": "bass-asrun-row54-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -3129,7 +3129,7 @@
   },
   {
    "id": "bass-asrun-row54-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -3149,7 +3149,7 @@
   },
   {
    "id": "bass-asrun-row54-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -3169,7 +3169,7 @@
   },
   {
    "id": "bass-asrun-row55-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -3189,7 +3189,7 @@
   },
   {
    "id": "bass-asrun-row55-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -3209,7 +3209,7 @@
   },
   {
    "id": "bass-asrun-row55-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -3229,7 +3229,7 @@
   },
   {
    "id": "bass-asrun-row56-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -3249,7 +3249,7 @@
   },
   {
    "id": "bass-asrun-row56-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -3269,7 +3269,7 @@
   },
   {
    "id": "bass-asrun-row56-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -3289,7 +3289,7 @@
   },
   {
    "id": "bass-asrun-row57-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -3309,7 +3309,7 @@
   },
   {
    "id": "bass-asrun-row57-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -3329,7 +3329,7 @@
   },
   {
    "id": "bass-asrun-row57-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -3349,7 +3349,7 @@
   },
   {
    "id": "bass-asrun-row58-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -3369,7 +3369,7 @@
   },
   {
    "id": "bass-asrun-row58-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -3389,7 +3389,7 @@
   },
   {
    "id": "bass-asrun-row58-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -3409,7 +3409,7 @@
   },
   {
    "id": "bass-asrun-row59-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -3429,7 +3429,7 @@
   },
   {
    "id": "bass-asrun-row59-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -3449,7 +3449,7 @@
   },
   {
    "id": "bass-asrun-row59-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -3469,7 +3469,7 @@
   },
   {
    "id": "bass-asrun-row60-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -3489,7 +3489,7 @@
   },
   {
    "id": "bass-asrun-row60-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -3509,7 +3509,7 @@
   },
   {
    "id": "bass-asrun-row60-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -3529,7 +3529,7 @@
   },
   {
    "id": "bass-asrun-row61-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -3549,7 +3549,7 @@
   },
   {
    "id": "bass-asrun-row61-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -3569,7 +3569,7 @@
   },
   {
    "id": "bass-asrun-row61-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -3589,7 +3589,7 @@
   },
   {
    "id": "bass-asrun-row62-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -3609,7 +3609,7 @@
   },
   {
    "id": "bass-asrun-row62-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -3629,7 +3629,7 @@
   },
   {
    "id": "bass-asrun-row62-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -3649,7 +3649,7 @@
   },
   {
    "id": "bass-asrun-row63-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -3669,7 +3669,7 @@
   },
   {
    "id": "bass-asrun-row63-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -3689,7 +3689,7 @@
   },
   {
    "id": "bass-asrun-row63-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -3709,7 +3709,7 @@
   },
   {
    "id": "bass-asrun-row64-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -3729,7 +3729,7 @@
   },
   {
    "id": "bass-asrun-row64-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -3749,7 +3749,7 @@
   },
   {
    "id": "bass-asrun-row64-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -3769,7 +3769,7 @@
   },
   {
    "id": "bass-asrun-row65-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -3789,7 +3789,7 @@
   },
   {
    "id": "bass-asrun-row65-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -3809,7 +3809,7 @@
   },
   {
    "id": "bass-asrun-row65-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -3829,7 +3829,7 @@
   },
   {
    "id": "bass-asrun-row67-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -3849,7 +3849,7 @@
   },
   {
    "id": "bass-asrun-row67-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -3869,7 +3869,7 @@
   },
   {
    "id": "bass-asrun-row67-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -3889,7 +3889,7 @@
   },
   {
    "id": "bass-asrun-row68-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -3909,7 +3909,7 @@
   },
   {
    "id": "bass-asrun-row68-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -3929,7 +3929,7 @@
   },
   {
    "id": "bass-asrun-row68-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -3949,7 +3949,7 @@
   },
   {
    "id": "bass-asrun-row69-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -3969,7 +3969,7 @@
   },
   {
    "id": "bass-asrun-row69-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -3989,7 +3989,7 @@
   },
   {
    "id": "bass-asrun-row69-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -4009,7 +4009,7 @@
   },
   {
    "id": "bass-asrun-row70-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -4029,7 +4029,7 @@
   },
   {
    "id": "bass-asrun-row70-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -4049,7 +4049,7 @@
   },
   {
    "id": "bass-asrun-row70-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -4069,7 +4069,7 @@
   },
   {
    "id": "bass-asrun-row71-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -4089,7 +4089,7 @@
   },
   {
    "id": "bass-asrun-row71-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -4109,7 +4109,7 @@
   },
   {
    "id": "bass-asrun-row71-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -4129,7 +4129,7 @@
   },
   {
    "id": "bass-asrun-row72-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -4149,7 +4149,7 @@
   },
   {
    "id": "bass-asrun-row72-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -4169,7 +4169,7 @@
   },
   {
    "id": "bass-asrun-row72-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -4189,7 +4189,7 @@
   },
   {
    "id": "bass-asrun-row73-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -4209,7 +4209,7 @@
   },
   {
    "id": "bass-asrun-row73-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -4229,7 +4229,7 @@
   },
   {
    "id": "bass-asrun-row73-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -4249,7 +4249,7 @@
   },
   {
    "id": "bass-asrun-row74-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -4269,7 +4269,7 @@
   },
   {
    "id": "bass-asrun-row74-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -4289,7 +4289,7 @@
   },
   {
    "id": "bass-asrun-row74-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -4309,7 +4309,7 @@
   },
   {
    "id": "bass-asrun-row75-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -4329,7 +4329,7 @@
   },
   {
    "id": "bass-asrun-row75-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -4349,7 +4349,7 @@
   },
   {
    "id": "bass-asrun-row75-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -4369,7 +4369,7 @@
   },
   {
    "id": "bass-asrun-row76-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -4389,7 +4389,7 @@
   },
   {
    "id": "bass-asrun-row76-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -4409,7 +4409,7 @@
   },
   {
    "id": "bass-asrun-row76-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -4429,7 +4429,7 @@
   },
   {
    "id": "bass-asrun-row77-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -4449,7 +4449,7 @@
   },
   {
    "id": "bass-asrun-row77-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -4469,7 +4469,7 @@
   },
   {
    "id": "bass-asrun-row77-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -4489,7 +4489,7 @@
   },
   {
    "id": "bass-asrun-row78-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -4509,7 +4509,7 @@
   },
   {
    "id": "bass-asrun-row78-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -4529,7 +4529,7 @@
   },
   {
    "id": "bass-asrun-row78-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -4549,7 +4549,7 @@
   },
   {
    "id": "bass-asrun-row79-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -4569,7 +4569,7 @@
   },
   {
    "id": "bass-asrun-row79-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -4589,7 +4589,7 @@
   },
   {
    "id": "bass-asrun-row79-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -4609,7 +4609,7 @@
   },
   {
    "id": "bass-asrun-row80-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -4629,7 +4629,7 @@
   },
   {
    "id": "bass-asrun-row80-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -4649,7 +4649,7 @@
   },
   {
    "id": "bass-asrun-row80-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -4669,7 +4669,7 @@
   },
   {
    "id": "bass-asrun-row81-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -4689,7 +4689,7 @@
   },
   {
    "id": "bass-asrun-row81-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -4709,7 +4709,7 @@
   },
   {
    "id": "bass-asrun-row81-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -4729,7 +4729,7 @@
   },
   {
    "id": "bass-asrun-row82-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -4751,7 +4751,7 @@
   },
   {
    "id": "bass-asrun-row82-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -4771,7 +4771,7 @@
   },
   {
    "id": "bass-asrun-row82-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -4791,7 +4791,7 @@
   },
   {
    "id": "bass-asrun-row83-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -4813,7 +4813,7 @@
   },
   {
    "id": "bass-asrun-row83-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -4833,7 +4833,7 @@
   },
   {
    "id": "bass-asrun-row83-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -4853,7 +4853,7 @@
   },
   {
    "id": "bass-asrun-row84-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -4873,7 +4873,7 @@
   },
   {
    "id": "bass-asrun-row84-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -4893,7 +4893,7 @@
   },
   {
    "id": "bass-asrun-row84-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -4913,7 +4913,7 @@
   },
   {
    "id": "bass-asrun-row85-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -4933,7 +4933,7 @@
   },
   {
    "id": "bass-asrun-row85-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -4953,7 +4953,7 @@
   },
   {
    "id": "bass-asrun-row85-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -4973,7 +4973,7 @@
   },
   {
    "id": "bass-asrun-row86-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -4993,7 +4993,7 @@
   },
   {
    "id": "bass-asrun-row86-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -5013,7 +5013,7 @@
   },
   {
    "id": "bass-asrun-row86-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -5033,7 +5033,7 @@
   },
   {
    "id": "bass-asrun-row87-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -5053,7 +5053,7 @@
   },
   {
    "id": "bass-asrun-row87-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -5073,7 +5073,7 @@
   },
   {
    "id": "bass-asrun-row87-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -5093,7 +5093,7 @@
   },
   {
    "id": "bass-asrun-row88-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -5113,7 +5113,7 @@
   },
   {
    "id": "bass-asrun-row88-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -5133,7 +5133,7 @@
   },
   {
    "id": "bass-asrun-row88-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -5153,7 +5153,7 @@
   },
   {
    "id": "bass-asrun-row89-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -5173,7 +5173,7 @@
   },
   {
    "id": "bass-asrun-row89-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -5193,7 +5193,7 @@
   },
   {
    "id": "bass-asrun-row89-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -5213,7 +5213,7 @@
   },
   {
    "id": "bass-asrun-row90-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -5233,7 +5233,7 @@
   },
   {
    "id": "bass-asrun-row90-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -5253,7 +5253,7 @@
   },
   {
    "id": "bass-asrun-row90-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -5273,7 +5273,7 @@
   },
   {
    "id": "bass-asrun-row91-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -5293,7 +5293,7 @@
   },
   {
    "id": "bass-asrun-row91-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -5313,7 +5313,7 @@
   },
   {
    "id": "bass-asrun-row91-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -5333,7 +5333,7 @@
   },
   {
    "id": "bass-asrun-row92-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -5355,7 +5355,7 @@
   },
   {
    "id": "bass-asrun-row92-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -5375,7 +5375,7 @@
   },
   {
    "id": "bass-asrun-row92-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -5395,7 +5395,7 @@
   },
   {
    "id": "bass-asrun-row93-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -5417,7 +5417,7 @@
   },
   {
    "id": "bass-asrun-row93-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -5437,7 +5437,7 @@
   },
   {
    "id": "bass-asrun-row93-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -5457,7 +5457,7 @@
   },
   {
    "id": "bass-asrun-row94-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -5479,7 +5479,7 @@
   },
   {
    "id": "bass-asrun-row94-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -5499,7 +5499,7 @@
   },
   {
    "id": "bass-asrun-row94-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -5519,7 +5519,7 @@
   },
   {
    "id": "bass-asrun-row95-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -5541,7 +5541,7 @@
   },
   {
    "id": "bass-asrun-row95-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -5561,7 +5561,7 @@
   },
   {
    "id": "bass-asrun-row96-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -5583,7 +5583,7 @@
   },
   {
    "id": "bass-asrun-row96-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -5603,7 +5603,7 @@
   },
   {
    "id": "bass-asrun-row97-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -5625,7 +5625,7 @@
   },
   {
    "id": "bass-asrun-row97-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -5645,7 +5645,7 @@
   },
   {
    "id": "bass-asrun-row98-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -5665,7 +5665,7 @@
   },
   {
    "id": "bass-asrun-row98-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -5685,7 +5685,7 @@
   },
   {
    "id": "bass-asrun-row99-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -5707,7 +5707,7 @@
   },
   {
    "id": "bass-asrun-row99-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -5727,7 +5727,7 @@
   },
   {
    "id": "bass-asrun-row100-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -5749,7 +5749,7 @@
   },
   {
    "id": "bass-asrun-row100-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -5769,7 +5769,7 @@
   },
   {
    "id": "bass-asrun-row100-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -5789,7 +5789,7 @@
   },
   {
    "id": "bass-asrun-row101-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -5811,7 +5811,7 @@
   },
   {
    "id": "bass-asrun-row101-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -5831,7 +5831,7 @@
   },
   {
    "id": "bass-asrun-row101-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -5851,7 +5851,7 @@
   },
   {
    "id": "bass-asrun-row102-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -5871,7 +5871,7 @@
   },
   {
    "id": "bass-asrun-row102-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -5891,7 +5891,7 @@
   },
   {
    "id": "bass-asrun-row102-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -5911,7 +5911,7 @@
   },
   {
    "id": "bass-asrun-row103-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -5931,7 +5931,7 @@
   },
   {
    "id": "bass-asrun-row103-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -5951,7 +5951,7 @@
   },
   {
    "id": "bass-asrun-row103-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -5971,7 +5971,7 @@
   },
   {
    "id": "bass-asrun-row104-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -5993,7 +5993,7 @@
   },
   {
    "id": "bass-asrun-row104-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -6013,7 +6013,7 @@
   },
   {
    "id": "bass-asrun-row104-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -6033,7 +6033,7 @@
   },
   {
    "id": "bass-asrun-row105-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -6055,7 +6055,7 @@
   },
   {
    "id": "bass-asrun-row105-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -6075,7 +6075,7 @@
   },
   {
    "id": "bass-asrun-row105-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -6095,7 +6095,7 @@
   },
   {
    "id": "bass-asrun-row106-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -6117,7 +6117,7 @@
   },
   {
    "id": "bass-asrun-row106-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -6137,7 +6137,7 @@
   },
   {
    "id": "bass-asrun-row106-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -6157,7 +6157,7 @@
   },
   {
    "id": "bass-asrun-row107-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -6179,7 +6179,7 @@
   },
   {
    "id": "bass-asrun-row107-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -6199,7 +6199,7 @@
   },
   {
    "id": "bass-asrun-row107-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -6219,7 +6219,7 @@
   },
   {
    "id": "bass-asrun-row108-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -6241,7 +6241,7 @@
   },
   {
    "id": "bass-asrun-row108-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -6261,7 +6261,7 @@
   },
   {
    "id": "bass-asrun-row108-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -6281,7 +6281,7 @@
   },
   {
    "id": "bass-asrun-row109-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -6303,7 +6303,7 @@
   },
   {
    "id": "bass-asrun-row109-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -6323,7 +6323,7 @@
   },
   {
    "id": "bass-asrun-row109-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -6343,7 +6343,7 @@
   },
   {
    "id": "bass-asrun-row110-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -6365,7 +6365,7 @@
   },
   {
    "id": "bass-asrun-row110-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -6385,7 +6385,7 @@
   },
   {
    "id": "bass-asrun-row110-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -6405,7 +6405,7 @@
   },
   {
    "id": "bass-asrun-row111-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -6427,7 +6427,7 @@
   },
   {
    "id": "bass-asrun-row111-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -6447,7 +6447,7 @@
   },
   {
    "id": "bass-asrun-row111-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -6467,7 +6467,7 @@
   },
   {
    "id": "bass-asrun-row112-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -6489,7 +6489,7 @@
   },
   {
    "id": "bass-asrun-row112-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -6509,7 +6509,7 @@
   },
   {
    "id": "bass-asrun-row112-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -6529,7 +6529,7 @@
   },
   {
    "id": "bass-asrun-row113-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -6551,7 +6551,7 @@
   },
   {
    "id": "bass-asrun-row113-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -6571,7 +6571,7 @@
   },
   {
    "id": "bass-asrun-row113-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -6591,7 +6591,7 @@
   },
   {
    "id": "bass-asrun-row114-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -6613,7 +6613,7 @@
   },
   {
    "id": "bass-asrun-row114-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -6633,7 +6633,7 @@
   },
   {
    "id": "bass-asrun-row114-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -6653,7 +6653,7 @@
   },
   {
    "id": "bass-asrun-row115-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -6675,7 +6675,7 @@
   },
   {
    "id": "bass-asrun-row115-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -6695,7 +6695,7 @@
   },
   {
    "id": "bass-asrun-row115-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -6715,7 +6715,7 @@
   },
   {
    "id": "bass-asrun-row116-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -6737,7 +6737,7 @@
   },
   {
    "id": "bass-asrun-row116-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -6757,7 +6757,7 @@
   },
   {
    "id": "bass-asrun-row116-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -6777,7 +6777,7 @@
   },
   {
    "id": "bass-asrun-row117-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -6799,7 +6799,7 @@
   },
   {
    "id": "bass-asrun-row117-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -6819,7 +6819,7 @@
   },
   {
    "id": "bass-asrun-row117-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -6839,7 +6839,7 @@
   },
   {
    "id": "bass-asrun-row118-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -6861,7 +6861,7 @@
   },
   {
    "id": "bass-asrun-row118-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -6881,7 +6881,7 @@
   },
   {
    "id": "bass-asrun-row118-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -6901,7 +6901,7 @@
   },
   {
    "id": "bass-asrun-row119-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -6921,7 +6921,7 @@
   },
   {
    "id": "bass-asrun-row119-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -6941,7 +6941,7 @@
   },
   {
    "id": "bass-asrun-row119-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -6961,7 +6961,7 @@
   },
   {
    "id": "bass-asrun-row120-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -6981,7 +6981,7 @@
   },
   {
    "id": "bass-asrun-row120-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -7001,7 +7001,7 @@
   },
   {
    "id": "bass-asrun-row120-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -7021,7 +7021,7 @@
   },
   {
    "id": "bass-asrun-row121-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -7041,7 +7041,7 @@
   },
   {
    "id": "bass-asrun-row121-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -7061,7 +7061,7 @@
   },
   {
    "id": "bass-asrun-row121-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -7081,7 +7081,7 @@
   },
   {
    "id": "bass-asrun-row122-oxygen",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -7101,7 +7101,7 @@
   },
   {
    "id": "bass-asrun-row122-pressure",
-   "status": "candidate, not verified",
+   "status": "applied 2026-11-15, see bass_conditions.json",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",
@@ -7121,7 +7121,7 @@
   },
   {
    "id": "bass-asrun-row122-co2",
-   "status": "candidate, not verified",
+   "status": "checked, not applied: co2_fraction means CO2 added as a suppressant, not cabin CO2 (see bass_conditions.json)",
    "investigation": "PSI-26",
    "applies_to": {
     "source_table": "tables/PSI-26/PSI-26_Experimental table_BASS.csv",

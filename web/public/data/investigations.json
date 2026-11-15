@@ -1398,6 +1398,28 @@
   ],
   "varied": [
    {
+    "field": "o2_fraction",
+    "label": "Oxygen (cabin air)",
+    "unit": "%",
+    "min": 15.9,
+    "max": 22.72,
+    "values": null,
+    "distinct": 41,
+    "recorded": 121,
+    "total": 121
+   },
+   {
+    "field": "pressure_atm",
+    "label": "Pressure",
+    "unit": "psi",
+    "min": 14.255,
+    "max": 14.824,
+    "values": null,
+    "distinct": 25,
+    "recorded": 121,
+    "total": 121
+   },
+   {
     "field": "fuel",
     "label": "Fuel",
     "unit": null,

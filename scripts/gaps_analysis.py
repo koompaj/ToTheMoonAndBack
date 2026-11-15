@@ -94,10 +94,12 @@ def prevention(tests, habitats, acr):
     extra = ""
     if s_hi is not None:
         s_top = [t for t in sensed if t["o2_sensor_max"] == s_hi]
-        extra = f"; {names(acr[t['investigation']] for t in s_top)}'s sensor log reads up to {pct(s_hi)} %"
+        also = " also" if pct(s_hi) == pct(hi) else ""
+        extra = f"; {names(acr[t['investigation']] for t in s_top)}'s sensor log{also} reads up to {pct(s_hi)} %"
         top += s_top
+    where = ", from its test matrix" if any("conditions_from_test_matrix" in t["flags"] for t in top if t["o2_fraction"] == hi) else ""
     missing.append(stmt(f"No solid-material test in the tables reaches 30 % oxygen (highest: "
-                        f"{names(acr[t['investigation']] for t in top if t['o2_fraction'] == hi)} {pct(hi)} %{extra}).",
+                        f"{names(acr[t['investigation']] for t in top if t['o2_fraction'] == hi)} {pct(hi)} %{where}{extra}).",
                         top, {t["investigation"] for t in top}))
     with_p = [t for t in tests if t["pressure_atm"] is not None]
     p_rng = [t for t in tests if t["pressure_atm"] is None and t.get("pressure_atm_min") is not None]
