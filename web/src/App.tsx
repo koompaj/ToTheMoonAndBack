@@ -6,7 +6,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import type { AppData } from './types/data'
 import type { CabinStageProps, FireModelProps } from './types/sim'
-import { distinctTestCount, loadData } from './data/load'
+import { loadData } from './data/load'
 import { loadUploads, onUploadsChanged } from './panels/uploads'
 import { loadAiContent, type AiContent } from './ai/content'
 import { isDuplicate } from './ai/evidence'
@@ -101,7 +101,6 @@ export default function App() {
     )
   if (!data) return <p className="status">Loading NASA PSI data…</p>
 
-  const investigationsWithTests = new Set(data.tests.map((t) => t.investigation)).size
   const navOn = view === 'place' || view === 'fire' ? 'map' : view
 
   return (
@@ -122,9 +121,6 @@ export default function App() {
             </a>
           ))}
         </nav>
-        <span className="topbar-meta mono">
-          {distinctTestCount(data).toLocaleString('en')} tests · {investigationsWithTests}/{data.investigations.length} investigations
-        </span>
       </header>
 
       <main id="main" tabIndex={-1}>

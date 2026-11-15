@@ -90,7 +90,6 @@ code { font-family: var(--mono); font-size: 0.9em; }
 }
 .topbar nav a:hover { color: var(--ink); background: var(--surface-2); text-decoration: none; }
 .topbar nav a.on { color: var(--accent-ink); background: var(--accent); }
-.topbar-meta { margin-left: auto; color: var(--ink-tertiary); white-space: nowrap; }
 main { flex: 1; outline: none; }
 .footer {
   display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px;
@@ -468,7 +467,6 @@ main { flex: 1; outline: none; }
 .flag-table .muted { grid-column: 1 / -1; }
 
 /* ---------- responsive ---------- */
-@media (max-width: 1500px) { .topbar-meta { display: none; } }
 @media (max-width: 1280px) {
   .topbar { overflow-x: auto; scrollbar-width: none; }
   .topbar::-webkit-scrollbar { display: none; }
