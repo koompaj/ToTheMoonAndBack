@@ -23,6 +23,7 @@ export function TimelineBar({
   onScrub,
   field = false,
   assumed = false,
+  loaded = false,
 }: {
   t: number
   steps: number
@@ -35,6 +36,8 @@ export function TimelineBar({
   field?: boolean
   /** True when any spread setting is above "no effect". */
   assumed?: boolean
+  /** True when the layout on show is one the user loaded, not the sample spacecraft. */
+  loaded?: boolean
 }) {
   const step = stepReached(t, steps)
   const atEnd = t >= steps
@@ -80,10 +83,17 @@ export function TimelineBar({
           {SPREAD_LABEL}
           {assumed && ` ${ASSUMED_LABEL}`}
         </b>{' '}
-        {assumed
-          ? 'Items light nearest first, by distance along the deck of this example layout (through its doorway and hatch, not through walls), changed by the spread settings you set.'
-          : 'Items light one per step, nearest first, by distance along the deck of this example layout only: through its doorway and hatch, not through walls.'}{' '}
-        A step is not a length of time.
+        {loaded
+          ? assumed
+            ? 'Items light nearest first, by distance through the layout you loaded (across its floors, through its open doors and along its vent duct, not through walls), changed by the spread settings you set.'
+            : 'Items light one per step, nearest first, by distance through the layout you loaded only: across its floors, through its open doors and along its vent duct, not through walls.'
+          : assumed
+            ? 'Items light nearest first, by distance through this example layout (along its deck and through its open hatch, not through walls), changed by the spread settings you set.'
+            : 'Items light one per step, nearest first, by distance through this example layout only: along its deck and through its open hatch, not through walls.'}{' '}
+        {loaded
+          ? 'A door marked closed stops the drawing, so a closed room is reached only along the vent duct.'
+          : 'The flight deck door is drawn closed, so the drawing gets in and out of the flight deck only along the vent duct.'}{' '}
+        That is our choice for the drawing, not a finding. A step is not a length of time.
       </p>
     </div>
   )

@@ -51,10 +51,14 @@ export interface Bulkhead {
   x: number
   /** Radius of its opening, centred on the hull's centre line. */
   opening: number
+  /** True when the door in its opening is shut. Nothing passes it along the deck. */
+  closed?: boolean
 }
 
+/** The flight deck's door is shut in this example, so the flight deck is a closed room: the only
+ *  way between it and the rest of the craft is the vent duct (DUCT below). */
 export const BULKHEADS: Bulkhead[] = [
-  { name: 'Flight deck doorway', x: HULL.coneEndX, opening: 1.25 },
+  { name: 'Flight deck door', x: HULL.coneEndX, opening: 1.25, closed: true },
   { name: 'Node hatch', x: HULL.cabinEndX, opening: 1.05 },
 ]
 
@@ -68,24 +72,32 @@ export const CEILING = { y: 2.55, x0: HULL.coneEndX, x1: HULL.cabinEndX }
 /** Half the ceiling's width: where it meets the hull. */
 export const ceilingHalfWidth = () => Math.sqrt(HULL.cabinR * HULL.cabinR - (CEILING.y - AXIS_Y) * (CEILING.y - AXIS_Y))
 
-/** The vent duct: a straight channel lying on top of the ceiling, along the craft. The only ways
- *  into it are the grilles in the ceiling. Example layout. */
-export const DUCT = { x0: -3.1, x1: 2.6, halfWidth: 0.32, height: 0.45 }
+/** The vent duct: a straight channel lying on top of the ceiling, along the craft. It carries on
+ *  through the flight deck's bulkhead, above the door, and ends just inside the flight deck. The
+ *  only ways into it are its grilles. Example layout. */
+export const DUCT = { x0: -3.88, x1: 2.6, halfWidth: 0.32, height: 0.45 }
 
 /** Size of one ceiling grille, along and across the craft. */
 export const GRILLE = { along: 0.62, across: 0.42 }
+
+/** The grille under the end of the duct inside the flight deck: shorter, to fit the stub. */
+export const OUTLET = { x: -3.64, along: 0.36 }
 
 /** Ventilation in the example layout: grilles in the ceiling that open into the duct, and the fan
  *  in the duct that draws the air along the craft toward the node. Positions and direction are
  *  part of the example, not of any real cabin. */
 export const VENTS = {
-  /** Where the grilles sit along the craft. */
+  /** Where the crew cabin's ceiling grilles sit along the craft. */
   grilles: [-2, 1.2],
   /** Where the fan sits along the craft. */
   fan: 2.35,
   /** Which way the air moves. */
   direction: [1, 0, 0] as [number, number, number],
 }
+
+/** Every opening into the duct, as positions along the craft: the flight deck's outlet, then the
+ *  cabin's ceiling grilles. All sit on the centre line at the height of the ceiling. */
+export const DUCT_OPENINGS: number[] = [OUTLET.x, ...VENTS.grilles]
 
 export type ZoneId = 'flight' | 'work' | 'quarters' | 'node'
 
@@ -219,6 +231,13 @@ export function checkSpec(knownFuelIds?: Iterable<string>): string[] {
     if (item.fuel && item.fuel.fuel_option_id !== 'other' && !item.fuel.fuel_option_id.startsWith(`${item.fuel.fuel_class}:`)) {
       problems.push(`${item.id}: ${item.fuel.fuel_option_id} is not a ${item.fuel.fuel_class} fuel`)
     }
+  }
+  // the duct must lie inside the hull for its whole length, and every opening must be under it
+  const ductCorner = Math.hypot(DUCT.halfWidth, CEILING.y + DUCT.height - AXIS_Y)
+  for (const x of [DUCT.x0, DUCT.x1]) if (hullRadius(x) < ductCorner) problems.push(`the vent duct pokes through the hull at x=${x.toFixed(2)}`)
+  for (const [x, along] of [[OUTLET.x, OUTLET.along], ...VENTS.grilles.map((g) => [g, GRILLE.along])]) {
+    if (x - along / 2 < DUCT.x0 || x + along / 2 > DUCT.x1) problems.push(`the grille at x=${x.toFixed(2)} is not under the duct`)
+    if (BULKHEADS.some((b) => Math.abs(x - b.x) < along / 2)) problems.push(`the grille at x=${x.toFixed(2)} sits across a bulkhead`)
   }
   // two solid areas must not overlap, or a click could mean either
   const areas = ITEMS.filter((i) => i.fuel?.fuel_class === 'solid')

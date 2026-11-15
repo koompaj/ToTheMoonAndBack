@@ -10,6 +10,7 @@ import type { FuelClass } from '../../types/data'
 import { TIER_COLOR, TIER_LABEL, type EvidenceTier } from '../../types/layout'
 import { FUEL_COLOR } from '../scale'
 import { HOLO_BLUE, ITEMS } from './spec'
+import type { SpreadItem } from './timeline'
 
 export interface ItemGroup {
   id: string
@@ -26,13 +27,14 @@ const FUEL_GROUP_NAME: Record<FuelClass, string> = { solid: 'Solid materials', d
 const FUEL_ORDER: FuelClass[] = ['solid', 'droplet', 'gas']
 const TIER_ORDER: EvidenceTier[] = ['tested_here', 'tested_elsewhere', 'not_in_tables']
 
-/** Pass the evidence tier of each fuel item (mark id -> tier) when a place is chosen; omit it otherwise. */
-export function groupItems(tiers?: Record<string, EvidenceTier> | null): ItemGroup[] {
-  const fuelItems = ITEMS.filter((i) => i.fuel)
+/** Pass the evidence tier of each fuel item (mark id -> tier) when a place is chosen; omit it
+ *  otherwise. `items` is the sample spacecraft's unless a loaded layout's are given. */
+export function groupItems(tiers?: Record<string, EvidenceTier> | null, items: readonly SpreadItem[] = ITEMS): ItemGroup[] {
+  const fuelItems = items.filter((i) => i.fuel)
   const groups: ItemGroup[] = tiers
     ? TIER_ORDER.map((t) => ({ id: t, name: TIER_LABEL[t], color: TIER_COLOR[t], itemIds: fuelItems.filter((i) => tiers[i.id] === t).map((i) => i.id), fittings: false }))
     : FUEL_ORDER.map((f) => ({ id: f, name: FUEL_GROUP_NAME[f], color: FUEL_COLOR[f], itemIds: fuelItems.filter((i) => i.fuel!.fuel_class === f).map((i) => i.id), fittings: false }))
-  groups.push({ id: PLAIN_GROUP, name: 'Furniture and fittings (not a fuel item)', color: HOLO_BLUE, itemIds: ITEMS.filter((i) => !i.fuel).map((i) => i.id), fittings: true })
+  groups.push({ id: PLAIN_GROUP, name: 'Furniture and fittings (not a fuel item)', color: HOLO_BLUE, itemIds: items.filter((i) => !i.fuel).map((i) => i.id), fittings: true })
   return groups.filter((g) => g.itemIds.length > 0 || g.fittings)
 }
 

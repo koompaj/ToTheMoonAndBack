@@ -64,3 +64,12 @@
 .cabin-b-effect small.cabin-b-now { color: #ffe2b8; }
 /* leave room for the timeline bar under the panel */
 .cabin-b-panel { max-height: calc(100% - 215px); overflow-y: auto; }
+
+/* A 3D layout file that was refused: what is wrong with it, in the middle of the stage */
+.cabin-b-refused {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(520px, calc(100% - 40px));
+  display: grid; gap: 8px; padding: 14px 16px; border-radius: 14px; font-size: 13.5px; line-height: 1.45; color: #cfe9ff;
+  background: rgba(4, 12, 24, 0.88); border: 1px solid rgba(255, 140, 120, 0.5);
+}
+.cabin-b-refused small { color: #a9c6da; }
+.cabin-b-problems { margin: 0; padding-left: 16px; font-size: 12px; line-height: 1.4; color: #ffb4a8; }
