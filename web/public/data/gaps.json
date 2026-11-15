@@ -639,7 +639,7 @@
      ]
     },
     {
-     "text": "6 solid-material tests sit in Earth sea level air (19-23 % oxygen, 14.5-14.9 psi).",
+     "text": "6 solid-material tests sit in Earth sea level air (19-23 % oxygen, 14.5-14.9 psi). They ran in microgravity, so only the air matches.",
      "test_ids": [
       "PSI-25:bass-ii:124",
       "PSI-25:bass-ii:125",
@@ -744,7 +744,7 @@
      ]
     },
     {
-     "text": "No solid-material test with a pressure in the tables or NASA's reports ran below 14.39 psi (lowest: the low end of BASS-II's report range).",
+     "text": "No solid-material test with a pressure from the tables or NASA's reports (as checked so far) ran below 14.39 psi (lowest: the low end of BASS-II's report range).",
      "test_ids": [
       "PSI-25:bass-ii:1",
       "PSI-25:bass-ii:2",
@@ -1650,7 +1650,7 @@
      ]
     },
     {
-     "text": "55 droplet tests sit in Earth sea level air (19-23 % oxygen, 14.5-14.9 psi).",
+     "text": "55 droplet tests sit in Earth sea level air (19-23 % oxygen, 14.5-14.9 psi). They ran in microgravity, so only the air matches.",
      "test_ids": [
       "PSI-69:flex:1",
       "PSI-69:flex:2",

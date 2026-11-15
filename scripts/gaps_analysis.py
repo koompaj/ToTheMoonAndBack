@@ -56,7 +56,8 @@ def air_statements(tests, habitats, what, invs):
     for h in habitats:
         ins = [t for t in tests if in_box(t, h)]
         if ins:
-            tested.append(stmt(f"{len(ins)} {what} tests sit in {h['name']} air ({place_air(h)}).", ins,
+            g_note = "" if 0 in (h.get("gravity") or {}).get("g", []) else " They ran in microgravity, so only the air matches."
+            tested.append(stmt(f"{len(ins)} {what} tests sit in {h['name']} air ({place_air(h)}).{g_note}", ins,
                                {t["investigation"] for t in ins}))
         else:
             missing.append(stmt(f"No {what} test in the tables sits in {h['name']} air ({place_air(h)}).", [], invs))
@@ -107,7 +108,7 @@ def prevention(tests, habitats, acr):
     missing.append(stmt(f"Only {len(with_p)} of {len(tests)} solid-material tests have a single pressure (from NASA's "
                         f"reports, {p_txt}); {len(p_rng)} more have only a range, and the other "
                         f"{len(tests) - len(with_p) - len(p_rng)} none.", with_p + p_rng, {t["investigation"] for t in with_p + p_rng}))
-    missing.append(stmt(f"No solid-material test with a pressure in the tables or NASA's reports ran below {psi(floor)} psi "
+    missing.append(stmt(f"No solid-material test with a pressure from the tables or NASA's reports (as checked so far) ran below {psi(floor)} psi "
                         f"(lowest: the low end of {names(acr[t['investigation']] for t in low)}'s "
                         f"{'sensor-log' if any('pressure_range_from_sensor_log' in t['flags'] for t in low) else 'report'} range).", low,
                         {t["investigation"] for t in low}))
