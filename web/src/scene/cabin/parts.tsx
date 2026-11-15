@@ -6,7 +6,7 @@ import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import { Box, Cyl, Glow, HOLO, Holo, Ring, Segs, ballGeo, type Vec3 } from './holo'
 import { Label } from '../Label'
-import { AXIS_Y, CEILING, DUCT, GRILLE, HULL, VENTS, type CabinItem } from './spec'
+import { AXIS_Y, BULKHEADS, CEILING, DUCT, GRILLE, HULL, OUTLET, VENTS, type CabinItem } from './spec'
 
 export interface PartLook {
   color: string
@@ -288,8 +288,9 @@ function Fan({ still }: { still: boolean }) {
 
 const SLATS = [-0.24, -0.12, 0, 0.12, 0.24].flatMap((x) => [x, 0, -0.18, x, 0, 0.18])
 
-/** Vent duct above the ceiling with its fan, the ceiling grilles that open into it, lights, smoke
- *  detectors, extinguisher, handrails. */
+/** Vent duct above the ceiling with its fan, the grilles that open into it (two in the cabin's
+ *  ceiling, one under its end inside the closed flight deck), lights, smoke detectors,
+ *  extinguisher, handrails. */
 export function Systems({ still, showLabel = false }: { still: boolean; showLabel?: boolean }) {
   const ductMid = (DUCT.x0 + DUCT.x1) / 2
   return (
@@ -303,6 +304,14 @@ export function Systems({ still, showLabel = false }: { still: boolean; showLabe
           <Segs points={SLATS} opacity={0.7} position={[0, -0.02, 0]} />
         </group>
       ))}
+      {/* the same grille, shortened, under the end of the duct inside the flight deck */}
+      <group position={[OUTLET.x, CEILING.y, 0]} scale={[OUTLET.along / GRILLE.along, 1, 1]}>
+        <Box size={[GRILLE.along, 0.03, GRILLE.across]} color="#dff4ff" line={0.9} fill={0.2} />
+        <Segs points={SLATS} opacity={0.7} position={[0, -0.02, 0]} />
+      </group>
+      {showLabel && <Label text="Vent into flight deck" position={[OUTLET.x - 0.5, CEILING.y - 0.35, 0]} color="#9fdcff" height={0.24} />}
+      {showLabel &&
+        BULKHEADS.filter((b) => b.closed).map((b) => <Label key={b.x} text="Closed door" position={[b.x, AXIS_Y + 0.35, 1.75]} color="#dff4ff" height={0.3} />)}
       {[-1.05, 1.05].map((z) => (
         <Box key={z} size={[5.6, 0.04, 0.1]} position={[-0.4, CEILING.y - 0.05, z]} color="#dff4ff" line={0.7} fill={0.35} />
       ))}

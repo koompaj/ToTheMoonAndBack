@@ -6,15 +6,16 @@
 // has reached": red at the start, blue at the edge. It is not temperature, smoke, air speed or
 // anything measured, and it has no scale. The edge sits where timeline.ts says the spread has got
 // to (distance through the example layout only); the ragged, drifting texture is decoration. Like
-// the order it follows, it goes through the doorway and the hatch and never through a bulkhead.
-// In the crew cabin it stays under the ceiling, and gets into the vent duct above only through the
-// ceiling grilles, then runs along the duct.
+// the order it follows, it goes through the open hatch and never through a bulkhead or the closed
+// flight deck door. In the crew cabin it stays under the ceiling, and gets into the vent duct
+// above only through a grille, then runs along the duct. The duct is its only way into or out of
+// the closed flight deck: in through one grille, along, and out through another.
 // See CLAUDE.md, "Spread is an illustration, never a result".
 import { useEffect, useMemo, type MutableRefObject } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import type { SpreadClock } from './CabinFire'
-import { AXIS_Y, BULKHEADS, CEILING, DECK_X0, DECK_X1, DUCT, HULL, VENTS } from './spec'
+import { AXIS_Y, BULKHEADS, CEILING, DECK_X0, DECK_X1, DUCT, DUCT_OPENINGS, HULL } from './spec'
 import { MIN_FACTOR, reachAt, smallestFactor, type SpreadBias, type SpreadPlan } from './timeline'
 
 /** Box that holds the whole inside of the craft, deck to ceiling. */
@@ -27,7 +28,18 @@ const STEPS = 40 // enough to catch the thin vent duct
 
 const f = (v: number) => v.toFixed(4)
 
-const VERT = /* glsl */ `
+// The duct's openings, written into the shader. Each is a point on the centre line at the height
+// of the ceiling.
+const OPENING = DUCT_OPENINGS.map((x) => `vec3(${f(x)}, CEIL_Y, 0.0)`)
+const least = (terms: string[]) => terms.reduce((a, b) => `min(${a}, ${b})`)
+/** From the fire point to each opening, without the duct. */
+const TO_OPENINGS = OPENING.map((g, i) => `float s${i} = pathDistance(uStart, ${g});`).join('\n    ')
+/** From the fire point to each opening, arriving along the duct from whichever opening is best. */
+const VIA_DUCT = DUCT_OPENINGS.map((xj, j) => `float via${j} = ${least(DUCT_OPENINGS.map((xi, i) => `s${i} + ${f(Math.abs(xi - xj))}`))};`).join('\n    ')
+const INSIDE_DUCT = least(OPENING.map((g, i) => `s${i} + distance(${g}, p)`))
+const OUT_OF_DUCT = least(OPENING.map((g, j) => `via${j} + pathDistance(${g}, p)`))
+
+export const VERT = /* glsl */ `
   varying vec3 vWorld;
   void main() {
     vec4 world = modelMatrix * vec4(position, 1.0);
@@ -46,11 +58,12 @@ const FRAG = /* glsl */ `
   uniform float uSpan;  // how much farther than uReach a straight line can go and still be inside
   uniform vec3 uMin;
   uniform vec3 uMax;
-  uniform vec2 uWalls[${BULKHEADS.length}]; // each bulkhead: where it stands, and the radius of its opening
+  uniform vec3 uWalls[${BULKHEADS.length}]; // each bulkhead: where it stands, the radius of its opening, 1 if its door is shut
   varying vec3 vWorld;
 
-  // Distance from the fire point to p without passing through a bulkhead: where the straight line
-  // would hit a wall, it bends round the nearest edge of that wall's opening instead.
+  // Distance from s to p without passing through a bulkhead: where the straight line would hit a
+  // wall, it bends round the nearest edge of that wall's opening instead. A wall whose door is
+  // shut cannot be passed at all: the answer is then a number too large to ever be reached.
   float pathDistance(vec3 s, vec3 p) {
     vec3 from = s;
     float d = 0.0;
@@ -59,6 +72,7 @@ const FRAG = /* glsl */ `
       int i = forward ? k : ${BULKHEADS.length - 1} - k;
       float xw = uWalls[i].x;
       if ((from.x - xw) * (p.x - xw) >= 0.0) continue; // this bulkhead is not in between
+      if (uWalls[i].z > 0.5) return 1.0e9;
       vec3 c = from + (p - from) * ((xw - from.x) / (p.x - from.x));
       vec2 off = c.yz - vec2(${f(AXIS_Y)}, 0.0);
       float r = length(off);
@@ -79,10 +93,13 @@ const FRAG = /* glsl */ `
     float b = x - ${f(HULL.nodeX)};
     return abs(b) < ${f(HULL.nodeR)} ? sqrt(${f(HULL.nodeR * HULL.nodeR)} - b * b) : 0.0;
   }
+  const float CEIL_Y = ${f(CEILING.y)};
+
   // above the crew cabin's ceiling there is only the vent duct
-  bool aboveCeiling(vec3 p) { return p.x > ${f(CEILING.x0)} && p.x < ${f(CEILING.x1)} && p.y > ${f(CEILING.y)}; }
+  bool aboveCeiling(vec3 p) { return p.x > ${f(CEILING.x0)} && p.x < ${f(CEILING.x1)} && p.y > CEIL_Y; }
+  // the duct for its whole length, including the end of it inside the flight deck
   bool inDuct(vec3 p) {
-    return p.x > ${f(DUCT.x0)} && p.x < ${f(DUCT.x1)} && abs(p.z) < ${f(DUCT.halfWidth)} && p.y < ${f(CEILING.y + DUCT.height)};
+    return p.x > ${f(DUCT.x0)} && p.x < ${f(DUCT.x1)} && abs(p.z) < ${f(DUCT.halfWidth)} && p.y > CEIL_Y && p.y < ${f(CEILING.y + DUCT.height)};
   }
   bool inside(vec3 p) {
     if (p.y < 0.0) return false;
@@ -92,9 +109,6 @@ const FRAG = /* glsl */ `
     return aboveCeiling(p) ? inDuct(p) : true;
   }
 
-  const float CEIL_Y = ${f(CEILING.y)};
-  const float GRILLE_X_0 = ${f(VENTS.grilles[0])};
-  const float GRILLE_X_1 = ${f(VENTS.grilles[1])};
 
   // 0 = the edge of reach (blue) .. 1 = where the fire starts (red)
   vec3 ramp(float h) {
@@ -130,6 +144,10 @@ const FRAG = /* glsl */ `
     t1 = min(t1, -bq + sq);
     if (t1 <= t0) discard;
 
+    // the same for every sample on this line of sight: how far it is to each of the duct's openings
+    ${TO_OPENINGS}
+    ${VIA_DUCT}
+
     float dt = (t1 - t0) / float(${STEPS});
     float t = t0 + dt * hash(gl_FragCoord.xy); // a little jitter hides the layering
     vec3 drift = vec3(uTime * 0.012, -uTime * 0.009, uTime * 0.007);
@@ -140,13 +158,13 @@ const FRAG = /* glsl */ `
       t += dt;
       if (!inside(p)) continue;
       float d;
-      if (aboveCeiling(p)) {
-        // in the duct: the only ways in are the ceiling grilles, so go to a grille and then along
-        d = 1.0e9;
-        d = min(d, pathDistance(uStart, vec3(GRILLE_X_0, CEIL_Y, 0.0)) + distance(vec3(GRILLE_X_0, CEIL_Y, 0.0), p));
-        d = min(d, pathDistance(uStart, vec3(GRILLE_X_1, CEIL_Y, 0.0)) + distance(vec3(GRILLE_X_1, CEIL_Y, 0.0), p));
+      if (inDuct(p)) {
+        // in the duct: the only ways in are its openings, so go to one and then along
+        d = ${INSIDE_DUCT};
       } else {
         d = pathDistance(uStart, p);
+        // behind a closed door: in through one opening, along the duct, out through another
+        if (d > 1.0e8) d = ${OUT_OF_DUCT};
       }
       // the same lean as the order (timeline.ts, biasFactor): 1 when no setting is in use
       vec3 away = p - uStart;
@@ -171,7 +189,7 @@ const FRAG = /* glsl */ `
 `
 
 /** A small block of random values, read smoothly: far cheaper per sample than computing noise. */
-function makeNoise() {
+export function makeNoise() {
   const size = 32
   const data = new Uint8Array(size * size * size)
   for (let i = 0; i < data.length; i++) data[i] = Math.floor(Math.random() * 256)
@@ -211,7 +229,7 @@ export function ReachField({ start, plan, bias, clock, still }: { start: [number
           uSpan: { value: 1 },
           uMin: { value: BOX_MIN },
           uMax: { value: BOX_MAX },
-          uWalls: { value: BULKHEADS.map((b) => new THREE.Vector2(b.x, b.opening)) },
+          uWalls: { value: BULKHEADS.map((b) => new THREE.Vector3(b.x, b.opening, b.closed ? 1 : 0)) },
         },
       }),
     [noise],

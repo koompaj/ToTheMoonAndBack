@@ -4,19 +4,28 @@
 // SPREAD IS AN ILLUSTRATION, NEVER A RESULT (CLAUDE.md, "Rules of evidence"). NASA's tables hold
 // no spread rates, no room geometry and no partial-gravity data, so:
 //   - the order below comes ONLY from distance through this example layout: along its deck and
-//     through its doorway and hatch, never through a bulkhead (path.ts);
+//     through its open hatch, never through a bulkhead or the closed flight deck door; the closed
+//     room is reached along the vent duct (path.ts);
 //   - the timeline counts steps: one more item per step. A step is not a length of time;
 //   - nothing computed here may be shown as a number, ranking or outcome, or change any evidence.
 // Only fuel items light. Plain furniture never does: nothing in the tables says what it is.
 //
 // No three.js here, so the order can be checked by a script.
-import { deckDistanceToItem } from './path'
-import { ITEMS, VENTS, type CabinItem } from './spec'
+import { routeToItem } from './path'
+import { CEILING, DUCT, ITEMS, VENTS, type CabinItem } from './spec'
+
+/** What the spread needs to know about an object: where it is, how big, and what it is offered
+ *  as. The sample spacecraft's items fit, and so do the items of a layout the user loads. */
+export type SpreadItem = Pick<CabinItem, 'id' | 'label' | 'x' | 'z' | 'w' | 'd' | 'h' | 'y' | 'fuel'>
 
 export interface SpreadEntry {
-  item: CabinItem
+  item: SpreadItem
   /** 0 = the fire starts on this item; otherwise the step at which it has lit. */
   step: number
+  /** Set when the way to this item is not a straight line (it runs along a vent duct or through
+   *  a door): the points it passes, in order, between the fire and the item. For the line drawn
+   *  from the fire to the item only. */
+  way?: [number, number, number][]
 }
 
 export interface SpreadPlan {
@@ -92,40 +101,49 @@ export function biasFrom(effects: EffectSettings, c: CabinConditions): SpreadBia
 }
 
 /** What a distance is multiplied by for something lying in direction (dx, dy, dz) from the fire.
- *  1 when no effect is in use. Air moves along VENTS.direction; "up" is away from the deck. */
-export function biasFactor(bias: SpreadBias, dx: number, dy: number, dz: number) {
+ *  1 when no effect is in use. Air moves along `air` (the sample spacecraft's vents unless a
+ *  loaded layout says otherwise); "up" is away from the deck. */
+export function biasFactor(bias: SpreadBias, dx: number, dy: number, dz: number, air: readonly [number, number, number] = VENTS.direction) {
   const len = Math.hypot(dx, dy, dz)
   if (len < 1e-6) return 1
-  const along = (dx * VENTS.direction[0] + dy * VENTS.direction[1] + dz * VENTS.direction[2]) / len
+  const along = (dx * air[0] + dy * air[1] + dz * air[2]) / len
   return Math.max(MIN_FACTOR, 1 - bias.downstream * along - bias.up * (dy / len))
 }
 
 /** The smallest factor any direction can get: used to size the region the cloud is drawn in. */
 export const smallestFactor = (bias: SpreadBias) => Math.max(MIN_FACTOR, 1 - Math.hypot(bias.downstream, bias.up))
 
-/** Distance along the deck from a point to an item's footprint; 0 when the point is on it. */
-export const distanceToItem = (item: CabinItem, x: number, z: number) => deckDistanceToItem(item, x, z)
-
 /** Fuel items in the order the illustration lights them, starting from a point (x, z) on the
  *  deck at height y. Every fuel item is in the order whether or not it is shown: hiding furniture
  *  is a choice about the view, not about where the fire goes. With no bias the order is distance
- *  along the deck alone. */
+ *  through the layout alone (path.ts). */
 export function planSpread(x: number, z: number, y = 0, bias: SpreadBias = NO_BIAS): SpreadPlan {
-  const ranked = ITEMS.filter((i) => i.fuel)
-    .map((item) => {
-      const distance = distanceToItem(item, x, z)
+  const inDuct = CEILING.y + DUCT.height / 2
+  return planFrom(
+    ITEMS.filter((i) => i.fuel).map((item) => {
+      const route = routeToItem(item, x, y, z)
       const middle = (item.y ?? 0) + item.h / 2
-      return { item, distance: distance * biasFactor(bias, item.x - x, middle - y, item.z - z) }
-    })
+      const way = route.via?.map((along): [number, number, number] => [along, inDuct, 0])
+      return { item, way, distance: route.distance * biasFactor(bias, item.x - x, middle - y, item.z - z) }
+    }),
+    bias.pace,
+  )
+}
+
+/** Turns "how far each item is" into the order and the timeline. Shared by the sample spacecraft
+ *  and a loaded layout, so both count steps the same way. */
+export function planFrom(reached: { item: SpreadItem; distance: number; way?: [number, number, number][] }[], pace: number): SpreadPlan {
+  const ranked = reached
+    .filter((r) => r.distance < Infinity) // an item with no way to it is left out, never guessed at
     .sort((a, b) => a.distance - b.distance) // stable: equal distances keep the layout's order
   let count = 0
   const radii = [START_REACH]
-  const entries = ranked.map(({ item, distance }) => {
+  const entries = ranked.map(({ item, way, distance }): SpreadEntry => {
     if (distance === 0) return { item, step: 0 }
     radii.push(Math.max(radii[radii.length - 1], distance + PAST_ITEM)) // the edge arrives as the item lights
-    return { item, step: ++count }
+    return { item, step: ++count, way }
   })
-  return { entries, count, pace: bias.pace, steps: count / bias.pace, radii }
+  return { entries, count, pace, steps: count / pace, radii }
 }
 
 /** How many items the timeline has got through at position t (fractions: one is part lit). */

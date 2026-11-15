@@ -250,6 +250,46 @@
     "source_file": "PSI-10_Reports_FinalRpt_ACMEFlameDesign.pdf",
     "source_where": "p. 3",
     "quote": "to acquire data to calibrate optical measurements of the flame temperature through Thin Filament Pyrometry (TFP)"
+   },
+   {
+    "kind": "flow",
+    "name": "Three mass flow controllers",
+    "detail": "deliver fuel, oxidizer or inert (e.g. helium or CO2), and nitrogen to the burner",
+    "source_file": "PSI-10_Reports_FinalRpt_ACMEFlameDesign.pdf",
+    "source_where": "p. 11",
+    "quote": "The chamber insert includes three mass flow controllers"
+   },
+   {
+    "kind": "pressure",
+    "name": "Chamber pressure",
+    "detail": "a supporting measurement (the report describes the hardware in the future tense)",
+    "source_file": "PSI-10_Reports_FinalRpt_ACMEFlameDesign.pdf",
+    "source_where": "p. 17",
+    "quote": "Additional supporting measurements will be made, where the chamber pressure is a simple example."
+   },
+   {
+    "kind": "pressure",
+    "name": "Burner internal pressure",
+    "detail": "to monitor the pressure difference across the porous burner's surface (the report describes the hardware in the future tense)",
+    "source_file": "PSI-10_Reports_FinalRpt_ACMEFlameDesign.pdf",
+    "source_where": "p. 10",
+    "quote": "The internal pressure of the porous burners will be measured"
+   },
+   {
+    "kind": "thermocouple",
+    "name": "Burner surface thermocouple",
+    "detail": "on most burners (the report describes the hardware in the future tense)",
+    "source_file": "PSI-10_Reports_FinalRpt_ACMEFlameDesign.pdf",
+    "source_where": "p. 10",
+    "quote": "Most burners will be equipped with a surface thermocouple"
+   },
+   {
+    "kind": "other",
+    "name": "Ion current (burner to electrode mesh)",
+    "detail": "from the voltage drop across a known resistor; part of the E-field hardware (the report describes the hardware in the future tense)",
+    "source_file": "PSI-10_Reports_FinalRpt_ACMEFlameDesign.pdf",
+    "source_where": "p. 17",
+    "quote": "The ion current between the burner and electrode mesh will be determined via measurement of the voltage drop across a known resistor"
    }
   ],
   "varied": [
@@ -1013,6 +1053,88 @@
   "fuel_class": "gas",
   "pillar": null,
   "page": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-23",
+  "sensors": [
+   {
+    "kind": "camera",
+    "name": "Five video cameras",
+    "detail": "ACME's imaging suite, three of them CIR facility cameras",
+    "source_file": "PSI-23_Reports_s_Flame_final_report_20210729.pdf",
+    "source_where": "p. 11",
+    "quote": "ACME's primary flame diagnostics are a suite of imaging systems including five video cameras and two illumination systems"
+   },
+   {
+    "kind": "other",
+    "name": "CIR gas chromatograph",
+    "detail": "pre- and post-test analysis of the chamber atmosphere (oxygen, nitrogen, CO2, CO, fuel gases) (the report describes the it in the future tense)",
+    "source_file": "PSI-23_Reports_s_Flame_final_report_20210729.pdf",
+    "source_where": "p. 16",
+    "quote": "The ACME experiments will use the CIR's gas chromatograph for pre- and post-test analysis of the chamber atmosphere"
+   },
+   {
+    "kind": "flow",
+    "name": "Mass flow controllers MFCA1-MFCA3",
+    "detail": "MFCA1 static mixer/oxygen, MFCA2 nitrogen bypass/inert, MFCA3 fuel; flow rate in SLPM (columns MFCA1StaticMixerFlow, MFCA2BypassFlow, MFCA3FuelFlow)",
+    "source_file": "PSI-23_Science Documents_ACME non-imaging data file description.pdf",
+    "source_where": "p. 4",
+    "quote": "Static mixer/oxygen mass flow controller flow rate."
+   },
+   {
+    "kind": "pressure",
+    "name": "Pressure transducers PTA1-PTA3",
+    "detail": "PTA1 outer coflow, PTA2 inner coflow/burner, PTA3 chamber; 0 to 145 psia",
+    "source_file": "PSI-23_Science Documents_ACME non-imaging data file description.pdf",
+    "source_where": "p. 5",
+    "quote": "Chamber pressure. Converted in flight software to to 0 to 145"
+   },
+   {
+    "kind": "other",
+    "name": "Ion current",
+    "detail": "between the E-field grid and the burner (column IonCurrent)",
+    "source_file": "PSI-23_Science Documents_ACME non-imaging data file description.pdf",
+    "source_where": "p. 4",
+    "quote": "Measurement of ion current between E-Field grid and burner."
+   },
+   {
+    "kind": "spectral",
+    "name": "Photomultiplier tubes PMT1-PMT3",
+    "detail": "PMT1 through a 310 nm bandpass filter, PMT2 broadband UV with a neutral-density filter, PMT3 through a 430 nm bandpass filter",
+    "source_file": "PSI-23_Science Documents_ACME non-imaging data file description.pdf",
+    "source_where": "p. 5",
+    "quote": "Looks through a 310 nm bandpass interference filter"
+   },
+   {
+    "kind": "thermocouple",
+    "name": "Rake thermocouples TC_A-TC_D",
+    "detail": "near or far array rake, types K and B (columns TCA-TCD)",
+    "source_file": "PSI-23_Science Documents_ACME non-imaging data file description.pdf",
+    "source_where": "p. 6",
+    "quote": "Near or far array Rake A Type K thermocouple"
+   },
+   {
+    "kind": "thermocouple",
+    "name": "200 mm thermocouples TC_200A and TC_200B",
+    "detail": "type K, 200 mm from the axis, igniter side and relay side",
+    "source_file": "PSI-23_Science Documents_ACME non-imaging data file description.pdf",
+    "source_where": "p. 7",
+    "quote": "Igniter side Type K thermocouple, 200 mm from axis."
+   },
+   {
+    "kind": "thermocouple",
+    "name": "Burner thermocouple TC_BNR",
+    "detail": "type K, on the burner (column TCBurner)",
+    "source_file": "PSI-23_Science Documents_ACME non-imaging data file description.pdf",
+    "source_where": "p. 7",
+    "quote": "Type K thermocouple on burner."
+   },
+   {
+    "kind": "radiometer",
+    "name": "Thermopile radiometer array",
+    "detail": "radiometers at +60, +30, centre, -30 and -60, plus an offset radiometer on the downstream relay board, each with a cold-junction channel",
+    "source_file": "PSI-23_Science Documents_ACME non-imaging data file description.pdf",
+    "source_where": "p. 7",
+    "quote": "Dexter Research Center (DRC) XP-0055."
+   }
+  ],
   "hardware_group": {
    "id": "cir",
    "label": "Combustion Integrated Rack (CIR)",
@@ -3977,6 +4099,46 @@
     "source_file": "PSI-159_Reports_FinalRpt_ACME.CFI-G.pdf",
     "source_where": "p. 10",
     "quote": "Both soot pyrometry and Thin Filament Pyrometry (TFP) are possible, where ACME is equipped with a crew-replaceable array of 5 silicon carbide (SiC) fibers."
+   },
+   {
+    "kind": "flow",
+    "name": "Three mass flow controllers",
+    "detail": "deliver fuel, oxidizer or inert (e.g. helium or CO2), and nitrogen to the burner",
+    "source_file": "PSI-159_Reports_FinalRpt_ACME.CFI-G.pdf",
+    "source_where": "p. 8",
+    "quote": "The chamber insert includes three mass flow controllers"
+   },
+   {
+    "kind": "pressure",
+    "name": "Chamber pressure",
+    "detail": "a supporting measurement (the report describes the hardware in the future tense)",
+    "source_file": "PSI-159_Reports_FinalRpt_ACME.CFI-G.pdf",
+    "source_where": "p. 14",
+    "quote": "Additional supporting measurements will be made, where the chamber pressure is a simple example."
+   },
+   {
+    "kind": "pressure",
+    "name": "Burner internal pressure",
+    "detail": "to monitor the pressure difference across the porous burner's surface (the report describes the hardware in the future tense)",
+    "source_file": "PSI-159_Reports_FinalRpt_ACME.CFI-G.pdf",
+    "source_where": "p. 7",
+    "quote": "The internal pressure of the porous burners will be measured"
+   },
+   {
+    "kind": "thermocouple",
+    "name": "Burner surface thermocouple",
+    "detail": "on most burners (the report describes the hardware in the future tense)",
+    "source_file": "PSI-159_Reports_FinalRpt_ACME.CFI-G.pdf",
+    "source_where": "p. 7",
+    "quote": "Most burners will be equipped with a surface thermocouple"
+   },
+   {
+    "kind": "other",
+    "name": "Ion current (burner to electrode mesh)",
+    "detail": "from the voltage drop across a known resistor; part of the E-field hardware (the report describes the hardware in the future tense)",
+    "source_file": "PSI-159_Reports_FinalRpt_ACME.CFI-G.pdf",
+    "source_where": "p. 14",
+    "quote": "The ion current between the burner and electrode mesh will be determined via measurement of the voltage drop across a known resistor"
    }
   ],
   "varied": [
