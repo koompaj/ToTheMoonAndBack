@@ -32,8 +32,9 @@ Audience: professors, students, aerospace researchers and engineers. Full notes:
    spec and who builds what: **`docs/LAYOUT_PLAN.md`**.
 7. **Illustrated spread** (agreed 2026-11-14): on the Simulation tab the user sets where a fire
    starts and can play, pause and scrub a timeline that shows it reaching more objects in the
-   example layout. It is a drawing, not a model, and is bound by the rule "Spread is an
-   illustration, never a result" below.
+   example layout. The user may also set the cabin's conditions and how strongly each one changes
+   the drawing. It is a drawing, not a model, and is bound by the rule "Spread is an illustration,
+   never a result" below.
 
 **Headline finding (reproduced by `scripts/build_web_data.py`):** of the tests whose tables record
 cabin-air oxygen and pressure, only **20** sit in Moon Base conditions (oxygen >= 30 %, pressure
@@ -63,14 +64,27 @@ say "not in the tables", never "never tested".
 - **Spread is an illustration, never a result.** NASA's tables hold no spread rates between
   objects, no room geometry and no partial-gravity data, so any spread we show is our own drawing.
   It is allowed only on the Simulation tab and only within these limits:
-  - The order in which objects light comes only from distance in the example layout, and the screen
-    says so. It is never presented as what a real fire would do.
+  - The order in which objects light comes from two things only, and the screen says so:
+    distance through the example layout (along its deck and through its doorways), and settings
+    the user can see and change on that screen. It is never presented as what a real fire would do.
+  - No hidden rates. Every value that changes the spread is on screen. A value with a source (a
+    place's air or gravity) shows its source. A value without one (how strongly oxygen, pressure,
+    airflow or gravity changes the drawing) is the user's to set, is labelled "your assumption,
+    not NASA data", and starts at "no effect". With every such setting at "no effect" the order is
+    distance alone.
+  - The shape of each effect (for example "items downstream of the fire count as nearer") is our
+    own. It is written in plain words beside its setting, and is never called physics, a model or
+    a NASA finding.
   - The timeline counts steps. It never shows seconds, minutes, speeds or any other real unit.
   - No number, ranking, outcome or "safe / destroyed" state is derived from the animation.
   - Evidence does not move with it: colours, card lines, nearest tests and task answers are the
-    same wherever the fire starts and whatever step the timeline is on.
+    same wherever the fire starts, whatever step the timeline is on and whatever the effect
+    settings are. (The cabin's oxygen and pressure do decide which place's evidence applies; that
+    is evidence, worked out from the tables, and is separate from the spread.)
   - This label stays on screen whenever spread is shown: "Illustration of spread, not a
-    prediction. NASA's tables do not model how fire spreads."
+    prediction. NASA's tables do not model how fire spreads." When any effect setting is above
+    "no effect" it is followed by: "It follows the settings you chose, which are your assumptions,
+    not NASA data."
 - **Report every issue you find**, however small, with a proposed fix. Do not silently drop one.
 
 ## Out of scope

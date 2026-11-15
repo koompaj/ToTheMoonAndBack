@@ -125,6 +125,26 @@ export function HomeView({ data }: { data: AppData }) {
             </div>
           ))}
         </div>
+        {data.waitingPlaces && data.waitingPlaces.length > 0 && (
+          <div className="waiting">
+            <h3>Places We Can&rsquo;t Show Yet</h3>
+            <ul>
+              {data.waitingPlaces.map((w) => (
+                <li key={w.id}>
+                  <b>{w.name}.</b> {w.why} <span className="muted">{w.what_would_change}</span>{' '}
+                  {w.source_urls.map((u, i) => (
+                    <a key={u} className="cite" href={u} target="_blank" rel="noreferrer">
+                      source {w.source_urls.length > 1 ? i + 1 : ''}
+                    </a>
+                  ))}
+                </li>
+              ))}
+            </ul>
+            <a className="link" href="#experiments?preset=custom">
+              Try your own values →
+            </a>
+          </div>
+        )}
       </section>
 
       <section className="chart-grid" aria-label="Summary charts">

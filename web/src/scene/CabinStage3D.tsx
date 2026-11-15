@@ -17,12 +17,13 @@ import type { CabinStageProps } from '../types/sim'
 import { Label } from './Label'
 import { useReducedMotion } from './fire/state'
 import { CabinFire, type SpreadClock } from './cabin/CabinFire'
+import { SpreadSettings } from './cabin/SpreadSettings'
 import { Spacecraft } from './cabin/Spacecraft'
-import { NothingToReach, TimelineBar } from './cabin/TimelineBar'
+import { TimelineBar } from './cabin/TimelineBar'
 import { groupItems, hiddenFor } from './cabin/groups'
 import { HOLO, Segs } from './cabin/holo'
 import { ITEMS, PLAN, deckHalfWidth } from './cabin/spec'
-import { NO_SPREAD, planSpread } from './cabin/timeline'
+import { NO_EFFECTS, NO_SPREAD, biasFrom, planSpread, type CabinConditions, type EffectSettings } from './cabin/timeline'
 import './scene.css'
 
 const BACKGROUND = '#04070d'
@@ -174,9 +175,18 @@ export function CabinStage3D({ placeChosen, markColors, selectedMarkId, imageUrl
   )
 
   // ---- illustrated spread: which fuel items light, in what order, and the timeline that plays it.
-  // The order comes only from distance in this example layout (cabin/timeline.ts). An uploaded plan
-  // has no items, so there is nothing to reach and no timeline.
-  const plan = useMemo(() => (fireAt && lit && !upload ? planSpread(fireAt[0], fireAt[2], hiddenIds) : NO_SPREAD), [fireAt, lit, upload, hiddenIds])
+  // The order comes from distance through this example layout (cabin/timeline.ts) and from the
+  // spread settings on screen, which are the user's assumptions and start at "no effect". It does
+  // not depend on which furniture is shown. An uploaded plan has no items, so there is nothing to
+  // reach and no timeline.
+  const [effects, setEffects] = useState<EffectSettings>(NO_EFFECTS)
+  const conditions = useMemo<CabinConditions>(
+    () => ({ o2Fraction: fire?.o2Fraction ?? 0.21, pressureAtm: fire?.pressureAtm ?? 1, airflowCmS: fire?.airflowCmS ?? 0, gravity: fire?.gravity ?? 0 }),
+    [fire?.o2Fraction, fire?.pressureAtm, fire?.airflowCmS, fire?.gravity],
+  )
+  const bias = useMemo(() => biasFrom(effects, conditions), [effects, conditions])
+  const assumed = effects.airflow > 0 || effects.gravity > 0 || effects.oxygen > 0 || effects.pressure > 0
+  const plan = useMemo(() => (fireAt && lit && !upload ? planSpread(fireAt[0], fireAt[2], fireAt[1], bias) : NO_SPREAD), [fireAt, lit, upload, bias])
   const clock = useRef<SpreadClock>({ t: 0, playing: false, rate: 1, shown: 0 })
   const [shownT, setShownT] = useState(0)
   const [playing, setPlaying] = useState(false)
@@ -189,7 +199,7 @@ export function CabinStage3D({ placeChosen, markColors, selectedMarkId, imageUrl
     setShownT(0)
     setPlaying(c.playing)
   }, [lit, fireX, fireZ, still])
-  // Hiding a group shortens the plan: never sit past its end.
+  // A setting can shorten the timeline: never sit past its end.
   useEffect(() => {
     const c = clock.current
     if (c.t > plan.steps) {
@@ -245,7 +255,7 @@ export function CabinStage3D({ placeChosen, markColors, selectedMarkId, imageUrl
         )}
         {placeChosen && fireAt && !lit && <FireMarker position={fireAt} />}
         {placeChosen && fireAt && lit && (
-          <CabinFire position={fireAt} fuel={fuel} fire={fire} plan={plan} clock={clock} field={field} onShow={setShownT} onEnd={() => setPlaying(false)} />
+          <CabinFire position={fireAt} fuel={fuel} fire={fire} plan={plan} bias={bias} clock={clock} field={field} hiddenIds={hiddenIds} onShow={setShownT} onEnd={() => setPlaying(false)} />
         )}
         <OrbitControls target={[0, 0.8, 0]} enablePan={false} autoRotate={!placeChosen && !still} autoRotateSpeed={0.5} minDistance={5} maxDistance={40} maxPolarAngle={Math.PI * 0.49} />
       </Canvas>
@@ -271,10 +281,10 @@ export function CabinStage3D({ placeChosen, markColors, selectedMarkId, imageUrl
               {g.name} <span>{g.itemIds.length}</span>
             </label>
           ))}
+          <SpreadSettings settings={effects} conditions={conditions} onChange={setEffects} />
         </div>
       )}
-      {placeChosen && lit && plan.steps > 0 && <TimelineBar t={shownT} steps={plan.steps} playing={playing} rate={rate} onPlay={togglePlay} onRate={changeRate} onScrub={scrub} field={field} />}
-      {placeChosen && lit && !upload && plan.steps === 0 && <NothingToReach />}
+      {placeChosen && lit && plan.steps > 0 && <TimelineBar t={shownT} steps={plan.steps} playing={playing} rate={rate} onPlay={togglePlay} onRate={changeRate} onScrub={scrub} field={field} assumed={assumed} />}
       {placeChosen && upload && <div className="cabin-b-tag" style={{ color: HOLO }}>Double-click your plan to place the fire</div>}
     </div>
   )

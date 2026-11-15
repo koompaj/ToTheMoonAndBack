@@ -3,16 +3,34 @@
 // PSI's tables hold no tests, so this page lists the gaps: by place and fuel, the biggest ones, and where the
 // data to close them may already exist (the relevance vs. study ranking). Every count is computed
 // live; every statement that is not a count names its source.
-import type { AppData, FuelClass } from '../types/data'
+import type { AppData, FuelClass, GapStatement } from '../types/data'
 import type { AiContent } from '../ai/content'
 import { testsInHabitat } from '../data/load'
 import { fmtPct, headline, isPlaced } from '../ai/evidence'
 import { UntappedPanel } from './UntappedPanel'
+import { DoiCite, TestCite } from './Cite'
 import { FUTURE_PLACES, placeName } from './places'
 import { Sun } from './SpaceArt'
-import { FUEL_SHORT, FuelDot, PanelHead, ViewHead, FuelIcon } from './ui'
+import { FUEL_SHORT, FuelDot, PanelHead, ViewHead, FuelIcon, PILLAR_LABEL } from './ui'
 
 const FUELS: FuelClass[] = ['gas', 'droplet', 'solid']
+
+
+/** Cites for one gap statement: its test rows (first 3) and investigation DOIs. */
+function GapCites({ g, data }: { g: GapStatement; data: AppData }) {
+  const tests = g.test_ids.slice(0, 3).map((id) => data.tests.find((t) => t.id === id)).filter((t) => t !== undefined)
+  return (
+    <>
+      {tests.map((t) => (
+        <TestCite key={t.id} test={t} />
+      ))}
+      {g.test_ids.length > 3 && <span className="muted small"> +{g.test_ids.length - 3} rows</span>}
+      {g.investigations.map((a) => (
+        <DoiCite key={a} inv={data.investigations.find((i) => i.accession === a)} />
+      ))}
+    </>
+  )
+}
 
 export function RiskView({ data, ai }: { data: AppData; ai: AiContent }) {
   const h = headline(data)
@@ -147,6 +165,45 @@ export function RiskView({ data, ai }: { data: AppData; ai: AiContent }) {
           ))}
         </div>
       </section>
+
+      {data.gaps && data.gaps.pillars.length > 0 && (
+        <section aria-labelledby="needed-title">
+          <h2 id="needed-title" className="section-title">
+            Research Needed, by Fire-Safety Job
+          </h2>
+          <div className="needed-grid">
+            {data.gaps.pillars.map((p) => (
+              <article key={p.pillar} className={`panel needed task-${p.pillar}`}>
+                <h3 className="sim-task-title">
+                  <span className="task-dot" aria-hidden />
+                  {PILLAR_LABEL[p.pillar]}
+                </h3>
+                <h4>In the tables</h4>
+                <ul className="sim-lines">
+                  {p.tested.map((g, i) => (
+                    <li key={i}>
+                      {g.text} <GapCites g={g} data={data} />
+                    </li>
+                  ))}
+                </ul>
+                <h4>Not in the tables</h4>
+                <ul className="sim-lines">
+                  {p.not_in_tables.map((g, i) => (
+                    <li key={i} className="gap">
+                      {g.text} <GapCites g={g} data={data} />
+                    </li>
+                  ))}
+                </ul>
+              </article>
+            ))}
+          </div>
+          <ul className="out-caveats">
+            {data.gaps.caveats.map((c) => (
+              <li key={c}>{c}</li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       <section aria-labelledby="rank-heading-wrap">
         <h2 id="rank-heading-wrap" className="section-title">
