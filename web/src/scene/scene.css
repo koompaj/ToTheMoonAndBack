@@ -75,3 +75,25 @@
 }
 .cabin-b-refused small { color: #a9c6da; }
 .cabin-b-problems { margin: 0; padding-left: 16px; font-size: 12px; line-height: 1.4; color: #ffb4a8; }
+
+/* A picture drawn in 3D by an AI model: the button, the fuel choices, the note */
+.cabin-b-aiset small { font-size: 11.5px; line-height: 1.4; color: #a9c6da; }
+.cabin-b-aiset .cabin-b-btn { justify-content: center; text-align: center; font: inherit; }
+.cabin-b-aiset { display: grid; gap: 6px; border-top: 1px solid rgba(92, 200, 255, 0.25); padding-top: 8px; margin-top: 2px; }
+.cabin-b-aiset > b { color: #ffe2b8; }
+.cabin-b-panel label.cabin-b-fuel { display: grid; grid-template-columns: 1fr 1.2fr; align-items: center; gap: 6px; cursor: default; }
+.cabin-b-fuel select { min-width: 0; font: inherit; font-size: 12px; color: #cfe9ff; background: rgba(4, 12, 24, 0.9); border: 1px solid rgba(92, 200, 255, 0.35); border-radius: 6px; padding: 2px 4px; }
+.cabin-b-row { display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* The options panel can be folded away so it does not cover the model. Its button is a tab on
+   the right edge of the view, in the same shape as the page's side tabs. */
+.cabin-b-edge {
+  position: absolute; right: 0; top: 14px; z-index: 2; display: flex; align-items: center; justify-content: center;
+  width: 38px; padding: 16px 0; border: 1px solid rgba(56, 189, 248, 0.45); border-right: 0; border-radius: 18px 0 0 18px; cursor: pointer;
+  background: linear-gradient(180deg, rgba(56, 189, 248, 0.22), rgba(52, 211, 153, 0.14)), rgba(10, 18, 30, 0.92);
+  box-shadow: -8px 10px 24px rgba(0, 0, 0, 0.4); transition: width 0.18s;
+}
+.cabin-b-edge:hover { width: 44px; }
+.cabin-b-edge span { writing-mode: vertical-rl; transform: rotate(180deg); font-weight: 700; font-size: 14px; letter-spacing: 0.02em; color: #a5f3fc; white-space: nowrap; }
+.cabin-b-panel { right: 50px; }
+.cabin-b-panel.closed { display: none; }

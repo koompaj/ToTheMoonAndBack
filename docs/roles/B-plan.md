@@ -846,6 +846,48 @@ Smaller choices:
 
 B still needs 10a, because the duct starts to decide the order.
 
+### A picture drawn in 3D by AI (2026-11-15, asked for by B's human; branch `app/plan-to-3d`)
+
+After uploading a PNG or JPG floor plan, "Draw this plan in 3D with AI" in the page's "Your Own
+Floor Plan" card sends the picture to Google Gemini through C's local helper and draws the answer
+as a layout. (The button was first inside the 3D view; B's human asked for it in the card.)
+
+- `ai/risk-server.mjs` (C's): a new endpoint, `POST /api/plan-to-layout`, with its own key,
+  `API_FOR_SIMULATION` in the local `.env`. A GitHub secret cannot be used: only a GitHub Actions
+  workflow can read one, and the repo has none. `/api/health` now also says whether that key is
+  there. `ai/README.md` describes it. C has not seen this.
+- `panels/sim/planToLayout.ts` (in C's folder, because the button is on the page): shrinks the
+  picture, asks the helper, throws away anything the model says about materials, and marks the
+  answer `drawn_by_ai`. The page hands the stage that file in place of the picture, the same way
+  it hands over an uploaded file, so no shared type changes.
+- `cabin/planFromPicture.ts`: the stage's side: reads the `drawn_by_ai` mark, and writes the
+  drawing out as a layout file with the chosen fuels.
+- `cabin/layoutFile.ts`: a `draft` option for the model's answer: any fuel in it is ignored and
+  having none is allowed. Every other check is unchanged, and an answer with a problem is refused
+  whole, with the problems listed and the choice to ask again or save the answer and fix it.
+- `CabinStage3D.tsx`: the fuel picker (each object: "Not a fuel" or one of the 18 fuels in
+  `fuels.json`) and "Save as a layout file".
+- `SimulationView.tsx` (C's): the button, its notice, "Asking the AI...", "Back to the picture",
+  the helper's error if it fails; the upload box says the file stays on the computer unless the
+  button is pressed. `web/src/scene/cabin/samples/made-up-floor-plan.png` is the test picture.
+
+How it keeps to the rules of evidence: the drawing is labelled "Drawn by AI from your picture.
+Check it. Not a NASA design" in the scene and in the panel; **the model is told not to say what
+anything is made of, and the user chooses every fuel**, labelled "Your choice, not NASA data";
+the model's sentence about the scale it used is shown as the model's words; the picture leaves
+the computer only when the button is pressed, and the button says where it goes.
+
+Checked end to end with a made-up plan (three rooms, two doorways, four labelled objects, two
+dimensions written on it) and the real key, which was already in the local `.env`: Gemini
+(`gemini-3.5-flash`) answered in about half a minute, read the scale from the dimensions, found
+the four objects, and the answer passed every check; fuels chosen for three objects; a fire
+placed and "Simulate" gave a 2-step timeline with the cloud drawn. `npm run build` passes.
+
+Not checked: a real floor plan (photo, scan or architect's drawing); a plan with no dimensions;
+the refusal box with a real bad answer; "Save as a layout file"; what the model does with a
+picture that is not a floor plan. `CLAUDE.md` says "The team no longer uses Gemini"; C's risk
+review and this both do, so that line is out of date (shared file, not changed here).
+
 ### A's review of the spread against the rule (2026-11-15), and the fixes
 
 A (Chai) checked the spread against "Spread is an illustration, never a result". It mostly
