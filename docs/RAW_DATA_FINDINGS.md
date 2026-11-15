@@ -178,12 +178,42 @@ group them by `name`. The other investigations' sensor files are still downloadi
 - **SAFFIRE-II:** "each 5 cm x 29 cm" (`SAFFIRE Objectives, Development and Status.pdf`) agrees with
   its table.
 
+### F8. ACME s-Flame (PSI-23): 276 flames that are not in PSI's tables (new tests, conditions nominal only)
+
+- **File:** `PSI-23_Engineering Documents_s-Flame_data_interpretation_20210920.pdf` (NASA's data guide),
+  pdftotext page 3 (printed page 3): "A total of 276 flames were ignited for the s-Flame experiment,
+  with 29, 116, and 131 respectively ignited during Increments 60, 61, and 63." Page 4: the first round
+  "featured 145 flames (nominally) in which the fuel and oxygen (i.e., in the chamber atmosphere) were
+  diluted with nitrogen"; the second "featured 131 flames (nominally) ... diluted with helium".
+- **Table 1** (pdftotext page 5, printed page 5, "Flames ignited for the s-Flame experiment") lists test days 19254 to
+  20190, the fuel bottle (for example "50% C2H4 with N2", "100% H2", "45% H2 with He") and the flames
+  per day, with the atmosphere only as **"~21% O2"** or **"~30% O2"** with N2 or He. Footnote 2:
+  "Atmosphere is ~1 atm but pressure increases and O2% drops with vitiation."
+- **Why it matters:** PSI has no experimental table for s-Flame, so none of these flames is in
+  `tests.json`. They are gas flames in the CIR chamber atmosphere (like CFI-G's "ambient" rows), at
+  about 1 atm, so they would **not** change the Moon Base counts (pressure far above 10.2 psi). The
+  "~" values are nominal, so they are **not** usable as test values, and no candidate is written.
+- **Where per-test values would be:** the same guide (pdftotext page 19) says the "chamber calculator provides the
+  chamber pressure before and after each operation", is "the more reliable source of the chamber
+  pressure" (CIR transducers checked every six months, averaged from PT16 and PT17 after PT28 proved
+  an outlier), and "also provides concentration estimates" of O2, N2, He, CO2 and H2O. Those files are
+  in PSI-23's 1,861 bulk files, which were still downloading when this was written.
+- **Next:** when PSI-23's files are down, find the chamber calculator file and the daily test point
+  logs ("19254 daily test point log.pdf" and so on), and match flames to test points (for example
+  "Test Point: 20190A1"). Only then could s-Flame tests be proposed as new rows, and that needs the
+  team's agreement, because they would be tests from outside PSI's tables.
+
 ## Searched and not found (so far)
 
 - BASS-II pressure for Ferkul, Miller, Olson, Fernandez-Pello (F2).
 - SPICE measured pressure or per-burn oxygen (F3): the .xls is now read cell by cell; its "Pressure"
   column is the 101325 Pa constant.
 - Cabin pressure in any old .xls file (F6b): only instrument hardware pressures (SAME, SAME-R).
+- Partial-gravity data in every downloaded document's text (all accessions): none. The hits are aims,
+  such as ACME BRE's aim "to assess the relevance of existing flammability test methods for low and
+  partial-gravity environments" (`PSI-10_Science Documents_ACME_ISRD.pdf`), and a roadmap heading
+  "Partial Gravity testing" in `PSI-102_Presentations_SAME_EarlyResults.ppt`. No test was run at
+  partial gravity in these files.
 - SAFFIRE-II and FLEX (F4): no files.
 
 ## Unmatched list
