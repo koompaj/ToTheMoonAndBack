@@ -15,6 +15,10 @@ items are coloured by fuel type, not by evidence, and the cards describe only th
 `l-shaped-habitat.layout.json` is a sample: three rooms in an L, one closed door, and a vent duct
 that is the only way into the closed room.
 
+`made-up-floor-plan.png` is a made-up picture of a floor plan (three rooms, two doorways, four
+labelled objects, two dimensions) for trying "Draw this plan in 3D with AI" in the same upload
+box. It is not a real place and not a NASA design.
+
 ## Format
 
 JSON. Lengths are in metres; `x` runs left to right and `z` front to back on the plan.

@@ -1033,6 +1033,13 @@ body {
 .sim-upload { display: grid; gap: 4px; padding: 12px; border: 1px dashed rgba(92, 200, 255, 0.5); border-radius: 12px; cursor: pointer; font-size: 14px; color: var(--ink-muted); }
 .sim-upload input { font: inherit; color: var(--ink-muted); }
 .sim-upload small { color: var(--ink-subtle); }
+.sim-ai { display: grid; gap: 6px; }
+.sim-ai p { margin: 0; }
+.sim-ai-btn {
+  width: 100%; padding: 9px 12px; border-radius: 10px; font: 600 15px var(--font); cursor: pointer;
+  background: rgba(255, 179, 71, 0.12); color: #ffe2b8; border: 1px solid rgba(255, 179, 71, 0.5);
+}
+.sim-ai-btn:hover { background: rgba(255, 179, 71, 0.22); }
 .sim-select select { width: 100%; }
 .sim-air { color: var(--ink-subtle); font-size: 12px; margin: 0; }
 .sim-stage-wrap { position: sticky; top: 76px; }
