@@ -1,6 +1,6 @@
 # What NASA's raw PSI files add (workstream A, automated scan, 2026-11-15)
 
-Status: **work in progress**: the download is still running (see "What was downloaded"). Nothing here is applied to the data. Candidate
+Status: download **finished** (see "What was downloaded"); the search of the bulk files is partly done (see "Left to do"). Only F1 (BASS) has been applied, on its own branch; nothing else here is applied to the data. Candidate
 values are in `data_sourced/raw_candidates.json`, each marked "candidate, not verified". The team
 checks them before anything enters `tests.json` or a count.
 
@@ -16,10 +16,24 @@ checks them before anything enters `tests.json` or a count.
   table rows lack pressure or oxygen first (BASS-II, BASS, Saffire, SPICE, FLEX), then documents,
   then the bulk per-test files of ACME and CFI. Files from the first run are counted as "skipped,
   already downloaded" in `data_extra/raw_manifest.json`, not as "ok".
-- **Status at 11:01 on 2026-11-15: still downloading.** 1,269 of the 9,616 files (9,502 planned plus
-  the 114 earlier documents) are on disk; about 8,340 are left, all bulk per-test files of ACME
-  (Flame Design PSI-10, s-Flame PSI-23, CFI-G PSI-159) and CFI (PSI-39), plus a few SAME-R and DAFT
-  files. At about 3.5 s per file this needs roughly 8 more hours.
+- **Final (download finished by 12:13 on 2026-11-15):** `data_extra/raw_manifest.json` of the last run:
+  **7,828 ok, 1,744 skipped (already there), 44 failed**, so **9,572 files** are on disk out of 9,616.
+  Earlier runs' manifests: `raw_manifest_run1.json`, `raw_manifest_run2.json`.
+- **All 44 failures are HTTP 404 from NASA's side:**
+  - the 8 documents already listed as broken (BASS and SPICE Final Reports under PSI-26, the Saffire
+    offgassing strategy under PSI-98 and PSI-100, the Saffire-I image grid file, three Saffire ICES
+    presentations);
+  - 4 SAME files that PSI lists as **0 bytes** (`PSI-102_Analyzed Data_16904___9.xml`, `16912`, `16937`,
+    `16942`);
+  - **32 CFI raw files (PSI-39):** the whole F173E01-E03 set (data, chamber readings, radiometer
+    readings, camera and test point settings, comments, filter positions, and 4 INTNS metadata files),
+    plus F121A01E (3 metadata files), F163A04D, F195D07D and F205D01 (C, D and 3 metadata files).
+    Proposed fix: one polite retry of these 36 to confirm they are broken, then report them to PSI with
+    the 8 known ones.
+- **3 size warnings** (downloaded size differs from the listed size): the metadata zips
+  `PSI-39_metadata_PSI-118_CFI.zip` (7,569 vs 10,237 bytes), `PSI-102_metadata_PSI-170_SAME.zip`
+  (10,753 vs 13,127) and `PSI-115_metadata_PSI-185_Utilization of the S.zip` (8,200 vs 7,021). These
+  are probably regenerated on request; they hold metadata only. Not used in any finding.
 - **Takeover at about 11:00:** another session on the team stopped this run's single-file download
   (PID 9956) and continues it 4 files at a time from its own copy of the script
   (`fetch_psi_raw_parallel.py --workers 4`, kept outside the repo), at the team lead's request to
@@ -31,7 +45,6 @@ checks them before anything enters `tests.json` or a count.
   are `raw_manifest_run1.json` and `raw_manifest_run2.json`. At the takeover the manifest planned
   8,397 files with 1,219 skipped, so a complete download is about **9,608** files (ok + skipped) plus
   the 8 known failures.
-- Final counts: to be filled in when the download finishes.
 - **Failed so far: 8, all known.** They are the 8 files `PSI_DOCUMENTS.md` already lists as broken on
   NASA's side (HTTP 404): BASS Final Report and SPICE Final Report as filed under PSI-26, the Saffire
   offgassing strategy (PSI-98, PSI-100), the Saffire-I image grid document and the three Saffire ICES
@@ -221,7 +234,15 @@ group them by `name`. The other investigations' sensor files are still downloadi
   provides the chamber pressure before and after each operation", is "the more reliable source of the
   chamber pressure" (CIR transducers checked every six months, averaged from PT16 and PT17 after PT28
   proved an outlier), and "also provides concentration estimates" of O2, N2, He, CO2 and H2O. Those
-  files are in PSI-23's 1,861 bulk files, which were still downloading when this was written.
+  files were expected among PSI-23's bulk files. **Checked after the download: the file named in the
+  guide, "ACME Chamber Calculator - 2018-03-08 to 2020-07-08.xlsx", is not in PSI-23's file list** (nor
+  in any zip listing). PSI's records list only the files added in the latest version (CLAUDE.md open
+  question 7), so it may be in an earlier version. Calculators for Flame Design and CFI-G are there (F11).
+  PSI-23's raw files do have per-test `<test point>_data.csv` files with chamber pressure channels
+  "PTA1", "PTA2", "PTA3" in raw volts (about 0.92 V), which need NASA's
+  `ACMEFlowAndPressuresRawDataConversion.xlsx` (inside `PSI-23_Engineering Documents_ACME Gas flow.zip`,
+  not extracted); the guide says PTA3's transducer "has not been calibrated in years".
+  The two "ACME Daily Test Point Log" spreadsheets hold image counts and downlink sizes only.
 - **Next:** when PSI-23's files are down, find the chamber calculator file and the daily test point
   logs ("19254 daily test point log.pdf" and so on), and match flames to test points (for example
   "Test Point: 20190A1"). Only then could s-Flame flames be proposed as test rows, and that needs the
@@ -243,6 +264,13 @@ group them by `name`. The other investigations' sensor files are still downloadi
   ... 29% Helium". Test 1268 is **not in the CFI table**, and 12 % is below the table's lowest CFI oxygen
   (17 %). The stated mix adds up to only 91 %, so the caption is not usable as a test's values. This is
   in the unmatched list.
+- **After the download:** no file in PSI-39 is named for test 1268. The per-test files named by FLEX
+  number (`FLEX-12xx_TestSheet`, `_DropletData`, `_Summary.pdf` and so on) cover 44 tests, the
+  highest near 1268 being FLEX-1261 and FLEX-1264. A second set of 123 test points is named by an
+  instrument ID such as "F068A03" (`_Chamber_Readings.txt`, `_MDCA_CFI_Testpoint_Settings.txt`, ...,
+  430 `F<id>.txt` data files). Those files do not mention a FLEX number (0 of the test point
+  settings files contain "FLEX"), so they cannot yet be tied to table rows. Matching them by date and
+  time to the table would be the next step; until then they are not used.
 
 ### F10. ACME flame counts: reports and tables nearly agree (differences noted, not resolved)
 
@@ -259,6 +287,46 @@ group them by `name`. The other investigations' sensor files are still downloadi
 - **CLD Flame (PSI-21):** the same CFI-G report, pdftotext page 51: "the over 300 that were ignited for
   all of CLD Flame". PSI's CLD Flame table has 32 rows, one per test day (`other_tables.json`), so no
   CLD flame is a row in `tests.json`.
+
+### F11. ACME chamber calculators confirm the table pressures, and the Moon Base headline
+
+NASA's "Final ACME Chamber Calculator" spreadsheets log every chamber fill, vent and test point
+(sheet "EventData": row 3 headers "TPID", "Pstart (psia)", "Pend (psia)"; row 4 names the sensor
+**"FCU_MP_PT28"**). Matched to table rows by test label with spaces removed ("21088 B1" = "21088B1").
+
+- **Flame Design (PSI-10):** `PSI-10_Raw Data_Final ACME Chamber Calculator - 2019-04-09 to 2019-08-13.xlsx`
+  and `... - 2021-10-28 to 2022-02-04.xlsx`. 207 of 327 rows match (187 + 20); **all agree within
+  0.11 psi** (table atm x 14.6959 against "Pstart"). 120 rows have no calculator entry under the same
+  label (for example the 21301 series).
+- **CFI-G (PSI-159):** `PSI-159_Raw Data_Final ACME Chamber Calculator - 2021-03-09 to 2021-10-21.xlsx`.
+  179 of 333 rows match. 157 agree within 0.25 psi and 22 differ by 0.25-0.56 psi. In 19 of those 22
+  the calculator is higher (for example 21125K3: table 1.0 atm = 14.70 psia, calculator Pstart 15.26),
+  and the pressure climbs test by test through a day. In the other 3 (21130N3-N5, table 3.0001 atm =
+  44.09 psia, calculator 43.79-43.80) it is about 0.3 psi lower. The table's CFI-G pressures are **nominal**
+  (1.0, 2.0001, 0.5 atm) while the calculator records the actual start pressure, which rises with
+  vitiation (the s-Flame guide's words: "pressure increases and O2% drops with vitiation"). This is
+  a difference of meaning, not an error. 154 rows (for example the 21196 series) have no entry under
+  the same label.
+- **Moon Base headline confirmed:** all **20** Moon Base tests (CFI-G days 21106, 21153, 21174) are
+  in the calculator (EventData rows 73-81, 236-241, 286-290). Their start pressures are **7.35-7.58
+  psia** and end pressures **7.46-7.82 psia**, all far below the 10.2 psi limit. So the 20 stay in
+  the Moon Base box on NASA's measured pressures, not only on the table's nominal 0.5 atm.
+- **Caveats:**
+  - The sensor named is PT28. The s-Flame guide (pdftotext page 19) says PT28 "was clearly an outlier"
+    and that "the average pressure recorded in the chamber calculator file was later based on just
+    PT16 and PT17". Which sensor these CFI-G and Flame Design values come from is not stated beyond
+    the PT28 label.
+  - The size of PT28's offset is visible in a CFI chamber log: `PSI-39_Raw Data_F068A03_Chamber_Readings.txt`
+    (2017-03-09 18:02:36, columns "FCU_MP_PT16(PSIA)", "FCU_MP_PT17(PSIA)", "FCU_MP_PT28(PSIA)",
+    "FCU_MP_PT29(PSIA)") reads **15.11, 15.07, 14.43, 15.05**: PT28 about 0.65 psi below the others at
+    about 1 atm. That is one reading in 2017, so it says nothing exact about 2021, but it shows the kind
+    of error. The Moon Base margin (highest 7.82 psia against a 10.2 psi limit, 2.4 psi) is far larger,
+    so the headline does not depend on it.
+  - Nothing is applied. Proposed: add a validator check that the 20 Moon Base tests stay at or below
+    10.2 psi in the calculator, with the file, sheet and row as the source; and let the team decide
+    whether to show the measured CFI-G pressures beside the nominal ones.
+  - The calculators' oxygen estimates (sheet "SourceTable" and later EventData columns) were not
+    compared yet.
 
 ## Searched and not found (so far)
 
@@ -312,23 +380,30 @@ group them by `name`. The other investigations' sensor files are still downloadi
    are outside PSI, so use them only with a citation and a check.
 6. **Sensors (F6):** C can show the Saffire and BASS lists now. Group repeated channels by name.
 
-## Left to do (updated 2026-11-15, 11:01)
+## Left to do (updated 2026-11-15, 12:20; this run stopped at about 64 % of the 5-hour usage limit)
 
-- **Download:** about 8,300 bulk files still downloading, now run by another session 4 at a time
-  (see "What was downloaded"). Do not start a second download.
-- **When it finishes:** fill in the final counts above from `data_extra/raw_manifest.json`, then run
-  `python -I scripts/summarize_raw.py data_extra` (about 9 minutes for the first 1,269 files; longer
-  for all) and `python -I scripts/extract_sensors.py data_extra data_sourced/raw_candidates.json`.
-- **Then search the new files** for:
-  - s-Flame's chamber calculator file and daily test point logs (F8), which give per-test chamber
-    pressure and O2;
-  - CFI test 1268 and the other CFI tests not in the table (F9);
-  - the one extra Flame Design row (F10);
-  - sensors for ACME and CFI-G (item 5 already lists BASS, CFI, SPICE, SAME, SAME-R on
-    `data/items-5-12`).
-- **Priority 1 does not wait on the download.** Every cabin-air row of Flame Design, CFI and CFI-G
-  already has oxygen and pressure in the tables. Only 11 Flame Design burner-oxidizer rows lack
-  oxygen, and burner-oxidizer rows never count toward habitats.
-- **Done in this run:** SPICE's .xls read cell by cell (F3), all 168 old .xls files read (F6b),
-  partial-gravity search of all document text (none found), s-Flame (F8), CFI (F9), ACME counts
-  (F10).
+- **Download: finished** (9,572 of 9,616 files; 44 are 404s on NASA's side, see "What was downloaded").
+  Proposed: one polite retry of the 36 new 404s, then report all 44 to PSI.
+- **Summaries:** `python -I scripts/summarize_raw.py data_extra` was started over all files at 12:13
+  and had reached PSI-62 at 12:18 (PSI-98 to PSI-159 still to go). If `data_extra/_raw_summary/PSI-159.json`
+  is older than 12:13, or `INDEX.md` was not rewritten, re-run it. It only writes inside `data_extra/`.
+- **Not yet re-run:** `python -I scripts/extract_sensors.py data_extra data_sourced/raw_candidates.json`
+  over the new files (ACME and CFI-G sensors). The chamber logs show sensor names such as
+  "FCU_MP_PT16(PSIA)" to "FCU_MP_PT29(PSIA)" and "FCU_MP_TM1(Deg C)" to "TM4" (F11).
+- **Searches still open:**
+  - s-Flame (F8): the chamber calculator named in NASA's guide is not in PSI-23's file list; look for
+    it in earlier PSI versions or ask PSI. The raw PTA1-PTA3 volts need NASA's conversion sheet
+    (inside a zip, not extracted).
+  - CFI (F9): tie the 123 "F<id>" test points to table rows by date and time.
+  - ACME chamber calculators (F11): compare their oxygen estimates with the tables, and look for the
+    154 CFI-G and 120 Flame Design rows with no calculator entry under the same label.
+  - Flame Design: the one row more than the report's 326 flames (F10).
+- **Proposed, for the team (nothing applied):**
+  - a validator check that the 20 Moon Base tests stay at or below 10.2 psi in the CFI-G chamber
+    calculator (F11);
+  - `docs/DATA_ISSUES.md`: add "report says 326 flames, table has 327 rows" (F10), and cite the
+    s-Flame guide's Table 1 ("with N2") in the N3-N6 autofill correction (F8).
+- **Done in this run:** chamber calculators checked against the tables, with PT28's offset seen in a CFI
+  log (F11); SPICE's .xls read cell by cell (F3); all 168 old .xls files read (F6b); partial-gravity
+  search of all document text (none found); s-Flame (F8); CFI (F9); ACME counts (F10); final download
+  counts.
