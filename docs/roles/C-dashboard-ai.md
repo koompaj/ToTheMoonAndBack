@@ -41,7 +41,7 @@ side of it are specified in `docs/PLAN.md`.**
   them. Needs an API key on a team laptop; see `ai/README.md`. The app shows no AI text until then.
 - **Shared logic**: `web/src/ai/evidence.ts` holds every computed number; the app and the AI script
   both use it.
-- **Demo script** (task 7): `docs/DEMO.md`. Deployment still open.
+- **Demo** (task 7): the 30-second video is `demo_video.mp4` at the repository root; the old two-minute script (`docs/DEMO.md`) was removed on 2026-11-15 and is in git history. Deployment: `docs/DEPLOY.md`.
 
 ## Tasks, in priority order
 
