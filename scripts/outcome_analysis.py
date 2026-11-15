@@ -188,6 +188,10 @@ def main():
             "Shares are out of tests whose ending is recorded; tests with no recorded ending are listed but not counted.",
             "FLEX endings 'Disruption' and 'Completion' are counted as not going out; their exact meaning is NASA's, not ours.",
             "All tests ran in microgravity; nothing here says how a flame behaves on the Moon or Mars.",
+            "ACME CFI-G: NASA's final report (PSI-159_Reports_FinalRpt_ACME.CFI-G.pdf, p. 44) says 'A total of 280 hot "
+            "diffusion flames were observed. Among them, 189 flames experienced radiative extinction, and the rest were "
+            "extinguished when their flow was terminated'. That is a report total, not tied to table rows, so it is not "
+            "part of the counts here.",
         ],
         "studies": studies,
     }

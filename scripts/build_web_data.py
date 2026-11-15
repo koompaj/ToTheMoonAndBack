@@ -81,6 +81,9 @@ FLAG_MEANINGS = {
                                    "reading during the burn. See data_sourced/bass_conditions.json.",
     "o2_diluted_work_volume": "A nitrogen-diluted BASS test: the oxygen is the glovebox work volume after NASA added "
                               "nitrogen, calculated by NASA (its notes say e.g. 'Calc 17.07% O2'), not ISS cabin air.",
+    "o2_differs_from_test_sheet": "NASA's per-test sheet for this test gives a different oxygen value (after the colon) "
+                                  "from the table's. The table's value is kept; NASA does not say which is right. "
+                                  "See data_sourced/table_conflicts.json.",
     "o2_from_sensor_log": "NASA's sensor log for this burn records oxygen (%); o2_sensor_min / max is its range over "
                           "the log. The table's own oxygen value, if any, is kept unchanged.",
     "o2_differs_from_sensor_log": "The table's oxygen and the sensor log's oxygen for this burn do not overlap "
@@ -312,6 +315,7 @@ class Builder:
         self.tests = []
         self.quality = []       # one entry per table
         self.table_use = {}     # "tables/..." -> where it went
+        self.repeats = {}       # "tables/..." -> {row: first identical earlier row}
         # Conditions NASA's tables leave out, from NASA's reports and sensor logs (hand-checked; see
         # docs/PSI_DOCUMENTS.md). Kept outside data/, which stays exactly as downloaded.
         path = os.path.join(os.path.dirname(os.path.abspath(data)), "data_sourced", "solid_conditions.json")
@@ -336,6 +340,13 @@ class Builder:
              "rows_in_source": len(body), "rows_as_tests": 0, "rows_left_out": [], "used_in": "tests.json"}
         self.quality.append(q)
         self.table_use["tables/" + rel] = "tests.json"
+        # Rows identical, cell for cell, to an earlier row of the same table (every test table, not only SPICE).
+        seen, self.repeats["tables/" + rel] = {}, {}
+        for i, r in enumerate(body, 1):
+            if tuple(r) in seen:
+                self.repeats["tables/" + rel][i] = seen[tuple(r)]
+            else:
+                seen[tuple(r)] = i
         return header, body, q
 
     def add(self, q, acc, acronym, row, label, fuel_class, fuel, o2, o2_basis, p_atm, flags, **extra):
@@ -372,6 +383,9 @@ class Builder:
             "flags": flags,
         }
         d.update(extra)
+        first = self.repeats.get(table, {}).get(row)
+        if first and not any(f.startswith("duplicate_row") for f in d["flags"]):
+            d["flags"] = d["flags"] + [f"duplicate_row:{first}"]
         if fuel_class == "solid":
             d["fuel_material"] = solid_material(d["fuel"])
             if d["fuel_material"] is None and d["fuel"]:
@@ -1043,6 +1057,11 @@ def main():
             sys.exit(f"{t['id']}: investigation {t['investigation']} is '{project.get(t['investigation'])}', "
                      f"not a Microgravity Investigation; its gravity is not known")
         t["gravity_g"] = 0.0
+    path = os.path.join(os.path.dirname(data), "data_sourced", "table_conflicts.json")
+    if os.path.exists(path):
+        by_id = {t["id"]: t for t in tests}
+        for c in json.load(open(path, encoding="utf-8"))["conflicts"]:
+            by_id[c["test_id"]]["flags"].append(c["flag"])
     fuels = build_fuels(tests, hab)
     sensors = sensors_by_investigation(data)
     for i in inv:

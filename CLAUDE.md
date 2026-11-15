@@ -145,8 +145,8 @@ cd web && npm run build
 ```
 
 `npm run build` type-checks and builds. It must pass on `main` at all times.
-The data build ends by running `scripts/validate_data.py` (101 independent checks against the raw
-files; 97 when `data_extra/` is absent, because 4 of them re-read NASA's downloaded documents and spreadsheets);
+The data build ends by running `scripts/validate_data.py` (105 independent checks against the raw
+files; 100 when `data_extra/` is absent, because 5 of them re-read NASA's downloaded documents and spreadsheets);
 it stops on any failure. To run the checks alone:
 
 ```bash
@@ -165,14 +165,14 @@ python -I scripts/validate_data.py data web/public/data
 ## Current state of the baseline
 
 - Raw data downloaded: 24 Combustion Science records and 22 experimental tables (2,009 rows).
-- `tests.json`: **1,753 test rows from 12 tables, 1,719 distinct** (34 SPICE rows repeat an earlier
-  row; say "1,719 tests", via `distinctTestCount()`) (263 solid, 361 droplet, 1,129 gas).
+- `tests.json`: **1,753 test rows from 12 tables, 1,711 distinct** (34 SPICE rows and 8 CFI rows repeat an
+  earlier row, flagged `duplicate_row`; say "1,711 tests", via `distinctTestCount()`) (263 solid, 361 droplet, 1,129 gas).
   274 are inverse-flame (burner-oxidizer) rows. Of the 1,479 cabin-air tests, 884 record an oxygen
   value, 746 record oxygen and pressure, 270 are at >= 30 % oxygen, and 20 are inside the Moon Base
   envelope. 457 tests record airflow. With pressures from NASA's own reports and sensor logs
   (`data_sourced/solid_conditions.json`) and BASS's as-run test matrix (`data_sourced/bass_conditions.json`,
-  121 tests; 26 are nitrogen-diluted glovebox tests, flagged `o2_diluted_work_volume`), **896** tests can be
-  placed, 150 of them solid (29 BASS-II at 1 atm, 121 BASS at 0.97-1.01 atm).
+  121 tests; 26 are nitrogen-diluted glovebox tests, flagged `o2_diluted_work_volume`), **896** test rows can be
+  placed (888 distinct tests: 8 of the rows are CFI repeats), 150 of them solid (29 BASS-II at 1 atm, 121 BASS at 0.97-1.01 atm).
 - Every source column is in `tests.json`: typed fields where the unit is clear (solid
   `fuel_material`, SAFFIRE sample size, FLEX droplet and extinction diameters, CFI-G hot ignition and
   peak burner temperature, SPICE ignition and flame-off times), `source_extra` word-for-word for the

@@ -23,17 +23,18 @@ flag means is in its `flag_meanings`.
 | 11 | Several | Blank values, e.g. 20 Flame Design rows lack final oxygen and pressure; FLEX extinction diameter filled for 225 of 274 | Kept as null | done |
 | 12 | BASS, BASS-II, SAFFIRE, SPICE | No pressure column at all (732 tests); BASS, SAFFIRE-III and SPICE have no oxygen column either (592 tests) | Partly resolved from NASA's own files in PSI (`data_sourced/solid_conditions.json`, `docs/PSI_DOCUMENTS.md`): the BASS-II Summary Report (NASA/TM-20210011385) gives **1 atm** for T'ien's 29 tests (p. 102; now placed, flag `pressure_from_report`) and **99.2-99.5 kPa** for Bhattacharjee's 22 (p. 46; range, flag `pressure_range_from_report`); Saffire-I and -III sensor logs give ambient pressure in PSIA and oxygen for their 4 burns (range, flags `pressure_range_from_sensor_log`, `o2_from_sensor_log`; Saffire-I's sensor oxygen does not overlap its table, flag `o2_differs_from_sensor_log`). Still no pressure: BASS (121), BASS-II's other 78 (Ferkul, Miller, Olson, Fernandez-Pello), SAFFIRE-II (9), SPICE (435) | partly resolved (55 of 732) |
 | 13 | SAFFIRE-II (PSI-99) | Four footnote rows inside the table; two material cells blank (merged cells) | Footnotes left out and listed; blank material filled from the row above with flag `fuel_from_row_above` | done |
-| 14 | SPICE (PSI-107) | 34 rows exactly repeat an earlier row | Kept, flagged `duplicate_row:<first row>`; `distinct_tests` (1,719) in `data_quality.json` | done |
+| 14 | SPICE (PSI-107) and CFI (PSI-39) | 34 SPICE rows and 8 CFI rows (80-87 repeat 23-30) exactly repeat an earlier row | Kept, flagged `duplicate_row:<first row>` (every test table is checked); `distinct_tests` (1,711) in `data_quality.json` | done |
 | 15 | SPICE (PSI-107) | 8 rows record a negative air rate (-0.28 or -5.92 cm/s) | Kept as written, flagged `airflow_negative_in_source`; `airflowRange()` in `web/src/data/load.ts` leaves them out. What NASA meant is not stated | done (meaning not knowable from the table) |
 | 16 | SPICE (PSI-107) | Time cells in `14:37:08`, `14.34.57` and `1744` forms, plus `Ku LOS`, `no ku`, `n/a` | `ignition_time` / `flame_off_time` as `HH:MM:SS` where unambiguous; `1744` and the no-signal cells stay null with flag `time_not_recorded` (18). Flame duration from the two times in 435 tests, flag `burn_time_from_gmt_times` | done |
 | 17 | SAFFIRE-I, SAFFIRE-II | Oxygen given as approximate or as a range | Approximate: value kept, flag `o2_approximate`. Range: `o2_fraction_min` / `max`, flag `o2_range` | done |
 | 18 | FLEX (PSI-69) | Test 129: extinction diameter 3.34 mm, initial droplet 3.33 mm | Within the table's 0.01 mm step, in a flame that went out after 0.55 s. Kept as written, flag `extinction_diameter_above_initial` | done |
 | 19 | E-FIELD Flames (PSI-22) | Test day 18319 appears twice with identical cells (rows 25-28 and 29-32) | Listed in the table's `known_issues`; which one is right is not stated | noted (not knowable from the table) |
 | 20 | FLEX (PSI-69) | Burning-rate header gives the unit only as `mm` | `burning_rate` kept as written, flag `burning_rate_unit_unclear` | done (unit not knowable from the table) |
+| 21 | CFI (PSI-39) | Row 7 (FLEX-1213) gives oxygen 0.17 and nitrogen 0.83; NASA's test sheet for the same test (`PSI-39_Raw Data_FLEX-1213_TestSheet.txt`, same date and CIR test F086A04) gives 0.21 and 0.79 | Table value kept, flagged `o2_differs_from_test_sheet:0.21` (`data_sourced/table_conflicts.json`); NASA does not say which is right | flagged |
 
 ## Where each table went
 
-- **`tests.json` (12 tables, 1,753 rows, 1,719 distinct tests):** Flame Design normal and inverse,
+- **`tests.json` (12 tables, 1,753 rows, 1,711 distinct tests):** Flame Design normal and inverse,
   CFI-G normal and inverse, SPICE, FLEX, CFI, BASS-II, BASS, SAFFIRE-I, -II, -III. Every source column
   is kept: typed fields where the unit is clear, `source_extra` (word-for-word) for the rest.
 - **`other_tables.json` (10 tables, 247 rows):** cells exactly as published in `rows`, and the same
@@ -51,5 +52,8 @@ flag means is in its `flag_meanings`.
 ## Not downloaded
 
 - Full file inventory per investigation (records list only files added in the latest version).
-- Reports, readme files, raw sensor data and video.
+- Video (1,629 files) and raw image zips (5,109). Every other file in each record's latest version was
+  downloaded on 2026-11-15 into `data_extra/` (not in git; `scripts/fetch_psi_raw.py`), except 44 that
+  NASA's storage answers with HTTP 404 (`data_extra/raw_manifest.json`: 32 CFI raw files, 4 SAME analysed
+  XML files and the 8 listed in `docs/PSI_DOCUMENTS.md`).
 - The pages linked from the challenge's Resources tab.
