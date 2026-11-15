@@ -183,13 +183,13 @@ python -I scripts/validate_data.py data web/public/data
   distinct-test count.
 - `habitats.json`: 5 places, every number from a source workstream A opened and checked
   (`source_urls`; `gemini_data/VERIFIED.md`): Moon Base (challenge box, 20 tests), Moon Base (NASA
-  exploration air, 0 tests), ISS (209), spacesuit (0), Earth sea level (209). ISS and Earth are boxes:
+  exploration air, 0 tests), ISS (206), spacesuit (0), Earth sea level (206); counts are distinct tests (3 CFI repeat rows at 21 % / 1 atm are counted once). ISS and Earth are boxes:
   NASA's +-2 % O2 / +-0.2 psia control band (NASA/TP-2010-216134 p. 11) around 21 % / 14.7 psia, so
   19-23 % and 14.5-14.9 psi; applying that band to these places is our step and the note says so.
 - Gravity: every test has `gravity_g` 0 (its PSI record says "Microgravity Investigation"); every
   place has a sourced `gravity` (Moon 0.165 g from the NASA NSSDC Moon Fact Sheet, ISS 0, Earth 1,
   spacesuit 0 or 0.165). `testsInHabitatAndGravity()` (tolerance 0.02 g) matches air and gravity:
-  today only the ISS matches (209); it is ready for partial-gravity data (LUCI, FM2 may add some).
+  today only the ISS matches (206); it is ready for partial-gravity data (LUCI, FM2 may add some).
   Counts on screen still match air only; each card and place page says whether gravity matches.
 - `outcomes.json`: the "will it go out" analysis (`scripts/outcome_analysis.py`). FLEX droplet
   flames went out less often as oxygen rose (17 of 17 at 12-14 %, 0 of 9 at 34-36 %), and the trend
@@ -236,7 +236,7 @@ python -I scripts/validate_data.py data web/public/data
 8. **[all] Judging criteria.** Check the official Space Apps 2026 criteria and tune the demo to them.
 9. **[C] Deployment.** Not set up. The build is a static site with a relative base path.
 10. **[A and C] Single-point habitats.** Resolved 2026-11-14 for ISS and Earth: they use NASA's
-    control band (19-23 % O2, 14.5-14.9 psi; 209 tests each), labelled as our step. The spacesuit
+    control band (19-23 % O2, 14.5-14.9 psi; 206 tests each), labelled as our step. The spacesuit
     stays one point (100 % O2, 4.3 psi; 0 tests), which the habitat panel words as "exactly these values".
 11. **[B or C] Bundle size.** The build warns that the script is over 500 kB (three.js). Harmless
     now; loading the 3D scene lazily would fix it.

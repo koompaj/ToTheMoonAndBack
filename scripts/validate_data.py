@@ -83,12 +83,12 @@ def main():
     # ---- headline numbers --------------------------------------------------------------------
     placed = [t for t in T if t["o2_basis"] == "ambient" and t["o2_fraction"] is not None and t["pressure_atm"] is not None]
 
-    def inside(h):
-        return [t for t in placed if h["o2_fraction"][0] <= t["o2_fraction"] <= h["o2_fraction"][1]
+    def inside(h):   # distinct tests: a row repeating an earlier row is the same test (duplicate_row)
+        return [t for t in placed if not any(f.startswith("duplicate_row") for f in t["flags"]) and h["o2_fraction"][0] <= t["o2_fraction"] <= h["o2_fraction"][1]
                 and h["pressure_atm"][0] <= t["pressure_atm"] <= h["pressure_atm"][1]]
     counts = {h["id"]: len(inside(h)) for h in H}
-    expect = {"moon_base": 20, "moon_base_nasa": 0, "iss": 209, "spacesuit": 0, "earth_sea_level": 209}
-    check("habitat counts (20, 0, 209, 0, 209)", counts == expect, str(counts))
+    expect = {"moon_base": 20, "moon_base_nasa": 0, "iss": 206, "spacesuit": 0, "earth_sea_level": 206}
+    check("habitat counts, distinct tests (20, 0, 206, 0, 206)", counts == expect, str(counts))
     check("896 tests can be placed on the map (746 from the tables + 29 BASS-II from NASA's report + 121 BASS from its test matrix)",
           len(placed) == 896, str(len(placed)))
     check("distinct tests 1,711 (42 duplicate rows: 34 SPICE, 8 CFI)", Q.get("distinct_tests") == 1711 and Q.get("duplicate_rows") == 42)
@@ -397,7 +397,7 @@ def main():
           gmap == {"moon_base": [0.165], "moon_base_nasa": [0.165], "iss": [0.0], "spacesuit": [0.0, 0.165], "earth_sea_level": [1.0]}, str(gmap))
 
     def fits(test, h):   # Python mirror of testsInHabitatAndGravity() in web/src/data/load.ts
-        return (test["o2_basis"] == "ambient" and test["o2_fraction"] is not None and test["pressure_atm"] is not None
+        return (not any(f.startswith("duplicate_row") for f in test.get("flags", [])) and test["o2_basis"] == "ambient" and test["o2_fraction"] is not None and test["pressure_atm"] is not None
                 and h["o2_fraction"][0] <= test["o2_fraction"] <= h["o2_fraction"][1]
                 and h["pressure_atm"][0] <= test["pressure_atm"] <= h["pressure_atm"][1]
                 and test.get("gravity_g") is not None
@@ -408,7 +408,7 @@ def main():
           fits(fake, moon) and not fits(dict(fake, gravity_g=0.0), moon)
           and not fits({k: v for k, v in fake.items() if k != "gravity_g"}, moon))
     both = {h["id"]: sum(1 for t in T if fits(t, h)) for h in H}
-    check("tests matching air and gravity: ISS 209, every other place 0", both == {"moon_base": 0, "moon_base_nasa": 0, "iss": 209, "spacesuit": 0, "earth_sea_level": 0}, str(both))
+    check("tests matching air and gravity: ISS 206, every other place 0", both == {"moon_base": 0, "moon_base_nasa": 0, "iss": 206, "spacesuit": 0, "earth_sea_level": 0}, str(both))
 
     # ---- items 6, 7, 9, 11, 12 (docs/roles/C-tasks-5-12.md) ---------------------------------
     import csv
@@ -428,6 +428,8 @@ def main():
     def in_conditions(h):
         inside = unknown = inverse = 0
         for t in T:
+            if any(f.startswith("duplicate_row") for f in t["flags"]):
+                continue
             if t["o2_basis"] != "ambient":
                 inverse += 1
             elif t["o2_fraction"] is None or t["pressure_atm"] is None:
@@ -436,9 +438,9 @@ def main():
                 inside += 1
         return inside, unknown, inverse
     pres = {h["id"]: in_conditions(h) for h in H}
-    check("air-conditions presets give each place card's count (20 / 0 / 209 / 0 / 209), 583 tests cannot be checked, 274 inverse rows left out",
-          {k: v[0] for k, v in pres.items()} == {"moon_base": 20, "moon_base_nasa": 0, "iss": 209, "spacesuit": 0, "earth_sea_level": 209}
-          and all(v[1:] == (583, 274) for v in pres.values()), str(pres))
+    check("air-conditions presets give each place card's count (20 / 0 / 206 / 0 / 206, distinct tests), 549 tests cannot be checked, 274 inverse rows left out",
+          {k: v[0] for k, v in pres.items()} == {"moon_base": 20, "moon_base_nasa": 0, "iss": 206, "spacesuit": 0, "earth_sea_level": 206}
+          and all(v[1:] == (549, 274) for v in pres.values()), str(pres))
 
     # item 7: recount what varied, independently, for oxygen (cabin air) and fuel
     bad = []

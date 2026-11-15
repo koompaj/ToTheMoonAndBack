@@ -56,6 +56,8 @@
 .cabin-b-settings summary { cursor: pointer; font-weight: 600; list-style-position: inside; }
 .cabin-b-settings summary span { color: #8fb4cc; font-weight: 500; margin-left: 4px; }
 .cabin-b-assume { margin: 6px 0; font-size: 12px; line-height: 1.35; color: #ffd9a0; }
+.cabin-b-limits { margin: 0 0 8px; font-size: 11.5px; line-height: 1.35; color: #a9c6da; }
+.cabin-b-limits b { color: #cfe9ff; font-weight: 600; }
 .cabin-b-effect { display: grid; gap: 2px; margin-bottom: 8px; }
 .cabin-b-effect label { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 2px 8px; cursor: default; }
 .cabin-b-effect label b { color: #ffe2b8; font-variant-numeric: tabular-nums; }
