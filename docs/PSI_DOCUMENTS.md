@@ -108,3 +108,27 @@ Later the same day (branch `app/gravity-and-band`) ISS and Earth became NASA's c
 14.5-14.9 psi), giving 20 / 0 / 171 / 0 / 171; 6 of these solid tests (SIBAL) now fall in ISS / Earth air.
 The Saffire-I oxygen conflict is flagged, not resolved. BASS (121 tests), BASS-II's other 78 tests, SAFFIRE-II and
 SPICE still have no pressure.
+
+## Done (2026-11-15, branch `data/items-5-12`): items 10, 5 and 8
+
+| Item | What was added | Where it comes from |
+|---|---|---|
+| 10. Fuel shape and size | `Test.fuel_shape`, `fuel_size_text`, `fuel_shape_source` on 1,646 rows (size on 1,608); 107 rows flagged `shape_not_stated` | BASS / BASS-II: shape and size words in the row's own fuel cell. FLEX: droplet, from its initial-diameter column. SAFFIRE: size only, from its sample-size columns. ACME Flame Design and CFI-G ("porous spherical burner", 6.35 mm, final reports pp. 25 / 29 and 10 / 8), SPICE (round nozzle, final report p. 2, size from the `Nozzle (mm)` column) and CFI (fiber-supported or free-floated droplet, final report pp. 6 and 9, from its `Fiber` column): `data_sourced/shapes.json` |
+| 5. What NASA measured | `Investigation.sensors`: 55 entries for 11 investigations | Saffire-I and -III: each burn's sensor log (sheet, column letters, header and unit row; both samples' logs checked). SAFFIRE-I to -III cameras: the experiment tables. BASS-II, ACME Flame Design, CFI-G, CFI, SPICE, SAME, SAME-R: report pages. BASS: overview presentation p. 10. `data_sourced/sensors.json` |
+| 8. Gaps by pillar | `web/public/data/gaps.json`, 27 statements | Worked out by `scripts/gaps_analysis.py` from `tests.json`, `habitats.json`, `outcomes.json` and `other_tables.json` |
+
+The validator now has 99 checks. With `data_extra/` present it re-finds every shape and sensor quote on the
+page given, and reads each Saffire log's header and unit rows from the .xlsx itself.
+
+Found while doing this:
+- Saffire-I's two logs write the radiometer unit differently: "mW/cm2" (Sample 1) and "mw/cm^2" (Sample 2).
+  Both are kept as written.
+- Solid tests with a pressure range sit below 1 atm: BASS-II's report gives 99.2-99.5 kPa (14.39-14.43 psi) and
+  Saffire-III's log reads 14.40-14.50 psia. So `gaps.json` says the lowest is 14.39 psi, not "nothing below 1 atm".
+- Shapes are left null when the row does not name one, even where a report describes the experiment's samples in
+  general (for example, the BASS-II report p. 13 lists rods, slabs and a spherical section). Solid shapes come only
+  from the row itself, so a row is never given a shape it does not state.
+- The ACME reports describe some hardware (radiometers, gas chromatograph) in the future tense, copied from the
+  proposal. Those entries quote it as written, and the detail says so where it matters.
+- Not read for sensors yet: FLEX, FLEX-2, DAFT, s-Flame and the other ACME records, SLICE, and PSI-115 / -117 / -142.
+

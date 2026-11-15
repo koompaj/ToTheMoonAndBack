@@ -144,8 +144,9 @@ cd web && npm run build
 ```
 
 `npm run build` type-checks and builds. It must pass on `main` at all times.
-The data build ends by running `scripts/validate_data.py` (80 independent checks against the raw
-files); it stops on any failure. To run the checks alone:
+The data build ends by running `scripts/validate_data.py` (99 independent checks against the raw
+files; 96 when `data_extra/` is absent, because 3 of them re-find quotes in NASA's downloaded documents);
+it stops on any failure. To run the checks alone:
 
 ```bash
 python -I scripts/validate_data.py data web/public/data
@@ -194,6 +195,18 @@ python -I scripts/validate_data.py data web/public/data
 - `fuels.json` + `web/src/data/layoutEvidence.ts` + `web/src/types/layout.ts`: the data side of the
   habitat evidence map (18 tested fuel options, their evidence in every place, `markEvidence()`), and
   an example layout in `web/public/layouts/`. See `docs/LAYOUT_PLAN.md` section 6.
+- `tests.csv`: every `tests.json` row as one CSV line with its table, row, DOI, oxygen, pressure, shape and flags.
+- `places_waiting.json`: places without a card yet (spacecraft cabin, Mars habitat), why, and what would change it.
+- Fuel shape (item 10): `Test.fuel_shape`, `fuel_size_text`, `fuel_shape_source`, only where the row or a NASA
+  report says so (1,646 rows have a shape, 1,608 a size). BASS and BASS-II shapes come from the row's own fuel cell;
+  ACME burners, SPICE nozzles and CFI droplets from reports quoted with page (`data_sourced/shapes.json`); FLEX from
+  its droplet-diameter column. SAFFIRE has sizes but no stated shape. The rest are null with `shape_not_stated`.
+- Sensors (item 5): `Investigation.sensors` for 11 investigations (55 entries, `data_sourced/sensors.json`), each
+  with file, page or sheet and column, and NASA's words. Saffire-I and -III come from the burn sensor logs (header
+  and unit rows). An investigation without `sensors` has not been read for them yet.
+- `gaps.json` (item 8, `scripts/gaps_analysis.py`): per pillar (prevention, detection, suppression), 27
+  statements of what the tables cover and what is not in them, each with its test ids, investigations and caveats.
+  Investigations without a stated pillar (ACME, SPICE, CFI) are in no column.
 - All 22 tables are accounted for: 2,009 source rows = 1,753 tests + 247 in other tables + 9 left
   out (listed with reasons). Remaining source problems: `docs/DATA_ISSUES.md`.
 - The web app builds and shows: a stub 3D map, a stub flame, a habitat panel with live counts, and a

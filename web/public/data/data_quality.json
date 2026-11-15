@@ -250,6 +250,7 @@
   "extinction_diameter_above_initial": 1,
   "pressure_range_from_report": 22,
   "material_not_stated": 87,
+  "shape_not_stated": 107,
   "pressure_from_report": 29,
   "o2_range": 3,
   "dimensions_swapped_in_source": 2,
@@ -286,6 +287,7 @@
   "o2_from_sensor_log": "NASA's sensor log for this burn records oxygen (%); o2_sensor_min / max is its range over the log. The table's own oxygen value, if any, is kept unchanged.",
   "o2_differs_from_sensor_log": "The table's oxygen and the sensor log's oxygen for this burn do not overlap (e.g. 21.5-21.7 % against 22.2-22.7 %). NASA does not say which is right.",
   "extinction_diameter_above_initial": "The extinction diameter is a little larger than the initial droplet diameter (by no more than the table's 0.01 mm step, in a flame that went out within a second). Kept as written.",
+  "shape_not_stated": "Neither the test's own columns nor a NASA document we checked states the fuel's shape, so fuel_shape is null (fuel_size_text may still give a size the row states).",
   "temperature_placeholder": "The peak burner temperature cell holds a placeholder ('-', '#VALUE!', or 273.15 K beside an empty Celsius cell), so peak_burner_temp_c is null."
  },
  "tests_total": 1753,

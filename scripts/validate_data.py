@@ -456,6 +456,202 @@ def main():
           "rover" in moon["name"].lower() and {w["id"] for w in W} == {"spacecraft_cabin", "mars_habitat"}
           and not {w["id"] for w in W} & {h["id"] for h in H} and all(set(w["source_urls"]) <= urls for w in W))
 
+    # ---- item 10: fuel shape and size ----------------------------------------------------------
+    SH = json.load(open(os.path.join(os.path.dirname(data), "data_sourced", "shapes.json"), encoding="utf-8"))["facts"]
+    no_src = [t["id"] for t in T if (t.get("fuel_shape") or t.get("fuel_size_text")) and not t.get("fuel_shape_source")]
+    flag_bad = [t["id"] for t in T if (t.get("fuel_shape") is None) != ("shape_not_stated" in t["flags"])]
+    check("every fuel shape or size has a source, and every test without a shape has the flag shape_not_stated",
+          not no_src and not flag_bad and all("fuel_shape" in t for t in T), f"{no_src[:3]} {flag_bad[:3]}")
+    # solid shapes: the shape word must be in the raw fuel cell of that very row
+    bad = []
+    for acc, rel in (("PSI-25", "PSI-25/PSI-25_Experimental table_BASS-II.csv"), ("PSI-26", "PSI-26/PSI-26_Experimental table_BASS.csv")):
+        header, body = raw_rows(data, rel)
+        col = header.index("Fuel Sample Material")
+        for t in by_inv(acc):
+            cell = " ".join(body[t["source_row"] - 1][col].split()).lower()
+            word = {"spherical section": "spherical section", "sphere": "sphere"}.get(t["fuel_shape"], t["fuel_shape"])
+            if t["fuel_shape"] and word not in cell:
+                bad.append(t["id"])
+            if t["fuel_size_text"] and not all(x.strip().split()[0] in cell for x in t["fuel_size_text"].split(",")):
+                bad.append(t["id"] + " size")
+    solid_doc = [t["id"] for t in T if t["fuel_class"] == "solid" and t.get("fuel_shape") and "column 'Fuel Sample Material'" not in t["fuel_shape_source"]]
+    check("solid shapes come only from the row's own fuel cell (the word is in the raw cell), sizes only from its numbers",
+          not bad and not solid_doc, f"{bad[:3]} {solid_doc[:3]}")
+    # report-sourced shapes: each test of the investigation carries the fact's shape and quote
+    bad = []
+    for f in SH:
+        a = f["applies_to"]
+        rows = [t for t in by_inv(f["investigation"]) if a.get("all_rows") or (t["source_extra"] or {}).get(a["column"], "") == a["value"]]
+        if not rows:
+            bad.append(f["id"] + ": no rows")
+        bad += [f"{f['id']}: {t['id']}" for t in rows if t["fuel_shape"] != f["fuel_shape"] or f["quote"] not in t["fuel_shape_source"]]
+    shaped = {t["investigation"] for t in T if t.get("fuel_shape")}
+    check("report-sourced fuel shapes match data_sourced/shapes.json (ACME burners, SPICE nozzle, CFI droplets); FLEX droplets from its diameter column",
+          not bad and shaped == {"PSI-10", "PSI-159", "PSI-107", "PSI-39", "PSI-69", "PSI-25", "PSI-26"}
+          and all(t["fuel_shape"] == "droplet" for t in by_inv("PSI-69")), f"{bad[:4]} {sorted(shaped)}")
+    txt_root = os.path.join(os.path.dirname(data), "data_extra", "_text")
+    if os.path.isdir(txt_root):
+        missing = []
+        for f in SH:
+            path = os.path.join(txt_root, f["investigation"], f["source_file"] + ".txt")
+            pages = open(path, encoding="utf-8", errors="replace").read().split("\f") if os.path.exists(path) else []
+            pages = [" ".join(pg.split()) for pg in pages]
+            for k in ("quote", "shape_quote", "size_quote"):
+                if f.get(k):
+                    on = [str(n + 1) for n, pg in enumerate(pages) if f[k] in pg]
+                    if not any(re.search(r"\bp\. " + n + r"\b", f["location"]) for n in on):
+                        missing.append(f"{f['id']}.{k}")
+        check("every fuel-shape quote is found in NASA's file on the page given (data_extra/_text)", not missing, ", ".join(missing))
+
+    # ---- item 5: what each investigation measured ----------------------------------------------
+    SE = json.load(open(os.path.join(os.path.dirname(data), "data_sourced", "sensors.json"), encoding="utf-8"))["sensors"]
+    kinds = {"thermocouple", "radiometer", "pressure", "oxygen", "co2", "flow", "camera", "spectral", "smoke", "soot", "humidity", "other"}
+    keys5 = ("kind", "name", "detail", "source_file", "source_where", "quote")
+    shipped = [(i["accession"], s) for i in INV for s in i.get("sensors", [])]
+    want = [(s["investigation"], {k: s[k] for k in keys5}) for s in SE]
+    bad = [s["name"] for _, s in shipped if s["kind"] not in kinds or not s["source_file"] or not s["source_where"] or not s["quote"]
+           or set(s) != set(keys5)]
+    check("every sensor has a kind from the contract, a source file, a place in it and NASA's words; investigations.json matches data_sourced/sensors.json",
+          not bad and sorted(map(json.dumps, shipped)) == sorted(map(json.dumps, want)), ", ".join(bad[:4]))
+    bad = []
+    for s in SE:
+        if "table_columns" in s:   # experiment-table headers, from data/ (always available)
+            header, _ = raw_rows(data, f"{s['investigation']}/{s['source_file']}")
+            if not all(c in [h.strip() for h in header] for c in s["table_columns"]) or s["quote"] != "; ".join(s["table_columns"]):
+                bad.append(s["investigation"] + " " + s["name"])
+    check("sensors read from experiment tables name real column headers (Saffire-I, -II, -III cameras)", not bad, ", ".join(bad))
+    if os.path.isdir(txt_root):
+        import zipfile
+        import xml.etree.ElementTree as ET
+        M = "{http://schemas.openxmlformats.org/spreadsheetml/2006/main}"
+
+        def first_rows(path, n=2):   # header and unit rows of the first sheet
+            z = zipfile.ZipFile(path)
+            ss = ["".join(t.text or "" for t in si.iter(M + "t")) for si in ET.fromstring(z.read("xl/sharedStrings.xml")).iter(M + "si")]
+            got = []
+            with z.open("xl/worksheets/sheet1.xml") as f:
+                for _, el in ET.iterparse(f):
+                    if el.tag == M + "row":
+                        r = {}
+                        for c in el.iter(M + "c"):
+                            v = c.find(M + "v")
+                            r[re.match(r"[A-Z]+", c.get("r")).group(0)] = None if v is None else (ss[int(v.text)] if c.get("t") == "s" else v.text)
+                        got.append(r)
+                        el.clear()
+                        if len(got) >= n:
+                            break
+            return got
+        missing = []
+        for s in SE:
+            if "table_columns" in s:
+                continue
+            if "cells" in s:
+                for fn, want_unit in zip([s["source_file"]] + s["also_in"], [s["unit"]] + s["also_in_units"]):
+                    txt = os.path.join(txt_root, s["investigation"], fn + ".txt")
+                    raw = os.path.join(os.path.dirname(txt_root), s["investigation"], fn)
+                    text = open(txt, encoding="utf-8", errors="replace").read() if os.path.exists(txt) else ""
+                    sheet = text.split(f"--- sheet '{s['sheet']}'")[1].split("--- sheet")[0] if f"--- sheet '{s['sheet']}'" in text else ""
+                    ok = all(f"[{c}]" in sheet for c in s["columns"])
+                    if ok and os.path.exists(raw):
+                        hdr, unit = first_rows(raw)
+                        ok = all(hdr.get(l) == c and unit.get(l) == s["unit"] for l, c in zip(s["cells"], s["columns"])) if fn == s["source_file"] \
+                            else all(any(hdr.get(l) == c and unit.get(l) == want_unit for l in hdr) for c in s["columns"])
+                    if not ok:
+                        missing.append(f"{s['investigation']} {s['name']} in {fn}")
+            else:
+                txt = os.path.join(txt_root, s["investigation"], s["source_file"] + ".txt")
+                pages = [" ".join(pg.split()) for pg in open(txt, encoding="utf-8", errors="replace").read().split("\f")] if os.path.exists(txt) else []
+                on = [str(n + 1) for n, pg in enumerate(pages) if s["quote"] in pg]
+                if not any(re.fullmatch(r"p\. " + n, s["source_where"]) for n in on):
+                    missing.append(f"{s['investigation']} {s['name']} ({s['source_where']}, found on {on})")
+        check("every sensor quote is on the page given, and every sensor-log column and unit is in NASA's file (data_extra)", not missing, "; ".join(missing[:4]))
+
+    # ---- item 8: gaps by pillar (recomputed here from tests.json, not from gaps_analysis.py) ----
+    G = load("gaps.json")
+    ids = {t["id"]: t for t in T}
+    uniq = [t for t in T if not any(f.startswith("duplicate_row") for f in t["flags"])]
+    pil = {p: {i["accession"] for i in INV if i["pillar"] == p} for p in ("prevention", "detection", "suppression")}
+    P = {g["pillar"]: g for g in G["pillars"]}
+    allst = [(p, k, st) for p, g in P.items() for k in ("tested", "not_in_tables") for st in g[k]]
+    bad = [st["text"][:50] for p, k, st in allst
+           if not st["text"] or "never tested" in st["text"].lower()
+           or any(x not in ids or ids[x]["o2_basis"] != "ambient" or any(f.startswith("duplicate_row") for f in ids[x]["flags"]) for x in st["test_ids"])
+           or not {ids[x]["investigation"] for x in st["test_ids"] if x in ids} <= set(st["investigations"])
+           or not set(st["investigations"]) <= pil[p] or not st["investigations"]]
+    check("gaps.json: three pillars, every statement cites only cabin-air, non-duplicate tests of its own pillar's investigations, never says 'never tested'",
+          list(P) == ["prevention", "detection", "suppression"] and not bad and len(G["caveats"]) >= 4
+          and any("Saffire-IV to VI" in c for c in G["caveats"]) and any("summaries" in c for c in G["caveats"]), "; ".join(bad[:3]))
+
+    def find(p, k, start):
+        hits = [st for st in P[p][k] if st["text"].startswith(start)]
+        return hits[0] if len(hits) == 1 else None
+
+    def box(t, h):
+        return (t["o2_basis"] == "ambient" and t["o2_fraction"] is not None and t["pressure_atm"] is not None
+                and h["o2_fraction"][0] <= t["o2_fraction"] <= h["o2_fraction"][1] and h["pressure_atm"][0] <= t["pressure_atm"] <= h["pressure_atm"][1])
+    errs = []
+    # prevention
+    sol = [t for t in uniq if t["investigation"] in pil["prevention"]]
+    o2v = [t for t in sol if t["o2_fraction"] is not None]
+    hi = max(t["o2_fraction"] for t in o2v)
+    st = find("prevention", "tested", f"{len(sol)} solid-material tests")
+    if not st or set(st["test_ids"]) != {t["id"] for t in sol} or any(t["fuel_class"] != "solid" for t in sol):
+        errs.append("solid count")
+    st = find("prevention", "tested", f"{len(o2v)} of them record a cabin oxygen value, from {min(t['o2_fraction'] for t in o2v) * 100:.1f}".rstrip("0").rstrip("."))
+    if not st or f"to {hi * 100:.1f} %" not in st["text"]:
+        errs.append("solid oxygen")
+    st = find("prevention", "not_in_tables", "No solid-material test in the tables reaches 30 % oxygen (highest: BASS-II 22.2 %")
+    top = {t["id"] for t in o2v if t["o2_fraction"] == hi}
+    if not st or hi >= 0.30 or abs(hi - 0.222) > 1e-9 or not top <= set(st["test_ids"]) or {ids[x]["investigation"] for x in top} != {"PSI-25"}:
+        errs.append("30 % statement")
+    wp = [t for t in sol if t["pressure_atm"] is not None]
+    rp = [t for t in sol if t["pressure_atm"] is None and t["pressure_atm_min"] is not None]
+    st = find("prevention", "not_in_tables", f"Only {len(wp)} of {len(sol)} solid-material tests have a single pressure")
+    if not st or f"{len(rp)} more have only a range, and the other {len(sol) - len(wp) - len(rp)} none" not in st["text"] or (len(wp), len(rp)) != (29, 26):
+        errs.append("solid pressure counts")
+    floor = min([t["pressure_atm"] for t in wp] + [t["pressure_atm_min"] for t in rp])
+    st = find("prevention", "not_in_tables", "No solid-material test with a pressure")
+    if not st or f"below {floor * PSI:.2f} psi" not in st["text"] or floor >= 1.0:
+        errs.append("solid pressure floor")
+    st = find("prevention", "tested", "156 state the sample's shape")
+    if not st or len([t for t in sol if t.get("fuel_shape")]) != 156:
+        errs.append("shapes")
+    for p_, what, ts in (("prevention", "solid-material", sol), ("suppression", "droplet", [t for t in uniq if t["investigation"] in pil["suppression"]])):
+        for h in H:
+            ins = {t["id"] for t in ts if box(t, h)}
+            st = find(p_, "tested", f"{len(ins)} {what} tests sit in {h['name']} air") if ins else find(p_, "not_in_tables", f"No {what} test in the tables sits in {h['name']} air")
+            if not st or set(st["test_ids"]) != ins:
+                errs.append(f"{p_} {h['id']}")
+    # suppression: recount FLEX endings by oxygen band straight from the test rows
+    fl = [t for t in uniq if t["investigation"] in pil["suppression"]]
+    def band(lo):
+        g = [t for t in fl if t["o2_fraction"] is not None and lo - 1e-9 <= t["o2_fraction"] < lo + 0.02 - 1e-9 and t["outcome"]]
+        return sum(t["outcome"] == "extinction" for t in g), len(g), {t["id"] for t in g}
+    a, b, ia = band(0.12)
+    c, d, ic = band(0.34)
+    st = find("suppression", "tested", f"FLEX flames went out in {a} of {b} tests at 12-14 % oxygen and in {c} of {d} at 34-36 %")
+    if not st or set(st["test_ids"]) != ia | ic or (a, b, c, d) != (17, 17, 0, 9):
+        errs.append("FLEX outcome")
+    st = find("suppression", "tested", f"{len(fl)} droplet tests from FLEX")
+    if not st or f"oxygen {min(t['o2_fraction'] for t in fl if t['o2_fraction']) * 100:g} % to {max(t['o2_fraction'] for t in fl if t['o2_fraction']) * 100:g} %" not in st["text"]:
+        errs.append("FLEX range")
+    co2 = [t for t in fl if t["co2_fraction"]]
+    he = [t for t in fl if t["he_fraction"]]
+    st = find("suppression", "tested", f"{len(co2)} ran with carbon dioxide")
+    if not st or f"{len(he)} with helium" not in st["text"]:
+        errs.append("FLEX added gas")
+    # detection: no burn rows; smoke-table row counts
+    det = [t for t in T if t["investigation"] in pil["detection"]]
+    smoke = {o["acronym"]: len(o["rows"]) for o in O if o["investigation"] in pil["detection"]}
+    st = find("detection", "tested", "Smoke tests from")
+    if det or not st or not all(f"{k} {v} rows" in st["text"] for k, v in smoke.items()) or smoke != {"SAME": 8, "SAME-R": 109}:
+        errs.append("detection")
+    # gravity
+    if {t["gravity_g"] for t in T} == {0.0} and not all(find(p_, "not_in_tables", f"Every {p_} test in the tables ran in microgravity") for p_ in ("prevention", "suppression")):
+        errs.append("gravity")
+    check("every gaps.json number recounts from tests.json, habitats.json and other_tables.json (solid 263, 22.2 % top, 29 + 26 pressures, FLEX 17/17 and 0/9, place counts, SAME rows)",
+          not errs, ", ".join(errs))
+
     # ---- report ------------------------------------------------------------------------------
     for name, ok, detail in results:
         print(f"{'PASS' if ok else 'FAIL'}  {name}{'' if ok or not detail else '  -> ' + detail}")
