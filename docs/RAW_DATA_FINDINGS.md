@@ -28,8 +28,12 @@ checks them before anything enters `tests.json` or a count.
   - **32 CFI raw files (PSI-39):** the whole F173E01-E03 set (data, chamber readings, radiometer
     readings, camera and test point settings, comments, filter positions, and 4 INTNS metadata files),
     plus F121A01E (3 metadata files), F163A04D, F195D07D and F205D01 (C, D and 3 metadata files).
-    Proposed fix: one polite retry of these 36 to confirm they are broken, then report them to PSI with
-    the 8 known ones.
+  - **Retried once (12:30-12:45), one file at a time: 0 of 36 came through, all 404 again.** For every
+    file PSI's API (`.../studies/<acc>/download?...&redirect=false`) issues a download link, but the
+    storage behind the link answers 404. So PSI lists files that are not in its storage. Each was
+    tried at the record's version and at version 1, three times each. Result:
+    `data_extra/raw_retry_2026-11-15.json` (not in git). Proposed: report all 44 to NASA PSI as broken
+    links, with this list.
 - **3 size warnings** (downloaded size differs from the listed size): the metadata zips
   `PSI-39_metadata_PSI-118_CFI.zip` (7,569 vs 10,237 bytes), `PSI-102_metadata_PSI-170_SAME.zip`
   (10,753 vs 13,127) and `PSI-115_metadata_PSI-185_Utilization of the S.zip` (8,200 vs 7,021). These
@@ -383,10 +387,10 @@ NASA's "Final ACME Chamber Calculator" spreadsheets log every chamber fill, vent
 ## Left to do (updated 2026-11-15, 12:20; this run stopped at about 64 % of the 5-hour usage limit)
 
 - **Download: finished** (9,572 of 9,616 files; 44 are 404s on NASA's side, see "What was downloaded").
-  Proposed: one polite retry of the 36 new 404s, then report all 44 to PSI.
-- **Summaries:** `python -I scripts/summarize_raw.py data_extra` was started over all files at 12:13
-  and had reached PSI-62 at 12:18 (PSI-98 to PSI-159 still to go). If `data_extra/_raw_summary/PSI-159.json`
-  is older than 12:13, or `INDEX.md` was not rewritten, re-run it. It only writes inside `data_extra/`.
+  The 36 new 404s were retried once and failed again (storage 404). Proposed: report all 44 to PSI.
+- **Summaries: done** over all 9,572 files (finished 12:26; `data_extra/_raw_summary/INDEX.md`
+  rewritten). Files not read are instrument binaries and images, for example 610 `.mdipsug` files and
+  2 images in CFI-G (PSI-159).
 - **Not yet re-run:** `python -I scripts/extract_sensors.py data_extra data_sourced/raw_candidates.json`
   over the new files (ACME and CFI-G sensors). The chamber logs show sensor names such as
   "FCU_MP_PT16(PSIA)" to "FCU_MP_PT29(PSIA)" and "FCU_MP_TM1(Deg C)" to "TM4" (F11).
