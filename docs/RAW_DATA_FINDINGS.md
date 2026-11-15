@@ -20,12 +20,17 @@ checks them before anything enters `tests.json` or a count.
   the 114 earlier documents) are on disk; about 8,340 are left, all bulk per-test files of ACME
   (Flame Design PSI-10, s-Flame PSI-23, CFI-G PSI-159) and CFI (PSI-39), plus a few SAME-R and DAFT
   files. At about 3.5 s per file this needs roughly 8 more hours.
-- The download now runs as a **detached process** (started 10:52, `python -I scripts/fetch_psi_raw.py
-  data data_extra`), so it outlives the session that started it. Log: `data_extra/_fetch_run3.log`
-  (a line every 50 files) and `_fetch_run3.err`. To see whether it is still running:
-  `Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -match 'fetch_psi_raw' }`. Each run
-  rewrites `data_extra/raw_manifest.json` and counts earlier files as "skipped"; copies of the earlier
-  runs' manifests are `raw_manifest_run1.json` and `raw_manifest_run2.json`.
+- **Takeover at about 11:00:** another session on the team stopped this run's single-file download
+  (PID 9956) and continues it 4 files at a time from its own copy of the script
+  (`fetch_psi_raw_parallel.py --workers 4`, kept outside the repo), at the team lead's request to
+  finish faster. It writes the same `data_extra/raw_manifest.json` and skips files already there.
+  Note: this brief asked for one file at a time; running 4 at once was the team lead's decision, not
+  this run's. Do not start another download while it runs. To check:
+  `Get-CimInstance Win32_Process -Filter "Name like 'python%'" | Where-Object { $_.CommandLine -like '*fetch_psi*' }`.
+- Each run rewrites the manifest and counts earlier files as "skipped"; copies of earlier manifests
+  are `raw_manifest_run1.json` and `raw_manifest_run2.json`. At the takeover the manifest planned
+  8,397 files with 1,219 skipped, so a complete download is about **9,608** files (ok + skipped) plus
+  the 8 known failures.
 - Final counts: to be filled in when the download finishes.
 - **Failed so far: 8, all known.** They are the 8 files `PSI_DOCUMENTS.md` already lists as broken on
   NASA's side (HTTP 404): BASS Final Report and SPICE Final Report as filed under PSI-26, the Saffire
@@ -306,8 +311,8 @@ group them by `name`. The other investigations' sensor files are still downloadi
 
 ## Left to do (updated 2026-11-15, 11:01)
 
-- **Download:** about 8,340 bulk files still downloading (see "What was downloaded"). Do not start a
-  second download while the detached one runs.
+- **Download:** about 8,300 bulk files still downloading, now run by another session 4 at a time
+  (see "What was downloaded"). Do not start a second download.
 - **When it finishes:** fill in the final counts above from `data_extra/raw_manifest.json`, then run
   `python -I scripts/summarize_raw.py data_extra` (about 9 minutes for the first 1,269 files; longer
   for all) and `python -I scripts/extract_sensors.py data_extra data_sourced/raw_candidates.json`.
