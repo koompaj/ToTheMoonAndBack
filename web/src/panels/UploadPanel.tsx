@@ -154,7 +154,7 @@ export function UploadPanel({ habitats }: { habitats: Habitat[] }) {
         <span className="up-done-badge">✓</span>
         <h3>{done.investigation.acronym} Has Landed</h3>
         <p>
-          {done.tests.length} tests were added and marked <span className="user-mark">✦ User-uploaded</span>. They now count on the place cards and in Experiments.
+          {done.tests.length} tests were added and marked <span className="user-mark">✦ User-uploaded</span>. You&rsquo;ll find them in the Your Uploads group in Experiments. NASA&rsquo;s own counts don&rsquo;t change.
         </p>
         <div className="up-dialog-actions">
           <a className="btn btn-primary" href={`#experiments?id=${done.investigation.accession}`}>

@@ -29,8 +29,9 @@ const placed = (t: Test) => t.o2_basis === 'ambient' && t.o2_fraction !== null &
 
 /** The k nearest real tests of one fuel type to a point. Distance counts 1 percentage point of
  *  oxygen the same as 1 psi (the rule shown on screen). When no test of the fuel has a usable
- *  pressure, only oxygen is compared and the result says so. Most solid tests have no pressure;
- *  29 BASS-II tests take 1 atm from NASA's BASS-II report (pressure_source on each test). */
+ *  pressure, only oxygen is compared and the result says so. Most solid tests have no pressure in
+ *  their table; those that are placed take it from another NASA document in PSI, named in each
+ *  test's pressure_source (today BASS-II's report and BASS's as-run test matrix). */
 export function nearestTests(data: AppData, fuel: FuelClass, point: SimPoint, k = 5): NearTest[] {
   const pool = data.tests.filter((t) => t.fuel_class === fuel && placed(t))
   if (pool.length > 0) {
@@ -107,9 +108,12 @@ export function taskAnswers(data: AppData, habitat: Habitat, fuel: FuelClass, po
     const withP = ofFuel.filter((t) => t.pressure_atm !== null)
     const pInvs = [...new Set(withP.map((t) => t.investigation))]
     const n = withP.length
-    // Where the pressure comes from, when some of it is from NASA's reports rather than the tables.
-    const k = withP.filter((t) => t.pressure_source).length
-    const docs = k === 0 ? '' : k === n ? ' (all from NASA’s reports, not the tables)' : ` (${k} of the ${n} from NASA’s reports, not the tables)`
+    // Where the pressure comes from, when some of it is from other NASA documents rather than the tables
+    // (each test's pressure_source, shortened to the document's name).
+    const fromDocs = withP.filter((t) => t.pressure_source)
+    const k = fromDocs.length
+    const names = [...new Set(fromDocs.map((t) => t.pressure_source!.replace(/\s*\([^)]*\)/g, '').split(',')[0].trim()))].join(' and ')
+    const docs = k === 0 ? '' : k === n ? ` (all from NASA documents, not the tables: ${names})` : ` (${k} of the ${n} from NASA documents, not the tables: ${names})`
     prevention.push({
       kind: outside ? 'gap' : 'data',
       text: outside

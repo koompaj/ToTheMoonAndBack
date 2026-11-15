@@ -6,7 +6,7 @@
 import type { AppData, FuelClass, GapStatement } from '../types/data'
 import type { AiContent } from '../ai/content'
 import { testsInHabitat } from '../data/load'
-import { fmtPct, headline, isPlaced } from '../ai/evidence'
+import { fmtPct, headline, isPlaced, pressureSources, pressureSourcesText } from '../ai/evidence'
 import { UntappedPanel } from './UntappedPanel'
 import { DoiCite, TestCite } from './Cite'
 import { FUTURE_PLACES, placeName } from './places'
@@ -36,6 +36,9 @@ export function RiskView({ data, ai }: { data: AppData; ai: AiContent }) {
   const h = headline(data)
   const solidTotal = data.tests.filter((t) => t.fuel_class === 'solid').length
   const solidPlaced = data.tests.filter((t) => t.fuel_class === 'solid' && isPlaced(t)).length
+  const solidSources = pressureSources(data.tests.filter((t) => t.fuel_class === 'solid'))
+  const solidSrc = pressureSourcesText(solidSources)
+  const solidDiluted = data.tests.filter((t) => t.fuel_class === 'solid' && isPlaced(t) && t.flags.includes('o2_diluted_work_volume')).length
   const solidIn = (id: string) => {
     const hab = data.habitats.find((x) => x.id === id)
     return hab ? testsInHabitat(data.tests, hab).filter((t) => t.fuel_class === 'solid').length : 0
@@ -46,9 +49,9 @@ export function RiskView({ data, ai }: { data: AppData; ai: AiContent }) {
   const gaps: { title: string; plain: string; why: string; source: string }[] = [
     {
       title: 'Fabrics and plastics: little pressure data',
-      plain: `${solidPlaced} of ${solidTotal} solid-material tests have a cabin pressure we can place, all at 1 atm (14.7 psi), from NASA\u2019s BASS-II report. The rest have none.`,
+      plain: `${solidPlaced} of ${solidTotal} solid-material tests have a cabin pressure we can place${solidSrc ? `, taken from NASA documents rather than the tables: ${solidSrc}` : ''}. The rest have none.`,
       why: `Habitats are built from these materials, and pressure changes how a fire behaves, so for most of them we cannot say how they burn in a habitat’s air. Of the ${solidPlaced} that can be placed, ${solidIn('iss')} ran in ISS / Earth air and ${solidIn('moon_base')} in Moon Base air.`,
-      source: 'Counted from tests.json. BASS, BASS-II and SAFFIRE tables have no pressure column; the placed tests use NASA/TM-20210011385 p. 102 ("Ambient pressure was 1 atm")',
+      source: `Counted from tests.json (pressure_source on each test). BASS, BASS-II and SAFFIRE tables have no pressure column.${solidSources.length ? ` Pressures: ${solidSources.map((g) => g.cite).join('; ')}.` : ''}${solidDiluted ? ` ${solidDiluted} of the placed tests ran in nitrogen-diluted glovebox air (flag o2_diluted_work_volume).` : ''}`,
     },
     {
       title: 'No solid material in PSI\u2019s tables at Moon Base oxygen',

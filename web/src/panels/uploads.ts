@@ -1,8 +1,9 @@
 // OWNER: dashboard + AI workstream.
 // User-uploaded experiments. They are saved in this browser only (localStorage), never sent anywhere,
-// and once submitted they cannot be edited. They are added to the dashboard's data and counts, and
-// every one carries a mark (accession "USER-…", source_table "user-upload", flag "user_uploaded") so
-// the screen can always tell them apart from NASA's own tables.
+// and once submitted they cannot be edited. They NEVER count in NASA's numbers (place cards, distinct
+// tests, rankings, filters): they appear only in their own "Your Uploads" group in Experiments and
+// on their own pages. Every one carries a mark (accession "USER-…", source_table "user-upload",
+// flag "user_uploaded") so the screen can always tell them apart from NASA's own tables.
 import type { AppData, FuelClass, Investigation, Pillar, Test } from '../types/data'
 
 const KEY = 'fif-user-uploads-v1'
@@ -51,17 +52,19 @@ export function onUploadsChanged(fn: () => void) {
   }
 }
 
-/** NASA data plus the user's uploads. The distinct-test count grows by the uploaded rows. */
+/** NASA data plus the user's uploads, ONLY for showing an upload itself (its card and page).
+ *  Never pass the result to anything that counts: NASA's distinct-test count is left unchanged. */
 export function mergeUploads(data: AppData, uploads: UserUpload[]): AppData {
   if (!uploads.length) return data
-  const tests = uploads.flatMap((u) => u.tests)
   return {
     ...data,
     investigations: [...data.investigations, ...uploads.map((u) => u.investigation)],
-    tests: [...data.tests, ...tests],
-    quality: { ...data.quality, distinct_tests: data.quality.distinct_tests == null ? data.quality.distinct_tests : data.quality.distinct_tests + tests.length },
+    tests: [...data.tests, ...uploads.flatMap((u) => u.tests)],
   }
 }
+
+/** All uploaded test rows. */
+export const uploadedTests = (uploads: UserUpload[]) => uploads.flatMap((u) => u.tests)
 
 // ---------- building an upload from the form ----------
 

@@ -8,7 +8,7 @@ import { shapeCounts } from '../data/load'
 import type { AiContent } from '../ai/content'
 import { fmtPct, fmtPsi, investigationStats, shortName } from '../ai/evidence'
 import { DoiCite, UserMark } from './Cite'
-import { isUserInvestigation } from './uploads'
+import { isUserInvestigation, mergeUploads, type UserUpload } from './uploads'
 import { InvestigationsView } from './InvestigationsView'
 import { TestsView } from './TestsView'
 import { useHashParam } from './route'
@@ -109,7 +109,7 @@ function Shapes({ tests }: { tests: Test[] }) {
   )
 }
 
-function ExperimentDetail({ data, id }: { data: AppData; id: string }) {
+function ExperimentDetail({ data, rows, id }: { data: AppData; rows: AppData; id: string }) {
   const s = investigationStats(data).find((x) => x.inv.accession === id)
   if (!s)
     return (
@@ -233,7 +233,7 @@ function ExperimentDetail({ data, id }: { data: AppData; id: string }) {
 
       {s.tests.length > 0 ? (
         <div className="panel">
-          <TestsView data={data} lockedInv={id} embedded />
+          <TestsView data={rows} lockedInv={id} embedded />
         </div>
       ) : (
         <div className="panel">
@@ -275,7 +275,13 @@ function ExperimentDetail({ data, id }: { data: AppData; id: string }) {
   )
 }
 
-export function ExperimentsView({ data, ai }: { data: AppData; ai: AiContent }) {
+/** data: distinct tests only (what every count uses). rows: every row, repeats included, for the tests table. */
+export function ExperimentsView({ data, rows, ai, uploads = [] }: { data: AppData; rows: AppData; ai: AiContent; uploads?: UserUpload[] }) {
   const [id] = useHashParam('id', '')
-  return id ? <ExperimentDetail data={data} id={id} /> : <InvestigationsView data={data} ai={ai} />
+  // An upload's own page is built from NASA data plus the uploads; NASA's pages never see them.
+  if (id) {
+    const mine = isUserInvestigation({ accession: id })
+    return <ExperimentDetail data={mine ? mergeUploads(data, uploads) : data} rows={mine ? mergeUploads(rows, uploads) : rows} id={id} />
+  }
+  return <InvestigationsView data={data} ai={ai} uploads={uploads} />
 }
