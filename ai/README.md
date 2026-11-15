@@ -57,7 +57,7 @@ node ai/risk-server.mjs
   The model must cite ids; the helper drops any line whose citations are missing or made up.
 - Data problems (missing values, outside the place's air, wrong gravity, repeats, link instead of DOI) are
   found by code in `web/src/panels/riskReview.ts`, not by the AI.
-- Reviews are kept in the browser with the upload. A deployed static site has no helper, so no new reviews there.
+- Reviews are kept in the browser with the upload. On Vercel the same work runs in `web/api/*.js` with the keys as Vercel environment variables: see `docs/DEPLOY.md`.
 
 ## A floor-plan picture drawn in 3D (Simulation page, same helper)
 

@@ -5,7 +5,7 @@
 import { useCallback, useEffect, useState, type ReactNode } from 'react'
 import type { AppData } from '../types/data'
 import { DoiCite, TestCite, UserMark } from './Cite'
-import { checks, helperUp, loadReviews, markSeen, onReviewsChanged, requestReview, type Fact, type StoredReview } from './riskReview'
+import { checks, helperUp, loadReviews, onLaptop, markSeen, onReviewsChanged, requestReview, type Fact, type StoredReview } from './riskReview'
 import type { UserUpload } from './uploads'
 import { PanelHead } from './ui'
 
@@ -78,7 +78,13 @@ function Status({ state, error, run }: { state: State; error: string; run: () =>
   if (state === 'offline')
     return (
       <p className="ai-status ai-warn">
-        The AI helper isn&rsquo;t running, so no review yet. Start it with <code>node ai/risk-server.mjs</code>, then{' '}
+        {onLaptop() ? (
+          <>
+            The AI helper isn&rsquo;t running, so no review yet. Start it with <code>node ai/risk-server.mjs</code>, then{' '}
+          </>
+        ) : (
+          <>The AI review isn&rsquo;t available on this site right now. </>
+        )}
         <button type="button" className="link-btn" onClick={run}>
           try again
         </button>
