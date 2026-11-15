@@ -58,3 +58,23 @@ node ai/risk-server.mjs
 - Data problems (missing values, outside the place's air, wrong gravity, repeats, link instead of DOI) are
   found by code in `web/src/panels/riskReview.ts`, not by the AI.
 - Reviews are kept in the browser with the upload. A deployed static site has no helper, so no new reviews there.
+
+## A floor-plan picture drawn in 3D (Simulation page, same helper)
+
+On the Simulation page, after uploading a PNG or JPG floor plan, "Draw this plan in 3D with AI"
+asks the same helper (`POST /api/plan-to-layout`) to describe the picture as a layout: rooms,
+doors and objects.
+
+- Key: `API_FOR_SIMULATION=...` in the same `.env` (never committed). A GitHub secret cannot be
+  read by this helper; the key has to be in the local file. Same models as above.
+- **The picture is sent to Google**, and only when the button is pressed. Without the button the
+  file stays on the computer.
+- The answer is the model's reading of the user's picture. It is not NASA data and holds none.
+- **The model is told not to say what anything is made of**, and the page ignores any material
+  it returns. The user picks each object's fuel from the fuels NASA's tables cover, or leaves it
+  as not a fuel.
+- The page checks the answer with the code that checks a layout file
+  (`web/src/scene/cabin/layoutFile.ts`). An answer with any problem is refused whole and the
+  problems are listed; nothing is repaired.
+- A picture has no scale unless it shows one: the model then makes the longer side 12 m and says
+  so, and the page shows that sentence.

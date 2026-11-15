@@ -12,6 +12,7 @@ import { Box, Glow, HOLO, Segs } from './holo'
 import { DOOR_HEIGHT, GRILLE_SIZE, type Layout3D, type LayoutDoor, type LayoutRoom } from './layoutFile'
 
 export const LOADED_NOTE = 'Your layout file, not a NASA design'
+export const AI_NOTE = 'Drawn by AI from your picture. Check it. Not a NASA design'
 
 const PALE = '#dff4ff'
 
@@ -82,7 +83,7 @@ function Duct({ layout, showLabel }: { layout: Layout3D; showLabel: boolean }) {
   )
 }
 
-export function LayoutModel({ layout, showLabels, hiddenIds, showDuct }: { layout: Layout3D; showLabels: boolean; hiddenIds: ReadonlySet<string>; showDuct: boolean }) {
+export function LayoutModel({ layout, showLabels, hiddenIds, showDuct, note = LOADED_NOTE }: { layout: Layout3D; showLabels: boolean; hiddenIds: ReadonlySet<string>; showDuct: boolean; note?: string }) {
   const walls = useMemo(() => layout.rooms.flatMap((r) => roomLines(r, layout.ceiling)), [layout])
   const plates = useMemo(() => layout.rooms.flatMap(floorLines), [layout])
   const floors = useMemo(
@@ -108,12 +109,12 @@ export function LayoutModel({ layout, showLabels, hiddenIds, showDuct }: { layou
           return (
             <group key={item.id} position={[item.x, base, item.z]}>
               <Box size={[item.w, item.h, item.d]} position={[0, item.h / 2, 0]} color={color} line={item.fuel ? 0.9 : 0.5} fill={item.fuel ? 0.14 : 0.04} />
-              {showLabels && item.fuel && <Label text={item.label} position={[0, item.h + 0.35, 0]} color={color} height={0.27} />}
+              {showLabels && (item.fuel || note !== LOADED_NOTE) && <Label text={item.label} position={[0, item.h + 0.35, 0]} color={color} height={0.27} />}
             </group>
           )
         })}
       {showLabels && layout.rooms.map((r) => <Label key={r.id} text={r.name} position={[(r.x0 + r.x1) / 2, 0.05, r.z1 - 0.35]} color="#9fdcff" height={0.32} />)}
-      <Label text={LOADED_NOTE} position={[0, -1.4, layout.size[1] / 2 + 1.2]} color="#7fa8c4" height={0.3} />
+      <Label text={note} position={[0, -1.4, layout.size[1] / 2 + 1.2]} color="#7fa8c4" height={0.3} />
     </group>
   )
 }

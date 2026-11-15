@@ -8,7 +8,11 @@
 //     of their own (rooms, doors, a vent duct, objects: cabin/layoutFile.ts). The page hands over
 //     one file either way; this view reads it to tell which. A layout is drawn in 3D and the
 //     illustrated spread runs through it. The page knows nothing of what is in it, so its items
-//     are coloured by fuel type and have no evidence colours or cards.
+//     are coloured by fuel type and have no evidence colours or cards;
+//   - a picture can also be drawn in 3D by an AI model, when the user presses the page's button
+//     for it. The page hands over the model's drawing as a layout file marked "drawn_by_ai"
+//     (cabin/planFromPicture.ts). It is the model's reading of the picture, labelled as such;
+//     the model never says what anything is made of, and the user picks each object's fuel here.
 //
 // Everything here is an ILLUSTRATION on an EXAMPLE LAYOUT, NOT A NASA DESIGN. The stage works out
 // no evidence and no outcome, and where the fire is placed changes nothing about the evidence.
@@ -18,12 +22,13 @@ import { Canvas, type ThreeEvent } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import * as THREE from 'three'
 import { TIER_COLOR, type EvidenceTier } from '../types/layout'
+import type { FuelClass } from '../types/data'
 import type { CabinStageProps } from '../types/sim'
 import { Label } from './Label'
 import { useReducedMotion } from './fire/state'
 import { CabinFire, type SpreadClock } from './cabin/CabinFire'
 import { LayoutField } from './cabin/LayoutField'
-import { LayoutModel } from './cabin/LayoutModel'
+import { AI_NOTE, LOADED_NOTE, LayoutModel } from './cabin/LayoutModel'
 import { SpreadSettings } from './cabin/SpreadSettings'
 import { Spacecraft } from './cabin/Spacecraft'
 import { TimelineBar } from './cabin/TimelineBar'
@@ -31,6 +36,7 @@ import { groupItems, hiddenFor } from './cabin/groups'
 import { HOLO, Segs } from './cabin/holo'
 import { parseLayout, roomAt, type Layout3D } from './cabin/layoutFile'
 import { buildGrid, distanceField, planLayoutSpread, type LayoutGrid } from './cabin/layoutGrid'
+import { aiDrawingInfo, layoutFileText, type AiDrawingInfo } from './cabin/planFromPicture'
 import { ITEMS, PLAN, deckHalfWidth } from './cabin/spec'
 import { NO_EFFECTS, NO_SPREAD, biasFrom, planSpread, type CabinConditions, type EffectSettings } from './cabin/timeline'
 import './scene.css'
@@ -100,15 +106,24 @@ function LayoutPick({ layout, onPick }: { layout: Layout3D; onPick: (x: number, 
   )
 }
 
-/** The ids of the fuels NASA's tables cover, to check a loaded layout against. */
-async function testedFuelIds(): Promise<Set<string>> {
+interface TestedFuel {
+  id: string
+  name: string
+  fuel_class: FuelClass
+}
+
+/** The fuels NASA's tables cover (fuels.json): to check a loaded layout against, and to choose from. */
+async function testedFuels(): Promise<TestedFuel[]> {
   const res = await fetch(`${import.meta.env.BASE_URL}data/fuels.json`)
   if (!res.ok) throw new Error(`fuels.json: ${res.status}`)
   const json: unknown = await res.json()
-  const list = (Array.isArray(json) ? json : (json as { fuels?: unknown }).fuels) as { id: string }[] | undefined
+  const list = (Array.isArray(json) ? json : (json as { fuels?: unknown }).fuels) as TestedFuel[] | undefined
   if (!Array.isArray(list)) throw new Error('fuels.json is not a list')
-  return new Set(list.map((f) => f.id))
+  return list
 }
+const testedFuelIds = async () => new Set((await testedFuels()).map((f) => f.id))
+
+const FUEL_WORD: Record<FuelClass, string> = { solid: 'solid', droplet: 'liquid', gas: 'gas' }
 
 interface LoadedLayout {
   layout: Layout3D
@@ -116,7 +131,12 @@ interface LoadedLayout {
 }
 
 /** What the uploaded file turned out to be. */
-type Upload = { url: string } & ({ kind: 'checking' | 'picture' } | { kind: 'layout'; loaded: LoadedLayout } | { kind: 'refused'; problems: string[] })
+type Upload = { url: string } & (
+  | { kind: 'checking' | 'picture' }
+  // `ai` is set when the file is an AI model's drawing of the user's picture
+  | { kind: 'layout'; loaded: LoadedLayout; ai: AiDrawingInfo | null }
+  | { kind: 'refused'; problems: string[]; ai: AiDrawingInfo | null }
+)
 
 /** Reads the uploaded file to tell a picture from a 3D layout file. A layout with a problem is
  *  refused whole, with every problem listed; it is never shown as an empty plan. */
@@ -125,12 +145,15 @@ async function readUpload(url: string): Promise<Upload> {
     const blob = await (await fetch(url)).blob()
     if (blob.type.startsWith('image/')) return { url, kind: 'picture' }
     if (!(await blob.slice(0, 64).text()).trimStart().startsWith('{')) return { url, kind: 'picture' }
-    if (blob.size > 300_000) return { url, kind: 'refused', problems: ['The file is larger than 300 kB; a layout file is a few kB.'] }
-    const result = parseLayout(await blob.text(), await testedFuelIds())
-    if ('problems' in result) return { url, kind: 'refused', problems: result.problems }
-    return { url, kind: 'layout', loaded: { layout: result.layout, grid: buildGrid(result.layout) } }
+    if (blob.size > 300_000) return { url, kind: 'refused', problems: ['The file is larger than 300 kB; a layout file is a few kB.'], ai: null }
+    const text = await blob.text()
+    // A drawing made by AI has no fuels yet (the user picks them), so it is checked as a draft.
+    const ai = aiDrawingInfo(text)
+    const result = parseLayout(text, await testedFuelIds(), { draft: ai !== null })
+    if ('problems' in result) return { url, kind: 'refused', problems: result.problems, ai }
+    return { url, kind: 'layout', loaded: { layout: result.layout, grid: buildGrid(result.layout) }, ai }
   } catch (e) {
-    return { url, kind: 'refused', problems: [e instanceof Error ? `The file could not be checked: ${e.message}` : 'The file could not be checked.'] }
+    return { url, kind: 'refused', problems: [e instanceof Error ? `The file could not be checked: ${e.message}` : 'The file could not be checked.'], ai: null }
   }
 }
 
@@ -170,7 +193,8 @@ function UploadedPlan({ imageUrl, onSize }: { imageUrl: string; onSize: (w: numb
     <group>
       <mesh rotation={[-Math.PI / 2, 0, 0]} raycast={() => null}>
         <planeGeometry args={[w, d]} />
-        {texture ? <meshBasicMaterial map={texture} transparent opacity={0.92} /> : <meshBasicMaterial color="#0b2a44" transparent opacity={0.5} />}
+        {/* Two materials with their own keys: reusing one left its colour black once the picture arrived, which hid the picture. */}
+        {texture ? <meshBasicMaterial key="picture" map={texture} color="#ffffff" transparent opacity={0.92} /> : <meshBasicMaterial key="blank" color="#0b2a44" transparent opacity={0.5} />}
       </mesh>
       <Segs points={border} opacity={0.9} />
       <Label text="Your floor plan" position={[0, 0.02, d / 2 + 0.6]} color="#9fdcff" height={0.34} />
@@ -207,6 +231,7 @@ export function CabinStage3D({ placeChosen, markColors, selectedMarkId, imageUrl
   const [field, setField] = useState(true)
   const [furniture, setFurniture] = useState(true)
   const [off, setOff] = useState<ReadonlySet<string>>(new Set())
+  const [panelOpen, setPanelOpen] = useState(true) // the options panel can be folded away: it can cover the model
   const [planSize, setPlanSize] = useState<[number, number]>([PLAN.w, PLAN.d])
 
   // ---- what the uploaded file is: a picture of a floor plan, or a 3D layout file of the user's
@@ -226,8 +251,53 @@ export function CabinStage3D({ placeChosen, markColors, selectedMarkId, imageUrl
     }
   }, [imageUrl])
   const current = placeChosen && imageUrl ? (read && read.url === imageUrl ? read : { url: imageUrl, kind: 'checking' as const }) : null
-  const upload = current?.kind === 'picture'
-  const custom = current?.kind === 'layout' ? current.loaded : null
+  const picture = current?.kind === 'picture'
+
+  // ---- a layout an AI model drew from the user's picture (cabin/planFromPicture.ts). The model
+  // describes rooms, doors and objects. It never says what anything is made of: the user chooses
+  // each object's fuel below, from the fuels NASA's tables cover.
+  const [aiFuels, setAiFuels] = useState<Record<string, string>>({})
+  const [fuelList, setFuelList] = useState<TestedFuel[]>([])
+  const aiDrawn = current?.kind === 'layout' && current.ai ? { loaded: current.loaded, ...current.ai } : null
+  const aiFile = aiDrawn?.text
+  useEffect(() => {
+    setAiFuels({}) // a new drawing starts with no fuels chosen
+    if (!aiFile) return
+    let live = true
+    void testedFuels().then((list) => live && setFuelList(list)).catch(() => undefined)
+    return () => {
+      live = false
+    }
+  }, [aiFile])
+  const saveAiFile = (text: string) => {
+    const link = document.createElement('a')
+    link.href = URL.createObjectURL(new Blob([layoutFileText(text, aiFuels)], { type: 'application/json' }))
+    link.download = 'ai-drawn.layout.json'
+    link.click()
+    setTimeout(() => URL.revokeObjectURL(link.href), 1000)
+  }
+  // the model's layout with the fuels the user has chosen so far
+  const aiLayout = aiDrawn?.loaded
+  const aiLoaded = useMemo<LoadedLayout | null>(
+    () =>
+      aiLayout
+        ? {
+            grid: aiLayout.grid,
+            layout: {
+              ...aiLayout.layout,
+              items: aiLayout.layout.items.map((item) => {
+                const id = aiFuels[item.id]
+                return id ? { ...item, fuel: { fuel_class: id.split(':')[0] as FuelClass, fuel_option_id: id, airflow: 'still' as const } } : item
+              }),
+            },
+          }
+        : null,
+    [aiLayout, aiFuels],
+  )
+
+  const upload = picture
+  const custom = current?.kind === 'layout' ? (aiLoaded ?? current.loaded) : null
+  const refusedAi = current?.kind === 'refused' ? current.ai : null
   const refused = current?.kind === 'refused' ? current.problems : null
   const waiting = current?.kind === 'checking'
   const [w, d] = custom ? custom.layout.size : upload ? planSize : [PLAN.w, PLAN.d]
@@ -335,7 +405,7 @@ export function CabinStage3D({ placeChosen, markColors, selectedMarkId, imageUrl
           </>
         ) : custom ? (
           <>
-            <LayoutModel layout={custom.layout} showLabels={labels} hiddenIds={hiddenIds} showDuct={showFittings} />
+            <LayoutModel layout={custom.layout} showLabels={labels} hiddenIds={hiddenIds} showDuct={showFittings} note={aiDrawn ? AI_NOTE : LOADED_NOTE} />
             <LayoutPick layout={custom.layout} onPick={onPick} />
           </>
         ) : (
@@ -377,7 +447,13 @@ export function CabinStage3D({ placeChosen, markColors, selectedMarkId, imageUrl
       </Canvas>
 
       {placeChosen && !upload && !waiting && !refused && (
-        <div className="cabin-b-panel">
+        // a tab on the right edge of the view folds the panel away, so it does not cover the model
+        <button type="button" className="cabin-b-edge" onClick={() => setPanelOpen((open) => !open)} aria-expanded={panelOpen}>
+          <span>{panelOpen ? 'Hide panel' : 'Show panel'}</span>
+        </button>
+      )}
+      {placeChosen && !upload && !waiting && !refused && (
+        <div className={panelOpen ? 'cabin-b-panel' : 'cabin-b-panel closed'}>
           <label className="cabin-b-main">
             <input type="checkbox" checked={labels} onChange={(e) => setLabels(e.target.checked)} /> Labels
           </label>
@@ -405,17 +481,64 @@ export function CabinStage3D({ placeChosen, markColors, selectedMarkId, imageUrl
             onChange={setEffects}
             air={custom ? `In this layout the air moves ${custom.layout.air.toward ? `toward ${custom.layout.air.toward}` : 'along +x'}, as the layout file says.` : undefined}
           />
+          {aiDrawn && (
+            <div className="cabin-b-aiset">
+              <b>Drawn by AI from your picture</b>
+              <small>
+                {aiDrawn.model} read your picture. Check the rooms and doors against it: this is the AI&rsquo;s reading, not NASA data, and it can be wrong.
+                {aiDrawn.scaleNote && <> The AI says: &ldquo;{aiDrawn.scaleNote}&rdquo;</>}
+              </small>
+              <small>
+                The AI was not asked what anything is made of. For each object, choose a fuel NASA&rsquo;s tables cover or leave it as not a fuel. Your choice, not NASA data. Until one object has a fuel,
+                there is nothing for the drawing to reach.
+              </small>
+              {aiDrawn.loaded.layout.items.map((item) => (
+                <label key={item.id} className="cabin-b-fuel">
+                  <span>{item.label}</span>
+                  <select value={aiFuels[item.id] ?? ''} onChange={(e) => setAiFuels((prev) => ({ ...prev, [item.id]: e.target.value }))} aria-label={`What ${item.label} is made of, your choice`}>
+                    <option value="">Not a fuel</option>
+                    {fuelList.map((f) => (
+                      <option key={f.id} value={f.id}>
+                        {f.name} ({FUEL_WORD[f.fuel_class]})
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              ))}
+              {aiDrawn.loaded.layout.items.length === 0 && <small>The AI found no objects in the picture.</small>}
+              <button type="button" className="cabin-b-btn" onClick={() => saveAiFile(aiDrawn.text)}>
+                Save as a layout file
+              </button>
+            </div>
+          )}
         </div>
       )}
       {refused && (
         <div className="cabin-b-refused" role="alert">
-          <b>This file was not loaded.</b> It reads as a 3D layout file, but:
+          {refusedAi ? (
+            <b>The AI&rsquo;s drawing was not used.</b>
+          ) : (
+            <>
+              <b>This file was not loaded.</b> It reads as a 3D layout file, but:
+            </>
+          )}
           <ul className="cabin-b-problems">
             {refused.slice(0, 8).map((problem) => (
               <li key={problem}>{problem}</li>
             ))}
           </ul>
-          <small>The format is described in web/src/scene/cabin/samples/README.md.</small>
+          {refusedAi ? (
+            <>
+              <small>Nothing is repaired: a drawing with a problem is refused whole. You can ask again under &ldquo;Your Own Floor Plan&rdquo;, or save what the AI returned, fix it by hand and upload it as a layout file.</small>
+              <div className="cabin-b-row">
+                <button type="button" className="cabin-b-btn" onClick={() => saveAiFile(refusedAi.text)}>
+                  Save what the AI returned
+                </button>
+              </div>
+            </>
+          ) : (
+            <small>The format is described in web/src/scene/cabin/samples/README.md.</small>
+          )}
         </div>
       )}
       {placeChosen && lit && plan.steps > 0 && (

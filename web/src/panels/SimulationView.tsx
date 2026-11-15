@@ -23,6 +23,7 @@ import { useHashParam } from './route'
 import { placeName } from './places'
 import { Choice, FUEL_LABEL, FUEL_SHORT, FuelDot, PanelHead, FuelIcon } from './ui'
 import { SimStage } from './sim/SimStage'
+import { askForLayout, helperCanDraw } from './sim/planToLayout'
 import { templateFor } from './sim/templates'
 
 const FUELS: FuelClass[] = ['gas', 'droplet', 'solid']
@@ -118,6 +119,12 @@ export function SimulationView({ data, renderStage }: { data: AppData; renderSta
   const [run, setRun] = useHashParam('run', '0')
   const [imageUrl, setImageUrl] = useState<string | null>(null)
   const [imageName, setImageName] = useState<string | null>(null)
+  // ---- a picture drawn in 3D by AI (sim/planToLayout.ts). The page asks; the 3D stage is handed
+  // the model's drawing as a layout file in place of the picture, and checks it there.
+  const [imageIsPicture, setImageIsPicture] = useState(false)
+  const [aiUrl, setAiUrl] = useState<string | null>(null)
+  const [aiState, setAiState] = useState<{ asking: boolean; error: string | null }>({ asking: false, error: null })
+  const [canDraw, setCanDraw] = useState<boolean | null>(null)
   const [exampleMarks, setExampleMarks] = useState<LayoutMark[]>([])
   const [cabinMarks, setCabinMarks] = useState<LayoutMark[]>([])
 
@@ -153,6 +160,15 @@ export function SimulationView({ data, renderStage }: { data: AppData; renderSta
       .catch(() => undefined)
   }, [])
   useEffect(() => () => void (imageUrl && URL.revokeObjectURL(imageUrl)), [imageUrl])
+  useEffect(() => () => void (aiUrl && URL.revokeObjectURL(aiUrl)), [aiUrl])
+  useEffect(() => {
+    if (!imageUrl || !imageIsPicture) return
+    let live = true
+    void helperCanDraw().then((ok) => live && setCanDraw(ok))
+    return () => {
+      live = false
+    }
+  }, [imageUrl, imageIsPicture])
 
   const marks = !template ? [] : renderStage ? cabinMarks : (template.marks ?? exampleMarks)
   const layoutTitle = renderStage ? 'example spacecraft' : template?.title.toLowerCase()
@@ -195,9 +211,28 @@ export function SimulationView({ data, renderStage }: { data: AppData; renderSta
     if (imageUrl) URL.revokeObjectURL(imageUrl)
     setImageUrl(URL.createObjectURL(f))
     setImageName(f.name)
+    setImageIsPicture(f.type.startsWith('image/'))
+    setAiUrl(null)
+    setAiState({ asking: false, error: null })
     setMapMode('upload')
     resetRun()
   }
+  /** Sends the uploaded picture to the AI and shows its drawing in place of the picture. */
+  const drawWithAi = async () => {
+    if (!imageUrl) return
+    const asked = imageUrl
+    setAiState({ asking: true, error: null })
+    try {
+      const text = await askForLayout(asked)
+      setAiUrl(URL.createObjectURL(new Blob([text], { type: 'application/json' })))
+      setAiState({ asking: false, error: null })
+      resetRun()
+    } catch (e) {
+      setAiState({ asking: false, error: e instanceof Error ? e.message : 'The AI could not be asked.' })
+    }
+  }
+  /** What the 3D stage is shown: the AI's drawing of the picture when there is one, else the upload. */
+  const stageFile = aiUrl ?? imageUrl
 
   // ---- results (computed from NASA data; the point's position does not change them)
   const mark: LayoutMark = {
@@ -222,8 +257,9 @@ export function SimulationView({ data, renderStage }: { data: AppData; renderSta
   const stageFire: StageFire | null = started ? { o2Fraction: o2, pressureAtm: pAtm, airflow: flow > 0 ? 'vent' : 'still', airflowCmS: flow, gravity, behaviour: exp.behaviour } : null
   const placeLabel = hab ? placeName(hab.id, hab.name) : 'your values'
   const optName = optId === OTHER_FUEL ? "Other (not in NASA's tables)" : options.find((o) => o.id === optId)?.name ?? optId
-  // Step 4 (your own plan) is optional, so a chosen point makes Simulate the current step.
-  const step = !started ? 1 : !point ? 3 : lit ? 6 : 5
+  // Step 3 (your own plan) is optional, so after the first two steps the one waiting on the user is
+  // the fire point (4), and a chosen point makes Simulate (5) the current step.
+  const step = !started ? 1 : !point ? 4 : lit ? 6 : 5
 
   return (
     <div className="sim-page">
@@ -234,7 +270,7 @@ export function SimulationView({ data, renderStage }: { data: AppData; renderSta
           <p className="lead">Set the cabin&rsquo;s air, choose what could burn, place a fire, and see what NASA&rsquo;s tables say about detecting, stopping and preventing it.</p>
         </div>
         <ol className="sim-steps" aria-label="Progress">
-          {['Conditions', 'What burns', 'Fire point', 'Your plan', 'Simulate'].map((s, i) => (
+          {['Conditions', 'What burns', 'Your plan', 'Fire point', 'Simulate'].map((s, i) => (
             <li key={s} className={step > i + 1 ? 'done' : step === i + 1 ? 'now' : ''}>
               <span>{i + 1}</span>
               {s}
@@ -359,7 +395,76 @@ export function SimulationView({ data, renderStage }: { data: AppData; renderSta
 
           <section className={`panel sim-card${started ? '' : ' locked'}`} aria-disabled={!started}>
             <h2>
-              <span className="sim-n">3</span>Fire Point
+              <span className="sim-n">3</span>Your Own Floor Plan <small className="sim-opt">optional</small>
+            </h2>
+            <Choice
+              label="Map"
+              value={mapMode === 'upload' ? 'upload' : 'example'}
+              onChange={(v) => {
+                setMapMode(v)
+                resetRun()
+              }}
+              className="full"
+              options={[
+                { id: 'example', label: 'Example Cabin' },
+                { id: 'upload', label: 'Your Floor Plan' },
+              ]}
+            />
+            {mapMode === 'upload' && (
+              <label className="sim-upload">
+                {/* A .json here is a 3D layout file; the 3D stage reads the file and tells it from a picture (scene/cabin/layoutFile.ts). */}
+                <input type="file" accept="image/png,image/jpeg,.json,application/json" onChange={(e) => upload(e.target.files?.[0])} disabled={!started} />
+                <span>{imageName ? `Using ${imageName}` : 'Upload a PNG or JPG floor plan, or a 3D layout file (.json)'}</span>
+                <small>Your file stays on this computer, unless you press &ldquo;Draw this plan in 3D with AI&rdquo; below.</small>
+              </label>
+            )}
+            {mapMode === 'upload' && imageUrl && imageIsPicture && (
+              <div className="sim-ai">
+                {aiUrl ? (
+                  <>
+                    <p className="muted small">
+                      Showing the AI&rsquo;s 3D drawing of your picture. It is the AI&rsquo;s reading, not NASA data, and it can be wrong. Choose what each object is made of in the 3D view.
+                    </p>
+                    <button
+                      type="button"
+                      className="sim-ai-btn"
+                      onClick={() => {
+                        setAiUrl(null)
+                        resetRun()
+                      }}
+                    >
+                      Back to the picture
+                    </button>
+                  </>
+                ) : aiState.asking ? (
+                  <p className="muted small" role="status">
+                    Asking the AI to read your picture. This can take up to a minute.
+                  </p>
+                ) : canDraw ? (
+                  <>
+                    <button type="button" className="sim-ai-btn" onClick={() => void drawWithAi()}>
+                      Draw this plan in 3D with AI
+                    </button>
+                    <p className="muted small">
+                      This sends your picture to Google Gemini, through the helper on this computer. What comes back is the AI&rsquo;s reading of your picture: not NASA data, and it can be wrong.
+                    </p>
+                  </>
+                ) : canDraw === false ? (
+                  <p className="muted small">To have AI draw this picture in 3D, start the helper on this computer (node ai/risk-server.mjs, with API_FOR_SIMULATION in .env) and upload the picture again.</p>
+                ) : null}
+                {aiState.error && (
+                  <p className="sim-warn" role="alert">
+                    The AI did not answer: {aiState.error}
+                  </p>
+                )}
+              </div>
+            )}
+            {template && !usingUpload && <p className="muted small">Now showing the {layoutTitle} (example layout, not a NASA design). Upload your own plan to place the fire on it instead.</p>}
+          </section>
+
+          <section className={`panel sim-card${started ? '' : ' locked'}`} aria-disabled={!started}>
+            <h2>
+              <span className="sim-n">4</span>Fire Point
             </h2>
             {point ? (
               <p>
@@ -384,34 +489,6 @@ export function SimulationView({ data, renderStage }: { data: AppData; renderSta
             )}
           </section>
 
-          <section className={`panel sim-card${started ? '' : ' locked'}`} aria-disabled={!started}>
-            <h2>
-              <span className="sim-n">4</span>Your Own Floor Plan <small className="sim-opt">optional</small>
-            </h2>
-            <Choice
-              label="Map"
-              value={usingUpload ? 'upload' : 'example'}
-              onChange={(v) => {
-                setMapMode(v)
-                resetRun()
-              }}
-              className="full"
-              options={[
-                { id: 'example', label: 'Example Cabin' },
-                { id: 'upload', label: 'Your Floor Plan' },
-              ]}
-            />
-            {mapMode === 'upload' && (
-              <label className="sim-upload">
-                {/* A .json here is a 3D layout file; the 3D stage reads the file and tells it from a picture (scene/cabin/layoutFile.ts). */}
-                <input type="file" accept="image/png,image/jpeg,.json,application/json" onChange={(e) => upload(e.target.files?.[0])} disabled={!started} />
-                <span>{imageName ? `Using ${imageName}` : 'Upload a PNG or JPG floor plan, or a 3D layout file (.json)'}</span>
-                <small>Your file stays on this computer.</small>
-              </label>
-            )}
-            {template && !usingUpload && <p className="muted small">Now showing the {layoutTitle} (example layout, not a NASA design). Upload your own plan to place the fire on it instead.</p>}
-          </section>
-
           <button type="button" className="btn-sim" disabled={!started || !point} onClick={() => setRun('1')}>
             {lit ? 'Simulated ✓' : 'Simulate'}
           </button>
@@ -420,7 +497,7 @@ export function SimulationView({ data, renderStage }: { data: AppData; renderSta
         <section className="sim-stage-wrap" aria-label="3D cabin">
           <div className="sim-stage">
             {renderStage ? (
-              renderStage({ placeChosen: started, marks: shownMarks, markColors, selectedMarkId: hit?.id ?? null, imageUrl: usingUpload ? imageUrl : null, point, fuel, lit, fire: stageFire, onPick: pick })
+              renderStage({ placeChosen: started, marks: shownMarks, markColors, selectedMarkId: hit?.id ?? null, imageUrl: usingUpload ? stageFile : null, point, fuel, lit, fire: stageFire, onPick: pick })
             ) : (
               <SimStage
                 template={template}

@@ -99,8 +99,12 @@ export function distanceToDuctLine(path: readonly [number, number][], x: number,
 
 /** Reads and checks a layout file. Returns the layout, moved so the middle of the plan is at the
  *  origin, or the list of everything wrong with the file in plain words. Nothing is guessed or
- *  repaired: a file with a problem is refused whole. */
-export function parseLayout(source: string, knownFuelIds: ReadonlySet<string>): { layout: Layout3D } | { problems: string[] } {
+ *  repaired: a file with a problem is refused whole.
+ *
+ *  `draft` is for a layout an AI model drew from a picture (planFromPicture.ts): any fuel in it
+ *  is ignored, because the user chooses the fuels afterwards, and having none yet is not a
+ *  problem. Every other check is the same. */
+export function parseLayout(source: string, knownFuelIds: ReadonlySet<string>, options: { draft?: boolean } = {}): { layout: Layout3D } | { problems: string[] } {
   let raw: unknown
   try {
     raw = JSON.parse(source)
@@ -221,14 +225,14 @@ export function parseLayout(source: string, knownFuelIds: ReadonlySet<string>): 
     const r = rooms[room]
     if (room < 0 || it.x - it.w / 2 < r.x0 - EPS || it.x + it.w / 2 > r.x1 + EPS || it.z - it.d / 2 < r.z0 - EPS || it.z + it.d / 2 > r.z1 + EPS) return problems.push(`${name} is not wholly inside one room.`)
     let fuel: SpreadItem['fuel']
-    if (it.fuel !== undefined && it.fuel !== null) {
+    if (!options.draft && it.fuel !== undefined && it.fuel !== null) {
       if (!text(it.fuel) || !knownFuelIds.has(it.fuel))
         return problems.push(`${name} names the fuel "${String(it.fuel)}", which is not one of the fuels in NASA's tables (see fuels.json). Leave "fuel" out for an object that is not a fuel.`)
       fuel = { fuel_class: it.fuel.split(':')[0] as FuelClass, fuel_option_id: it.fuel, airflow: 'still' }
     }
     items.push({ id: it.id, label: it.label.trim(), x: it.x, z: it.z, w: it.w, d: it.d, h: it.h, y, fuel })
   })
-  if (!items.some((i) => i.fuel)) problems.push('No item names a fuel, so there is nothing for the drawing to reach.')
+  if (!options.draft && !items.some((i) => i.fuel)) problems.push('No item names a fuel, so there is nothing for the drawing to reach.')
 
   if (problems.length) return { problems }
 
