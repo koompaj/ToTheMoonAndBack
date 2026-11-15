@@ -28,7 +28,7 @@ checks them before anything enters `tests.json` or a count.
   - **32 CFI raw files (PSI-39):** the whole F173E01-E03 set (data, chamber readings, radiometer
     readings, camera and test point settings, comments, filter positions, and 4 INTNS metadata files),
     plus F121A01E (3 metadata files), F163A04D, F195D07D and F205D01 (C, D and 3 metadata files).
-  - **Retried once (12:30-12:45), one file at a time: 0 of 36 came through, all 404 again.** For every
+  - **Retried once (about 12:27 to 12:39), one file at a time: 0 of 36 came through, all 404 again.** For every
     file PSI's API (`.../studies/<acc>/download?...&redirect=false`) issues a download link, but the
     storage behind the link answers 404. So PSI lists files that are not in its storage. Each was
     tried at the record's version and at version 1, three times each. Result:
