@@ -203,6 +203,23 @@ group them by `name`. The other investigations' sensor files are still downloadi
   "Test Point: 20190A1"). Only then could s-Flame tests be proposed as new rows, and that needs the
   team's agreement, because they would be tests from outside PSI's tables.
 
+### F9. CFI (PSI-39): the report describes more tests than the table holds
+
+- **File:** `PSI-39_Reports_CFI Science Final Report.pdf`, pdftotext page 6: "Over two hundred tests
+  were carried out during the CFI experimental campaign." The PSI table has **87** CFI rows, so most
+  CFI tests are **not in the tables** (the tables are summaries).
+- Same page, the list of experiments: "Pure n-dodecane at 0.5, 0.75, 1, 1.25, 2, 3, and 5 atm";
+  "Helium dilution by 29% and 59% with O2 mole fraction at 0.21"; "Farnesane: from 0.75 to 3 atm".
+  This agrees with the table (0.5-5 atm, O2 0.17-0.21, helium 0.29 and 0.59 at O2 0.21). The stated
+  objective, "a rage [sic] of pressure from 0.25 atm to 5 atm", is an aim: no 0.25 atm test is listed
+  or in the table. Not a conflict.
+- **Figure 1** caption, pdftotext page 7: "FLEX-1223: N-dodecane at 1.25 atm pressure in air" **agrees** with
+  CFI table row 16 (test 1223, 1.25 atm, O2 0.21, no helium).
+- **Figure 3** caption, pdftotext page 8: "FLEX-1268 ... N-dodecane at 3 atm burning in 12%O2 ... 50% N2
+  ... 29% Helium". Test 1268 is **not in the CFI table**, and 12 % is below the table's lowest CFI oxygen
+  (17 %). The stated mix adds up to only 91 %, so the caption is not usable as a test's values. This is
+  in the unmatched list.
+
 ## Searched and not found (so far)
 
 - BASS-II pressure for Ferkul, Miller, Olson, Fernandez-Pello (F2).
@@ -223,6 +240,10 @@ group them by `name`. The other investigations' sensor files are still downloadi
 - Saffire-I / -III "single large sample (approx. 0.4 m wide by 0.94 m tall)": the tables have two rows
   (S1, S2) per flight; how one sample relates to two rows is not stated.
 - Saffire-III Cygnus EPS pressures (13.95-14.06 psi): not lined up in time with the burns.
+
+- CFI test 1268 (F9): a figure caption only ("3 atm ... 12%O2 ... 50% N2 ... 29% Helium", adds to 91 %);
+  no table row.
+- s-Flame (F8): 276 flames with nominal conditions only; no table rows.
 
 ## Other things noticed
 
