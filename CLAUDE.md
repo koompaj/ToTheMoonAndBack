@@ -204,9 +204,9 @@ python -I scripts/validate_data.py data web/public/data
   report says so (1,646 rows have a shape, 1,608 a size). BASS and BASS-II shapes come from the row's own fuel cell;
   ACME burners, SPICE nozzles and CFI droplets from reports quoted with page (`data_sourced/shapes.json`); FLEX from
   its droplet-diameter column. SAFFIRE has sizes but no stated shape. The rest are null with `shape_not_stated`.
-- Sensors (item 5): `Investigation.sensors` for 11 investigations (55 entries, `data_sourced/sensors.json`), each
+- Sensors (item 5): `Investigation.sensors` for 12 investigations (75 entries, `data_sourced/sensors.json`), each
   with file, page or sheet and column, and NASA's words. Saffire-I and -III come from the burn sensor logs (header
-  and unit rows). An investigation without `sensors` has not been read for them yet.
+  and unit rows); ACME s-Flame's channels from NASA's "ACME Non-Imaging Data" description in its PSI record. An investigation without `sensors` has not been read for them yet.
 - `gaps.json` (item 8, `scripts/gaps_analysis.py`): per pillar (prevention, detection, suppression), 27
   statements of what the tables cover and what is not in them, each with its test ids, investigations and caveats.
   Investigations without a stated pillar (ACME, SPICE, CFI) are in no column.
