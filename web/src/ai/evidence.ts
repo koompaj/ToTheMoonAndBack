@@ -255,3 +255,48 @@ export function shortName(inv: Investigation) {
   const t = inv.title ?? inv.accession
   return t.length > 44 ? `${t.slice(0, 42).trimEnd()}…` : t
 }
+
+/** Placed tests whose pressure is not in NASA's table but comes from another NASA document in PSI,
+ *  grouped by that document (each test's `pressure_source`). Use this for any on-screen wording
+ *  about where pressures come from, so it follows the data rather than fixed text. */
+export interface PressureSource {
+  doc: string // short document name, e.g. "BASS As Run Test Matrix"
+  acronyms: string[]
+  n: number
+  atm: [number, number]
+  /** How many of these carry flag "pressure_from_report" (a report page, not a spreadsheet). */
+  fromReport: number
+  /** Document plus page or sheet, for a footnote (each test's own pressure_source has the exact cell or quote). */
+  cite: string
+}
+
+const shortDoc = (src: string) =>
+  src
+    .replace(/\s*\([^)]*\)/g, '')
+    .split(',')[0]
+    .trim()
+
+export function pressureSources(tests: Test[]): PressureSource[] {
+  const groups = new Map<string, PressureSource>()
+  for (const t of tests) {
+    if (!t.pressure_source || t.pressure_atm === null || isDuplicate(t)) continue
+    const doc = shortDoc(t.pressure_source)
+    const cite = t.pressure_source.split(/, cell |, chapter |: "/)[0].trim()
+    const g = groups.get(doc) ?? { doc, acronyms: [], n: 0, atm: [t.pressure_atm, t.pressure_atm] as [number, number], fromReport: 0, cite }
+    g.n++
+    if (!g.acronyms.includes(t.acronym)) g.acronyms.push(t.acronym)
+    g.atm = [Math.min(g.atm[0], t.pressure_atm), Math.max(g.atm[1], t.pressure_atm)]
+    if (t.flags.includes('pressure_from_report')) g.fromReport++
+    groups.set(doc, g)
+  }
+  return [...groups.values()].sort((a, b) => a.n - b.n)
+}
+
+const atmText = ([a, b]: [number, number]) => (Math.abs(a - b) < 0.005 ? `${Number(a.toFixed(2))} atm` : `${a.toFixed(2)}-${b.toFixed(2)} atm`)
+
+/** "29 BASS-II from Burning and Suppression of Solids-II Summary Report (1 atm) and 121 BASS from
+ *  BASS As Run Test Matrix (0.97-1.01 atm)". Empty string when no test takes its pressure from a document. */
+export function pressureSourcesText(src: PressureSource[]) {
+  const parts = src.map((g) => `${g.n} ${g.acronyms.join(', ')} from ${g.doc} (${atmText(g.atm)})`)
+  return parts.length <= 1 ? (parts[0] ?? '') : `${parts.slice(0, -1).join(', ')} and ${parts[parts.length - 1]}`
+}

@@ -7,8 +7,9 @@ import { useEffect, useMemo, useState } from 'react'
 import type { AppData } from './types/data'
 import type { CabinStageProps, FireModelProps } from './types/sim'
 import { distinctTestCount, loadData } from './data/load'
-import { loadUploads, mergeUploads, onUploadsChanged } from './panels/uploads'
+import { loadUploads, onUploadsChanged } from './panels/uploads'
 import { loadAiContent, type AiContent } from './ai/content'
+import { isDuplicate } from './ai/evidence'
 import { FireModel3D } from './scene/FireModel3D'
 import { CabinStage3D } from './scene/CabinStage3D'
 import { HomeView } from './panels/HomeView'
@@ -62,11 +63,15 @@ function Mark() {
 }
 
 export default function App() {
-  const [nasa, setData] = useState<AppData | null>(null)
-  // User uploads (this browser only) join NASA's data; each one is marked as user-uploaded.
+  const [rows, setData] = useState<AppData | null>(null)
+  // Every view counts distinct tests only: rows that exactly repeat an earlier row (flag duplicate_row,
+  // 34 SPICE + 8 CFI) are left out here, so A's helpers (testsInHabitat etc.) never count them twice.
+  // The tests table still gets every row (rows) so it can say how many repeats it hides.
+  const data = useMemo(() => (rows ? { ...rows, tests: rows.tests.filter((t) => !isDuplicate(t)) } : null), [rows])
+  // User uploads (this browser only). They never enter NASA's data or counts; they appear only in
+  // their own "Your Uploads" group in Experiments and on their own pages.
   const [uploads, setUploads] = useState(loadUploads)
   useEffect(() => onUploadsChanged(() => setUploads(loadUploads())), [])
-  const data = useMemo(() => (nasa ? mergeUploads(nasa, uploads) : null), [nasa, uploads])
   const [ai, setAi] = useState<AiContent>({ habitats: null, investigations: null, fire: null })
   const [error, setError] = useState<string | null>(null)
   const [view, setView] = useState<ViewId>(viewFromHash)
@@ -126,7 +131,7 @@ export default function App() {
         {view === 'map' && <HomeView data={data} />}
         {view === 'place' && <PlaceView data={data} ai={ai} />}
         {view === 'fire' && <FireView data={data} ai={ai} renderFire={renderFire} />}
-        {view === 'experiments' && <ExperimentsView data={data} ai={ai} />}
+        {view === 'experiments' && <ExperimentsView data={data} rows={rows!} ai={ai} uploads={uploads} />}
         {view === 'risk' && <RiskView data={data} ai={ai} />}
         {view === 'simulation' && <SimulationView data={data} renderStage={renderStage} />}
       </main>

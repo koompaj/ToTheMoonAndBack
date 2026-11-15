@@ -4,11 +4,10 @@
 // place (step 2), a fuel slice opens the Test Explorer filtered to it, a pillar opens Investigations.
 import type { AppData, FuelClass } from '../types/data'
 import { distinctTestCount, testsInHabitat, testsInHabitatAndGravity } from '../data/load'
-import { fmtPct, headline, isDuplicate, isPlaced, psi } from '../ai/evidence'
+import { fmtPct, headline, isDuplicate, isPlaced, pressureSources, pressureSourcesText, psi } from '../ai/evidence'
 import { Donut, Histogram, StackRow, type BarSeg } from './charts'
 import { FUTURE_PLACES, PARTIAL_G_NOTE, gravityShort, placeArt, placeName } from './places'
 import { PlaceArt, RocketPath, Stars } from './SpaceArt'
-import { isUserInvestigation, isUserTest } from './uploads'
 import { UploadPanel } from './UploadPanel'
 import { useHashParam } from './route'
 import { FUEL_SHORT, PanelHead, PILLAR_LABEL } from './ui'
@@ -32,8 +31,7 @@ export function HomeView({ data }: { data: AppData }) {
   const h = headline(data)
   const nTests = distinctTestCount(data)
   const distinct = data.tests.filter((t) => !isDuplicate(t))
-  const nUser = data.tests.filter(isUserTest).length
-  const nUserInv = data.investigations.filter(isUserInvestigation).length
+  const solidSrc = pressureSourcesText(pressureSources(data.tests.filter((t) => t.fuel_class === 'solid')))
   const places = data.habitats.map((hab) => ({
     hab,
     inside: testsInHabitat(data.tests, hab),
@@ -83,14 +81,12 @@ export function HomeView({ data }: { data: AppData }) {
         </div>
         <dl className="stat-strip">
           <div>
-            <dt>{nUser ? 'Tests' : 'NASA tests'}</dt>
+            <dt>NASA tests</dt>
             <dd>{nTests.toLocaleString('en')}</dd>
-            {nUser > 0 && <span className="user-mark">✦ incl. {nUser} user-uploaded</span>}
           </div>
           <div>
             <dt>Investigations</dt>
             <dd>{data.investigations.length}</dd>
-            {nUserInv > 0 && <span className="user-mark">✦ incl. {nUserInv} user-uploaded</span>}
           </div>
           <div>
             <dt>Placed on the map</dt>
@@ -151,12 +147,7 @@ export function HomeView({ data }: { data: AppData }) {
                       {hab.pressure_psi[0] === hab.pressure_psi[1] ? `${hab.pressure_psi[0]} psi` : `${hab.pressure_psi[0]} – ${hab.pressure_psi[1]} psi`}
                     </span>
                     <span className="place-num">{inside.length}</span>
-                    <span className="place-sub">{inside.some(isUserTest) ? 'tests in this air' : 'NASA tests in this air'}</span>
-                    {inside.some(isUserTest) && (
-                      <span className="user-mark" title="Uploaded in this browser, not from NASA's PSI tables">
-                        ✦ incl. {inside.filter(isUserTest).length} user-uploaded
-                      </span>
-                    )}
+                    <span className="place-sub">NASA tests in this air</span>
                     {gravityShort(hab, inside.length, sameG) && <span className="place-grav">{gravityShort(hab, inside.length, sameG)}</span>}
                     <span className="mini-bar">
                       {inside.length === 0 ? (
@@ -258,8 +249,8 @@ export function HomeView({ data }: { data: AppData }) {
             onPick={(f) => go(`#experiments?view=tests&fuel=${f}`)}
           />
           <p className="chart-note">
-            <b className="t-gap">{data.tests.filter((t) => t.fuel_class === 'solid' && isPlaced(t)).length}</b> of {h.solidTotal} solid tests can be placed.
-            Their pressure is from NASA&rsquo;s own BASS and BASS-II documents in PSI; the other solid tests have none.
+            <b className="t-gap">{data.tests.filter((t) => t.fuel_class === 'solid' && isPlaced(t)).length}</b> of {h.solidTotal} solid tests can be placed.{' '}
+            {solidSrc && <>Their pressure is from NASA documents, not the tables: {solidSrc}. </>}The other solid tests have none.
           </p>
         </div>
 
