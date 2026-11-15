@@ -5,9 +5,17 @@
 // (CLAUDE.md, "Spread is an illustration, never a result"). NASA's tables hold no spread rates, so
 // nothing here can be sourced. The strength of each effect is the user's; the SHAPE of each rule
 // is our own, written out beside its slider below, and is not physics, a model or a NASA finding.
-import { AIRFLOW_FULL_CMS, EARTH_AIR_O2, biasFrom, type CabinConditions, type EffectSettings } from './timeline'
+import { AIRFLOW_FULL_CMS, EARTH_AIR_O2, MIN_FACTOR, PACE_LIMITS, RULE_FLOOR, biasFrom, type CabinConditions, type EffectSettings } from './timeline'
 
 const pct = (v: number) => `${Math.round(v * 100)} %`
+
+/** Items per step in words, to the nearest half: two decimals would read like a measured rate,
+ *  and this is only how the drawing is paced. */
+function aboutPerStep(pace: number) {
+  const half = Math.round(pace * 2) / 2
+  if (half === 0) return 'fewer than 0.5 items per step'
+  return `about ${half} ${half === 1 ? 'item' : 'items'} per step`
+}
 
 interface Row {
   key: keyof EffectSettings
@@ -40,14 +48,14 @@ const ROWS: Row[] = [
     name: 'Oxygen effect',
     max: 1,
     rule: (x) => `More items light per step as oxygen rises above ${pct(EARTH_AIR_O2)}, fewer below. At 100 % the number per step follows the oxygen in proportion; you have it at ${x}.`,
-    now: (s, c) => `At ${(c.o2Fraction * 100).toFixed(1)} % oxygen: ${biasFrom({ ...s, pressure: 0 }, c).pace.toFixed(2)} items per step from this setting.`,
+    now: (s, c) => `At ${(c.o2Fraction * 100).toFixed(1)} % oxygen: ${aboutPerStep(biasFrom({ ...s, pressure: 0 }, c).pace)} from this setting.`,
   },
   {
     key: 'pressure',
     name: 'Pressure effect',
     max: 1,
     rule: (x) => `More items light per step as pressure rises above 14.7 psi, fewer below. At 100 % the number per step follows the pressure in proportion; you have it at ${x}.`,
-    now: (s, c) => `At ${(c.pressureAtm * 14.696).toFixed(1)} psi: ${biasFrom({ ...s, oxygen: 0 }, c).pace.toFixed(2)} items per step from this setting.`,
+    now: (s, c) => `At ${(c.pressureAtm * 14.696).toFixed(1)} psi: ${aboutPerStep(biasFrom({ ...s, oxygen: 0 }, c).pace)} from this setting.`,
   },
 ]
 
@@ -62,6 +70,10 @@ export function SpreadSettings({ settings, conditions, onChange, air = SAMPLE_AI
         Spread settings <span>{active === 0 ? 'all at no effect' : `${active} in use`}</span>
       </summary>
       <p className="cabin-b-assume">Your assumptions, not NASA data. NASA&rsquo;s tables hold no spread rates. Each rule below is our own wording of a simple effect; only its strength is yours to set.</p>
+      <p className="cabin-b-limits">
+        <b>Fixed limits of this drawing (ours, not NASA data, and not yours to set):</b> however strong a setting, a distance never counts as less than {pct(MIN_FACTOR)} of itself; the oxygen rule and
+        the pressure rule each give at least {RULE_FLOOR} of the usual one item per step; and the items per step stay between {PACE_LIMITS[0]} and {PACE_LIMITS[1]}.
+      </p>
       {ROWS.map((r) => {
         const v = settings[r.key]
         return (

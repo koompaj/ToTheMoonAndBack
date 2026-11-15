@@ -44,6 +44,26 @@ const clampTo = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo,
 /** A number from the URL, or the fallback when it is missing or not a number. */
 const numberOr = (text: string, fallback: number, lo: number, hi: number) => (text !== '' && Number.isFinite(Number(text)) ? clampTo(Number(text), lo, hi) : fallback)
 
+/** NASA's control band is +-2 % oxygen and +-0.2 psia (NASA/TP-2010-216134 p. 11; see habitats.json).
+ *  A place drawn as a box no wider than that is a band around one value. */
+const CONTROL_BAND = { o2: 0.04, psi: 0.4 }
+
+/** The air a place fills in when it is chosen, and which part of its range that is.
+ *  - a place with one value: that value;
+ *  - a place drawn as NASA's control band (ISS, Earth, Moon Base in NASA's air): the middle of the
+ *    band, not its edge;
+ *  - any other box (the Moon Base challenge box): its low-oxygen, high-pressure corner, which is
+ *    where the challenge puts its limits (defaultPoint, shared with the Fire page). */
+function presetAir(h: Habitat): SimPoint & { from: 'value' | 'middle' | 'corner' } {
+  const o2Width = h.o2_fraction[1] - h.o2_fraction[0]
+  const psiWidth = h.pressure_psi[1] - h.pressure_psi[0]
+  if (o2Width < 1e-9 && psiWidth < 1e-9) return { ...defaultPoint(h), from: 'value' }
+  if (o2Width <= CONTROL_BAND.o2 + 1e-9 && psiWidth <= CONTROL_BAND.psi + 1e-9)
+    return { o2Fraction: (h.o2_fraction[0] + h.o2_fraction[1]) / 2, pressureAtm: (h.pressure_atm[0] + h.pressure_atm[1]) / 2, from: 'middle' }
+  return { ...defaultPoint(h), from: 'corner' }
+}
+const PRESET_WORDS = { value: 'its one value', middle: 'the middle of its range', corner: 'the low-oxygen, high-pressure corner of its range' }
+
 /** One condition: a typed value and a slider that move together. */
 function Condition({ label, unit, value, min, max, step, digits, onChange }: { label: string; unit: string; value: number; min: number; max: number; step: number; digits: number; onChange: (v: number) => void }) {
   // While a value is being typed, keep the text as typed; apply it as soon as it is in range.
@@ -103,7 +123,7 @@ export function SimulationView({ data, renderStage }: { data: AppData; renderSta
 
   // ---- cabin conditions. A place only fills in starting values; the sliders are the truth.
   const picked = data.habitats.find((h) => h.id === hid) ?? null
-  const start = defaultPoint(picked ?? data.habitats[0])
+  const start = presetAir(picked ?? data.habitats[0])
   const o2 = numberOr(o2Str, start.o2Fraction, 0.1, 1)
   const pAtm = numberOr(pStr, start.pressureAtm, 0.2, 5)
   const flow = numberOr(flowStr, 0, 0, 50)
@@ -164,7 +184,7 @@ export function SimulationView({ data, renderStage }: { data: AppData; renderSta
     setHid(id)
     const place = data.habitats.find((h) => h.id === id)
     if (!place) return
-    const d = defaultPoint(place)
+    const d = presetAir(place)
     setO2(d.o2Fraction.toFixed(4))
     setP(d.pressureAtm.toFixed(4))
     // A place carries its own sourced gravity (habitats.json); a spacesuit has two, the first is used.
@@ -244,14 +264,45 @@ export function SimulationView({ data, renderStage }: { data: AppData; renderSta
             <Condition label="Pressure" unit="psi" value={psiNow} min={3} max={73.4} step={0.1} digits={1} onChange={(v) => setP((v / PSI_PER_ATM).toFixed(4))} />
             <Condition label="Airflow" unit="cm/s" value={flow} min={0} max={50} step={1} digits={0} onChange={(v) => setFlow(String(v))} />
             <Condition label="Gravity" unit="% of Earth" value={gravity * 100} min={0} max={100} step={0.5} digits={1} onChange={(v) => setG((v / 100).toFixed(3))} />
+            {picked && (
+              <p className="muted small">
+                Choosing {placeName(picked.id, picked.name)} fills in {(start.o2Fraction * 100).toFixed(1)} % oxygen and {(start.pressureAtm * PSI_PER_ATM).toFixed(1)} psi: {PRESET_WORDS[start.from]}
+                {start.from === 'value' ? '' : ` (${(picked.o2_fraction[0] * 100).toFixed(0)} to ${(picked.o2_fraction[1] * 100).toFixed(0)} % oxygen, ${picked.pressure_psi[0]} to ${picked.pressure_psi[1]} psi)`}.
+              </p>
+            )}
             {!started ? (
               <p className="muted small">Pick a place or move a slider to begin.</p>
             ) : hab ? (
-              <p className="sim-match">
-                These values are the air of: <b>{matches.map((m) => placeName(m.id, m.name)).join(', ')}</b>.
-                {matches.length > 1 && <> Evidence is shown for {placeName(hab.id, hab.name)}.</>}
-                {hab.gravity && <> Gravity there: {hab.gravity.label}.</>}
-              </p>
+              <>
+                <p className="sim-match">
+                  These values are the air of: <b>{matches.map((m) => placeName(m.id, m.name)).join(', ')}</b>.
+                  {matches.length > 1 && <> Evidence is shown for {placeName(hab.id, hab.name)}.</>}
+                  {hab.gravity && <> Gravity there: {hab.gravity.label}.</>}
+                </p>
+                {/* Where the place's air and gravity come from (habitats.json): a value shown without a source is a bug. */}
+                <p className="muted small sim-source">
+                  Source for the air of {placeName(hab.id, hab.name)}: {hab.source}
+                  {(hab.source_urls ?? []).map((u, i, all) => (
+                    <span key={u}>
+                      {' '}
+                      <a href={u} target="_blank" rel="noreferrer">
+                        source{all.length > 1 ? ` ${i + 1}` : ''}
+                      </a>
+                    </span>
+                  ))}
+                  .
+                  {hab.gravity && (
+                    <>
+                      {' '}
+                      Source for its gravity: {hab.gravity.source}{' '}
+                      <a href={hab.gravity.source_url} target="_blank" rel="noreferrer">
+                        source
+                      </a>
+                      .
+                    </>
+                  )}
+                </p>
+              </>
             ) : (
               <p className="sim-warn" role="status">
                 Not the air of any listed place. Evidence colours are off. The nearest real tests are listed with how far away they are.
