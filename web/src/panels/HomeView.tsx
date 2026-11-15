@@ -259,7 +259,7 @@ export function HomeView({ data }: { data: AppData }) {
           />
           <p className="chart-note">
             <b className="t-gap">{data.tests.filter((t) => t.fuel_class === 'solid' && isPlaced(t)).length}</b> of {h.solidTotal} solid tests can be placed.
-            Their pressure is from NASA&rsquo;s BASS-II report; the other solid tables have no pressure.
+            Their pressure is from NASA&rsquo;s own BASS and BASS-II documents in PSI; the other solid tests have none.
           </p>
         </div>
 
