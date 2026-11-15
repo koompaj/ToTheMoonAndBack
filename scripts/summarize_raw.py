@@ -12,7 +12,8 @@ Per type:
   xlsx xlsm      per sheet: first rows, header and unit rows, row count, min / max per numeric column
   pdf            pdftotext -layout into _text/ (kept if already there), page count, start of text
   pptx docx rtf  text into _text/, word count, start of text
-  doc ppt xls pxp  printable text runs into _text/, marked as such
+  xls            cells read by read_xls.py (BIFF8), summarised per sheet like xlsx; text runs kept too
+  doc ppt pxp    printable text runs into _text/, marked as such (also xls if read_xls.py fails)
   zip            names of the files inside (never extracted)
   anything else  "not read" with the reason
 Python standard library plus the pdftotext program.
@@ -27,6 +28,9 @@ import subprocess
 import sys
 import zipfile
 import xml.etree.ElementTree as ET
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))  # scripts/ only (never data_extra)
+import read_xls  # noqa: E402
 
 NS = {"m": "http://schemas.openxmlformats.org/spreadsheetml/2006/main"}
 RELNS = "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id"
@@ -174,6 +178,23 @@ def xlsx_summary(path):
     return {"sheets": sheets}
 
 
+def xls_summary(path):
+    sheets = []
+    for sh in read_xls.read(path)["sheets"]:
+        grid = {}
+        for ref, v in sh["cells"].items():
+            m = re.match(r"([A-Z]+)(\d+)$", ref)
+            grid.setdefault(int(m.group(2)), {})[col_index(m.group(1))] = "" if v is None else str(v).strip()
+        rows = []
+        for r in range(1, max(grid, default=0) + 1):
+            cells = grid.get(r, {})
+            rows.append([cells.get(j, "") for j in range(max(cells, default=-1) + 1)])
+        s = {"sheet": sh["name"], "first_rows": [" | ".join(r)[:300] for r in rows[:5]]}
+        s.update(table_summary(rows))
+        sheets.append(s)
+    return {"sheets": sheets, "note": "old .xls read cell by cell with scripts/read_xls.py"}
+
+
 def office_text(path, part_re):
     with zipfile.ZipFile(path) as z:
         parts = sorted((n for n in z.namelist() if re.fullmatch(part_re, n)),
@@ -245,9 +266,15 @@ def summarise(path, acc, name, text_root):
         save_text(text_root, acc, name, t)
         e.update(words=len(t.split()), start=start_of(t))
     elif ext in ("doc", "ppt", "xls", "pxp"):
+        if ext == "xls":
+            try:
+                e.update(xls_summary(path))
+            except Exception as x:  # noqa: BLE001
+                e["xls_read_error"] = str(x)[:200]
         t = binary_strings(path)
         save_text(text_root, acc, name, t)
-        e.update(note="old binary format: printable text runs only", words=len(t.split()), start=start_of(t))
+        e.setdefault("note", "old binary format: printable text runs only")
+        e.update(words=len(t.split()), start=start_of(t))
     elif ext == "zip":
         try:
             with zipfile.ZipFile(path) as z:

@@ -97,9 +97,15 @@ PSI table has neither.
   - the Science Verification Report: "Experiment is to operate at ambient pressure" and the MSG
     "will nominally operate at a negative pressure of 1.3 mBar relative to ISS cabin Pressure":
     requirements, not readings.
-- The SPICE "Spice Flight Test Data II modified.xls" is an old binary Excel file; only its text runs
-  could be read (column names such as "GMT ignition", "Fuel Rate", "Air Rate", "Pressure"). Its cell
-  values need a proper .xls reader (see next steps).
+- `PSI-107_Raw Data_Spice Flight Test Data II modified.xls` (old binary Excel), now read cell by cell
+  with `scripts/read_xls.py`. Sheet "Data record of Video and Stills", column K, header "Pressure"
+  (K3) with unit "(Pa)" (K4): **101325 in all 526 data rows (K5-K530)**, stored as typed numbers
+  (RK / MULRK records), not formulas. Like the smoke-point sheets, it is one standard atmosphere used
+  as a constant, not a reading. **No SPICE pressure is in PSI's files.**
+- The same file's "Reference" sheet gives the burner tube sizes, for example "The 1.6 mm tube inner
+  diameter is 0.063 inches or 1.6002 mm. The length is 1.170 inches" (A5). Item 10 already has SPICE's
+  nozzle diameters from the table and the Final Report, so nothing new is needed. NASA's A6 says "0.30
+  inches or 0.762 mm"; 0.762 mm is 0.030 inches, so "0.30" is a typo in the source (noted, not used).
 
 ### F4. SAFFIRE-II and FLEX: nothing in PSI to search
 
@@ -141,6 +147,20 @@ stamps, LEDs, camera triggers) are left out. Hand-added lines (`from_text: true`
 Many Saffire lines repeat the same channel across files (sample 1, sample 2, telemetry); C may want to
 group them by `name`. The other investigations' sensor files are still downloading (see "Left to do").
 
+### F6b. Old .xls files: every pressure column is instrument hardware (SAME, SAME-R)
+
+- `scripts/read_xls.py` (standard library, reads cell values only) now reads all 168 `.xls` files;
+  `scripts/summarize_raw.py` summarises them per sheet like `.xlsx`. 0 failed.
+- Cells naming pressure or oxygen appear only in SAME (PSI-102, 39 files), SAME-R (PSI-101, 75 files)
+  and the SPICE file above. In SAME and SAME-R they are housekeeping channels, row 1 headers such as
+  "MFCPressure(PSIA)", "GN2MainPressure[PN02](PSIA)", "GN2RegulatedPressure[PN12](PSIG)",
+  "VacuumPressure[VR04](PSIA)", "DriveSidePressure[BN02](PSIA)" and "SampleSidePressure[AT20](PSIA)":
+  the instrument's gas supply, vacuum and flow lines, **not cabin air**. SAME's smoke tests are in
+  `other_tables.json`, not `tests.json`, so no test row gains a value. Item 5 already lists these as
+  sensors on `data/items-5-12`.
+- `PSI-102_Engineering Documents_SAME VPRED Matrix PLN-005 Baseline.xls` mentions pressures only as
+  design requirements (for example "Two relief valves will keep the pressure below 21 psi downstream").
+
 ### F7. Fuel shape and size (item 10)
 
 - **BASS and BASS-II:** NASA's own table text already states the shape for most rows, in
@@ -161,7 +181,9 @@ group them by `name`. The other investigations' sensor files are still downloadi
 ## Searched and not found (so far)
 
 - BASS-II pressure for Ferkul, Miller, Olson, Fernandez-Pello (F2).
-- SPICE measured pressure or per-burn oxygen (F3).
+- SPICE measured pressure or per-burn oxygen (F3): the .xls is now read cell by cell; its "Pressure"
+  column is the 101325 Pa constant.
+- Cabin pressure in any old .xls file (F6b): only instrument hardware pressures (SAME, SAME-R).
 - SAFFIRE-II and FLEX (F4): no files.
 
 ## Unmatched list
@@ -192,9 +214,8 @@ group them by `name`. The other investigations' sensor files are still downloadi
    775 to 896, and ISS / Earth from 171 to 209. Moon Base counts would not change.
 2. **Credentials cell (Other things noticed):** tell NASA PSI; never quote it.
 3. **Saffire-III pressure (F5):** line up the Cygnus EPS and Saffire logs by time before showing ranges.
-4. **SPICE (F3):** read `Spice Flight Test Data II modified.xls` with a proper .xls (BIFF) reader. It
-   is an old binary file, and only its text runs were read here. Its "Pressure" column is probably the
-   same 101325 Pa constant, but that is not confirmed.
+4. **SPICE (F3): done.** The .xls "Pressure (Pa)" column is the 101325 constant in all 526 rows. SPICE
+   has no measured pressure in PSI; leave its rows without one.
 5. **BASS-II's 78 tests:** no pressure anywhere in PSI. The researchers' papers listed in the ReadMe
    (for example Olson and Ferkul, Combustion and Flame 180, 2017) are the next place to look. They
    are outside PSI, so use them only with a citation and a check.
