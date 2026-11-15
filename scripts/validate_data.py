@@ -87,18 +87,19 @@ def main():
         return [t for t in placed if h["o2_fraction"][0] <= t["o2_fraction"] <= h["o2_fraction"][1]
                 and h["pressure_atm"][0] <= t["pressure_atm"] <= h["pressure_atm"][1]]
     counts = {h["id"]: len(inside(h)) for h in H}
-    expect = {"moon_base": 20, "moon_base_nasa": 0, "iss": 171, "spacesuit": 0, "earth_sea_level": 171}
-    check("habitat counts (20, 0, 171, 0, 171)", counts == expect, str(counts))
-    check("775 tests can be placed on the map (746 from the tables + 29 BASS-II with a pressure from NASA's report)",
-          len(placed) == 775, str(len(placed)))
+    expect = {"moon_base": 20, "moon_base_nasa": 0, "iss": 209, "spacesuit": 0, "earth_sea_level": 209}
+    check("habitat counts (20, 0, 209, 0, 209)", counts == expect, str(counts))
+    check("896 tests can be placed on the map (746 from the tables + 29 BASS-II from NASA's report + 121 BASS from its test matrix)",
+          len(placed) == 896, str(len(placed)))
     check("distinct tests 1,719 (34 duplicate rows)", Q.get("distinct_tests") == 1719 and Q.get("duplicate_rows") == 34)
     solid_o2 = [t["o2_fraction"] for t in T if t["fuel_class"] == "solid" and t["o2_fraction"] is not None]
-    check("highest solid-material oxygen is 22.2 %", abs(max(solid_o2) - 0.222) < 1e-9, str(max(solid_o2)))
+    check("highest solid-material oxygen is 22.72 % (BASS test matrix)", abs(max(solid_o2) - 0.2272) < 1e-9, str(max(solid_o2)))
     solid_placed = [t for t in placed if t["fuel_class"] == "solid"]
-    check("the placed solid tests are exactly the 29 T'ien BASS-II tests, all at 1 atm with their source",
-          len(solid_placed) == 29 and all(t["investigation"] == "PSI-25" and (t["source_extra"] or {}).get("PI") == "T'ien"
-                                          and t["pressure_atm"] == 1.0 and "pressure_from_report" in t["flags"] and t["pressure_source"]
-                                          for t in solid_placed),
+    check("the placed solid tests are exactly the 29 T'ien BASS-II tests (1 atm, report) and the 121 BASS tests (test matrix), each with its source",
+          len(solid_placed) == 150 and all((t["investigation"] == "PSI-25" and (t["source_extra"] or {}).get("PI") == "T'ien"
+                                            and t["pressure_atm"] == 1.0 and "pressure_from_report" in t["flags"] and t["pressure_source"])
+                                           or (t["investigation"] == "PSI-26" and "conditions_from_test_matrix" in t["flags"] and t["pressure_source"])
+                                           for t in solid_placed),
           str(len(solid_placed)))
 
     # ---- conditions from NASA's reports and sensor logs (data_sourced/solid_conditions.json) -----
@@ -123,7 +124,7 @@ def main():
             if not ok:
                 bad.append(f"{f['id']}: {t['id']}")
     check("every sourced condition matches data_sourced/solid_conditions.json (29 + 22 BASS-II rows, 4 Saffire burns)",
-          not bad and sum(1 for t in T if t.get("pressure_source")) == 55, ", ".join(bad[:5]))
+          not bad and sum(1 for t in T if t.get("pressure_source") and t["investigation"] != "PSI-26") == 55, ", ".join(bad[:5]))
     txt_root = os.path.join(os.path.dirname(data), "data_extra", "_text")
     if os.path.isdir(txt_root):
         missing = []
@@ -301,9 +302,9 @@ def main():
     expect_teal = {
         "moon_base": ["gas:butane", "gas:ethane"],
         "moon_base_nasa": [],
-        "iss": ["droplet:dodecane-n-and-iso-mixes", "droplet:heptane", "droplet:methanol", "gas:butane", "gas:ethane", "gas:ethylene", "gas:propane", "solid:sibal-cotton-fiberglass-blend"],
+        "iss": ["droplet:dodecane-n-and-iso-mixes", "droplet:heptane", "droplet:methanol", "gas:butane", "gas:ethane", "gas:ethylene", "gas:propane", "solid:nomex", "solid:pmma", "solid:sibal-cotton-fiberglass-blend", "solid:ultem", "solid:wax-type-not-stated"],
         "spacesuit": [],
-        "earth_sea_level": ["droplet:dodecane-n-and-iso-mixes", "droplet:heptane", "droplet:methanol", "gas:butane", "gas:ethane", "gas:ethylene", "gas:propane", "solid:sibal-cotton-fiberglass-blend"],
+        "earth_sea_level": ["droplet:dodecane-n-and-iso-mixes", "droplet:heptane", "droplet:methanol", "gas:butane", "gas:ethane", "gas:ethylene", "gas:propane", "solid:nomex", "solid:pmma", "solid:sibal-cotton-fiberglass-blend", "solid:ultem", "solid:wax-type-not-stated"],
     }
     check("teal fuels per place match docs/LAYOUT_PLAN.md section 5", teal == expect_teal, str(teal))
     bad = []
@@ -365,8 +366,8 @@ def main():
     check("example spacecraft layout is valid and has every mark type, both airflows and an 'Other'",
           not probs and every_kind(ship), ", ".join(probs))
     got = {h["id"]: tiers(ship, h) for h in H}
-    expect_here = {"moon_base": 1, "moon_base_nasa": 0, "iss": 6, "spacesuit": 0, "earth_sea_level": 6}
-    check("example spacecraft colours per place match the app (teal 1/0/6/0/6, one 'Other' each)",
+    expect_here = {"moon_base": 1, "moon_base_nasa": 0, "iss": 9, "spacesuit": 0, "earth_sea_level": 9}
+    check("example spacecraft colours per place match the app (teal 1/0/9/0/9, one 'Other' each)",
           {k: v["tested_here"] for k, v in got.items()} == expect_here and all(v["not_in_tables"] == 1 for v in got.values()),
           str(got))
 
@@ -392,7 +393,7 @@ def main():
           fits(fake, moon) and not fits(dict(fake, gravity_g=0.0), moon)
           and not fits({k: v for k, v in fake.items() if k != "gravity_g"}, moon))
     both = {h["id"]: sum(1 for t in T if fits(t, h)) for h in H}
-    check("tests matching air and gravity: ISS 171, every other place 0", both == {"moon_base": 0, "moon_base_nasa": 0, "iss": 171, "spacesuit": 0, "earth_sea_level": 0}, str(both))
+    check("tests matching air and gravity: ISS 209, every other place 0", both == {"moon_base": 0, "moon_base_nasa": 0, "iss": 209, "spacesuit": 0, "earth_sea_level": 0}, str(both))
 
     # ---- items 6, 7, 9, 11, 12 (docs/roles/C-tasks-5-12.md) ---------------------------------
     import csv
@@ -420,9 +421,9 @@ def main():
                 inside += 1
         return inside, unknown, inverse
     pres = {h["id"]: in_conditions(h) for h in H}
-    check("air-conditions presets give each place card's count (20 / 0 / 171 / 0 / 171), 704 tests cannot be checked, 274 inverse rows left out",
-          {k: v[0] for k, v in pres.items()} == {"moon_base": 20, "moon_base_nasa": 0, "iss": 171, "spacesuit": 0, "earth_sea_level": 171}
-          and all(v[1:] == (704, 274) for v in pres.values()), str(pres))
+    check("air-conditions presets give each place card's count (20 / 0 / 209 / 0 / 209), 583 tests cannot be checked, 274 inverse rows left out",
+          {k: v[0] for k, v in pres.items()} == {"moon_base": 20, "moon_base_nasa": 0, "iss": 209, "spacesuit": 0, "earth_sea_level": 209}
+          and all(v[1:] == (583, 274) for v in pres.values()), str(pres))
 
     # item 7: recount what varied, independently, for oxygen (cabin air) and fuel
     bad = []
@@ -600,14 +601,14 @@ def main():
     st = find("prevention", "tested", f"{len(o2v)} of them record a cabin oxygen value, from {min(t['o2_fraction'] for t in o2v) * 100:.1f}".rstrip("0").rstrip("."))
     if not st or f"to {hi * 100:.1f} %" not in st["text"]:
         errs.append("solid oxygen")
-    st = find("prevention", "not_in_tables", "No solid-material test in the tables reaches 30 % oxygen (highest: BASS-II 22.2 %")
+    st = find("prevention", "not_in_tables", "No solid-material test in the tables reaches 30 % oxygen (highest: BASS 22.7 %")
     top = {t["id"] for t in o2v if t["o2_fraction"] == hi}
-    if not st or hi >= 0.30 or abs(hi - 0.222) > 1e-9 or not top <= set(st["test_ids"]) or {ids[x]["investigation"] for x in top} != {"PSI-25"}:
+    if not st or hi >= 0.30 or abs(hi - 0.2272) > 1e-9 or not top <= set(st["test_ids"]) or {ids[x]["investigation"] for x in top} != {"PSI-26"}:
         errs.append("30 % statement")
     wp = [t for t in sol if t["pressure_atm"] is not None]
     rp = [t for t in sol if t["pressure_atm"] is None and t["pressure_atm_min"] is not None]
     st = find("prevention", "not_in_tables", f"Only {len(wp)} of {len(sol)} solid-material tests have a single pressure")
-    if not st or f"{len(rp)} more have only a range, and the other {len(sol) - len(wp) - len(rp)} none" not in st["text"] or (len(wp), len(rp)) != (29, 26):
+    if not st or f"{len(rp)} more have only a range, and the other {len(sol) - len(wp) - len(rp)} none" not in st["text"] or (len(wp), len(rp)) != (150, 26):
         errs.append("solid pressure counts")
     floor = min([t["pressure_atm"] for t in wp] + [t["pressure_atm_min"] for t in rp])
     st = find("prevention", "not_in_tables", "No solid-material test with a pressure")
@@ -649,8 +650,55 @@ def main():
     # gravity
     if {t["gravity_g"] for t in T} == {0.0} and not all(find(p_, "not_in_tables", f"Every {p_} test in the tables ran in microgravity") for p_ in ("prevention", "suppression")):
         errs.append("gravity")
-    check("every gaps.json number recounts from tests.json, habitats.json and other_tables.json (solid 263, 22.2 % top, 29 + 26 pressures, FLEX 17/17 and 0/9, place counts, SAME rows)",
+    check("every gaps.json number recounts from tests.json, habitats.json and other_tables.json (solid 263, 22.7 % top, 150 + 26 pressures, FLEX 17/17 and 0/9, place counts, SAME rows)",
           not errs, ", ".join(errs))
+
+    # ---- BASS conditions from NASA's as-run test matrix (data_sourced/bass_conditions.json) ----------
+    BA = [t for t in T if t["investigation"] == "PSI-26"]
+    dil = [t for t in BA if "o2_diluted_work_volume" in t["flags"]]
+    in_any = [t["id"] for t in dil if any(h["o2_fraction"][0] <= t["o2_fraction"] <= h["o2_fraction"][1]
+                                         and h["pressure_atm"][0] <= t["pressure_atm"] <= h["pressure_atm"][1] for h in H)]
+    check("all 121 BASS tests placed from the test matrix with a source; 26 flagged nitrogen-diluted, none inside any place; no BASS CO2 applied",
+          len(BA) == 121 and all(t["o2_fraction"] is not None and t["pressure_atm"] is not None and "conditions_from_test_matrix" in t["flags"]
+                                 and t["pressure_source"] and t["co2_fraction"] is None for t in BA)
+          and len(dil) == 26 and not in_any, f"{len(BA)} BASS, {len(dil)} diluted, inside: {in_any}")
+    xlsx = os.path.join(os.path.dirname(data), "data_extra", "PSI-26", "PSI-26_Science Documents_As Run_Test Matrix.xlsx")
+    if os.path.exists(xlsx):
+        import re as _re
+        import zipfile
+        import xml.etree.ElementTree as ET
+        NS = "{http://schemas.openxmlformats.org/spreadsheetml/2006/main}"
+        RID = "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id"
+        z = zipfile.ZipFile(xlsx)
+        sst = ["".join(x.text or "" for x in si.iter(NS + "t")) for si in ET.fromstring(z.read("xl/sharedStrings.xml")).iter(NS + "si")]
+        rels = {r.get("Id"): r.get("Target") for r in ET.fromstring(z.read("xl/_rels/workbook.xml.rels"))}
+        sheets = {s.get("name"): "xl/" + rels[s.get(RID)].lstrip("/").replace("xl/", "") for s in ET.fromstring(z.read("xl/workbook.xml")).iter(NS + "sheet")}
+        grid = {}
+        for c in ET.fromstring(z.read(sheets["as run matrix"])).iter(NS + "c"):
+            m = _re.match(r"([A-Z]+)(\d+)$", c.get("r"))
+            v = c.find(NS + "v")
+            grid.setdefault(int(m.group(2)), {})[m.group(1)] = None if v is None else (sst[int(v.text)] if c.get("t") == "s" else v.text)
+        hdr = {(v or "").strip().lower(): k for k, v in grid.get(3, {}).items()}
+        ca, ct, cs, co, cp = (hdr[x] for x in ("as run test no.", "test no.", "sample no.", "o2 % by volume", "pressure, atm"))
+        def key(x):
+            x = str(x or "").strip()
+            try:
+                return str(int(float(x))) if float(x) == int(float(x)) else x
+            except ValueError:
+                return x
+        rows_by = {}
+        for n, r in grid.items():
+            if n > 3:
+                rows_by.setdefault((key(r.get(ca)), key(r.get(ct)), key(r.get(cs))), []).append(r)
+        bad = []
+        for t in BA:
+            k = (key(t["source_extra"]["As Run Test #"]), key(t["test_label"]), key(t["source_extra"]["Sample #"]))
+            hits = rows_by.get(k, [])
+            if len(hits) != 1 or abs(float(hits[0][co]) - t["o2_fraction"]) > 1e-4 or abs(float(hits[0][cp]) - t["pressure_atm"]) > 1e-4:
+                bad.append(f"{t['id']} {k} ({len(hits)} rows)")
+        check("every BASS oxygen and pressure re-read from NASA's as-run test matrix (independent reader, data_extra)", not bad, "; ".join(bad[:4]))
+    else:
+        print("NOTE  data_extra BASS test matrix not present: BASS cells not re-read")
 
     # ---- report ------------------------------------------------------------------------------
     for name, ok, detail in results:

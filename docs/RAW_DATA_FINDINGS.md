@@ -41,7 +41,10 @@ checks them before anything enters `tests.json` or a count.
 
 ## Findings
 
-### F1. BASS: NASA's "as run" test matrix records oxygen, pressure and CO2 for every test (candidate)
+### F1. BASS: NASA's "as run" test matrix records oxygen, pressure and CO2 for every test (applied 2026-11-15)
+
+**Applied** on branch `data/bass-conditions` after a 10-row hand check (oxygen and pressure only; CO2 not applied). See the
+last "Done" section of `docs/PSI_DOCUMENTS.md`.
 
 This is the main finding. It would give all 121 BASS tests an oxygen value and a pressure, where the
 PSI table has neither.
@@ -72,7 +75,7 @@ PSI table has neither.
     candidate carries its row's note.
   - The header says "ISS environment". For the diluted tests the oxygen is plainly the work volume, so
     whether the pressure is the cabin's or the work volume's is not stated.
-- **What it would change if the team applies it (not applied):** 121 more solid tests placed
+- **What it changes (now applied):** 121 more solid tests placed
   (775 -> 896 placed), all at 0.97-1.01 atm and 16-23 % O2. 38 of them fall inside the ISS / Earth
   control band (19-23 % O2, 14.5-14.9 psi). None reach Moon Base air (>= 30 % O2), so the headline
   ("no solid-material test in the tables reaches 30 % oxygen") does not change.

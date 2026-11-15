@@ -13,11 +13,14 @@ const plural = (n: number, one: string, many = `${one}s`) => `${n} ${n === 1 ? o
 const list = (xs: string[]) => (xs.length <= 1 ? xs.join('') : `${xs.slice(0, -1).join(', ')} and ${xs[xs.length - 1]}`)
 
 /** "Pressure tested: 14.7 psi." for one value, "Pressures tested: X to Y." for a range, plus the
- *  option's note when some of that pressure comes from NASA's reports rather than the tables. */
+ *  the option's note sentences when some of that pressure comes from NASA's reports or test matrix rather
+ *  than the tables. */
 function pressureTestedText(option: FuelOption) {
   const [lo, hi] = option.pressure_psi_range!
   const base = lo === hi ? `Pressure tested: ${psi(lo)}.` : `Pressures tested: ${psi(lo)} to ${psi(hi)}.`
-  return option.note && option.note.includes('reports') ? `${base} ${option.note}` : base
+  // Keep only the note's sentences about where pressure came from (reports, test matrix).
+  const where = (option.note ?? '').split(/(?<=\.)\s+/).filter((x) => x.includes('not the tables')).join(' ')
+  return where ? `${base} ${where}` : base
 }
 
 function airText(h: Habitat) {
@@ -62,7 +65,15 @@ export function markEvidence(data: AppData, habitat: Habitat, mark: LayoutMark):
   const near = option.nearest_by_habitat[habitat.id] ?? null
 
   // ---- What NASA tested
-  const o2 = option.o2_range ? `at ${option.o2_range[0] === option.o2_range[1] ? pct(option.o2_range[0]) : `${pct(option.o2_range[0])} to ${pct(option.o2_range[1])}`} cabin oxygen` : 'with oxygen not recorded in the tables'
+  // BASS's nitrogen-diluted tests ran in glovebox air, not cabin air (flag o2_diluted_work_volume).
+  const ids = new Set(option.test_ids)
+  const diluted = data.tests.filter((t) => ids.has(t.id) && t.flags.includes('o2_diluted_work_volume')).length
+  const range = option.o2_range ? (option.o2_range[0] === option.o2_range[1] ? pct(option.o2_range[0]) : `${pct(option.o2_range[0])} to ${pct(option.o2_range[1])}`) : ''
+  const o2 = !option.o2_range
+    ? 'with oxygen not recorded in the tables'
+    : diluted
+      ? `at ${range} oxygen (${diluted} of them in nitrogen-diluted glovebox air, the rest in cabin air)`
+      : `at ${range} cabin oxygen`
   tested.push({
     kind: 'data',
     text: `${plural(option.test_count, `${option.name} test`)} (${list(option.acronyms)}) ${o2}.`,
