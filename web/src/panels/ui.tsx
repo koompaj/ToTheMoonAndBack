@@ -111,11 +111,13 @@ export function Kpi({ value, label, tone, children }: { value: ReactNode; label:
   )
 }
 
-/** The rounded header bar every card starts with: a gold circle, a title, three colour dots. */
+/** The rounded header bar every card starts with: a star, a title, three colour dots. */
 export function PanelHead({ title, children }: { title: string; children?: ReactNode }) {
   return (
     <div className="panel-head">
-      <span className="panel-dot" aria-hidden />
+      <span className="panel-dot" aria-hidden>
+        ⭐
+      </span>
       <span className="panel-head-title">{title}</span>
       <span className="panel-head-right">
         {children}

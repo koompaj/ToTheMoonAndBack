@@ -7,7 +7,7 @@ import type { FuelClass, Habitat, Pillar } from '../types/data'
 import { placeName } from './places'
 import { buildUpload, CSV_TEMPLATE, isValidSource, parseTestsCsv, saveUpload, type RowResult, type UploadForm, type UserUpload } from './uploads'
 import { Stars } from './SpaceArt'
-import { Choice, FUEL_LABEL, FuelIcon, PILLAR_LABEL } from './ui'
+import { Choice, FUEL_LABEL, FuelIcon, PanelHead, PILLAR_LABEL } from './ui'
 
 const EMPTY: UploadForm = { acronym: '', title: '', organisation: '', platform: '', fuel_class: 'solid', pillar: '', source: '', description: '' }
 
@@ -43,16 +43,18 @@ function ConfirmDialog({ form, rows, fileName, onCancel, onConfirm }: { form: Up
       <div className="up-dialog-card">
         <Stars />
         <div className="up-dialog-body">
-          <span className="up-dialog-icon" aria-hidden>
-            <svg viewBox="0 0 48 48" width="56" height="56">
-              <circle cx="24" cy="24" r="22" fill="rgba(255,204,41,0.14)" stroke="#ffcc29" strokeWidth="2" />
-              <path d="M24 12v15" stroke="#ffcc29" strokeWidth="4" strokeLinecap="round" />
-              <circle cx="24" cy="34" r="2.6" fill="#ffcc29" />
-            </svg>
-          </span>
-          <h2 id="up-confirm-title">Ready for Launch?</h2>
+          <PanelHead title="Upload · Final Check" />
+          <header className="up-dialog-head">
+            <h2 id="up-confirm-title">Check Your Experiment</h2>
+            <p className="muted small">Review the details below before submitting.</p>
+          </header>
           <p className="up-dialog-warn">
-            <b>Once submitted, this experiment can&rsquo;t be edited.</b> Please check every detail carefully before you launch it.
+            <span className="up-warn-circle" aria-hidden>
+              !
+            </span>
+            <span>
+              <b>Check before you submit.</b> It can&rsquo;t be edited afterwards.
+            </span>
           </p>
           <dl className="up-summary">
             <div>
@@ -76,7 +78,7 @@ function ConfirmDialog({ form, rows, fileName, onCancel, onConfirm }: { form: Up
             <div>
               <dt>Tests</dt>
               <dd>
-                {rows.length} rows from {fileName}
+                {rows.length} {rows.length === 1 ? 'row' : 'rows'} from {fileName}
               </dd>
             </div>
             <div>
@@ -84,16 +86,12 @@ function ConfirmDialog({ form, rows, fileName, onCancel, onConfirm }: { form: Up
               <dd className="up-break">{form.source}</dd>
             </div>
           </dl>
-          <p className="up-dialog-note">
-            It is saved in this browser only, added to the dashboard&rsquo;s counts, and marked <span className="user-mark">✦ User-uploaded</span> everywhere it
-            appears.
-          </p>
           <div className="up-dialog-actions">
             <button type="button" className="btn" onClick={onCancel} autoFocus>
-              Go Back and Check
+              Go Back
             </button>
-            <button type="button" className="up-submit-btn" onClick={onConfirm}>
-              Yes, Submit 🚀
+            <button type="button" className="btn btn-primary" onClick={onConfirm}>
+              Submit Experiment
             </button>
           </div>
         </div>
