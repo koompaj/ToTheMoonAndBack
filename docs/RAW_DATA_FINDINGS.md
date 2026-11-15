@@ -264,6 +264,13 @@ group them by `name`. The other investigations' sensor files are still downloadi
   ... 29% Helium". Test 1268 is **not in the CFI table**, and 12 % is below the table's lowest CFI oxygen
   (17 %). The stated mix adds up to only 91 %, so the caption is not usable as a test's values. This is
   in the unmatched list.
+- **After the download:** no file in PSI-39 is named for test 1268. The per-test files named by FLEX
+  number (`FLEX-12xx_TestSheet`, `_DropletData`, `_Summary.pdf` and so on) cover 44 tests, the
+  highest near 1268 being FLEX-1261 and FLEX-1264. A second set of 123 test points is named by an
+  instrument ID such as "F068A03" (`_Chamber_Readings.txt`, `_MDCA_CFI_Testpoint_Settings.txt`, ...,
+  430 `F<id>.txt` data files). Those files do not mention a FLEX number (0 of the test point
+  settings files contain "FLEX"), so they cannot yet be tied to table rows. Matching them by date and
+  time to the table would be the next step; until then they are not used.
 
 ### F10. ACME flame counts: reports and tables nearly agree (differences noted, not resolved)
 
@@ -309,6 +316,12 @@ NASA's "Final ACME Chamber Calculator" spreadsheets log every chamber fill, vent
     and that "the average pressure recorded in the chamber calculator file was later based on just
     PT16 and PT17". Which sensor these CFI-G and Flame Design values come from is not stated beyond
     the PT28 label.
+  - The size of PT28's offset is visible in a CFI chamber log: `PSI-39_Raw Data_F068A03_Chamber_Readings.txt`
+    (2017-03-09 18:02:36, columns "FCU_MP_PT16(PSIA)", "FCU_MP_PT17(PSIA)", "FCU_MP_PT28(PSIA)",
+    "FCU_MP_PT29(PSIA)") reads **15.11, 15.07, 14.43, 15.05**: PT28 about 0.65 psi below the others at
+    about 1 atm. That is one reading in 2017, so it says nothing exact about 2021, but it shows the kind
+    of error. The Moon Base margin (highest 7.82 psia against a 10.2 psi limit, 2.4 psi) is far larger,
+    so the headline does not depend on it.
   - Nothing is applied. Proposed: add a validator check that the 20 Moon Base tests stay at or below
     10.2 psi in the calculator, with the file, sheet and row as the source; and let the team decide
     whether to show the measured CFI-G pressures beside the nominal ones.
@@ -367,22 +380,30 @@ NASA's "Final ACME Chamber Calculator" spreadsheets log every chamber fill, vent
    are outside PSI, so use them only with a citation and a check.
 6. **Sensors (F6):** C can show the Saffire and BASS lists now. Group repeated channels by name.
 
-## Left to do (updated 2026-11-15, 11:01)
+## Left to do (updated 2026-11-15, 12:20; this run stopped at about 64 % of the 5-hour usage limit)
 
 - **Download: finished** (9,572 of 9,616 files; 44 are 404s on NASA's side, see "What was downloaded").
-- **When it finishes:** fill in the final counts above from `data_extra/raw_manifest.json`, then run
-  `python -I scripts/summarize_raw.py data_extra` (about 9 minutes for the first 1,269 files; longer
-  for all) and `python -I scripts/extract_sensors.py data_extra data_sourced/raw_candidates.json`.
-- **Then search the new files** for:
-  - s-Flame's chamber calculator file and daily test point logs (F8), which give per-test chamber
-    pressure and O2;
-  - CFI test 1268 and the other CFI tests not in the table (F9);
-  - the one extra Flame Design row (F10);
-  - sensors for ACME and CFI-G (item 5 already lists BASS, CFI, SPICE, SAME, SAME-R on
-    `data/items-5-12`).
-- **Priority 1 does not wait on the download.** Every cabin-air row of Flame Design, CFI and CFI-G
-  already has oxygen and pressure in the tables. Only 11 Flame Design burner-oxidizer rows lack
-  oxygen, and burner-oxidizer rows never count toward habitats.
-- **Done in this run:** SPICE's .xls read cell by cell (F3), all 168 old .xls files read (F6b),
-  partial-gravity search of all document text (none found), s-Flame (F8), CFI (F9), ACME counts
-  (F10).
+  Proposed: one polite retry of the 36 new 404s, then report all 44 to PSI.
+- **Summaries:** `python -I scripts/summarize_raw.py data_extra` was started over all files at 12:13
+  and had reached PSI-62 at 12:18 (PSI-98 to PSI-159 still to go). If `data_extra/_raw_summary/PSI-159.json`
+  is older than 12:13, or `INDEX.md` was not rewritten, re-run it. It only writes inside `data_extra/`.
+- **Not yet re-run:** `python -I scripts/extract_sensors.py data_extra data_sourced/raw_candidates.json`
+  over the new files (ACME and CFI-G sensors). The chamber logs show sensor names such as
+  "FCU_MP_PT16(PSIA)" to "FCU_MP_PT29(PSIA)" and "FCU_MP_TM1(Deg C)" to "TM4" (F11).
+- **Searches still open:**
+  - s-Flame (F8): the chamber calculator named in NASA's guide is not in PSI-23's file list; look for
+    it in earlier PSI versions or ask PSI. The raw PTA1-PTA3 volts need NASA's conversion sheet
+    (inside a zip, not extracted).
+  - CFI (F9): tie the 123 "F<id>" test points to table rows by date and time.
+  - ACME chamber calculators (F11): compare their oxygen estimates with the tables, and look for the
+    154 CFI-G and 120 Flame Design rows with no calculator entry under the same label.
+  - Flame Design: the one row more than the report's 326 flames (F10).
+- **Proposed, for the team (nothing applied):**
+  - a validator check that the 20 Moon Base tests stay at or below 10.2 psi in the CFI-G chamber
+    calculator (F11);
+  - `docs/DATA_ISSUES.md`: add "report says 326 flames, table has 327 rows" (F10), and cite the
+    s-Flame guide's Table 1 ("with N2") in the N3-N6 autofill correction (F8).
+- **Done in this run:** chamber calculators checked against the tables, with PT28's offset seen in a CFI
+  log (F11); SPICE's .xls read cell by cell (F3); all 168 old .xls files read (F6b); partial-gravity
+  search of all document text (none found); s-Flame (F8); CFI (F9); ACME counts (F10); final download
+  counts.
