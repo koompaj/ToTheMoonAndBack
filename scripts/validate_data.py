@@ -91,7 +91,22 @@ def main():
     check("habitat counts (20, 0, 209, 0, 209)", counts == expect, str(counts))
     check("896 tests can be placed on the map (746 from the tables + 29 BASS-II from NASA's report + 121 BASS from its test matrix)",
           len(placed) == 896, str(len(placed)))
-    check("distinct tests 1,719 (34 duplicate rows)", Q.get("distinct_tests") == 1719 and Q.get("duplicate_rows") == 34)
+    check("distinct tests 1,711 (42 duplicate rows: 34 SPICE, 8 CFI)", Q.get("distinct_tests") == 1711 and Q.get("duplicate_rows") == 42)
+    # every test table, re-read from NASA's CSV: a row is flagged duplicate_row:<n> exactly when it repeats row n
+    bad = []
+    for tbl in sorted({t["source_table"] for t in T}):
+        _, body = raw_rows(data, tbl[len("tables/"):])
+        first, want = {}, {}
+        for i, r in enumerate(body, 1):
+            if tuple(r) in first:
+                want[i] = first[tuple(r)]
+            else:
+                first[tuple(r)] = i
+        got = {t["source_row"]: int(f.split(":")[1]) for t in T if t["source_table"] == tbl
+               for f in t["flags"] if f.startswith("duplicate_row")}
+        if got != want:
+            bad.append(f"{tbl}: flagged {sorted(got.items())[:3]} vs repeats {sorted(want.items())[:3]}")
+    check("rows repeating an earlier row, in every test table re-read from NASA's CSV, are exactly the rows flagged duplicate_row", not bad, "; ".join(bad))
     solid_o2 = [t["o2_fraction"] for t in T if t["fuel_class"] == "solid" and t["o2_fraction"] is not None]
     check("highest solid-material oxygen is 22.72 % (BASS test matrix)", abs(max(solid_o2) - 0.2272) < 1e-9, str(max(solid_o2)))
     solid_placed = [t for t in placed if t["fuel_class"] == "solid"]
@@ -699,6 +714,30 @@ def main():
         check("every BASS oxygen and pressure re-read from NASA's as-run test matrix (independent reader, data_extra)", not bad, "; ".join(bad[:4]))
     else:
         print("NOTE  data_extra BASS test matrix not present: BASS cells not re-read")
+
+    # ---- table values that NASA's own per-test files contradict (data_sourced/table_conflicts.json) ----
+    TC = json.load(open(os.path.join(os.path.dirname(data), "data_sourced", "table_conflicts.json"), encoding="utf-8"))["conflicts"]
+    by_id = {t["id"]: t for t in T}
+    bad = [c["test_id"] for c in TC if c["flag"] not in by_id[c["test_id"]]["flags"] or by_id[c["test_id"]]["o2_fraction"] != 0.17]
+    check("FLEX-1213 (CFI row 7) keeps the table's 0.17 oxygen and is flagged with the test sheet's 0.21", not bad, ", ".join(bad))
+    ex = os.path.join(os.path.dirname(data), "data_extra")
+    if os.path.isdir(ex):
+        miss = []
+        for c in TC:
+            acc = c["test_id"].split(":")[0]
+            fp = os.path.join(ex, acc, c["source_file"])
+            if not os.path.exists(fp) or c["quote"] not in open(fp, encoding="utf-8", errors="replace").read():
+                miss.append(c["test_id"])
+        check("every table conflict's quote is in NASA's per-test file (data_extra)", not miss, ", ".join(miss))
+
+    cav = [c for c in OUT["caveats"] if "189 flames experienced radiative extinction" in c]
+    txt = os.path.join(os.path.dirname(data), "data_extra", "_text", "PSI-159", "PSI-159_Reports_FinalRpt_ACME.CFI-G.pdf.txt")
+    if os.path.exists(txt):
+        page = open(txt, encoding="utf-8", errors="replace").read().split("")[43]
+        check("CFI-G report caveat (189 of 280 radiative extinction) is in outcomes.json and on p. 44 of NASA's report",
+              len(cav) == 1 and "189 flames experienced" in page and "280 hot diffusion flames" in page)
+    else:
+        check("CFI-G report caveat (189 of 280 radiative extinction) is in outcomes.json", len(cav) == 1)
 
     # ---- report ------------------------------------------------------------------------------
     for name, ok, detail in results:

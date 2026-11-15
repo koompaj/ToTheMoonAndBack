@@ -246,7 +246,7 @@ export function UntappedPanel({ data, ai, embedded = false }: { data: AppData; a
         <div className="reuse">
           <div>
             <h3>Ground Studies Built on Flight Data</h3>
-            <ul className="link-list">
+            <ul className="link-list reuse-scroll scroll-astro">
               {ground.map((l, i) => (
                 <li key={i}>
                   <span title={l.from.title}>{shortName(l.from)}</span> <span className="arrow">→</span> <b>{shortName(l.to)}</b>
@@ -256,7 +256,7 @@ export function UntappedPanel({ data, ai, embedded = false }: { data: AppData; a
           </div>
           <div>
             <h3>Flight Investigations Linked to Each Other</h3>
-            <ul className="link-list">
+            <ul className="link-list reuse-scroll scroll-astro">
               {flight.map((l, i) => (
                 <li key={i}>
                   {shortName(l.from)} <span className="arrow">→</span> <b>{shortName(l.to)}</b>

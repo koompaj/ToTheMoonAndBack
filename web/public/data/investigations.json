@@ -1593,8 +1593,8 @@
     "max": 21.0,
     "values": null,
     "distinct": 2,
-    "recorded": 87,
-    "total": 87
+    "recorded": 79,
+    "total": 79
    },
    {
     "field": "pressure_atm",
@@ -1604,8 +1604,8 @@
     "max": 73.48,
     "values": null,
     "distinct": 7,
-    "recorded": 87,
-    "total": 87
+    "recorded": 79,
+    "total": 79
    },
    {
     "field": "he_fraction",
@@ -1615,8 +1615,8 @@
     "max": 59.0,
     "values": null,
     "distinct": 3,
-    "recorded": 87,
-    "total": 87
+    "recorded": 79,
+    "total": 79
    },
    {
     "field": "fuel",
@@ -1630,8 +1630,8 @@
      "[.75]/[.25] C12H26/iso-dodecane"
     ],
     "distinct": 3,
-    "recorded": 87,
-    "total": 87
+    "recorded": 79,
+    "total": 79
    }
   ],
   "hardware_group": {

@@ -7,11 +7,12 @@ import { useMemo } from 'react'
 import type { AppData, Pillar } from '../types/data'
 import type { AiContent } from '../ai/content'
 import { fmtPct, fmtPsi, investigationStats, shortName, type InvestigationStats } from '../ai/evidence'
-import { DoiCite, SentenceCites } from './Cite'
+import { DoiCite, SentenceCites, UserMark } from './Cite'
 import { useHashParam } from './route'
 import { Choice, FuelTag, PILLAR_HINT, PillarTag, ViewHead } from './ui'
 import { ComparePanel, useCompare, type CompareMode } from './CompareDrawer'
 import { ConditionsBar, useConditions } from './Conditions'
+import { isUserInvestigation } from './uploads'
 import type { Test } from '../types/data'
 
 type Filter = Pillar | 'unstated' | 'all'
@@ -48,7 +49,9 @@ function Card({ s, data, ai, testQuery, matches, airCount, keep }: { s: Investig
             {starred ? '★ Comparing' : '☆ Compare'}
           </button>
         </div>
-        <span className="mono muted inv-acc">{inv.accession}</span>
+        <span className="mono muted inv-acc">
+          {inv.accession} {isUserInvestigation(inv) && <UserMark />}
+        </span>
         <div className="chips">
           <PillarTag pillar={inv.pillar} />
           <FuelTag fuel={fuelClass} />

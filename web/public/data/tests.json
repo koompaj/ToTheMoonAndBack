@@ -78507,7 +78507,9 @@
    "Nitrogen": "0.83",
    "Fiber": "Yes"
   },
-  "flags": [],
+  "flags": [
+   "o2_differs_from_test_sheet:0.21"
+  ],
   "fuel_shape": "fiber-supported droplet",
   "fuel_size_text": null,
   "fuel_shape_source": "CFI Science Final Report (PSI-39_Reports_CFI Science Final Report.pdf), p. 6 (fiber); p. 9 (the two kinds); the table's 'Fiber' column says which: \"When required a 40 micron silicon-carbide fiber is used to tether the droplet\"; \"free-floated and fiber-supported droplets\"",
@@ -82221,7 +82223,9 @@
    "Nitrogen": "0.83",
    "Fiber": "Yes"
   },
-  "flags": [],
+  "flags": [
+   "duplicate_row:23"
+  ],
   "fuel_shape": "fiber-supported droplet",
   "fuel_size_text": null,
   "fuel_shape_source": "CFI Science Final Report (PSI-39_Reports_CFI Science Final Report.pdf), p. 6 (fiber); p. 9 (the two kinds); the table's 'Fiber' column says which: \"When required a 40 micron silicon-carbide fiber is used to tether the droplet\"; \"free-floated and fiber-supported droplets\"",
@@ -82272,7 +82276,9 @@
    "Nitrogen": "0.83",
    "Fiber": "Yes"
   },
-  "flags": [],
+  "flags": [
+   "duplicate_row:24"
+  ],
   "fuel_shape": "fiber-supported droplet",
   "fuel_size_text": null,
   "fuel_shape_source": "CFI Science Final Report (PSI-39_Reports_CFI Science Final Report.pdf), p. 6 (fiber); p. 9 (the two kinds); the table's 'Fiber' column says which: \"When required a 40 micron silicon-carbide fiber is used to tether the droplet\"; \"free-floated and fiber-supported droplets\"",
@@ -82323,7 +82329,9 @@
    "Nitrogen": "0.83",
    "Fiber": "No"
   },
-  "flags": [],
+  "flags": [
+   "duplicate_row:25"
+  ],
   "fuel_shape": "free-floated droplet",
   "fuel_size_text": null,
   "fuel_shape_source": "CFI Science Final Report (PSI-39_Reports_CFI Science Final Report.pdf), p. 6 (free deployment); p. 9 (the two kinds); the table's 'Fiber' column says which: \"a droplet of desired size is dispensed between the hypodermic needles and freely deployed, and ignited\"; \"free-floated and fiber-supported droplets\"",
@@ -82374,7 +82382,9 @@
    "Nitrogen": "0.83",
    "Fiber": "No"
   },
-  "flags": [],
+  "flags": [
+   "duplicate_row:26"
+  ],
   "fuel_shape": "free-floated droplet",
   "fuel_size_text": null,
   "fuel_shape_source": "CFI Science Final Report (PSI-39_Reports_CFI Science Final Report.pdf), p. 6 (free deployment); p. 9 (the two kinds); the table's 'Fiber' column says which: \"a droplet of desired size is dispensed between the hypodermic needles and freely deployed, and ignited\"; \"free-floated and fiber-supported droplets\"",
@@ -82425,7 +82435,9 @@
    "Nitrogen": "0.83",
    "Fiber": "Yes"
   },
-  "flags": [],
+  "flags": [
+   "duplicate_row:27"
+  ],
   "fuel_shape": "fiber-supported droplet",
   "fuel_size_text": null,
   "fuel_shape_source": "CFI Science Final Report (PSI-39_Reports_CFI Science Final Report.pdf), p. 6 (fiber); p. 9 (the two kinds); the table's 'Fiber' column says which: \"When required a 40 micron silicon-carbide fiber is used to tether the droplet\"; \"free-floated and fiber-supported droplets\"",
@@ -82476,7 +82488,9 @@
    "Nitrogen": "0.79",
    "Fiber": "Yes"
   },
-  "flags": [],
+  "flags": [
+   "duplicate_row:28"
+  ],
   "fuel_shape": "fiber-supported droplet",
   "fuel_size_text": null,
   "fuel_shape_source": "CFI Science Final Report (PSI-39_Reports_CFI Science Final Report.pdf), p. 6 (fiber); p. 9 (the two kinds); the table's 'Fiber' column says which: \"When required a 40 micron silicon-carbide fiber is used to tether the droplet\"; \"free-floated and fiber-supported droplets\"",
@@ -82527,7 +82541,9 @@
    "Nitrogen": "0.79",
    "Fiber": "Yes"
   },
-  "flags": [],
+  "flags": [
+   "duplicate_row:29"
+  ],
   "fuel_shape": "fiber-supported droplet",
   "fuel_size_text": null,
   "fuel_shape_source": "CFI Science Final Report (PSI-39_Reports_CFI Science Final Report.pdf), p. 6 (fiber); p. 9 (the two kinds); the table's 'Fiber' column says which: \"When required a 40 micron silicon-carbide fiber is used to tether the droplet\"; \"free-floated and fiber-supported droplets\"",
@@ -82578,7 +82594,9 @@
    "Nitrogen": "0.79",
    "Fiber": "No"
   },
-  "flags": [],
+  "flags": [
+   "duplicate_row:30"
+  ],
   "fuel_shape": "free-floated droplet",
   "fuel_size_text": null,
   "fuel_shape_source": "CFI Science Final Report (PSI-39_Reports_CFI Science Final Report.pdf), p. 6 (free deployment); p. 9 (the two kinds); the table's 'Fiber' column says which: \"a droplet of desired size is dispensed between the hypodermic needles and freely deployed, and ignited\"; \"free-floated and fiber-supported droplets\"",

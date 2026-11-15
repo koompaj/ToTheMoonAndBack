@@ -1408,7 +1408,7 @@ PSI-39:cfi:3,PSI-39,CFI,10.60555/m6pj-a914,tables/PSI-39/PSI-39_Experimental tab
 PSI-39:cfi:4,PSI-39,CFI,10.60555/m6pj-a914,tables/PSI-39/PSI-39_Experimental table_CFI.csv,4,1209,droplet,C12H26,fiber-supported droplet,,ambient,0.21,,,1.0,,,,0.0,0.0,,
 PSI-39:cfi:5,PSI-39,CFI,10.60555/m6pj-a914,tables/PSI-39/PSI-39_Experimental table_CFI.csv,5,1210,droplet,C12H26,fiber-supported droplet,,ambient,0.21,,,1.0,,,,0.0,0.0,,
 PSI-39:cfi:6,PSI-39,CFI,10.60555/m6pj-a914,tables/PSI-39/PSI-39_Experimental table_CFI.csv,6,1211,droplet,C12H26,fiber-supported droplet,,ambient,0.21,,,1.0,,,,0.0,0.0,,
-PSI-39:cfi:7,PSI-39,CFI,10.60555/m6pj-a914,tables/PSI-39/PSI-39_Experimental table_CFI.csv,7,1213,droplet,C12H26,fiber-supported droplet,,ambient,0.17,,,1.0,,,,0.0,0.0,,
+PSI-39:cfi:7,PSI-39,CFI,10.60555/m6pj-a914,tables/PSI-39/PSI-39_Experimental table_CFI.csv,7,1213,droplet,C12H26,fiber-supported droplet,,ambient,0.17,,,1.0,,,,0.0,0.0,,o2_differs_from_test_sheet:0.21
 PSI-39:cfi:8,PSI-39,CFI,10.60555/m6pj-a914,tables/PSI-39/PSI-39_Experimental table_CFI.csv,8,1215,droplet,C12H26,free-floated droplet,,ambient,0.17,,,1.0,,,,0.0,0.0,,
 PSI-39:cfi:9,PSI-39,CFI,10.60555/m6pj-a914,tables/PSI-39/PSI-39_Experimental table_CFI.csv,9,1216,droplet,C12H26,free-floated droplet,,ambient,0.17,,,1.0,,,,0.0,0.0,,
 PSI-39:cfi:10,PSI-39,CFI,10.60555/m6pj-a914,tables/PSI-39/PSI-39_Experimental table_CFI.csv,10,1217,droplet,C12H26,free-floated droplet,,ambient,0.17,,,1.0,,,,0.0,0.0,,
@@ -1481,14 +1481,14 @@ PSI-39:cfi:76,PSI-39,CFI,10.60555/m6pj-a914,tables/PSI-39/PSI-39_Experimental ta
 PSI-39:cfi:77,PSI-39,CFI,10.60555/m6pj-a914,tables/PSI-39/PSI-39_Experimental table_CFI.csv,77,1384,droplet,[.60]/[.40] C12H26/iso-dodecane,fiber-supported droplet,,ambient,0.21,,,1.0,,,,0.59,0.0,,
 PSI-39:cfi:78,PSI-39,CFI,10.60555/m6pj-a914,tables/PSI-39/PSI-39_Experimental table_CFI.csv,78,1386,droplet,[.60]/[.40] C12H26/iso-dodecane,fiber-supported droplet,,ambient,0.21,,,1.0,,,,0.59,0.0,,
 PSI-39:cfi:79,PSI-39,CFI,10.60555/m6pj-a914,tables/PSI-39/PSI-39_Experimental table_CFI.csv,79,1387,droplet,[.60]/[.40] C12H26/iso-dodecane,droplet,,ambient,0.21,,,1.0,,,,0.59,0.0,,
-PSI-39:cfi:80,PSI-39,CFI,10.60555/m6pj-a914,tables/PSI-39/PSI-39_Experimental table_CFI.csv,80,1285,droplet,[.75]/[.25] C12H26/iso-dodecane,fiber-supported droplet,,ambient,0.17,,,1.0,,,,0.0,0.0,,
-PSI-39:cfi:81,PSI-39,CFI,10.60555/m6pj-a914,tables/PSI-39/PSI-39_Experimental table_CFI.csv,81,1286,droplet,[.75]/[.25] C12H26/iso-dodecane,fiber-supported droplet,,ambient,0.17,,,1.0,,,,0.0,0.0,,
-PSI-39:cfi:82,PSI-39,CFI,10.60555/m6pj-a914,tables/PSI-39/PSI-39_Experimental table_CFI.csv,82,1287,droplet,[.75]/[.25] C12H26/iso-dodecane,free-floated droplet,,ambient,0.17,,,1.0,,,,0.0,0.0,,
-PSI-39:cfi:83,PSI-39,CFI,10.60555/m6pj-a914,tables/PSI-39/PSI-39_Experimental table_CFI.csv,83,1288,droplet,[.75]/[.25] C12H26/iso-dodecane,free-floated droplet,,ambient,0.17,,,1.0,,,,0.0,0.0,,
-PSI-39:cfi:84,PSI-39,CFI,10.60555/m6pj-a914,tables/PSI-39/PSI-39_Experimental table_CFI.csv,84,1289,droplet,[.75]/[.25] C12H26/iso-dodecane,fiber-supported droplet,,ambient,0.17,,,1.0,,,,0.0,0.0,,
-PSI-39:cfi:85,PSI-39,CFI,10.60555/m6pj-a914,tables/PSI-39/PSI-39_Experimental table_CFI.csv,85,1295,droplet,[.75]/[.25] C12H26/iso-dodecane,fiber-supported droplet,,ambient,0.21,,,1.0,,,,0.0,0.0,,
-PSI-39:cfi:86,PSI-39,CFI,10.60555/m6pj-a914,tables/PSI-39/PSI-39_Experimental table_CFI.csv,86,1296,droplet,[.75]/[.25] C12H26/iso-dodecane,fiber-supported droplet,,ambient,0.21,,,1.0,,,,0.0,0.0,,
-PSI-39:cfi:87,PSI-39,CFI,10.60555/m6pj-a914,tables/PSI-39/PSI-39_Experimental table_CFI.csv,87,1297,droplet,[.75]/[.25] C12H26/iso-dodecane,free-floated droplet,,ambient,0.21,,,1.0,,,,0.0,0.0,,
+PSI-39:cfi:80,PSI-39,CFI,10.60555/m6pj-a914,tables/PSI-39/PSI-39_Experimental table_CFI.csv,80,1285,droplet,[.75]/[.25] C12H26/iso-dodecane,fiber-supported droplet,,ambient,0.17,,,1.0,,,,0.0,0.0,,duplicate_row:23
+PSI-39:cfi:81,PSI-39,CFI,10.60555/m6pj-a914,tables/PSI-39/PSI-39_Experimental table_CFI.csv,81,1286,droplet,[.75]/[.25] C12H26/iso-dodecane,fiber-supported droplet,,ambient,0.17,,,1.0,,,,0.0,0.0,,duplicate_row:24
+PSI-39:cfi:82,PSI-39,CFI,10.60555/m6pj-a914,tables/PSI-39/PSI-39_Experimental table_CFI.csv,82,1287,droplet,[.75]/[.25] C12H26/iso-dodecane,free-floated droplet,,ambient,0.17,,,1.0,,,,0.0,0.0,,duplicate_row:25
+PSI-39:cfi:83,PSI-39,CFI,10.60555/m6pj-a914,tables/PSI-39/PSI-39_Experimental table_CFI.csv,83,1288,droplet,[.75]/[.25] C12H26/iso-dodecane,free-floated droplet,,ambient,0.17,,,1.0,,,,0.0,0.0,,duplicate_row:26
+PSI-39:cfi:84,PSI-39,CFI,10.60555/m6pj-a914,tables/PSI-39/PSI-39_Experimental table_CFI.csv,84,1289,droplet,[.75]/[.25] C12H26/iso-dodecane,fiber-supported droplet,,ambient,0.17,,,1.0,,,,0.0,0.0,,duplicate_row:27
+PSI-39:cfi:85,PSI-39,CFI,10.60555/m6pj-a914,tables/PSI-39/PSI-39_Experimental table_CFI.csv,85,1295,droplet,[.75]/[.25] C12H26/iso-dodecane,fiber-supported droplet,,ambient,0.21,,,1.0,,,,0.0,0.0,,duplicate_row:28
+PSI-39:cfi:86,PSI-39,CFI,10.60555/m6pj-a914,tables/PSI-39/PSI-39_Experimental table_CFI.csv,86,1296,droplet,[.75]/[.25] C12H26/iso-dodecane,fiber-supported droplet,,ambient,0.21,,,1.0,,,,0.0,0.0,,duplicate_row:29
+PSI-39:cfi:87,PSI-39,CFI,10.60555/m6pj-a914,tables/PSI-39/PSI-39_Experimental table_CFI.csv,87,1297,droplet,[.75]/[.25] C12H26/iso-dodecane,free-floated droplet,,ambient,0.21,,,1.0,,,,0.0,0.0,,duplicate_row:30
 PSI-25:bass-ii:1,PSI-25,BASS-II,10.60555/4qc4-de67,tables/PSI-25/PSI-25_Experimental table_BASS-II.csv,1,B1,solid,100 micron PMMA film 2 cm wide,film,"100 micron, 2 cm wide",ambient,0.222,,,,,,,,0.0,,pressure_not_in_table;pressure_range_from_report
 PSI-25:bass-ii:2,PSI-25,BASS-II,10.60555/4qc4-de67,tables/PSI-25/PSI-25_Experimental table_BASS-II.csv,2,B2,solid,200 micron PMMA film 2 cm wide,film,"200 micron, 2 cm wide",ambient,0.222,,,,,,,,0.0,,pressure_not_in_table;pressure_range_from_report
 PSI-25:bass-ii:3,PSI-25,BASS-II,10.60555/4qc4-de67,tables/PSI-25/PSI-25_Experimental table_BASS-II.csv,3,B3,solid,100 micron film 2 cm wide,film,"100 micron, 2 cm wide",ambient,0.222,,,,,,,,0.0,,pressure_not_in_table;pressure_range_from_report;material_not_stated

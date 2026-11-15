@@ -7,7 +7,8 @@ import type { AppData, Investigation, Sensor, SensorKind, Test } from '../types/
 import { shapeCounts } from '../data/load'
 import type { AiContent } from '../ai/content'
 import { fmtPct, fmtPsi, investigationStats, shortName } from '../ai/evidence'
-import { DoiCite } from './Cite'
+import { DoiCite, UserMark } from './Cite'
+import { isUserInvestigation } from './uploads'
 import { InvestigationsView } from './InvestigationsView'
 import { TestsView } from './TestsView'
 import { useHashParam } from './route'
@@ -141,6 +142,7 @@ function ExperimentDetail({ data, id }: { data: AppData; id: string }) {
             <h1 id="exp-title">{shortName(inv)}</h1>
             {inv.acronym && <p className="lead">{inv.title}</p>}
             <div className="chips">
+              {isUserInvestigation(inv) && <UserMark label="User-uploaded, not NASA data" />}
               <PillarTag pillar={inv.pillar} />
               {fuels.map((f) => (
                 <FuelTag key={f} fuel={f} />

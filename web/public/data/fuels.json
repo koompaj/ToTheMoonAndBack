@@ -1412,17 +1412,9 @@
    "PSI-39:cfi:76",
    "PSI-39:cfi:77",
    "PSI-39:cfi:78",
-   "PSI-39:cfi:79",
-   "PSI-39:cfi:80",
-   "PSI-39:cfi:81",
-   "PSI-39:cfi:82",
-   "PSI-39:cfi:83",
-   "PSI-39:cfi:84",
-   "PSI-39:cfi:85",
-   "PSI-39:cfi:86",
-   "PSI-39:cfi:87"
+   "PSI-39:cfi:79"
   ],
-  "test_count": 87,
+  "test_count": 79,
   "investigations": [
    "PSI-39"
   ],
@@ -1469,10 +1461,7 @@
     "PSI-39:cfi:76",
     "PSI-39:cfi:77",
     "PSI-39:cfi:78",
-    "PSI-39:cfi:79",
-    "PSI-39:cfi:85",
-    "PSI-39:cfi:86",
-    "PSI-39:cfi:87"
+    "PSI-39:cfi:79"
    ],
    "spacesuit": [],
    "earth_sea_level": [
@@ -1500,10 +1489,7 @@
     "PSI-39:cfi:76",
     "PSI-39:cfi:77",
     "PSI-39:cfi:78",
-    "PSI-39:cfi:79",
-    "PSI-39:cfi:85",
-    "PSI-39:cfi:86",
-    "PSI-39:cfi:87"
+    "PSI-39:cfi:79"
    ]
   },
   "nearest_by_habitat": {

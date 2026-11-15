@@ -14,7 +14,7 @@ import { FuelTag, PillarTag } from './ui'
 
 export const MAX_COMPARE = 3
 export type CompareMode = 'split' | 'full' | 'min'
-const STAR_COLORS = ['#ffcc29', '#f472b6', '#38bdf8']
+const STAR_COLORS = ['#ffe39a', '#ffc9e3', '#a8dcff'] // pastel butter, blush, sky
 const O2_MAX = 0.45 // bar scale end; highest cabin-air oxygen in the tables is 40 %
 const PSI_MAX = 75 // bar scale end; highest pressure in the tables is 5 atm (73.5 psi)
 
