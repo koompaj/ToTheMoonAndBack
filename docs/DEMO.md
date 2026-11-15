@@ -6,7 +6,7 @@ tables", never "never tested": NASA ran more (for example Saffire-IV to VI) than
 
 ## 0:00 - Step 1, Home: the wide picture
 
-> "PSI holds 1,719 distinct NASA microgravity combustion tests. We placed each one by the oxygen
+> "PSI holds 1,711 distinct NASA microgravity combustion tests. We placed each one by the oxygen
 > and pressure it ran at, against the air in each place crews will live."
 
 Point at the place cards: Moon Base (challenge box) 20 tests, Moon Base in NASA's own exploration

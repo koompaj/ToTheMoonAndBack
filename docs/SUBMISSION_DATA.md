@@ -83,8 +83,8 @@ Space Apps asks every team to describe how SI tools were used. For the data side
 
 ## Key data facts for the summary (as built)
 
-- 1,753 test rows from 12 NASA experiment tables; 1,719 distinct tests
-  (34 rows repeat an earlier row exactly).
+- 1,753 test rows from 12 NASA experiment tables; 1,711 distinct tests
+  (42 rows repeat an earlier row exactly: 34 SPICE, 8 CFI).
 - NASA's exploration atmosphere for a Moon base (8.2 psia, 34 % O2, +-0.2 psia / +-2 %): 0 tests in PSI's tables.
   The challenge's wider Moon Base range (30 % O2 or more, 10.2 psi or less): 20 tests, all gas flames from ACME CFI-G.
 - No solid-material test in the tables goes above 22.2 % O2, and none records its pressure.

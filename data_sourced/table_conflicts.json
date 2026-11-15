@@ -1,0 +1,14 @@
+{
+ "about": "Values in NASA's own per-test files in PSI that disagree with the experiment table. The table's value is kept unchanged; the test gets a flag naming the other value. Applied by build_web_data.py; validate_data.py re-finds each quote when data_extra/ is present.",
+ "checked": "2026-11-15 by workstream A (file re-read by hand)",
+ "conflicts": [
+  {
+   "test_id": "PSI-39:cfi:7",
+   "flag": "o2_differs_from_test_sheet:0.21",
+   "table_value": "Oxygen 0.17, Nitrogen 0.83 (27-Mar-17, CIR f086a04)",
+   "source_file": "PSI-39_Raw Data_FLEX-1213_TestSheet.txt",
+   "location": "section AMBIENT ENVIRONMENT, line 10 (Test Date: Monday, March 27, 2017; CIR Test Number: F086A04)",
+   "quote": "O2 Mole Fraction = \t 0.21"
+  }
+ ]
+}
