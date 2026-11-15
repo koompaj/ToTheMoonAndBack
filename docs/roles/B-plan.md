@@ -846,6 +846,27 @@ Smaller choices:
 
 B still needs 10a, because the duct starts to decide the order.
 
+### A's review of the spread against the rule (2026-11-15), and the fixes
+
+A (Chai) checked the spread against "Spread is an illustration, never a result". It mostly
+passes; four points, all fixed on branch `app/spread-review-fixes`:
+
+| A's point | Fix | File |
+|---|---|---|
+| Three fixed values change the spread and are not on screen: a distance never counts as less than 15 % of itself; each of the oxygen and pressure rules gives at least 0.2; items per step stay between 0.2 and 6. | One labelled line in the Spread settings panel, "Fixed limits of this drawing (ours, not NASA data, and not yours to set)". The numbers are read from the constants the code uses (`MIN_FACTOR`, `RULE_FLOOR`, `PACE_LIMITS`). | `cabin/timeline.ts`, `cabin/SpreadSettings.tsx` |
+| The place's air and gravity are shown without a source. | A "Source for the air of ..." line with the place's `source`, its `source_urls` and its gravity source, all from `habitats.json`. | C's `SimulationView.tsx` |
+| "0.94 items per step" reads like a measured rate. | To the nearest half, with "about": "about 1 item per step". | `cabin/SpreadSettings.tsx` |
+| Choosing the ISS fills in the edge of its band (19 %, 14.9 psi). | A place drawn as NASA's control band (no wider than 4 % oxygen and 0.4 psi) fills in the middle: 21 % / 14.7 psi for the ISS and Earth, 34 % / 8.2 psi for Moon Base (NASA air). Other places are unchanged. A line says what was filled in and the place's range. `defaultPoint()` is not changed: C's Fire page uses it. | C's `SimulationView.tsx` |
+
+Checked in the browser: all five places fill in the values above and show their sources and
+links; the limits line shows; with both effects at 100 % in NASA's Moon Base air the panel says
+"about 1.5 items per step" and "about 0.5 items per step"; no console errors. `npm run build`
+passes. Not checked: that each source link opens.
+
+A also reported new counts after the BASS pressures (896 tests placed; 209 for the ISS and
+Earth). Nothing in `web/src/scene/` or `web/src/panels/` hard-codes the old counts. `CLAUDE.md`
+still says 775 and 171; that is A's to change.
+
 ---
 
 ## 11. Questions

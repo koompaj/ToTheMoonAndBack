@@ -86,17 +86,26 @@ export interface SpreadBias {
 }
 export const NO_BIAS: SpreadBias = { downstream: 0, up: 0, pace: 1 }
 
+// ---- fixed limits of the drawing. OURS, NOT NASA DATA, and not the user's to set. They keep an
+// extreme setting from collapsing a distance to nothing or stalling the timeline. Because they
+// change the spread, every one of them is written out in the settings panel (SpreadSettings.tsx
+// reads these same constants): CLAUDE.md, "No hidden rates".
+
 /** A distance is never counted as less than this share of itself, however strong an effect. */
 export const MIN_FACTOR = 0.15
+/** The oxygen rule and the pressure rule each give at least this share of the usual items per step. */
+export const RULE_FLOOR = 0.2
+/** Items lit per step are kept between these two, whatever the two rules multiply out to. */
+export const PACE_LIMITS: readonly [number, number] = [0.2, 6]
 const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v))
 
 export function biasFrom(effects: EffectSettings, c: CabinConditions): SpreadBias {
-  const oxygen = Math.max(0.2, 1 + effects.oxygen * (c.o2Fraction / EARTH_AIR_O2 - 1))
-  const pressure = Math.max(0.2, 1 + effects.pressure * (c.pressureAtm / SEA_LEVEL_ATM - 1))
+  const oxygen = Math.max(RULE_FLOOR, 1 + effects.oxygen * (c.o2Fraction / EARTH_AIR_O2 - 1))
+  const pressure = Math.max(RULE_FLOOR, 1 + effects.pressure * (c.pressureAtm / SEA_LEVEL_ATM - 1))
   return {
     downstream: effects.airflow * clamp(c.airflowCmS / AIRFLOW_FULL_CMS, 0, 1),
     up: effects.gravity * clamp(c.gravity, 0, 1),
-    pace: clamp(oxygen * pressure, 0.2, 6),
+    pace: clamp(oxygen * pressure, PACE_LIMITS[0], PACE_LIMITS[1]),
   }
 }
 
