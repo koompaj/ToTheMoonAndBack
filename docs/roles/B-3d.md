@@ -11,10 +11,10 @@ You own what people see first. Read `CLAUDE.md` first.
 
 ## Where things stand
 
-- `HabitatMap3D.tsx` is a stub: it plots every test that has oxygen and pressure as a point, draws
-  each habitat as a see-through box, and lets you orbit. No hover, no click on tests, no axis ticks.
-- `Flame3D.tsx` is a stub: a sphere that stretches and changes colour with a gravity value.
-- `scale.ts` maps data to scene positions (x = oxygen, y = pressure on a log scale, z = fuel layer).
+- The two baseline stubs, `HabitatMap3D.tsx` (every test as a point, each habitat as a box) and
+  `Flame3D.tsx` (a sphere stretched by gravity), were removed on 2026-11-15: nothing imported
+  them. They are in git history. What B built instead is in `docs/roles/B-plan.md`.
+- `scale.ts` holds the fuel-type colours. The all-tests map's axis scales went with its stub.
 - `Label.tsx` draws text as a canvas sprite. Use it for all in-scene text: drei's `<Html>` logs React
   errors under React 19, and drei's `<Text>` fetches a font from the network.
 
