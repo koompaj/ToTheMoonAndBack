@@ -91,9 +91,16 @@ export function gravityNote(tests: Test[], h: Habitat): string | null {
 
 /** Tests that sit inside a habitat's oxygen and pressure box.
  *  Only ambient-oxygen tests with both values known can be placed. */
+/** True for a row that repeats an earlier row of the same NASA table cell for cell (flag duplicate_row).
+ *  It is the same test, so every count of tests leaves it out. */
+export function isRepeatRow(t: Test): boolean {
+  return t.flags.some((f) => f.startsWith('duplicate_row'))
+}
+
 export function testsInHabitat(tests: Test[], h: Habitat): Test[] {
   return tests.filter(
     (t) =>
+      !isRepeatRow(t) &&
       t.o2_basis === 'ambient' &&
       t.o2_fraction !== null &&
       t.pressure_atm !== null &&
@@ -134,6 +141,7 @@ export function testsInConditions(tests: Test[], c: Conditions): ConditionsResul
   let inverse = 0
   const g = c.gravity_g
   for (const t of tests) {
+    if (isRepeatRow(t)) continue // the same test as an earlier row: counted once
     if (t.o2_basis !== 'ambient') {
       inverse++
       continue
@@ -156,7 +164,7 @@ export function testsInConditions(tests: Test[], c: Conditions): ConditionsResul
 export function nearestOutside(tests: Test[], c: Conditions, k = 5): { test: Test; o2_gap_points: number; psi_gap: number }[] {
   const gap = (v: number, [lo, hi]: [number, number]) => (v < lo ? lo - v : v > hi ? v - hi : 0)
   return tests
-    .filter((t) => t.o2_basis === 'ambient' && t.o2_fraction !== null && t.pressure_atm !== null && !t.flags.some((f) => f.startsWith('duplicate_row')))
+    .filter((t) => t.o2_basis === 'ambient' && t.o2_fraction !== null && t.pressure_atm !== null && !isRepeatRow(t))
     .map((t) => ({
       test: t,
       o2_gap_points: gap(t.o2_fraction! * 100, [c.o2[0] * 100, c.o2[1] * 100]),
