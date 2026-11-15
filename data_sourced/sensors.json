@@ -1,6 +1,6 @@
 {
  "about": "What each investigation measured (item 5): one entry per sensor or group of sensors, as NASA names it, with the file and place it is read from and NASA's words. Report entries quote the report (page numbers count the page breaks pdftotext writes, one per PDF page, as in solid_conditions.json). Sensor-log entries name the sheet, the column letters, the header (quote) and the unit from the log's own unit row. Experiment-table entries name the table's column headers. Hand-checked by workstream A against data_extra/ (not in git). build_web_data.py copies these to investigations.json as Investigation.sensors; validate_data.py re-finds every quote, header and unit when data_extra/ exists, and every table header always. A sensor listed here is one NASA's documents name; an investigation with no entry is one we have not read for sensors yet, not one that measured nothing.",
- "checked": "2026-11-15",
+ "checked": "2026-11-15 (ACME additions: each quote re-found on its page by workstream A)",
  "sensors": [
   {
    "investigation": "PSI-98",
@@ -844,6 +844,186 @@
    "source_file": "PSI-101_Reports_SAME-R_Final Report.pdf",
    "source_where": "p. 2",
    "quote": "a new instrument, M-pass, developed in-house GRC, was used to replace one of the two Commercial Diagnostic Enclosures"
+  },
+  {
+   "investigation": "PSI-10",
+   "kind": "flow",
+   "name": "Three mass flow controllers",
+   "detail": "deliver fuel, oxidizer or inert (e.g. helium or CO2), and nitrogen to the burner",
+   "source_file": "PSI-10_Reports_FinalRpt_ACMEFlameDesign.pdf",
+   "source_where": "p. 11",
+   "quote": "The chamber insert includes three mass flow controllers"
+  },
+  {
+   "investigation": "PSI-159",
+   "kind": "flow",
+   "name": "Three mass flow controllers",
+   "detail": "deliver fuel, oxidizer or inert (e.g. helium or CO2), and nitrogen to the burner",
+   "source_file": "PSI-159_Reports_FinalRpt_ACME.CFI-G.pdf",
+   "source_where": "p. 8",
+   "quote": "The chamber insert includes three mass flow controllers"
+  },
+  {
+   "investigation": "PSI-10",
+   "kind": "pressure",
+   "name": "Chamber pressure",
+   "detail": "a supporting measurement (the report describes the hardware in the future tense)",
+   "source_file": "PSI-10_Reports_FinalRpt_ACMEFlameDesign.pdf",
+   "source_where": "p. 17",
+   "quote": "Additional supporting measurements will be made, where the chamber pressure is a simple example."
+  },
+  {
+   "investigation": "PSI-159",
+   "kind": "pressure",
+   "name": "Chamber pressure",
+   "detail": "a supporting measurement (the report describes the hardware in the future tense)",
+   "source_file": "PSI-159_Reports_FinalRpt_ACME.CFI-G.pdf",
+   "source_where": "p. 14",
+   "quote": "Additional supporting measurements will be made, where the chamber pressure is a simple example."
+  },
+  {
+   "investigation": "PSI-10",
+   "kind": "pressure",
+   "name": "Burner internal pressure",
+   "detail": "to monitor the pressure difference across the porous burner's surface (the report describes the hardware in the future tense)",
+   "source_file": "PSI-10_Reports_FinalRpt_ACMEFlameDesign.pdf",
+   "source_where": "p. 10",
+   "quote": "The internal pressure of the porous burners will be measured"
+  },
+  {
+   "investigation": "PSI-159",
+   "kind": "pressure",
+   "name": "Burner internal pressure",
+   "detail": "to monitor the pressure difference across the porous burner's surface (the report describes the hardware in the future tense)",
+   "source_file": "PSI-159_Reports_FinalRpt_ACME.CFI-G.pdf",
+   "source_where": "p. 7",
+   "quote": "The internal pressure of the porous burners will be measured"
+  },
+  {
+   "investigation": "PSI-10",
+   "kind": "thermocouple",
+   "name": "Burner surface thermocouple",
+   "detail": "on most burners (the report describes the hardware in the future tense)",
+   "source_file": "PSI-10_Reports_FinalRpt_ACMEFlameDesign.pdf",
+   "source_where": "p. 10",
+   "quote": "Most burners will be equipped with a surface thermocouple"
+  },
+  {
+   "investigation": "PSI-159",
+   "kind": "thermocouple",
+   "name": "Burner surface thermocouple",
+   "detail": "on most burners (the report describes the hardware in the future tense)",
+   "source_file": "PSI-159_Reports_FinalRpt_ACME.CFI-G.pdf",
+   "source_where": "p. 7",
+   "quote": "Most burners will be equipped with a surface thermocouple"
+  },
+  {
+   "investigation": "PSI-10",
+   "kind": "other",
+   "name": "Ion current (burner to electrode mesh)",
+   "detail": "from the voltage drop across a known resistor; part of the E-field hardware (the report describes the hardware in the future tense)",
+   "source_file": "PSI-10_Reports_FinalRpt_ACMEFlameDesign.pdf",
+   "source_where": "p. 17",
+   "quote": "The ion current between the burner and electrode mesh will be determined via measurement of the voltage drop across a known resistor"
+  },
+  {
+   "investigation": "PSI-159",
+   "kind": "other",
+   "name": "Ion current (burner to electrode mesh)",
+   "detail": "from the voltage drop across a known resistor; part of the E-field hardware (the report describes the hardware in the future tense)",
+   "source_file": "PSI-159_Reports_FinalRpt_ACME.CFI-G.pdf",
+   "source_where": "p. 14",
+   "quote": "The ion current between the burner and electrode mesh will be determined via measurement of the voltage drop across a known resistor"
+  },
+  {
+   "investigation": "PSI-23",
+   "kind": "camera",
+   "name": "Five video cameras",
+   "detail": "ACME's imaging suite, three of them CIR facility cameras",
+   "source_file": "PSI-23_Reports_s_Flame_final_report_20210729.pdf",
+   "source_where": "p. 11",
+   "quote": "ACME's primary flame diagnostics are a suite of imaging systems including five video cameras and two illumination systems"
+  },
+  {
+   "investigation": "PSI-23",
+   "kind": "other",
+   "name": "CIR gas chromatograph",
+   "detail": "pre- and post-test analysis of the chamber atmosphere (oxygen, nitrogen, CO2, CO, fuel gases) (the report describes the it in the future tense)",
+   "source_file": "PSI-23_Reports_s_Flame_final_report_20210729.pdf",
+   "source_where": "p. 16",
+   "quote": "The ACME experiments will use the CIR's gas chromatograph for pre- and post-test analysis of the chamber atmosphere"
+  },
+  {
+   "investigation": "PSI-23",
+   "kind": "flow",
+   "name": "Mass flow controllers MFCA1-MFCA3",
+   "detail": "MFCA1 static mixer/oxygen, MFCA2 nitrogen bypass/inert, MFCA3 fuel; flow rate in SLPM (columns MFCA1StaticMixerFlow, MFCA2BypassFlow, MFCA3FuelFlow)",
+   "source_file": "PSI-23_Science Documents_ACME non-imaging data file description.pdf",
+   "source_where": "p. 4",
+   "quote": "Static mixer/oxygen mass flow controller flow rate."
+  },
+  {
+   "investigation": "PSI-23",
+   "kind": "pressure",
+   "name": "Pressure transducers PTA1-PTA3",
+   "detail": "PTA1 outer coflow, PTA2 inner coflow/burner, PTA3 chamber; 0 to 145 psia",
+   "source_file": "PSI-23_Science Documents_ACME non-imaging data file description.pdf",
+   "source_where": "p. 5",
+   "quote": "Chamber pressure. Converted in flight software to to 0 to 145"
+  },
+  {
+   "investigation": "PSI-23",
+   "kind": "other",
+   "name": "Ion current",
+   "detail": "between the E-field grid and the burner (column IonCurrent)",
+   "source_file": "PSI-23_Science Documents_ACME non-imaging data file description.pdf",
+   "source_where": "p. 4",
+   "quote": "Measurement of ion current between E-Field grid and burner."
+  },
+  {
+   "investigation": "PSI-23",
+   "kind": "spectral",
+   "name": "Photomultiplier tubes PMT1-PMT3",
+   "detail": "PMT1 through a 310 nm bandpass filter, PMT2 broadband UV with a neutral-density filter, PMT3 through a 430 nm bandpass filter",
+   "source_file": "PSI-23_Science Documents_ACME non-imaging data file description.pdf",
+   "source_where": "p. 5",
+   "quote": "Looks through a 310 nm bandpass interference filter"
+  },
+  {
+   "investigation": "PSI-23",
+   "kind": "thermocouple",
+   "name": "Rake thermocouples TC_A-TC_D",
+   "detail": "near or far array rake, types K and B (columns TCA-TCD)",
+   "source_file": "PSI-23_Science Documents_ACME non-imaging data file description.pdf",
+   "source_where": "p. 6",
+   "quote": "Near or far array Rake A Type K thermocouple"
+  },
+  {
+   "investigation": "PSI-23",
+   "kind": "thermocouple",
+   "name": "200 mm thermocouples TC_200A and TC_200B",
+   "detail": "type K, 200 mm from the axis, igniter side and relay side",
+   "source_file": "PSI-23_Science Documents_ACME non-imaging data file description.pdf",
+   "source_where": "p. 7",
+   "quote": "Igniter side Type K thermocouple, 200 mm from axis."
+  },
+  {
+   "investigation": "PSI-23",
+   "kind": "thermocouple",
+   "name": "Burner thermocouple TC_BNR",
+   "detail": "type K, on the burner (column TCBurner)",
+   "source_file": "PSI-23_Science Documents_ACME non-imaging data file description.pdf",
+   "source_where": "p. 7",
+   "quote": "Type K thermocouple on burner."
+  },
+  {
+   "investigation": "PSI-23",
+   "kind": "radiometer",
+   "name": "Thermopile radiometer array",
+   "detail": "radiometers at +60, +30, centre, -30 and -60, plus an offset radiometer on the downstream relay board, each with a cold-junction channel",
+   "source_file": "PSI-23_Science Documents_ACME non-imaging data file description.pdf",
+   "source_where": "p. 7",
+   "quote": "Dexter Research Center (DRC) XP-0055."
   }
  ]
 }

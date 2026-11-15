@@ -114,7 +114,7 @@ SPICE still have no pressure.
 | Item | What was added | Where it comes from |
 |---|---|---|
 | 10. Fuel shape and size | `Test.fuel_shape`, `fuel_size_text`, `fuel_shape_source` on 1,646 rows (size on 1,608); 107 rows flagged `shape_not_stated` | BASS / BASS-II: shape and size words in the row's own fuel cell. FLEX: droplet, from its initial-diameter column. SAFFIRE: size only, from its sample-size columns. ACME Flame Design and CFI-G ("porous spherical burner", 6.35 mm, final reports pp. 25 / 29 and 10 / 8), SPICE (round nozzle, final report p. 2, size from the `Nozzle (mm)` column) and CFI (fiber-supported or free-floated droplet, final report pp. 6 and 9, from its `Fiber` column): `data_sourced/shapes.json` |
-| 5. What NASA measured | `Investigation.sensors`: 55 entries for 11 investigations | Saffire-I and -III: each burn's sensor log (sheet, column letters, header and unit row; both samples' logs checked). SAFFIRE-I to -III cameras: the experiment tables. BASS-II, ACME Flame Design, CFI-G, CFI, SPICE, SAME, SAME-R: report pages. BASS: overview presentation p. 10. `data_sourced/sensors.json` |
+| 5. What NASA measured | `Investigation.sensors`: 75 entries for 12 investigations | Saffire-I and -III: each burn's sensor log (sheet, column letters, header and unit row; both samples' logs checked). SAFFIRE-I to -III cameras: the experiment tables. BASS-II, ACME Flame Design, CFI-G, s-Flame, CFI, SPICE, SAME, SAME-R: report pages. s-Flame channels (flow controllers, pressure transducers, ion current, PMTs, thermocouples, radiometers): `PSI-23_Science Documents_ACME non-imaging data file description.pdf` pp. 4-7. BASS: overview presentation p. 10. `data_sourced/sensors.json` |
 | 8. Gaps by pillar | `web/public/data/gaps.json`, 27 statements | Worked out by `scripts/gaps_analysis.py` from `tests.json`, `habitats.json`, `outcomes.json` and `other_tables.json` |
 
 The validator now has 99 checks. With `data_extra/` present it re-finds every shape and sensor quote on the
@@ -130,7 +130,9 @@ Found while doing this:
   from the row itself, so a row is never given a shape it does not state.
 - The ACME reports describe some hardware (radiometers, gas chromatograph) in the future tense, copied from the
   proposal. Those entries quote it as written, and the detail says so where it matters.
-- Not read for sensors yet: FLEX, FLEX-2, DAFT, s-Flame and the other ACME records, SLICE, and PSI-115 / -117 / -142.
+- Not read for sensors yet: FLEX, FLEX-2, DAFT, ACME BRE / CLD / E-FIELD (their PSI records hold no `_data.csv` files and no channel description; their other files were not searched for sensors), SLICE, and PSI-115 / -117 / -142.
+- The ACME non-imaging description is filed only under s-Flame and does not name Flame Design or CFI-G, so it is applied to s-Flame only, even though those two records' `_data.csv` files have the same column headings. Their new entries (flow controllers, chamber and burner pressure, burner thermocouple, ion current) quote their own final reports.
+- CFI's per-test RadiometerData, DropletData, ColorCamData and CoolFlameData files are outputs of the cameras and radiometers already listed from its report, so they add no new sensor.
 
 
 ## Done (2026-11-15, branch `data/bass-conditions`): BASS oxygen and pressure
