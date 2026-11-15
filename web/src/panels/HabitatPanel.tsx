@@ -7,7 +7,7 @@ import type { AppData, FuelClass, Habitat } from '../types/data'
 import type { AiContent } from '../ai/content'
 import { isSourced, testsInHabitat, unplacedTests } from '../data/load'
 import { useApp } from '../state/store'
-import { fmtPct, fmtPsi, habitatEvidence, type ClassEvidence } from '../ai/evidence'
+import { fmtPct, fmtPsi, habitatEvidence, pressureSources, pressureSourcesText, type ClassEvidence } from '../ai/evidence'
 import { DoiCite, SentenceCites, TestCite } from './Cite'
 import { TestDetail } from './TestDetail'
 import { Choice, FUEL_LABEL, FuelDot, PanelHead, Step } from './ui'
@@ -238,8 +238,9 @@ export function HabitatPanel({ data, ai, embedded = false }: { data: AppData; ai
                   single pressure from NASA&rsquo;s reports, so they cannot be placed in any box yet (
                   {unplaced.noPressureInTable.filter((t) => t.pressure_atm_min != null).length} of them have only a pressure range from a
                   NASA report or sensor log).{' '}
-                  {data.tests.filter((t) => t.flags.includes('pressure_from_report') && t.pressure_atm !== null).length} solid tests
-                  from the same kind of table are placed, using the pressure in NASA&rsquo;s BASS-II report.
+                  {pressureSources(data.tests.filter((t) => t.fuel_class === 'solid')).reduce((n, g) => n + g.n, 0)} solid tests from the
+                  same kind of table are placed, using a pressure from another NASA document:{' '}
+                  {pressureSourcesText(pressureSources(data.tests.filter((t) => t.fuel_class === 'solid')))}.
                 </li>
               )}
             </ul>

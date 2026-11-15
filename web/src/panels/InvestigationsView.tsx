@@ -12,7 +12,8 @@ import { useHashParam } from './route'
 import { Choice, FuelTag, PILLAR_HINT, PillarTag, ViewHead } from './ui'
 import { ComparePanel, useCompare, type CompareMode } from './CompareDrawer'
 import { ConditionsBar, useConditions } from './Conditions'
-import { isUserInvestigation } from './uploads'
+import { isUserInvestigation, mergeUploads, type UserUpload } from './uploads'
+import { testsInConditions } from '../data/load'
 import type { Test } from '../types/data'
 
 type Filter = Pillar | 'unstated' | 'all'
@@ -219,7 +220,7 @@ function groupsOf(list: InvestigationStats[], by: 'pillar' | 'hardware') {
   return order.map((label) => ({ label, items: out.get(label)! }))
 }
 
-export function InvestigationsView({ data, ai }: { data: AppData; ai: AiContent }) {
+export function InvestigationsView({ data, ai, uploads = [] }: { data: AppData; ai: AiContent; uploads?: UserUpload[] }) {
   const [filter, setFilter] = useHashParam('pillar', 'all')
   const [query, setQuery] = useHashParam('eq', '')
   const [testQuery, setTestQuery] = useHashParam('tq', '')
@@ -237,15 +238,18 @@ export function InvestigationsView({ data, ai }: { data: AppData; ai: AiContent 
   const testMatches = (st: InvestigationStats) =>
     tq ? st.tests.filter((t) => [t.fuel, t.test_label, t.outcome].filter(Boolean).join(' ').toLowerCase().includes(tq)) : []
   const match = (s: InvestigationStats, f: string) => (f === 'all' ? true : f === 'unstated' ? s.inv.pillar === null : s.inv.pillar === f)
+  const passes = (s: InvestigationStats, air: (s: InvestigationStats) => number) =>
+    match(s, filter) &&
+    (!q || [s.inv.acronym, s.inv.title, s.inv.accession, s.inv.keywords.join(' '), s.inv.hardware].filter(Boolean).join(' ').toLowerCase().includes(q)) &&
+    (!tq || testMatches(s).length > 0) &&
+    (!cond.active || air(s) > 0)
+  // Uploads: their own group, never in NASA's counts above. Joined to NASA's data only to build their cards.
+  const withUploads = useMemo(() => mergeUploads(data, uploads), [data, uploads])
+  const userStats = useMemo(() => (uploads.length ? investigationStats(withUploads).filter((s) => isUserInvestigation(s.inv)) : []), [withUploads, uploads.length])
+  const userAir = (st: InvestigationStats) => testsInConditions(st.tests, cond.conditions).inside.length
+  const userShown = userStats.filter((s) => passes(s, userAir))
   const shown = stats
-    .filter((s) => match(s, filter))
-    .filter(
-      (s) =>
-        !q ||
-        [s.inv.acronym, s.inv.title, s.inv.accession, s.inv.keywords.join(' '), s.inv.hardware].filter(Boolean).join(' ').toLowerCase().includes(q),
-    )
-    .filter((s) => !tq || testMatches(s).length > 0)
-    .filter((s) => !cond.active || airCount(s) > 0)
+    .filter((s) => passes(s, airCount))
     .sort((a, b) => b.tests.length - a.tests.length || b.tableRows - a.tableRows)
   const count = (f: Filter) => stats.filter((s) => match(s, f)).length
   const opt = (id: Filter, label: string, tone?: string, title?: string) => ({
@@ -341,7 +345,15 @@ export function InvestigationsView({ data, ai }: { data: AppData; ai: AiContent 
             <Card key={s.inv.accession} s={s} data={data} ai={ai} testQuery={testQuery.trim()} matches={testMatches(s)} airCount={cond.active ? airCount(s) : null} keep={cond.query} />
           )),
         ])}
-        {shown.length === 0 && (
+        {userShown.length > 0 && [
+          <h2 key="h-yours" className="group-head">
+            Your Uploads <span className="user-mark">✦ not NASA data</span> <span className="count">{userShown.length}</span>
+          </h2>,
+          ...userShown.map((s) => (
+            <Card key={s.inv.accession} s={s} data={withUploads} ai={ai} testQuery={testQuery.trim()} matches={testMatches(s)} airCount={cond.active ? userAir(s) : null} keep={cond.query} />
+          )),
+        ]}
+        {shown.length === 0 && userShown.length === 0 && (
           <p className="empty-state">
             No experiment matches {query ? `“${query}”` : ''}{query && testQuery ? ' with ' : ''}{testQuery ? `a test matching “${testQuery}”` : ''}. Try a shorter word, or pick <b>All</b>.
           </p>
