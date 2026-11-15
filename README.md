@@ -119,9 +119,10 @@ The files in `data/` are NASA's files exactly as downloaded.
 | A floor-plan picture drawn in 3D (Google Gemini) | Reads rooms, doors and objects from the user's picture | It never says what anything is made of; the user picks each fuel from NASA's tested list; an answer with any problem is refused whole |
 | Offline summaries (Claude) | `ai/generate.mjs` can write short cited summaries from the same facts as the screen | Its output is not in this repository, so the app shows none today |
 
-No API key is in the browser or in this repository: both Gemini features run through a small
-helper on the user's own computer. Code in this repository was written with help from Claude
-(Anthropic). Everything an AI wrote or drew is labelled as such in the app.
+No API key is in the browser or in this repository. Both Gemini features run through server
+code that holds the key: Vercel Functions on a deployed site, or a small helper on the user's own
+computer. Code in this repository was written with help from Claude (Anthropic). Everything an AI
+wrote or drew is labelled as such in the app.
 
 ## Run it
 
@@ -143,6 +144,8 @@ The two AI features need the helper, with `API_FOR_RISK` and `API_FOR_SIMULATION
 ```bash
 node ai/risk-server.mjs
 ```
+
+To put the site online with both AI features, follow [docs/DEPLOY.md](docs/DEPLOY.md) (Vercel).
 
 Rebuild the app's data from NASA's files and run the 100 checks (Python 3.11 or newer, standard
 library only):
@@ -166,7 +169,8 @@ Both are examples we made up. Neither is a real place or a NASA design.
 
 ## Limits
 
-- **Not deployed.** The build is a static site; run it locally as above.
+- **No public link is given here.** The site is set up for Vercel
+  ([docs/DEPLOY.md](docs/DEPLOY.md)); until it is deployed, run it locally as above.
 - **No partial gravity.** PSI holds none yet, so nothing here says how a fire behaves on the Moon
   or Mars.
 - **Two places cannot be shown:** a spacecraft cabin such as Orion, and a Mars habitat. We found
