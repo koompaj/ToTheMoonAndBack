@@ -6,8 +6,7 @@ ineligible for Global Judging. The deck must show: team name, team members' name
 of the project, the user experience, and how NASA data makes it possible. Judged on Impact, Creativity,
 Validity, Relevance and Presentation (1-5 each). Any AI-made image or video needs a visible watermark.
 
-Every number below is on `main` after branch `data/dups-in-places` is merged (place counts are distinct
-tests). Re-check them on the deployed site before recording. Source for each is in brackets.
+Every number below is on `main` (place counts are distinct tests). Re-check them on the deployed site before recording. Source for each is in brackets.
 
 ---
 
@@ -53,10 +52,13 @@ tests). Re-check them on the deployed site before recording. Source for each is 
 - Say "not in the tables", never "never tested": NASA's Saffire-IV to VI results are not in PSI.
 
 ### Slide 6 - AI, used honestly
-- Claude writes short summaries offline from fact packs built from the same data as the screen; any sentence
-  with a number or citation not in its facts is rejected; every sentence links to its NASA source.
+- Upload your own experiment: an AI (Google Gemini) compares it with NASA's nearest tests, using numbered facts
+  worked out by code; any line without a valid citation is dropped.
+- Upload a floor-plan picture: the AI reads rooms, doors and objects into 3D; it never says what anything is made
+  of, the user picks each fuel from NASA's tested list.
+- Every AI output is labelled in the app as the AI's, "not NASA data". No API key is in the browser or the repo.
 - The fire-spread view is labelled an illustration, never a prediction; its settings are the user's own.
-- Code written with help from Claude (Anthropic); AI text is marked as AI-generated in the app.
+- Code written with help from Claude (Anthropic).
 
 ### Slide 7 - Impact and next steps
 - For mission designers: see in one view which fire tests exist for a habitat's air, and which are missing.
