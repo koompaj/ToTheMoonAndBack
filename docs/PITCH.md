@@ -62,7 +62,8 @@ tests). Re-check them on the deployed site before recording. Source for each is 
 - For mission designers: see in one view which fire tests exist for a habitat's air, and which are missing.
 - For researchers: the gaps become a list of tests to run next (solids at 30 %+ oxygen and low pressure,
   partial gravity once LUCI and FM2 data arrive). For students: an open, cited way into NASA's data.
-- Earth: the same evidence applies to oxygen-rich settings on Earth (Earth drawer in the app).
+- Earth: the app's Earth Benefits drawer links NASA fire-safety spinoffs already used on Earth (air tanks,
+  a fire detector, fire attire; challenge Resources tab).
 - Links: live app [URL], repository [URL], 30-second video [URL].
 
 ---
