@@ -443,8 +443,11 @@ reviews: move the two types to `types/sim.ts`, add `renderStage` to `SimulationV
 ## 8. Step 8 - polish and housekeeping (`scene/polish`)
 
 - Lazy-load the 3D code so the home page does not pay for three.js (removes the bundle warning).
-- `Flame3D.tsx` and `HabitatMap3D.tsx` are imported nowhere now: delete them, or keep the map if
-  the team wants the all-tests view back (Q7).
+- Done 2026-11-15 (asked for by B's human): `Flame3D.tsx`, `HabitatMap3D.tsx` and the dev-only
+  preview page (`cabin/preview/`) were removed, since nothing in the app imported them, and
+  `scale.ts` was cut down to the fuel-type colours, the only part still used. All are in git
+  history if the all-tests map is wanted again (Q7). `cabin/samples/` is kept: the app does not
+  import it, but its files are there for people to upload.
 - Rewrite `docs/roles/B-3d.md`: it still lists `LayoutCanvas` and the old tasks.
 - Projector and laptop-on-battery passes on real hardware.
 
@@ -922,7 +925,7 @@ still says 775 and 171; that is A's to change.
 | Q12 | What should the task cards show when the values are not the air of any listed place? | C | Step 9b |
 | Q13 | Single-point places match only at exactly their values (open question 10 in `CLAUDE.md`). Keep exact matching, or agree a tolerance? | A, C | Step 9c |
 | Q14 | Is the form of each rule in 9e acceptable, given that only its strength is the user's? | B's human, team | Step 9e |
-| Q7 | Delete `HabitatMap3D.tsx` and `Flame3D.tsx`, or bring the all-tests map back somewhere? | Team | Step 8 |
+| Q7 | Answered 2026-11-15 by B's human: `HabitatMap3D.tsx` and `Flame3D.tsx` are deleted. Bringing an all-tests 3D map back would start from git history. | Team | Step 8 |
 | Q9 | Who writes the new wording for `CLAUDE.md` and `docs/LAYOUT_PLAN.md` (step 4c)? B can draft it; all three humans must see it. | Team | Step 5 |
 | Q10 | In the illustrated spread, should a liquid or gas point light up the same way as a solid area, and should plain furniture ever light? This plan: only fuel items light; furniture never does. | B's human | Step 5 |
 
