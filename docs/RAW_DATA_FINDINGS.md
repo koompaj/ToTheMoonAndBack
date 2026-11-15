@@ -1,6 +1,6 @@
 # What NASA's raw PSI files add (workstream A, automated scan, 2026-11-15)
 
-Status: **work in progress** (written as the scan runs). Nothing here is applied to the data. Candidate
+Status: **work in progress**: the download is still running (see "What was downloaded"). Nothing here is applied to the data. Candidate
 values are in `data_sourced/raw_candidates.json`, each marked "candidate, not verified". The team
 checks them before anything enters `tests.json` or a count.
 
@@ -16,7 +16,17 @@ checks them before anything enters `tests.json` or a count.
   table rows lack pressure or oxygen first (BASS-II, BASS, Saffire, SPICE, FLEX), then documents,
   then the bulk per-test files of ACME and CFI. Files from the first run are counted as "skipped,
   already downloaded" in `data_extra/raw_manifest.json`, not as "ok".
-- Final counts: (to be filled in when the download finishes)
+- **Status at 11:01 on 2026-11-15: still downloading.** 1,269 of the 9,616 files (9,502 planned plus
+  the 114 earlier documents) are on disk; about 8,340 are left, all bulk per-test files of ACME
+  (Flame Design PSI-10, s-Flame PSI-23, CFI-G PSI-159) and CFI (PSI-39), plus a few SAME-R and DAFT
+  files. At about 3.5 s per file this needs roughly 8 more hours.
+- The download now runs as a **detached process** (started 10:52, `python -I scripts/fetch_psi_raw.py
+  data data_extra`), so it outlives the session that started it. Log: `data_extra/_fetch_run3.log`
+  (a line every 50 files) and `_fetch_run3.err`. To see whether it is still running:
+  `Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -match 'fetch_psi_raw' }`. Each run
+  rewrites `data_extra/raw_manifest.json` and counts earlier files as "skipped"; copies of the earlier
+  runs' manifests are `raw_manifest_run1.json` and `raw_manifest_run2.json`.
+- Final counts: to be filled in when the download finishes.
 - **Failed so far: 8, all known.** They are the 8 files `PSI_DOCUMENTS.md` already lists as broken on
   NASA's side (HTTP 404): BASS Final Report and SPICE Final Report as filed under PSI-26, the Saffire
   offgassing strategy (PSI-98, PSI-100), the Saffire-I image grid document and the three Saffire ICES
@@ -294,11 +304,23 @@ group them by `name`. The other investigations' sensor files are still downloadi
    are outside PSI, so use them only with a citation and a check.
 6. **Sensors (F6):** C can show the Saffire and BASS lists now. Group repeated channels by name.
 
-## Left to do (when this run stopped)
+## Left to do (updated 2026-11-15, 11:01)
 
-- The bulk per-test files (ACME, CFI, SAME, SAME-R, DAFT) were still downloading, and their
-  summaries and sensor lists were not yet searched. Re-run:
-  `python -I scripts/fetch_psi_raw.py data data_extra` (it skips finished files), then
-  `python -I scripts/summarize_raw.py data_extra` and `python -I scripts/extract_sensors.py data_extra data_sourced/raw_candidates.json`.
-- Priority 4 (partial gravity, conditions that contradict the tables, new tests) was searched only
-  in the BASS, BASS-II, Saffire and SPICE files.
+- **Download:** about 8,340 bulk files still downloading (see "What was downloaded"). Do not start a
+  second download while the detached one runs.
+- **When it finishes:** fill in the final counts above from `data_extra/raw_manifest.json`, then run
+  `python -I scripts/summarize_raw.py data_extra` (about 9 minutes for the first 1,269 files; longer
+  for all) and `python -I scripts/extract_sensors.py data_extra data_sourced/raw_candidates.json`.
+- **Then search the new files** for:
+  - s-Flame's chamber calculator file and daily test point logs (F8), which give per-test chamber
+    pressure and O2;
+  - CFI test 1268 and the other CFI tests not in the table (F9);
+  - the one extra Flame Design row (F10);
+  - sensors for ACME and CFI-G (item 5 already lists BASS, CFI, SPICE, SAME, SAME-R on
+    `data/items-5-12`).
+- **Priority 1 does not wait on the download.** Every cabin-air row of Flame Design, CFI and CFI-G
+  already has oxygen and pressure in the tables. Only 11 Flame Design burner-oxidizer rows lack
+  oxygen, and burner-oxidizer rows never count toward habitats.
+- **Done in this run:** SPICE's .xls read cell by cell (F3), all 168 old .xls files read (F6b),
+  partial-gravity search of all document text (none found), s-Flame (F8), CFI (F9), ACME counts
+  (F10).
