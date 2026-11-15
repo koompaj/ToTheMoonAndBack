@@ -24,6 +24,7 @@ import { placeName } from './places'
 import { Choice, FUEL_LABEL, FUEL_SHORT, FuelDot, PanelHead, FuelIcon } from './ui'
 import { SimStage } from './sim/SimStage'
 import { askForLayout, helperCanDraw } from './sim/planToLayout'
+import { onLaptop } from './riskReview'
 import { templateFor } from './sim/templates'
 
 const FUELS: FuelClass[] = ['gas', 'droplet', 'solid']
@@ -450,7 +451,11 @@ export function SimulationView({ data, renderStage }: { data: AppData; renderSta
                     </p>
                   </>
                 ) : canDraw === false ? (
-                  <p className="muted small">To have AI draw this picture in 3D, start the helper on this computer (node ai/risk-server.mjs, with API_FOR_SIMULATION in .env) and upload the picture again.</p>
+                  <p className="muted small">
+                    {onLaptop()
+                      ? 'To have AI draw this picture in 3D, start the helper on this computer (node ai/risk-server.mjs, with API_FOR_SIMULATION in .env) and upload the picture again.'
+                      : 'Drawing this picture in 3D with AI isn\u2019t available on this site right now.'}
+                  </p>
                 ) : null}
                 {aiState.error && (
                   <p className="sim-warn" role="alert">

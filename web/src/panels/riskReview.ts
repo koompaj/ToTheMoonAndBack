@@ -4,14 +4,51 @@
 //  2. buildFacts(): the only things the AI may use: the upload's own values, the checks, and facts
 //     worked out from NASA's tables (place counts, nearest tests, gaps). Each fact has an id; the
 //     AI must cite ids, and the helper drops any line that doesn't.
-//  3. requestReview(): asks the local helper (ai/risk-server.mjs, which holds the API key) and keeps
+//  3. requestReview(): asks the AI helper (this site's /api on Vercel, or ai/risk-server.mjs on a laptop;
+//     either way the API key stays on the server) and keeps
 //     the result in this browser with the upload. New reviews are "unseen" until the Risk page is read.
 import type { AppData, Habitat, Test } from '../types/data'
 import { conditionsFromHabitat, nearestOutside, testsInHabitat } from '../data/load'
 import { placeName } from './places'
 import type { UserUpload } from './uploads'
 
-export const HELPER = 'http://127.0.0.1:8787'
+/** The laptop helper (node ai/risk-server.mjs). */
+export const LOCAL_HELPER = 'http://127.0.0.1:8787'
+
+export interface Helper {
+  base: string // '' = this site's own /api (Vercel); LOCAL_HELPER on a laptop
+  deployed: boolean
+  review: boolean // API_FOR_RISK is set
+  simulation: boolean // API_FOR_SIMULATION is set
+}
+
+async function probe(base: string): Promise<Helper | null> {
+  try {
+    const r = await fetch(`${base}/api/health`, { signal: AbortSignal.timeout(4000) })
+    // The dev server answers unknown paths with the page itself, so insist on JSON.
+    if (!r.ok || !(r.headers.get('content-type') ?? '').includes('application/json')) return null
+    const j = await r.json()
+    return { base, deployed: j.deployed === true, review: j.ok === true, simulation: j.simulation === true }
+  } catch {
+    return null
+  }
+}
+
+let found: Promise<Helper | null> | null = null
+/** Where the AI helper is: this site's own /api first (Vercel), then the laptop helper. Null if neither.
+ *  A miss is not remembered, so starting the helper later and pressing "try again" works. */
+export function findHelper(): Promise<Helper | null> {
+  if (!found) {
+    found = (async () => (await probe('')) ?? (await probe(LOCAL_HELPER)))()
+    found.then((h) => {
+      if (!h) found = null
+    })
+  }
+  return found
+}
+
+/** True when the page is served from this computer (npm run dev / preview). */
+export const onLaptop = () => /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname)
 const KEY = 'fif-upload-reviews-v1'
 const EVENT = 'fif-reviews-changed'
 
@@ -252,12 +289,7 @@ export function markSeen(ids: string[]) {
 // ---------- asking the helper ----------
 
 export async function helperUp(): Promise<boolean> {
-  try {
-    const r = await fetch(`${HELPER}/api/health`, { signal: AbortSignal.timeout(2500) })
-    return r.ok && (await r.json()).ok === true
-  } catch {
-    return false
-  }
+  return (await findHelper())?.review === true
 }
 
 const inFlight = new Map<string, Promise<StoredReview>>()
@@ -268,7 +300,9 @@ export function requestReview(upload: UserUpload, data: AppData): Promise<Stored
   if (running) return running
   const p = (async () => {
     const facts = buildFacts(upload, data)
-    const res = await fetch(`${HELPER}/api/risk-review`, {
+    const helper = await findHelper()
+    if (!helper) throw new Error('the AI helper is not reachable')
+    const res = await fetch(`${helper.base}/api/risk-review`, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ facts: facts.map(({ id, text }) => ({ id, text })) }),

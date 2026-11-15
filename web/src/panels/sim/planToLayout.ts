@@ -1,4 +1,5 @@
-// Asks the local helper (ai/risk-server.mjs) to describe a picture of a floor plan as a 3D layout
+// Asks the AI helper (this site's /api/plan-to-layout on Vercel, or ai/risk-server.mjs on a laptop)
+// to describe a picture of a floor plan as a 3D layout
 // file, for the "Draw this plan in 3D with AI" button on the Simulation page. Added by the 3D
 // workstream; it lives here because the button is on the page, and the page hands the 3D stage
 // the finished file exactly as it hands it an uploaded one.
@@ -11,19 +12,14 @@
 //     each object's fuel in the 3D view, from the fuels NASA's tables cover;
 //   - the file is marked "drawn_by_ai", and the 3D stage checks it like any layout file
 //     (scene/cabin/layoutFile.ts) and refuses it whole if anything is wrong.
-import { HELPER } from '../riskReview'
+import { findHelper } from '../riskReview'
 
 /** Longest side of the picture as sent: enough to read a plan, and no more of it than needed. */
 const MAX_SIDE = 1600
 
-/** True when the helper is running on this computer and has a key for this job. */
+/** True when an AI helper (this site or the laptop) is reachable and has a key for this job. */
 export async function helperCanDraw(): Promise<boolean> {
-  try {
-    const res = await fetch(`${HELPER}/api/health`, { signal: AbortSignal.timeout(2500) })
-    return res.ok && (await res.json()).simulation === true
-  } catch {
-    return false
-  }
+  return (await findHelper())?.simulation === true
 }
 
 /** The picture as a JPEG no larger than MAX_SIDE, in base64. */
@@ -54,7 +50,9 @@ async function shrink(blob: Blob): Promise<string> {
  *  Throws with the helper's message if it fails. */
 export async function askForLayout(pictureUrl: string): Promise<string> {
   const image = await shrink(await (await fetch(pictureUrl)).blob())
-  const res = await fetch(`${HELPER}/api/plan-to-layout`, {
+  const helper = await findHelper()
+  if (!helper?.simulation) throw new Error('the AI helper is not reachable')
+  const res = await fetch(`${helper.base}/api/plan-to-layout`, {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({ image, mime: 'image/jpeg' }),
