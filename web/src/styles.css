@@ -1488,3 +1488,47 @@ body { background: #04050a; background-image: none; }
 .folder-body { backdrop-filter: none; -webkit-backdrop-filter: none; }
 .folder-body .place-card, .folder-body .waiting { background: rgba(20, 22, 30, 0.25); backdrop-filter: none; -webkit-backdrop-filter: none; }
 .folder-body .up-group { background: rgba(10, 12, 20, 0.2); }
+
+/* ===================== pastel chart palette =====================
+   Every bar, donut, histogram and legend swatch uses these softer tones. Same meaning per colour
+   as before (fuel, pillar, went out / burned on), just pastel so they sit calmly on the space theme. */
+:root {
+  --c-solid: #ffc2a1;      /* peach */
+  --c-droplet: #a8dcff;    /* sky */
+  --c-gas: #d2bfff;        /* lavender */
+  --c-evidence: #a3ecd6;   /* mint */
+  --c-gap: #ffb3ad;        /* soft coral */
+  --c-muted: #8f98ab;      /* slate */
+  --c-prevention: #b9efd2; /* sage */
+  --c-detection: #ffc9e3;  /* blush */
+  --c-suppression: #bcd4ff;/* periwinkle */
+  --c-accent: #ffe39a;     /* butter */
+}
+.fill-solid { background: var(--c-solid); fill: var(--c-solid); stroke: var(--c-solid); }
+.fill-droplet { background: var(--c-droplet); fill: var(--c-droplet); stroke: var(--c-droplet); }
+.fill-gas { background: var(--c-gas); fill: var(--c-gas); stroke: var(--c-gas); }
+.fill-evidence { background: var(--c-evidence); fill: var(--c-evidence); stroke: var(--c-evidence); }
+.fill-gap { background: var(--c-gap); fill: var(--c-gap); stroke: var(--c-gap); }
+.fill-muted { background: var(--c-muted); fill: var(--c-muted); stroke: var(--c-muted); }
+.fill-prevention { background: var(--c-prevention); fill: var(--c-prevention); stroke: var(--c-prevention); }
+.fill-detection { background: var(--c-detection); fill: var(--c-detection); stroke: var(--c-detection); }
+.fill-suppression { background: var(--c-suppression); fill: var(--c-suppression); stroke: var(--c-suppression); }
+.fuel-solid .class-bar i { background: var(--c-solid); }
+.fuel-droplet .class-bar i { background: var(--c-droplet); }
+.fuel-gas .class-bar i { background: var(--c-gas); }
+.out-bar i { background: linear-gradient(90deg, #8fe3cb, var(--c-evidence)); }
+.score-bar i { background: var(--c-accent); }
+.hist .band-moon { fill: rgba(255, 227, 154, 0.1); }
+.donut .donut-seg { fill: none; } /* keep the ring hollow: the pastel fill-* rules must not paint the middle */
+/* align the air/gravity box with the search boxes: same label line, same 42px control height, same top/bottom inset */
+.search-pair { align-items: flex-start; }
+.search-pair .search { padding: 9px 0 11px; }
+.cond-bar.inline .cond-row { align-items: flex-start; padding: 8px 12px 10px; }
+.cond-bar.inline .select, .cond-bar.inline .cond-g { gap: 6px; }
+.cond-bar.inline .select > span, .cond-bar.inline .cond-g-label { font-size: 14px; font-weight: 550; line-height: 1.6; }
+.cond-bar.inline .select select { height: 42px; }
+.cond-bar.inline .choice { height: 42px; padding: 4px; align-items: stretch; flex-wrap: nowrap; }
+.cond-bar.inline .choice button { padding: 0 10px; height: 32px; line-height: 32px; }
+.cond-bar.inline .cond-pair input, .cond-bar.inline .cond-g-input { height: 42px; }
+.cond-bar.inline .btn { height: 42px; margin-top: 28px; }
+@media (max-width: 760px) { .cond-bar.inline .choice { height: auto; flex-wrap: wrap; } .search-pair .search { padding: 0; } }
