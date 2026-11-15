@@ -3,6 +3,16 @@
 import type { AppData, Investigation, Test } from '../types/data'
 import type { AiSentence } from '../ai/content'
 import { useApp } from '../state/store'
+import { isUserInvestigation, isUserTest } from './uploads'
+
+/** The little mark on anything a user uploaded (not from NASA's tables). */
+export function UserMark({ label = 'User-uploaded' }: { label?: string }) {
+  return (
+    <span className="user-mark" title="Uploaded by a user in this browser. Not from NASA's PSI tables.">
+      ✦ {label}
+    </span>
+  )
+}
 
 function tableName(path: string) {
   const base = path.split('/').pop() ?? path
@@ -16,10 +26,11 @@ export function TestCite({ test }: { test: Test }) {
   return (
     <button
       type="button"
-      className={`cite cite-test${selected ? ' on' : ''}`}
-      title={`${test.investigation}, ${tableName(test.source_table)}, row ${test.source_row}${test.test_label ? `, NASA test ${test.test_label}` : ''}`}
+      className={`cite cite-test${selected ? ' on' : ''}${isUserTest(test) ? ' cite-user' : ''}`}
+      title={isUserTest(test) ? `User-uploaded, not NASA data: ${test.acronym} row ${test.source_row}` : `${test.investigation}, ${tableName(test.source_table)}, row ${test.source_row}${test.test_label ? `, NASA test ${test.test_label}` : ''}`}
       onClick={() => selectTest(selected ? null : test.id)}
     >
+      {isUserTest(test) && '✦ '}
       {test.acronym} · row {test.source_row}
     </button>
   )
@@ -28,6 +39,14 @@ export function TestCite({ test }: { test: Test }) {
 /** An investigation's DOI, which PSI asks every user of its data to cite. */
 export function DoiCite({ inv }: { inv: Investigation | undefined }) {
   if (!inv) return null
+  if (isUserInvestigation(inv) && !inv.doi)
+    return inv.page ? (
+      <a className="cite cite-user" href={inv.page} target="_blank" rel="noreferrer nofollow" title="Source given by the user who uploaded it">
+        ✦ user source ↗
+      </a>
+    ) : (
+      <span className="cite cite-user">✦ user upload</span>
+    )
   if (!inv.doi)
     return (
       <a className="cite" href={inv.page} target="_blank" rel="noreferrer">

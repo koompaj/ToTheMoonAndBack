@@ -200,10 +200,32 @@ export function FireView({
         </div>
       </div>
 
-      <a className="btn-sim cta-sim" href={`#simulation?h=${hab.id}&fuel=${fuel}`}>
-        Simulate Your Project!
-        <small>Place this fire in a 3D cabin or your own floor plan</small>
-      </a>
+      <section className="panel sim-banner" aria-labelledby="sim-banner-title">
+        <span className="sim-banner-art" aria-hidden>
+          <svg viewBox="0 0 64 64" width="64" height="64">
+            <defs>
+              <radialGradient id="sbf" cx="50%" cy="65%" r="55%">
+                <stop offset="0" stopColor="#fff3c4" />
+                <stop offset="0.45" stopColor="#ffb347" />
+                <stop offset="1" stopColor="#ff6a1a" stopOpacity="0" />
+              </radialGradient>
+            </defs>
+            <rect x="6" y="14" width="52" height="40" rx="10" fill="none" stroke="rgba(147,197,253,0.55)" strokeWidth="2" strokeDasharray="4 4" />
+            <circle cx="32" cy="36" r="14" fill="url(#sbf)" />
+          </svg>
+        </span>
+        <div className="sim-banner-text">
+          <span className="sim-banner-eyebrow">Next step · Try it yourself</span>
+          <h2 id="sim-banner-title">Simulate This Fire in a Cabin</h2>
+          <p className="muted">Place it in a 3D cabin or your own floor plan, then check what NASA&rsquo;s tests say about each item. The spread there is an illustration, not a prediction.</p>
+        </div>
+        <a className="btn-sim sim-banner-btn" href={`#simulation?h=${hab.id}&fuel=${fuel}`}>
+          <span>Simulate Your Project</span>
+          <span className="sim-banner-arrow" aria-hidden>
+            →
+          </span>
+        </a>
+      </section>
 
       <section aria-labelledby="tasks-title">
         <h2 id="tasks-title" className="section-title">

@@ -3,10 +3,11 @@
 // -> #fire?h=<habitat>&fuel=<fuel> (3D fire illustration, expected behaviour, three tasks)
 // -> #simulation (3D cabin, fire point, three tasks). The fire page draws workstream B's
 // FireModel3D through the renderFire prop below (docs/PLAN.md).
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import type { AppData } from './types/data'
 import type { CabinStageProps, FireModelProps } from './types/sim'
 import { distinctTestCount, loadData } from './data/load'
+import { loadUploads, mergeUploads, onUploadsChanged } from './panels/uploads'
 import { loadAiContent, type AiContent } from './ai/content'
 import { FireModel3D } from './scene/FireModel3D'
 import { CabinStage3D } from './scene/CabinStage3D'
@@ -61,7 +62,11 @@ function Mark() {
 }
 
 export default function App() {
-  const [data, setData] = useState<AppData | null>(null)
+  const [nasa, setData] = useState<AppData | null>(null)
+  // User uploads (this browser only) join NASA's data; each one is marked as user-uploaded.
+  const [uploads, setUploads] = useState(loadUploads)
+  useEffect(() => onUploadsChanged(() => setUploads(loadUploads())), [])
+  const data = useMemo(() => (nasa ? mergeUploads(nasa, uploads) : null), [nasa, uploads])
   const [ai, setAi] = useState<AiContent>({ habitats: null, investigations: null, fire: null })
   const [error, setError] = useState<string | null>(null)
   const [view, setView] = useState<ViewId>(viewFromHash)
